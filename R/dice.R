@@ -14,6 +14,14 @@ d6 <- function(){
   base::sample(x = 1:6, size = 1)
 }
 
+#' @title Roll an Eight-Sided Dice ("d8")
+#'
+#' @description Picks a random number from 1-8
+#'
+d8 <- function(){
+  base::sample(x = 1:8, size = 1)
+}
+
 #' @title Roll a Ten-Sided Dice ("d10")
 #'
 #' @description Picks a random number from 1-10
@@ -53,3 +61,12 @@ d100 <- function(){
 coin <- function(){
   base::sample(x = 1:2, size = 1)
 }
+
+#' @title Roll a Two-Sided Dice
+#'
+#' @description Picks a random number from 1-2. Essentially flips a coin.
+#'
+d2 <- function(){
+  base::sample(x = 1:2, size = 1)
+}
+
