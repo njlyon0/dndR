@@ -1,2 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+utils/pkg-checking.R
