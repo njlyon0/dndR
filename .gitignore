@@ -3,6 +3,5 @@
 .RData
 .Ruserdata
 
-
 # Add .Rproj file to gitignore
 *.Rproj
