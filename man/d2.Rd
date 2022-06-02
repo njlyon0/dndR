@@ -6,6 +6,9 @@
 \usage{
 d2()
 }
+\value{
+Numeric, the specified dice outcome
+}
 \description{
 Picks a random number from 1-2. Essentially flips a coin.
 }
