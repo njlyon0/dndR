@@ -1,6 +1,6 @@
 #' @title Return Vector of Accepted Classes
 #'
-#' @description Simply returns a vector of classes that `stat_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
+#' @description Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
 #' @return character vector of accepted class names
 #'
 #' @export
@@ -37,13 +37,13 @@ accepted_classes <- function(){
 #'
 #' @examples
 #' # Can roll up a new character of the desired class from scratch
-#' stat_block(class = "wizard", score_method = "4d6")
+#' class_block(class = "wizard", score_method = "4d6")
 #'
 #' # Or you can roll separately and then create a character with that dataframe
 #' my_scores <- ability_scores(method = "4d6")
-#' stat_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
+#' class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
 #'
-stat_block <- function(class = NULL, score_method = "4d6",
+class_block <- function(class = NULL, score_method = "4d6",
                        scores_rolled = FALSE, scores_df = NULL){
   # Squelch visible bindings note
   score <- ability <- NULL
