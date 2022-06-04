@@ -5,6 +5,10 @@
 #'
 #' @export
 #'
+#' @examples
+#' # Want to check which classes this package supports?
+#' accepted_classes()
+#'
 accepted_classes <- function(){
 
   # Assemble vector of currently supported classes
@@ -22,7 +26,8 @@ accepted_classes <- function(){
 #' @description Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).
 #'
 #' @param class character string of class (supported classes returned by `accepted_classes()`)
-#' @param scores_rolled logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE.
+#' @param score_method character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Only values accepted by `ability_score()` are accepted here
+#' @param scores_rolled logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
 #' @param scores_df if 'scores_rolled' is TRUE, the name of the dataframe returned by `ability_scores()`
 #'
 #' @return a dataframe of two columns and six rows
@@ -30,19 +35,28 @@ accepted_classes <- function(){
 #' @importFrom magrittr %>%
 #' @export
 #'
-stat_block <- function(class = NULL, scores_rolled = FALSE, scores_df = NULL){
+#' @examples
+#' # Can roll up a new character of the desired class from scratch
+#' stat_block(class = "wizard", score_method = "4d6")
+#'
+#' # Or you can roll separately and then create a character with that dataframe
+#' my_scores <- ability_scores(method = "4d6")
+#' stat_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
+#'
+stat_block <- function(class = NULL, score_method = "4d6",
+                       scores_rolled = FALSE, scores_df = NULL){
   # Squelch visible bindings note
   score <- ability <- NULL
 
   # If scores have been rolled but dataframe hasn't been provided, error out
   if(scores_rolled == TRUE & base::is.null(scores_df))
-    stop("Scores have been rolled but no dataframe provided. Please provide name of dataframe returned by `ability_scores()` to 'scores_df' argument.")
+    stop("No scores dataframe provided but 'scores_rolled' is set to TRUE. Please provide name of dataframe returned by `ability_scores()` to 'scores_df' argument.")
 
   # If scores have been rolled and a dataframe has been provided, change its name
   if(scores_rolled == TRUE & !base::is.null(scores_df)){ scores <- scores_df }
 
   # If scores haven't been rolled, roll them here
-  if(scores_rolled == FALSE){ scores <- dndR::ability_scores() }
+  if(scores_rolled == FALSE){ scores <- dndR::ability_scores(method = score_method) }
 
   # Error out if class isn't one of supported vector
   if(base::is.null(class) | !base::tolower(class) %in% dndR::accepted_classes())

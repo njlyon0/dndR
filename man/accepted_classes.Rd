@@ -12,3 +12,8 @@ character vector of accepted class names
 \description{
 Simply returns a vector of classes that `stat_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
 }
+\examples{
+# Want to check which classes this package supports?
+accepted_classes()
+
+}

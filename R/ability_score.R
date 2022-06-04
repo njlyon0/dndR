@@ -8,6 +8,7 @@
 #'
 #' @export
 #'
+#'
 ability_singular <- function(method = "4d6"){
   # Create empty list
   blank <- list()
@@ -41,9 +42,22 @@ ability_singular <- function(method = "4d6"){
 #' @importFrom magrittr %>%
 #' @export
 #'
+#' @examples
+#' # Roll ability scores using four d6 and dropping the lowest
+#' ability_scores(method = "4d6")
+#'
+#' # Roll using 3d6 and dropping nothing
+#' ability_scores("3d6")
+#'
+#' # Or if you're truly wild, just roll a d20 for each ability
+#' ability_scores('d20')
+#'
 ability_scores <- function(method = "4d6"){
   # Squelch 'no visible bindings' note
   name <- value <- total <- NULL
+
+  # Increase specificity of "d20" if someone enters that
+  if(method == "d20"){method <- "1d20"}
 
   # Identify number of rows of placeholder matrix
   if(method == "4d6"){ row_num <- 4 }

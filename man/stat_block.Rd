@@ -4,12 +4,19 @@
 \alias{stat_block}
 \title{Assign Ability Scores Based on Class}
 \usage{
-stat_block(class = NULL, scores_rolled = FALSE, scores_df = NULL)
+stat_block(
+  class = NULL,
+  score_method = "4d6",
+  scores_rolled = FALSE,
+  scores_df = NULL
+)
 }
 \arguments{
 \item{class}{character string of class (supported classes returned by `accepted_classes()`)}
 
-\item{scores_rolled}{logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE.}
+\item{score_method}{character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Only values accepted by `ability_score()` are accepted here}
+
+\item{scores_rolled}{logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE}
 
 \item{scores_df}{if 'scores_rolled' is TRUE, the name of the dataframe returned by `ability_scores()`}
 }
@@ -18,4 +25,13 @@ a dataframe of two columns and six rows
 }
 \description{
 Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).
+}
+\examples{
+# Can roll up a new character of the desired class from scratch
+stat_block(class = "wizard", score_method = "4d6")
+
+# Or you can roll separately and then create a character with that dataframe
+my_scores <- ability_scores(method = "4d6")
+stat_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
+
 }

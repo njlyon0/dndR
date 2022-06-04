@@ -7,7 +7,15 @@
 #'
 #' @return Numeric, the sum of specified dice outcomes
 #' @export
-
+#'
+#' @examples
+#' # Roll your desired dice (i.e., randomly sample the specified die)
+#' roll(what = "4d6")
+#'
+#' # Returned as a number so you can add rolls together or integers
+#' roll('1d20') + 5
+#' roll('2d8') + roll('1d4')
+#'
 roll <- function(what = "d20"){
 
   # Identify number of dice to roll
