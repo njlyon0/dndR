@@ -29,6 +29,66 @@ You can install the development version of dndR from [GitHub](https://github.com
 devtools::install_github("NJLyon-Projects/dndR")
 ```
 
+```{r load_package, echo = FALSE, include = FALSE}
+devtools::install_github("NJLyon-Projects/dndR")
+```
 
+
+## Current Functions
+
+There are several functions currently in `dndR` and I am working on more as we speak!
+
+### Dice Rolling
+
+At its simplest, DnD involves significant amounts of dice rolling so I've scripted dice functions! These functions support dice with the following numbers of sides: 100, 20, 12, 10, 8, 6, 4, and 2 (2 is essentially a coin so `coin()` is also a function).
+
+```{r, dice}
+# Twenty-sided dice
+dndR::d20()
+
+# Eight-sided dice
+dndR::d8()
+
+# Flip a coin
+dndR::coin()
+```
+
+That said, this is somewhat cumbersome given that DnD mostly involves rolling *multiple* dice and summing their outcomes so the `roll()` function is built to handle these more general cases
+
+```{r, roll_fxn}
+dndR::roll(what = '2d8')
+```
+
+
+### Character Creation
+
+You can also roll for your character's six ability scores by summing four d6 and dropping the lowest value, rolling three d6, or (for the truly wild) rolling only a d20.
+
+```{r ability_scores_fxn}
+dndR::ability_scores(method = "4d6")
+```
+
+That method allows for manual specification of which ability scores should go to each roll but you could also assign them based on the Player's Handbook's (PHB's) recommendations for various classes.
+
+```{r class_block_fxn}
+dndR::class_block(class = 'wizard', score_method = "4d6")
+```
+
+DnD races (e.g., dwarves, dragonborn, etc.) confer additional points to specific abilities and there's a function for that as well!
+
+```{r race_mods_fxn}
+dndR::race_mods(race = 'wood elf')
+```
+
+Finally, you could create a character of specified race and class in one fell swoop!
+```{r pc_creator_fxn}
+dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
+```
+
+## Looking Ahead
+
+I'm working on a function to help stat out monsters/creatures for various challenge ratings ("CR") and will update this README when it/they are ready!
+
+If you have other function ideas, post them as Issues on this repository!
 
 
