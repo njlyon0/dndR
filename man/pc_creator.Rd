@@ -8,7 +8,7 @@ pc_creator(
   class = NULL,
   race = NULL,
   score_method = "4d6",
-  scores_rolled = TRUE,
+  scores_rolled = FALSE,
   scores_df = NULL
 )
 }

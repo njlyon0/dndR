@@ -20,7 +20,9 @@
 #' pc_creator(class = 'sorcerer', race = 'dragonborn', scores_rolled = TRUE, scores_df = my_scores)
 #'
 pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
-                       scores_rolled = TRUE, scores_df = NULL){
+                       scores_rolled = FALSE, scores_df = NULL){
+  # Squelch no visible bindings note
+  score <- modifier <- raw_score <- race_modifier <- NULL
 
   # Create class block
   class_df <- class_block(class = class, score_method = score_method,
@@ -30,8 +32,8 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
   race_df <- race_mods(race = race)
 
   # Combine both tables
-  full_stats <- class %>%
-    dplyr::left_join(y = race, by = "ability") %>%
+  full_stats <- class_df %>%
+    dplyr::left_join(y = race_df, by = "ability") %>%
     # Rename the columns more descriptively
     dplyr::rename(raw_score = score, race_modifier = modifier) %>%
     # Calculate the total scores
