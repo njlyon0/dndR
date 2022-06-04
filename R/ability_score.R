@@ -20,9 +20,9 @@ ability_singular <- function(method = "4d6"){
   if(!method %in% c("4d6", "3d6", "1d20")) stop("Score method improperly set. Select one of '4d6', '3d6', or 'd20'")
 
   # Roll appropriate number of dice
-  if(method == "4d6"){ for(i in 1:4){ blank[i]<- dndR::d6() } }
-  if(method == "3d6"){ for(i in 1:3){ blank[i]<- dndR::d6() } }
-  if(method == "1d20"){ blank[1] <- dndR::d20() }
+  if(method == "4d6"){ for(i in 1:4){ blank[i]<- d6() } }
+  if(method == "3d6"){ for(i in 1:3){ blank[i]<- d6() } }
+  if(method == "1d20"){ blank[1] <- d20() }
 
   # Unbind list into a numeric vector
   score <- base::as.numeric(base::do.call(what = rbind, args = blank))
@@ -68,7 +68,7 @@ ability_scores <- function(method = "4d6"){
   empty_block <- matrix(nrow = row_num, ncol = 6)
 
   # Fill it column by column
-  for(k in 1:6){ empty_block[,k] <- dndR::ability_singular(method = method) }
+  for(k in 1:6){ empty_block[,k] <- ability_singular(method = method) }
 
   # Method == "4d6" (and drop lowest) ----
   if(method == "4d6") {

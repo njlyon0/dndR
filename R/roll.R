@@ -43,49 +43,49 @@ roll <- function(what = "d20"){
   ## d2
   if(dice_type == "d2"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d2())
+      dice_result[[k]] <- base::data.frame('result' = d2())
     } }
 
   ## d4
   if(dice_type == "d4"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d4())
+      dice_result[[k]] <- base::data.frame('result' = d4())
     } }
 
   ## d6
   if(dice_type == "d6"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d6())
+      dice_result[[k]] <- base::data.frame('result' = d6())
     } }
 
   ## d8
   if(dice_type == "d8"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d8())
+      dice_result[[k]] <- base::data.frame('result' = d8())
     } }
 
   ## d10
   if(dice_type == "d10"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d10())
+      dice_result[[k]] <- base::data.frame('result' = d10())
     } }
 
   ## d12
   if(dice_type == "d12"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d12())
+      dice_result[[k]] <- base::data.frame('result' = d12())
     } }
 
   ## d20
   if(dice_type == "d20"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d20())
+      dice_result[[k]] <- base::data.frame('result' = d20())
     } }
 
   ## d100
   if(dice_type == "d100"){
     for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = dndR::d100())
+      dice_result[[k]] <- base::data.frame('result' = d100())
     } }
 
   # Collapse list into dataframe

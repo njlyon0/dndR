@@ -42,11 +42,11 @@ dnd_races <- function(){
 #'
 race_mods <- function(race = NULL){
   # If scores have been rolled but dataframe hasn't been provided, error out
-  if(is.null(race) | !base::tolower(race) %in% dndR::dnd_races())
+  if(is.null(race) | !base::tolower(race) %in% dnd_races())
     stop("Race not in supported set. See `dnd_races()` for list of supported entries. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.")
 
   # Create an empty dataframe to hold modifiers
-  empty_block <- data.frame('ability' = c("STR", "CON", "DEX", "INT", "WIS", "CHA"),
+  empty_block <- data.frame('ability' = c("STR", "DEX", "CON", "INT", "WIS", "CHA"),
                             'modifier' = base::rep(x = 0, times = 6))
 
   # Depending on race, modify the dataframe as needed
