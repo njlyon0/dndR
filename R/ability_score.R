@@ -30,7 +30,7 @@ ability_singular <- function(method = "4d6"){
   return(score)
 }
 
-#' @title Create Full Stat Block
+#' @title Roll for all Ability Scores
 #'
 #' @description Rolls 4d6 and drops the lowest value for six abilities. Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
 #'
