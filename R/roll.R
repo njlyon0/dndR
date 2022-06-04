@@ -94,6 +94,12 @@ roll <- function(what = "d20"){
   # Calculate final sum
   total <- base::sum(dice_result_df$result, na.rm = TRUE)
 
+  # If two d20 are rolled, assume they're rolling for advantage/disadvantage and don't sum
+  if(what == "2d20"){
+    total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
+    base::message("Assuming you're rolling for (dis)advantage so both rolls returned.")
+    }
+
   # Return total
   return(total) }
 
