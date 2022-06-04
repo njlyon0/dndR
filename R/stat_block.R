@@ -2,18 +2,26 @@
 #'
 #' @description Rolls 4d6.
 #'
+#' @param method a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for an ability score ("4d6" drops lowest in the subsequent `stat_block()` function)
+#'
 #' @return a numeric vector
 #'
 #' @export
 #'
-ability_score <- function(){
+ability_singular <- function(method = "4d6"){
   # Create empty list
   blank <- list()
 
-  # Populate list with rolled values
-  for(i in 1:4){
-    blank[i]<- dndR::d6()
-  }
+  # Increase specificity of "d20" if someone enters that
+  if(method == "d20"){method <- "1d20"}
+
+  # Error out if method isn't specified
+  if(!method %in% c("4d6", "3d6", "1d20")) stop("Score method improperly set. Select one of '4d6', '3d6', or 'd20'")
+
+  # Roll appropriate number of dice
+  if(method == "4d6"){ for(i in 1:4){ blank[i]<- dndR::d6() } }
+  if(method == "3d6"){ for(i in 1:3){ blank[i]<- dndR::d6() } }
+  if(method == "1d20"){ blank[1] <- dndR::d20() }
 
   # Unbind list into a numeric vector
   score <- base::as.numeric(base::do.call(what = rbind, args = blank))
@@ -22,28 +30,34 @@ ability_score <- function(){
   return(score)
 }
 
-
 #' @title Create Full Stat Block
 #'
 #' @description Rolls 4d6 and drops the lowest value for six abilities. Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
+#'
+#' @param method a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
 #'
 #' @return a dataframe of two columns and six rows
 #'
 #' @importFrom magrittr %>%
 #' @export
 #'
-stat_block <- function(){
+ability_scores <- function(method = "4d6"){
   # Squelch 'no visible bindings' note
   name <- value <- total <- NULL
 
+  # Identify number of rows of placeholder matrix
+  if(method == "4d6"){ row_num <- 4 }
+  if(method == "3d6"){ row_num <- 3 }
+  if(method == "1d20"){ row_num <- 1 }
+
   # Make placeholder matrix
-  empty_block <- matrix(nrow = 4, ncol = 6)
+  empty_block <- matrix(nrow = row_num, ncol = 6)
 
   # Fill it column by column
-  for(k in 1:6){
-    empty_block[,k] <- dndR::ability_score()
-    }
+  for(k in 1:6){ empty_block[,k] <- dndR::ability_singular(method = method) }
 
+  # Method == "4d6" (and drop lowest) ----
+  if(method == "4d6") {
   # Assemble the stat block
   block <- base::as.data.frame(empty_block) %>%
     # Pivot to long format
@@ -61,14 +75,38 @@ stat_block <- function(){
     # Return better names
     dplyr::rename(ability = name, score = total) %>%
     # Return as a dataframe
-    base::as.data.frame()
+    base::as.data.frame() }
 
-  # Print a warning if its too low
+  # Method == "3d6" ----
+  if(method == "3d6") {
+    # Assemble the stat block
+    block <- base::as.data.frame(empty_block) %>%
+      # Same as "4d6" but no subsetting
+      tidyr::pivot_longer(cols = dplyr::everything()) %>%
+      dplyr::group_by(name) %>%
+      dplyr::summarise(total = base::sum(value, na.rm = TRUE)) %>%
+      dplyr::rename(ability = name, score = total) %>%
+      base::as.data.frame() }
+
+  # Method == "1d20" ----
+  if(method == "1d20"){
+    block <- base::as.data.frame(empty_block) %>%
+      # Just clean up the data and return it
+      tidyr::pivot_longer(cols = dplyr::everything()) %>%
+      dplyr::rename(ability = name, score = value) %>%
+      base::as.data.frame() }
+
+  # If method is anything other than "1d20", print warnings
+  ## d20 so consistently trips these that it's not worth warning the user
+  if(method != "1d20") {
+  # Print a warning if the sum of all scores is too low
   if(base::sum(block$score, na.rm = TRUE) < 70){
     base::message("Total score very low. Consider re-rolling?") }
 
+  # Print a warning if one or more abilities is very low
   if(base::min(block$score, na.rm = TRUE) < 8){
     base::message("At least one ability very low. Consider re-rolling?") }
+    }
 
   # Return filled block
   return(block) }
