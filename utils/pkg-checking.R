@@ -16,16 +16,10 @@ devtools::document()
 # Testing Dice Functions ------------------------
 
 for (i in 1:1000){
-
   result <- data.frame('result' = d4())
-
-  dice_check[[i]] <- result
-
-}
-
+  dice_check[[i]] <- result }
 dice_check_df <- dice_check %>%
   purrr::map_dfr(.f = select, everything())
-
 hist(x = dice_check_df$result)
 
 # Releasing to CRAN -----------------------------
