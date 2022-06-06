@@ -14,10 +14,12 @@ dnd_races <- function(){
 
   # Assemble vector of currently supported classes
   current_races <- c(
-    "aarakocra", "dark elf", "dragonborn", "forest gnome", "half elf", "half-elf",
-    "half orc", "half-orc", "high elf", "hill dwarf", "human", "lightfoot halfling",
-    "mountain dwarf", "plasmoid", "rock gnome", "stout halfling",
-    "tiefling", "wood elf"
+    "aarakocra", "dark elf", "dragonborn", "drow",
+    "forest gnome", "half elf", "half-elf",
+    "half orc", "half-orc", "high elf",
+    "hill dwarf", "human", "lightfoot halfling",
+    "mountain dwarf", "plasmoid", "rock gnome",
+    "stout halfling", "tiefling", "wood elf"
     )
 
   # Return that vector
@@ -46,7 +48,8 @@ race_mods <- function(race = NULL){
     stop("Race not in supported set. See `dnd_races()` for list of supported entries. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.")
 
   # Create an empty dataframe to hold modifiers
-  empty_block <- data.frame('ability' = c("STR", "DEX", "CON", "INT", "WIS", "CHA"),
+  empty_block <- data.frame('ability' = base::as.factor(c("STR", "DEX", "CON",
+                                                          "INT", "WIS", "CHA")),
                             'modifier' = base::rep(x = 0, times = 6))
 
   # Depending on race, modify the dataframe as needed

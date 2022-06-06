@@ -91,9 +91,15 @@ class_block <- function(class = NULL, score_method = "4d6",
     # Sort by value
     dplyr::arrange(dplyr::desc(score)) %>%
     # Attach the scores previously ordered
-    dplyr::mutate(ability = c(top_two, remaining)) %>%
+    dplyr::mutate(ability = base::factor(x = c(top_two, remaining),
+                                         levels = c("STR", "DEX", "CON",
+                                                    "INT", "WIS", "CHA")) ) %>%
     # Reorder columns
-    dplyr::select(ability, score)
+    dplyr::select(ability, score) %>%
+    # Reorder rows
+    dplyr::arrange(ability) %>%
+    # Return dataframe
+    as.data.frame()
 
   # Return the stat block
   return(stat_block)
