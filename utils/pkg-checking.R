@@ -22,6 +22,11 @@ dice_check_df <- dice_check %>%
   purrr::map_dfr(.f = select, everything())
 hist(x = dice_check_df$result)
 
+# Adding Badges to README -----------------------
+
+# R-CMD Check
+# usethis::use_github_action_check_standard()
+
 # Releasing to CRAN -----------------------------
 
 # CRAN Repository Policy here:
