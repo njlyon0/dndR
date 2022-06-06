@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # dndR
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/njlyon0/dndR/workflows/R-CMD-check/badge.svg)](https://github.com/njlyon0/dndR/actions)
 <!-- badges: end -->
 
 The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth Edition) related functions.

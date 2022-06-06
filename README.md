@@ -4,6 +4,8 @@
 # dndR
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/njlyon0/dndR/workflows/R-CMD-check/badge.svg)](https://github.com/njlyon0/dndR/actions)
 <!-- badges: end -->
 
 The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth
@@ -34,15 +36,15 @@ essentially a coin so `coin()` is also a function).
 ``` r
 # Twenty-sided dice
 dndR::d20()
-#> [1] 11
+#> [1] 2
 
 # Eight-sided dice
 dndR::d8()
-#> [1] 5
+#> [1] 7
 
 # Flip a coin
 dndR::coin()
-#> [1] 1
+#> [1] 2
 ```
 
 That said, this is somewhat cumbersome given that DnD mostly involves
@@ -51,7 +53,7 @@ function is built to handle these more general cases
 
 ``` r
 dndR::roll(what = '2d8')
-#> [1] 15
+#> [1] 10
 ```
 
 ### Character Creation
@@ -62,13 +64,14 @@ truly wild) rolling only a d20.
 
 ``` r
 dndR::ability_scores(method = "4d6")
+#> At least one ability very low. Consider re-rolling?
 #>   ability score
 #> 1      V1    13
-#> 2      V2    14
-#> 3      V3    13
-#> 4      V4    10
-#> 5      V5    12
-#> 6      V6     8
+#> 2      V2     7
+#> 3      V3    11
+#> 4      V4    17
+#> 5      V5    16
+#> 6      V6     6
 ```
 
 That method allows for manual specification of which ability scores
@@ -77,13 +80,14 @@ Player’s Handbook’s (PHB’s) recommendations for various classes.
 
 ``` r
 dndR::class_block(class = 'wizard', score_method = "4d6")
+#> Total score very low. Consider re-rolling?
 #>   ability score
-#> 1     INT    16
-#> 2     CON    14
-#> 3     CHA    13
-#> 4     WIS    13
-#> 5     STR    12
-#> 6     DEX     9
+#> 1     INT    13
+#> 2     CON    12
+#> 3     WIS     9
+#> 4     CHA     9
+#> 5     DEX     8
+#> 6     STR     8
 ```
 
 DnD races (e.g., dwarves, dragonborn, etc.) confer additional points to
@@ -105,15 +109,13 @@ fell swoop!
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
-#> Total score very low. Consider re-rolling?
-#> At least one ability very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
 #> 1     STR        15             2    17            +3
-#> 2     CON        14             1    15            +2
-#> 3     CHA        12             0    12            +1
-#> 4     INT        11             0    11             0
-#> 5     DEX        11             0    11             0
-#> 6     WIS         5             0     5            -3
+#> 2     CON        15             1    16            +3
+#> 3     WIS        14             0    14            +2
+#> 4     DEX        12             0    12            +1
+#> 5     CHA        11             0    11             0
+#> 6     INT        10             0    10             0
 ```
 
 ## Looking Ahead

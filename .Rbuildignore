@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 utils/pkg-checking.R
 ^README\.Rmd$
+^\.github$
