@@ -114,20 +114,22 @@ The first such function is `xp_total()` and it identifies the total experience p
 dndR::xp_total(party_level = 3, difficulty = 'medium')
 ```
 
-Here is a comparison of the total XP for an easy encounter recommended in the DMG versus the XP calcualted by `dndR::xp_total()` for the same difficulty of encounter.
+Here is a comparison of the total XP for an easy encounter recommended in the DMG versus the XP calculated by `dndR::xp_total()` for the same difficulty of encounter.
 
 ```{r xp_demo, echo = FALSE, out.width = '50%', fig.align = 'center'}
 ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp,
                            color = authority, shape = authority))  +
   geom_smooth(method = 'loess', formula = 'y ~ x', se = FALSE) +
-  geom_point(size = 2, pch = rep(x = c(17, 19), times = 20)) +
+  geom_point(size = 3, pch = rep(x = c(17, 19), times = 20),
+             position = position_dodge(width = 0.5)) +
   labs(x = "Party Level", y = "Experience Points (XP)") +
   scale_color_manual(values = c("#f46d43", "#74add1")) +
   theme_classic() +
   theme(legend.position = c(0.1, 0.9),
         legend.title = element_blank(),
-        axis.text = element_text(size = 13),
-        axis.title = element_text(size = 15))
+        axis.text.y = element_text(angle = 90, hjust = 0.5),
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
 ```
 
 ## Looking Ahead

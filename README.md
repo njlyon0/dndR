@@ -36,11 +36,11 @@ essentially a coin so `coin()` is also a function).
 ``` r
 # Twenty-sided dice
 dndR::d20()
-#> [1] 9
+#> [1] 18
 
 # Eight-sided dice
 dndR::d8()
-#> [1] 6
+#> [1] 1
 
 # Flip a coin
 dndR::coin()
@@ -53,7 +53,7 @@ function is built to handle these more general cases
 
 ``` r
 dndR::roll(what = '2d8')
-#> [1] 7
+#> [1] 6
 
 dndR::roll('3d6') + dndR::roll('1d4')
 #> [1] 13
@@ -67,13 +67,15 @@ truly wild) rolling only a d20.
 
 ``` r
 dndR::ability_scores(method = "4d6")
+#> Total score very low. Consider re-rolling?
+#> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1    14
+#> 1      V1     7
 #> 2      V2    15
-#> 3      V3    10
+#> 3      V3    11
 #> 4      V4    13
-#> 5      V5    16
-#> 6      V6    16
+#> 5      V5    10
+#> 6      V6    12
 ```
 
 That method allows for manual specification of which ability scores
@@ -84,11 +86,11 @@ Player’s Handbook’s (PHB’s) recommendations for various classes.
 dndR::class_block(class = 'wizard', score_method = "4d6")
 #>   ability score
 #> 1     STR    10
-#> 2     DEX    12
-#> 3     CON    17
-#> 4     INT    17
-#> 5     WIS    13
-#> 6     CHA    10
+#> 2     DEX     8
+#> 3     CON    16
+#> 4     INT    16
+#> 5     WIS    11
+#> 6     CHA    13
 ```
 
 DnD races (e.g., dwarves, dragonborn, etc.) confer additional points to
@@ -110,14 +112,13 @@ fell swoop!
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
-#> Total score very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        14             2    16            +3
+#> 1     STR        18             2    20            +5
 #> 2     DEX        13             0    13            +1
-#> 3     CON        13             1    14            +2
-#> 4     INT         9             0     9            -1
-#> 5     WIS         8             0     8            -1
-#> 6     CHA        10             0    10             0
+#> 3     CON        17             1    18            +4
+#> 4     INT        11             0    11             0
+#> 5     WIS        11             0    11             0
+#> 6     CHA         8             0     8            -1
 ```
 
 ## Current Functions (GMs)
@@ -141,7 +142,7 @@ dndR::xp_total(party_level = 3, difficulty = 'medium')
 ```
 
 Here is a comparison of the total XP for an easy encounter recommended
-in the DMG versus the XP calcualted by `dndR::xp_total()` for the same
+in the DMG versus the XP calculated by `dndR::xp_total()` for the same
 difficulty of encounter.
 
 <img src="man/figures/README-xp_demo-1.png" width="50%" style="display: block; margin: auto;" />
