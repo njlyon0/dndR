@@ -17,3 +17,8 @@ a number of total encounter XP
 \description{
 Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. NOTE: this does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.
 }
+\examples{
+# Supply a party level and difficulty and get the total XP of such an encounter
+xp_total(party_level = 3, difficulty = 'medium')
+
+}

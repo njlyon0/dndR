@@ -8,6 +8,10 @@
 #' @return a number of total encounter XP
 #' @export
 #'
+#' @examples
+#' # Supply a party level and difficulty and get the total XP of such an encounter
+#' xp_total(party_level = 3, difficulty = 'medium')
+#'
 xp_total <- function(party_level = NULL, difficulty = NULL){
 
   # Error out if party_level or difficulty is unspecified
@@ -40,7 +44,10 @@ xp_total <- function(party_level = NULL, difficulty = NULL){
   if(difficulty == "hard"){ xp_amount <- (easy_xp_amount * 3) }
   if(difficulty == "deadly"){ xp_amount <- (easy_xp_amount * 4) }
 
+  # And round that value to not return weird decimals
+  xp_actual <- base::trunc(x = xp_amount)
+
   # Return the xp_amount
-  return(xp_amount)
+  return(xp_actual)
 }
 
