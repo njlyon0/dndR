@@ -4,10 +4,12 @@
 \alias{xp_total}
 \title{Calculate Total XP of Monsters for Given Party Level and Difficulty}
 \usage{
-xp_total(party_level = NULL, difficulty = NULL)
+xp_total(party_level = NULL, party_size = NULL, difficulty = NULL)
 }
 \arguments{
-\item{party_level}{a number indicating the average party level. If all players are the same level, that level is the averaage party level}
+\item{party_level}{a number indicating the average party level. If all players are the same level, that level is the average party level}
+
+\item{party_size}{a number indicating how many player characters (PCs) are in the party}
 
 \item{difficulty}{one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.}
 }
@@ -19,6 +21,6 @@ Returns the total XP (experience points) of all creatures that would make an enc
 }
 \examples{
 # Supply a party level and difficulty and get the total XP of such an encounter
-xp_total(party_level = 3, difficulty = 'medium')
+xp_total(party_level = 3, party_size = 2, difficulty = 'medium')
 
 }
