@@ -18,10 +18,10 @@ You can install the development version of dndR from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("NJLyon-Projects/dndR")
+devtools::install_github("njlyon0/dndR")
 ```
 
-## Current Functions
+## Current Functions (Players and GMs)
 
 There are several functions currently in `dndR` and I am working on more
 as we speak!
@@ -36,11 +36,11 @@ essentially a coin so `coin()` is also a function).
 ``` r
 # Twenty-sided dice
 dndR::d20()
-#> [1] 2
+#> [1] 9
 
 # Eight-sided dice
 dndR::d8()
-#> [1] 7
+#> [1] 6
 
 # Flip a coin
 dndR::coin()
@@ -53,7 +53,10 @@ function is built to handle these more general cases
 
 ``` r
 dndR::roll(what = '2d8')
-#> [1] 10
+#> [1] 7
+
+dndR::roll('3d6') + dndR::roll('1d4')
+#> [1] 13
 ```
 
 ### Character Creation
@@ -64,14 +67,13 @@ truly wild) rolling only a d20.
 
 ``` r
 dndR::ability_scores(method = "4d6")
-#> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1    13
-#> 2      V2     7
-#> 3      V3    11
-#> 4      V4    17
+#> 1      V1    14
+#> 2      V2    15
+#> 3      V3    10
+#> 4      V4    13
 #> 5      V5    16
-#> 6      V6     6
+#> 6      V6    16
 ```
 
 That method allows for manual specification of which ability scores
@@ -80,14 +82,13 @@ Player’s Handbook’s (PHB’s) recommendations for various classes.
 
 ``` r
 dndR::class_block(class = 'wizard', score_method = "4d6")
-#> Total score very low. Consider re-rolling?
 #>   ability score
-#> 1     INT    13
-#> 2     CON    12
-#> 3     WIS     9
-#> 4     CHA     9
-#> 5     DEX     8
-#> 6     STR     8
+#> 1     STR    10
+#> 2     DEX    12
+#> 3     CON    17
+#> 4     INT    17
+#> 5     WIS    13
+#> 6     CHA    10
 ```
 
 DnD races (e.g., dwarves, dragonborn, etc.) confer additional points to
@@ -109,14 +110,41 @@ fell swoop!
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
+#> Total score very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        15             2    17            +3
-#> 2     CON        15             1    16            +3
-#> 3     WIS        14             0    14            +2
-#> 4     DEX        12             0    12            +1
-#> 5     CHA        11             0    11             0
-#> 6     INT        10             0    10             0
+#> 1     STR        14             2    16            +3
+#> 2     DEX        13             0    13            +1
+#> 3     CON        13             1    14            +2
+#> 4     INT         9             0     9            -1
+#> 5     WIS         8             0     8            -1
+#> 6     CHA        10             0    10             0
 ```
+
+## Current Functions (GMs)
+
+I’ve also designed some functions to help other GMs in developing
+encounters. It can be very difficult to balance encounter difficulty
+appropriately so I’ve begun to write functions that (hopefully) make it
+a little easier to navigate the opaque difficulty, challenge rating, and
+experience point systems outlined in the Dungeon Master’s Guide (DMG).
+
+The first such function is `xp_total()` and it identifies the total
+experience points of all creatures given a party level (average of PCs
+level in party) and a desired difficulty level (easy, medium, hard, or
+deadly). GMs can use this value to “buy” creatures/monsters based on
+their XP until the pool is exhausted to ensure their encounters are the
+desired level of difficulty for the specified party.
+
+``` r
+dndR::xp_total(party_level = 3, difficulty = 'medium')
+#> [1] 185
+```
+
+Here is a comparison of the total XP for an easy encounter recommended
+in the DMG versus the XP calcualted by `dndR::xp_total()` for the same
+difficulty of encounter.
+
+<img src="man/figures/README-xp_demo-1.png" width="50%" style="display: block; margin: auto;" />
 
 ## Looking Ahead
 

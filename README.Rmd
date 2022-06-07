@@ -5,12 +5,8 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
+                      fig.path = "man/figures/README-", out.width = "100%")
 ```
 
 # dndR
@@ -27,15 +23,16 @@ You can install the development version of dndR from [GitHub](https://github.com
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("NJLyon-Projects/dndR")
+devtools::install_github("njlyon0/dndR")
 ```
 
-```{r load_package, echo = FALSE, include = FALSE}
-devtools::install_github("NJLyon-Projects/dndR")
+```{r load_packages, echo = FALSE, message = FALSE}
+devtools::install_github("njlyon0/dndR")
+library(dndR)
+library(tidyverse)
 ```
 
-
-## Current Functions
+## Current Functions (Players and GMs)
 
 There are several functions currently in `dndR` and I am working on more as we speak!
 
@@ -43,7 +40,7 @@ There are several functions currently in `dndR` and I am working on more as we s
 
 At its simplest, DnD involves significant amounts of dice rolling so I've scripted dice functions! These functions support dice with the following numbers of sides: 100, 20, 12, 10, 8, 6, 4, and 2 (2 is essentially a coin so `coin()` is also a function).
 
-```{r, dice}
+```{r dice}
 # Twenty-sided dice
 dndR::d20()
 
@@ -56,10 +53,11 @@ dndR::coin()
 
 That said, this is somewhat cumbersome given that DnD mostly involves rolling *multiple* dice and summing their outcomes so the `roll()` function is built to handle these more general cases
 
-```{r, roll_fxn}
+```{r roll_fxn}
 dndR::roll(what = '2d8')
-```
 
+dndR::roll('3d6') + dndR::roll('1d4')
+```
 
 ### Character Creation
 
@@ -86,10 +84,54 @@ Finally, you could create a character of specified race and class in one fell sw
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
 ```
 
+## Current Functions (GMs)
+
+I've also designed some functions to help other GMs in developing encounters. It can be very difficult to balance encounter difficulty appropriately so I've begun to write functions that (hopefully) make it a little easier to navigate the opaque difficulty, challenge rating, and experience point systems outlined in the Dungeon Master's Guide (DMG).
+
+```{r xp_setup, echo = FALSE}
+# Assemble a dataframe showing the DMG's party level versus easy encounter XP
+xp_df <- data.frame('pc_level' = 1:20,
+                   'easy_xp' = c(25, 50, 75, 125, 250, 300, 350, 450, 550, 600,
+                                 800, 1000, 1100, 1250, 1400, 1600, 2000, 2100,
+                                 2400, 2800)) %>%
+  # For each row...
+  dplyr::rowwise() %>%
+  # Calculate the XP for that party level using my function
+  dplyr::mutate(calc_xp = dndR::xp_total(party_level = pc_level,
+                                        difficulty = 'easy')) %>%
+  # Rename a column more intuitively
+  dplyr::rename(book_xp = easy_xp) %>%
+  # Pivot longer for ease of plotting
+  tidyr::pivot_longer(cols = -pc_level, names_to = 'calc_method', values_to = 'xp') %>%
+  # Change the entries of the calc_method column
+  dplyr::mutate(authority = base::ifelse(test = calc_method == "book_xp",
+                                         yes = "DMG", no = "dndR"))
+```
+
+The first such function is `xp_total()` and it identifies the total experience points of all creatures given a party level (average of PCs level in party) and a desired difficulty level (easy, medium, hard, or deadly). GMs can use this value to "buy" creatures/monsters based on their XP until the pool is exhausted to ensure their encounters are the desired level of difficulty for the specified party.
+
+```{r xp_total_fxn}
+dndR::xp_total(party_level = 3, difficulty = 'medium')
+```
+
+Here is a comparison of the total XP for an easy encounter recommended in the DMG versus the XP calcualted by `dndR::xp_total()` for the same difficulty of encounter.
+
+```{r xp_demo, echo = FALSE, out.width = '50%', fig.align = 'center'}
+ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp,
+                           color = authority, shape = authority))  +
+  geom_smooth(method = 'loess', formula = 'y ~ x', se = FALSE) +
+  geom_point(size = 2, pch = rep(x = c(17, 19), times = 20)) +
+  labs(x = "Party Level", y = "Experience Points (XP)") +
+  scale_color_manual(values = c("#f46d43", "#74add1")) +
+  theme_classic() +
+  theme(legend.position = c(0.1, 0.9),
+        legend.title = element_blank(),
+        axis.text = element_text(size = 13),
+        axis.title = element_text(size = 15))
+```
+
 ## Looking Ahead
 
 I'm working on a function to help stat out monsters/creatures for various challenge ratings ("CR") and will update this README when it/they are ready!
 
 If you have other function ideas, post them as Issues on this repository!
-
-
