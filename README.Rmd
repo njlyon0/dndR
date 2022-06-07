@@ -98,7 +98,8 @@ xp_df <- data.frame('pc_level' = 1:20,
   dplyr::rowwise() %>%
   # Calculate the XP for that party level using my function
   dplyr::mutate(calc_xp = dndR::xp_total(party_level = pc_level,
-                                        difficulty = 'easy')) %>%
+                                         party_size = 1,
+                                         difficulty = 'easy')) %>%
   # Rename a column more intuitively
   dplyr::rename(book_xp = easy_xp) %>%
   # Pivot longer for ease of plotting
@@ -108,10 +109,12 @@ xp_df <- data.frame('pc_level' = 1:20,
                                          yes = "DMG", no = "dndR"))
 ```
 
-The first such function is `xp_total()` and it identifies the total experience points of all creatures given a party level (average of PCs level in party) and a desired difficulty level (easy, medium, hard, or deadly). GMs can use this value to "buy" creatures/monsters based on their XP until the pool is exhausted to ensure their encounters are the desired level of difficulty for the specified party.
+The first such function is `xp_total()` and it identifies the total experience points of all creatures given a party level (average of PCs level in party), the number of adventurers (i.e., party size), and a desired difficulty level (easy, medium, hard, or deadly). GMs can use this value to "buy" creatures/monsters based on their XP until the pool is exhausted to ensure their encounters are the desired level of difficulty for the specified party.
+
+Here is the XP maximum for a medium difficulty encounter for a party of four PCs, all of whom are level 3.
 
 ```{r xp_total_fxn}
-dndR::xp_total(party_level = 3, difficulty = 'medium')
+dndR::xp_total(party_level = 3, party_size = 4, difficulty = 'medium')
 ```
 
 Here is a comparison of the total XP for an easy encounter recommended in the DMG versus the XP calculated by `dndR::xp_total()` for the same difficulty of encounter.

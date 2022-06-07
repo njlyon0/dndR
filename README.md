@@ -21,6 +21,16 @@ You can install the development version of dndR from
 devtools::install_github("njlyon0/dndR")
 ```
 
+    #> 
+    #> * checking for file ‘/private/var/folders/9m/7tv5z0_j2q34mnkv7907vm540000gn/T/RtmpzMcoZX/remotesb8c439d3f771/njlyon0-dndR-9394818/DESCRIPTION’ ... OK
+    #> * preparing ‘dndR’:
+    #> * checking DESCRIPTION meta-information ... OK
+    #> * checking for LF line-endings in source and make files and shell scripts
+    #> * checking for empty or unneeded directories
+    #> Removed empty directory ‘dndR/utils’
+    #> Omitted ‘LazyData’ from DESCRIPTION
+    #> * building ‘dndR_0.1.0.tar.gz’
+
 ## Current Functions (Players and GMs)
 
 There are several functions currently in `dndR` and I am working on more
@@ -36,15 +46,15 @@ essentially a coin so `coin()` is also a function).
 ``` r
 # Twenty-sided dice
 dndR::d20()
-#> [1] 18
+#> [1] 19
 
 # Eight-sided dice
 dndR::d8()
-#> [1] 1
+#> [1] 3
 
 # Flip a coin
 dndR::coin()
-#> [1] 2
+#> [1] 1
 ```
 
 That said, this is somewhat cumbersome given that DnD mostly involves
@@ -53,10 +63,10 @@ function is built to handle these more general cases
 
 ``` r
 dndR::roll(what = '2d8')
-#> [1] 6
+#> [1] 13
 
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 13
+#> [1] 10
 ```
 
 ### Character Creation
@@ -67,15 +77,13 @@ truly wild) rolling only a d20.
 
 ``` r
 dndR::ability_scores(method = "4d6")
-#> Total score very low. Consider re-rolling?
-#> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1     7
-#> 2      V2    15
-#> 3      V3    11
-#> 4      V4    13
-#> 5      V5    10
-#> 6      V6    12
+#> 1      V1    17
+#> 2      V2    10
+#> 3      V3    15
+#> 4      V4    12
+#> 5      V5    12
+#> 6      V6    16
 ```
 
 That method allows for manual specification of which ability scores
@@ -85,12 +93,12 @@ Player’s Handbook’s (PHB’s) recommendations for various classes.
 ``` r
 dndR::class_block(class = 'wizard', score_method = "4d6")
 #>   ability score
-#> 1     STR    10
-#> 2     DEX     8
-#> 3     CON    16
-#> 4     INT    16
+#> 1     STR    14
+#> 2     DEX    12
+#> 3     CON    14
+#> 4     INT    14
 #> 5     WIS    11
-#> 6     CHA    13
+#> 6     CHA     8
 ```
 
 DnD races (e.g., dwarves, dragonborn, etc.) confer additional points to
@@ -113,12 +121,12 @@ fell swoop!
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        18             2    20            +5
-#> 2     DEX        13             0    13            +1
-#> 3     CON        17             1    18            +4
-#> 4     INT        11             0    11             0
-#> 5     WIS        11             0    11             0
-#> 6     CHA         8             0     8            -1
+#> 1     STR        16             2    18            +4
+#> 2     DEX        11             0    11             0
+#> 3     CON        15             1    16            +3
+#> 4     INT         9             0     9            -1
+#> 5     WIS        14             0    14            +2
+#> 6     CHA        12             0    12            +1
 ```
 
 ## Current Functions (GMs)
@@ -131,14 +139,18 @@ experience point systems outlined in the Dungeon Master’s Guide (DMG).
 
 The first such function is `xp_total()` and it identifies the total
 experience points of all creatures given a party level (average of PCs
-level in party) and a desired difficulty level (easy, medium, hard, or
-deadly). GMs can use this value to “buy” creatures/monsters based on
-their XP until the pool is exhausted to ensure their encounters are the
-desired level of difficulty for the specified party.
+level in party), the number of adventurers (i.e., party size), and a
+desired difficulty level (easy, medium, hard, or deadly). GMs can use
+this value to “buy” creatures/monsters based on their XP until the pool
+is exhausted to ensure their encounters are the desired level of
+difficulty for the specified party.
+
+Here is the XP maximum for a medium difficulty encounter for a party of
+four PCs, all of whom are level 3.
 
 ``` r
-dndR::xp_total(party_level = 3, difficulty = 'medium')
-#> [1] 185
+dndR::xp_total(party_level = 3, party_size = 4, difficulty = 'medium')
+#> [1] 741
 ```
 
 Here is a comparison of the total XP for an easy encounter recommended
