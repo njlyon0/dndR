@@ -13,14 +13,14 @@
 #'
 #' @examples
 #' # Calculate the realized XP from the raw XP, number of monsters, and number of PCs
-#' xp_multiplier(monster_xp = 100, monster_count = 3, party_size = 2)
+#' xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
 #'
-xp_multiplier <- function(monster_xp = NULL, monster_count = NULL, party_size = NULL){
+xp_cost <- function(monster_xp = NULL, monster_count = NULL, party_size = NULL){
   # Squelch visible bindings note
   monster_number <- party_category <- NULL
 
   # Error out if any parameter is null
-  if(base::is.null(monster_xp) | base::is.null(monster_count) | base::is.null(party_size)) stop("At least one parameter is unspecified. See `?dndR::xp_multiplier()` for details.")
+  if(base::is.null(monster_xp) | base::is.null(monster_count) | base::is.null(party_size)) stop("At least one parameter is unspecified. See `?dndR::xp_cost()` for details.")
 
   # Error out if any parameter is not numeric
   if(base::is.numeric(monster_xp) != TRUE | base::is.numeric(monster_count) != TRUE |

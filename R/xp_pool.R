@@ -11,12 +11,12 @@
 #'
 #' @examples
 #' # Supply a party level and difficulty and get the total XP of such an encounter
-#' xp_total(party_level = 3, party_size = 2, difficulty = 'medium')
+#' xp_pool(party_level = 3, party_size = 2, difficulty = 'medium')
 #'
-xp_total <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
+xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
 
   # Error out if party_level or difficulty is unspecified
-  if(base::is.null(party_level) | base::is.null(party_size) | base::is.null(difficulty)) stop("At least one parameter is unspecified. See `?dndR::xp_total()` for details.")
+  if(base::is.null(party_level) | base::is.null(party_size) | base::is.null(difficulty)) stop("At least one parameter is unspecified. See `?dndR::xp_pool()` for details.")
 
   if(base::is.numeric(party_level) != TRUE | base::is.numeric(party_size) != TRUE)
     stop("Party level and party size must be a number.")
