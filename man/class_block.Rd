@@ -12,7 +12,7 @@ class_block(
 )
 }
 \arguments{
-\item{class}{character string of class (supported classes returned by `accepted_classes()`)}
+\item{class}{character string of class (supported classes returned by `dnd_classes()`)}
 
 \item{score_method}{character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Only values accepted by `ability_scores()` are accepted here}
 
