@@ -2,7 +2,7 @@
 #'
 #' @description Rolls the Specified Number and Type of Dice
 #'
-#' @param what a character specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
+#' @param dice a character specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
 #'
 #'
 #' @return Numeric, the sum of specified dice outcomes
@@ -10,17 +10,17 @@
 #'
 #' @examples
 #' # Roll your desired dice (i.e., randomly sample the specified die)
-#' roll(what = "4d6")
+#' roll(dice = "4d6")
 #'
 #' # Returned as a number so you can add rolls together or integers
 #' roll('1d20') + 5
 #' roll('2d8') + roll('1d4')
 #'
-roll <- function(what = "d20"){
+roll <- function(dice = "d20"){
 
   # Identify number of dice to roll
   dice_count <- base::gsub(pattern = "d", replacement = "",
-                           x = stringr::str_extract(string = what,
+                           x = stringr::str_extract(string = dice,
                                      pattern = "[:digit:]{1,10000000}d"))
   # If number is left blank, assume one but print warning
   if(base::nchar(dice_count) == 0 | is.na(dice_count)){
@@ -29,8 +29,8 @@ roll <- function(what = "d20"){
   }
 
   # Identify which dice type
-  dice_type <- stringr::str_extract(string = what,
-                                    pattern = "d[:digit:]{1,10000000}")
+  dice_type <- stringr::str_extract(string = dice,
+                                    pattern = "d[:digit:]{1,3}")
 
   # Error out if dice_type not of recognized type
   if(!dice_type %in% c("d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100"))
@@ -95,7 +95,7 @@ roll <- function(what = "d20"){
   total <- base::sum(dice_result_df$result, na.rm = TRUE)
 
   # If two d20 are rolled, assume they're rolling for advantage/disadvantage and don't sum
-  if(what == "2d20"){
+  if(dice == "2d20"){
     total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
     base::message("Assuming you're rolling for (dis)advantage so both rolls returned.")
     }

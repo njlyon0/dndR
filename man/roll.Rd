@@ -4,10 +4,10 @@
 \alias{roll}
 \title{Roll Any Number of Dice}
 \usage{
-roll(what = "d20")
+roll(dice = "d20")
 }
 \arguments{
-\item{what}{a character specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice}
+\item{dice}{a character specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice}
 }
 \value{
 Numeric, the sum of specified dice outcomes
@@ -17,7 +17,7 @@ Rolls the Specified Number and Type of Dice
 }
 \examples{
 # Roll your desired dice (i.e., randomly sample the specified die)
-roll(what = "4d6")
+roll(dice = "4d6")
 
 # Returned as a number so you can add rolls together or integers
 roll('1d20') + 5
