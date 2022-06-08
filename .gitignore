@@ -43,3 +43,6 @@ vignettes/*.pdf
 
 # Add R project file
 *.Rproj
+
+# Add my campaigns script to gitignore
+utils/my-campaigns.R
