@@ -1,6 +1,6 @@
 #' @title Rolls for a Single Ability Score
 #'
-#' @description Rolls 4d6.
+#' @description Rolls for a single ability score using the specified method of dice rolling.
 #'
 #' @param method a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for an ability score ("4d6" drops lowest in the subsequent `stat_block()` function)
 #'
@@ -33,7 +33,7 @@ ability_singular <- function(method = "4d6"){
 
 #' @title Roll for all Ability Scores
 #'
-#' @description Rolls 4d6 and drops the lowest value for six abilities. Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
+#' @description Rolls for six ability scores using the desired method of rolling (4d6 drop lowest, 3d6, or 1d20). Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
 #'
 #' @param method a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
 #'

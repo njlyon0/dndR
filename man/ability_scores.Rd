@@ -13,7 +13,7 @@ ability_scores(method = "4d6")
 a dataframe of two columns and six rows
 }
 \description{
-Rolls 4d6 and drops the lowest value for six abilities. Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
+Rolls for six ability scores using the desired method of rolling (4d6 drop lowest, 3d6, or 1d20). Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
 }
 \examples{
 # Roll ability scores using four d6 and dropping the lowest

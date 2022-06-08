@@ -13,5 +13,5 @@ ability_singular(method = "4d6")
 a numeric vector
 }
 \description{
-Rolls 4d6.
+Rolls for a single ability score using the specified method of dice rolling.
 }
