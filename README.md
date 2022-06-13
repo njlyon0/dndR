@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<img src="inst/images/dndR_hex.png" align = "right" width = "15%" />
+
 # dndR
 
 <!-- badges: start -->
@@ -35,10 +37,10 @@ function).
 
 ``` r
 dndR::roll(dice = '1d20')
-#> [1] 5
+#> [1] 12
 
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 11
+#> [1] 16
 ```
 
 ## Character Creation
@@ -50,12 +52,13 @@ ability scores.
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
+#> At least one ability very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        15             2    17            +3
-#> 2     DEX        14             0    14            +2
-#> 3     CON        14             1    15            +2
-#> 4     INT        12             0    12            +1
-#> 5     WIS        14             0    14            +2
+#> 1     STR        16             2    18            +4
+#> 2     DEX        13             0    13            +1
+#> 3     CON        13             1    14            +2
+#> 4     INT        13             0    13            +1
+#> 5     WIS         5             0     5            -3
 #> 6     CHA        12             0    12            +1
 ```
 
@@ -71,12 +74,14 @@ manually assign them to specific abilities yourself.
 
 ``` r
 dndR::ability_scores(method = "4d6")
+#> Total score very low. Consider re-rolling?
+#> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1    11
-#> 2      V2    10
-#> 3      V3    17
-#> 4      V4    11
-#> 5      V5    17
+#> 1      V1     9
+#> 2      V2     5
+#> 3      V3    13
+#> 4      V4    14
+#> 5      V5     8
 #> 6      V6    12
 ```
 

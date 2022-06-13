@@ -4,9 +4,10 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<img src="inst/images/dndR_hex.png" align = "right" width = "15%" />
+
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
-                      fig.path = "man/figures/README-", out.width = "100%")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "man/figures/README-")
 ```
 
 # dndR
@@ -122,7 +123,7 @@ The DMG specifies the XP threshold *per player* for a given difficulty while my 
 
 I calculated the formula for the relationship between XP and player level and used that calculation in lieu of embedding the DMG's table in my function. This has the added benefit of being able to handle non-integer values for average party_level. Below is a comparison of the DMG's XP-to-player level curve and the one obtained by `xp_pool()`
 
-```{r xp_dmg-to-pool_comparison, echo = FALSE, out.width = '50%', fig.align = 'center'}
+```{r xp_dmg-to-pool_comparison, echo = FALSE,out.width = '50%',fig.align = 'center'}
 # Assemble a dataframe showing the DMG's party level versus easy encounter XP
 xp_df <- data.frame('pc_level' = 1:20,
                    'easy_xp' = c(25, 50, 75, 125, 250, 300, 350, 450, 550, 600,
