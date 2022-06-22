@@ -37,10 +37,10 @@ function).
 
 ``` r
 dndR::roll(dice = '1d20')
-#> [1] 12
+#> [1] 3
 
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 16
+#> [1] 10
 ```
 
 ## Character Creation
@@ -52,13 +52,12 @@ ability scores.
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
-#> At least one ability very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        16             2    18            +4
-#> 2     DEX        13             0    13            +1
-#> 3     CON        13             1    14            +2
-#> 4     INT        13             0    13            +1
-#> 5     WIS         5             0     5            -3
+#> 1     STR        18             2    20            +5
+#> 2     DEX         9             0     9            -1
+#> 3     CON        17             1    18            +4
+#> 4     INT         8             0     8            -1
+#> 5     WIS        15             0    15            +2
 #> 6     CHA        12             0    12            +1
 ```
 
@@ -77,12 +76,12 @@ dndR::ability_scores(method = "4d6")
 #> Total score very low. Consider re-rolling?
 #> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1     9
-#> 2      V2     5
+#> 1      V1    15
+#> 2      V2    13
 #> 3      V3    13
-#> 4      V4    14
-#> 5      V5     8
-#> 6      V6    12
+#> 4      V4    13
+#> 5      V5     6
+#> 6      V6     4
 ```
 
 ## Encounter Balancing
@@ -206,11 +205,23 @@ DMG’s XP-to-player level curve and the one obtained by `xp_pool()`
 
 <img src="man/figures/README-xp_dmg-to-pool_comparison-1.png" width="50%" style="display: block; margin: auto;" />
 
+### `cr_convert()` versus DMG Comparison
+
+The DMG specifies the XP value of a monster of any challenge rating (CR)
+from 0 to 30. I calculated the formula for this parabola (actually two
+formulas; one for above and one for below a CR of 20) and coded it into
+`cr_convert()` to calculate it. This is pre-requisite to my idea of a
+‘monster creator’ function as it allows users to specify either CR or XP
+value of a monster to inform that function. Below is the comparison of
+the DMG’s XP-to-CR curve and the one produced by `cr_convert()`
+
+<img src="man/figures/README-cr_dmg-to-convert_comparison-1.png" width="50%" style="display: block; margin: auto;" />
+
 ## Looking Ahead
 
-I’m working on a function to help stat out monsters/creatures for
-various challenge ratings (“CR”) and will update this README when
-it/they are ready!
+I’m working on a function to help stat out monsters/creatures based on
+challenge rating (CR) and will update this README when it/they are
+ready!
 
 If you have other function ideas, post them as Issues on this
 repository!

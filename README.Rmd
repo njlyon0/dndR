@@ -158,8 +158,47 @@ ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp,
         axis.title = element_text(size = 16))
 ```
 
+### `cr_convert()` versus DMG Comparison
+
+The DMG specifies the XP value of a monster of any challenge rating (CR) from 0 to 30. I calculated the formula for this parabola (actually two formulas; one for above and one for below a CR of 20) and coded it into `cr_convert()` to calculate it. This is pre-requisite to my idea of a 'monster creator' function as it allows users to specify either CR or XP value of a monster to inform that function. Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert()`
+
+```{r cr_dmg-to-convert_comparison, warning = FALSE, message = FALSE, echo = FALSE, out.width = '50%',fig.align = 'center'}
+# Assemble a dataframe showing the DMG XP to CR relationship
+cr_actual <- data.frame(
+  "cr" = c(0, 0.125, 0.25, 0.5, 1:30),
+  "dmg_xp" = c(0, 25, 50, 100, 200, 450, 700, 1100, 1800, 2300, 2900,
+           3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000,
+           18000, 20000, 22000, 25000, 33000, 41000, 50000, 62000,
+           75000, 90000, 105000, 120000, 135000, 155000) ) %>%
+  # For each row...
+  dplyr::rowwise() %>%
+  # Calculate XP for a given CR using `cr_convert()`
+  dplyr::mutate("calc_xp" = dndR::cr_convert(cr = cr)) %>%
+  # Pivot to long format
+  tidyr::pivot_longer(cols = dplyr::contains('_xp'),
+                      names_to = "authority",
+                      values_to = "xp") %>%
+  # And clean up the entries of the source column
+  dplyr::mutate(source = base::ifelse(test = (authority == "calc_xp"),
+                                      yes = "dndR", no = "DMG"))
+  
+# Creat the plot comparison
+ggplot(cr_actual, aes(x = cr, y = xp, color = source, shape = source)) +
+  geom_smooth(formula = 'y ~ x', method = 'loess', se = F) +
+  geom_point(size = 3, pch = rep(x = c(17, 19), times = 34),
+             position = position_dodge(width = 0.5)) +
+  labs(x = "Challenge Rating (CR)", y = "Experience Points (XP)") +
+  scale_color_manual(values = c("#c51b7d", "#4d9221")) +
+  theme_classic() +
+  theme(legend.position = c(0.15, 0.9),
+        legend.title = element_blank(),
+        axis.text.y = element_text(angle = 90, hjust = 0.5),
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16))
+```
+
 ## Looking Ahead
 
-I'm working on a function to help stat out monsters/creatures for various challenge ratings ("CR") and will update this README when it/they are ready!
+I'm working on a function to help stat out monsters/creatures based on challenge rating (CR) and will update this README when it/they are ready!
 
 If you have other function ideas, post them as Issues on this repository!
