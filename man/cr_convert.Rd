@@ -10,5 +10,5 @@ cr_convert(cr = NULL)
 \item{cr}{(numeric) Challenge rating that you want to calculate experience points for}
 }
 \description{
-Converts challenge rating (CR) into experience points (XP) using two formulas for a parabola (one for less than/equal to 20 and one for greater than 20). The relationship between CR and XP in the Dungeon Master's Guide (DMG) is disjointed in this way so this is a reasonable move.
+Converts challenge rating (CR) into experience points (XP) using two formulas for a parabola (one for CR less than/equal to 20 and one for greater than 20). The relationship between CR and XP in the Dungeon Master's Guide (DMG) is disjointed in this way so this is a reasonable move. Accepts '1/8', '1/4, and '1/2' in addition to numbers between 1 and 30.
 }
