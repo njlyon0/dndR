@@ -32,15 +32,15 @@ At its simplest, DnD involves significant amounts of dice rolling and
 (often) summing their values, so I’ve scripted a `roll()` function! This
 function supports ‘rolling’ up to 10 million of any of the standard
 dice. “Standard” dice include the following numbers of sides: 100, 20,
-12, 10, 8, 6, 4, and 2 (2 is essentially a coin so `coin()` is also a
-function).
+12, 10, 8, 6, 4, and 2.
 
 ``` r
-dndR::roll(dice = '1d20')
-#> [1] 3
-
+dndR::roll(dice = '2d20')
+#> Assuming you're rolling for (dis)advantage so both rolls returned.
+#>   roll_1 roll_2
+#> 1     19     20
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 10
+#> [1] 11
 ```
 
 ## Character Creation
@@ -54,11 +54,11 @@ ability scores.
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
 #>   ability raw_score race_modifier score roll_modifier
 #> 1     STR        18             2    20            +5
-#> 2     DEX         9             0     9            -1
-#> 3     CON        17             1    18            +4
-#> 4     INT         8             0     8            -1
+#> 2     DEX        16             0    16            +3
+#> 3     CON        16             1    17            +3
+#> 4     INT        16             0    16            +3
 #> 5     WIS        15             0    15            +2
-#> 6     CHA        12             0    12            +1
+#> 6     CHA        14             0    14            +2
 ```
 
 You can check which classes and races are currently supported by
@@ -76,12 +76,12 @@ dndR::ability_scores(method = "4d6")
 #> Total score very low. Consider re-rolling?
 #> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1    15
-#> 2      V2    13
+#> 1      V1    13
+#> 2      V2    10
 #> 3      V3    13
-#> 4      V4    13
-#> 5      V5     6
-#> 6      V6     4
+#> 4      V4     7
+#> 5      V5    10
+#> 6      V6    13
 ```
 
 ## Encounter Balancing
@@ -154,7 +154,7 @@ to design a hard encounter for them. This is how I would go about doing
 that using `dndR`:
 
 To begin, I’d identify the total XP I can ‘spend’ to make an encounter
-this difficult
+this difficult.
 
 ``` r
 dndR::xp_pool(party_level = 3, party_size = 4, difficulty = 'hard')
@@ -162,7 +162,7 @@ dndR::xp_pool(party_level = 3, party_size = 4, difficulty = 'hard')
 ```
 
 Now that I know how much XP I can ‘spend’ I can check the value of two
-monsters worth (total) 500 XP against that threshold
+monsters worth (total) 500 XP against that threshold.
 
 ``` r
 dndR::xp_cost(monster_xp = 500, monster_count = 2, party_size = 4)
@@ -170,7 +170,7 @@ dndR::xp_cost(monster_xp = 500, monster_count = 2, party_size = 4)
 ```
 
 I can see that I’m well under the XP threshold I have to play with so I
-can add a monster and see where that leaves me
+can add a monster and see where that leaves me.
 
 ``` r
 dndR::xp_cost(monster_xp = 500, monster_count = 3, party_size = 4)
@@ -189,9 +189,44 @@ Basically right on target! I can now pick out my four monsters that
 total up to 550 XP raw and know that they will likely\* make a hard
 encounter for my players! (\* “Likely” because there is dice rolling
 involved and it is possible the monters roll well while my players roll
-badly or vice versa.)
+badly or vice versa).
 
-### `xp_pool()` versus DMG Comparison
+## Creating Monsters
+
+Creating your own creatures can be a great way to add flavor to an
+encounter! Dungeon Master’s Guide provides a table (see p. 274) that
+gives the core vital statistics for creatures based on their Challenge
+Rating (CR) but this table can be cumbersome to compare to Experience
+Points (you know, the things used to determine how hard an encounter
+will be for your party?). To aid with this, I’ve created
+`monster_quick()` which accepts either CR or XP and returns a quick
+summary of what statistics the DMG recommends for a creature of the
+CR/XP value.You can specify either XP or CR and it can convert between
+the two internally as needed. Note that if you specify both XP and CR,
+the function will ignore XP and proceed with CR alone.
+
+``` r
+dndR::monster_quick(xp = 1000, cr = 4)
+#> CR and XP both specified, proceeding with CR
+#>   Challenge DMG_XP Prof_Bonus Armor_Class Hit_Points Attack_Bonus Save_DC
+#> 1         4   1100          2          14    116-130            5      14
+```
+
+Challenge Rating is more than a little esoteric so feel free to ignore
+that argument entirely if XP is more comfortable for you!
+
+``` r
+dndR::monster_quick(xp = 8000)
+#>   Challenge DMG_XP Prof_Bonus Armor_Class Hit_Points Attack_Bonus Save_DC
+#> 1        11   7200          4          17    221-235            8      17
+```
+
+## `dndR` versus DMG Comparisons
+
+See below for some comparisons between my functions and the Dungeon
+Master’s Guide statistics they recapitulate.
+
+### `xp_pool()` vs. DMG
 
 The DMG specifies the XP threshold *per player* for a given difficulty
 while my function asks for the *average* player level and the party size
@@ -201,11 +236,11 @@ I calculated the formula for the relationship between XP and player
 level and used that calculation in lieu of embedding the DMG’s table in
 my function. This has the added benefit of being able to handle
 non-integer values for average party_level. Below is a comparison of the
-DMG’s XP-to-player level curve and the one obtained by `xp_pool()`
+DMG’s XP-to-player level curve and the one obtained by `xp_pool()`.
 
 <img src="man/figures/README-xp_dmg-to-pool_comparison-1.png" width="50%" style="display: block; margin: auto;" />
 
-### `cr_convert()` versus DMG Comparison
+### `cr_convert()` vs. DMG
 
 The DMG specifies the XP value of a monster of any challenge rating (CR)
 from 0 to 30. I calculated the formula for this parabola (actually two
@@ -213,7 +248,9 @@ formulas; one for above and one for below a CR of 20) and coded it into
 `cr_convert()` to calculate it. This is pre-requisite to my idea of a
 ‘monster creator’ function as it allows users to specify either CR or XP
 value of a monster to inform that function. Below is the comparison of
-the DMG’s XP-to-CR curve and the one produced by `cr_convert()`
+the DMG’s XP-to-CR curve and the one produced by `cr_convert()`. Note
+that `cr_convert()` is a helper function invoked in `monster_quick()` to
+convert from CR to XP (done internally in that function).
 
 <img src="man/figures/README-cr_dmg-to-convert_comparison-1.png" width="50%" style="display: block; margin: auto;" />
 
