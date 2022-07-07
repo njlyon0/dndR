@@ -1,32 +1,3 @@
-#' @title Return Vector of Supported DnD Races
-#'
-#' @description Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.
-#'
-#' @return character vector of supported race designations
-#'
-#' @export
-#'
-#' @examples
-#' # Want to check which races this package supports?
-#' dnd_races()
-#'
-dnd_races <- function(){
-
-  # Assemble vector of currently supported classes
-  current_races <- c(
-    "aarakocra", "dark elf", "dragonborn", "drow",
-    "forest gnome", "half elf", "half-elf",
-    "half orc", "half-orc", "high elf",
-    "hill dwarf", "human", "lightfoot halfling",
-    "mountain dwarf", "plasmoid", "rock gnome",
-    "stout halfling", "tiefling", "wood elf"
-    )
-
-  # Return that vector
-  return(current_races)
-}
-
-
 #' @title Identify Race-Based Ability Modifiers
 #'
 #' @description Identify the race-based ability modifiers identified in the Player's Handbook (PHB).

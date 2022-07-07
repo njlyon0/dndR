@@ -1,26 +1,3 @@
-#' @title Return Vector of Accepted Classes
-#'
-#' @description Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
-#' @return character vector of accepted class names
-#'
-#' @export
-#'
-#' @examples
-#' # Want to check which classes this package supports?
-#' dnd_classes()
-#'
-dnd_classes <- function(){
-
-  # Assemble vector of currently supported classes
-  current_classes <- c("barbarian", "bard", "cleric", "druid",
-                       "fighter", "monk", "paladin", "ranger",
-                       "rogue", "sorcerer", "warlock", "wizard")
-
-  # Return that vector
-  return(current_classes)
-}
-
-
 #' @title Assign Ability Scores Based on Class
 #'
 #' @description Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).
