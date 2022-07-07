@@ -29,7 +29,7 @@ as we speak!
 ## Dice Rolling
 
 At its simplest, DnD involves significant amounts of dice rolling and
-(often) summing their values, so I’ve scripted a `roll()` function! This
+(often) summing their values, so I’ve scripted a `roll` function! This
 function supports ‘rolling’ up to 10 million of any of the standard
 dice. “Standard” dice include the following numbers of sides: 100, 20,
 12, 10, 8, 6, 4, and 2.
@@ -38,9 +38,9 @@ dice. “Standard” dice include the following numbers of sides: 100, 20,
 dndR::roll(dice = '2d20')
 #> Assuming you're rolling for (dis)advantage so both rolls returned.
 #>   roll_1 roll_2
-#> 1     17      7
+#> 1      4      3
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 14
+#> [1] 13
 ```
 
 ## Character Creation
@@ -52,24 +52,26 @@ ability scores.
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
+#> Total score very low. Consider re-rolling?
+#> At least one ability very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        16             2    18            +4
-#> 2     DEX        13             0    13            +1
-#> 3     CON        14             1    15            +2
-#> 4     INT        12             0    12            +1
-#> 5     WIS        10             0    10             0
-#> 6     CHA        14             0    14            +2
+#> 1     STR        17             2    19            +4
+#> 2     DEX        10             0    10             0
+#> 3     CON        16             1    17            +3
+#> 4     INT         8             0     8            -1
+#> 5     WIS         5             0     5            -3
+#> 6     CHA        11             0    11             0
 ```
 
 You can check which classes and races are currently supported by
-`pc_creator()` by running `dnd_classes()` or `dnd_races()`. If you have
-a class/race in mind that isn’t supported you can [post an
+`pc_creator` by running `dnd_classes` or `dnd_races`. If you have a
+class/race in mind that isn’t supported you can [post an
 Issue](https://github.com/njlyon0/dndR/issues) and I’ll add that
 class/race’s stats to the function ASAP!
 
 While waiting for me to act on your Issue, you can run the simpler
-`ability_scores()` function to simply roll for ability scores and
-manually assign them to specific abilities yourself.
+`ability_scores` function to simply roll for ability scores and manually
+assign them to specific abilities yourself.
 
 ``` r
 dndR::ability_scores(method = "4d6")
@@ -77,11 +79,11 @@ dndR::ability_scores(method = "4d6")
 #> At least one ability very low. Consider re-rolling?
 #>   ability score
 #> 1      V1     6
-#> 2      V2    10
-#> 3      V3     9
-#> 4      V4    12
-#> 5      V5    11
-#> 6      V6    13
+#> 2      V2    16
+#> 3      V3    10
+#> 4      V4    11
+#> 5      V5     8
+#> 6      V6     9
 ```
 
 ## Encounter Balancing
@@ -106,7 +108,7 @@ XP so encounters are balanced by the DMG listing the total XP of all
 monsters in a given fight for every level of players, party size, and
 difficulty. That table is useful but a little dense to work through as
 you’re prepping potentially multiple encounters per session, so I
-created `xp_pool()` to handle this.
+created `xp_pool` to handle this.
 
 The number returned by this function represents the amount of XP the GM
 can ‘spend’ on monsters in a given encounter to ensure the difficulty is
@@ -131,16 +133,16 @@ monster XP is multiplied by a larger value for more monsters facing a
 smaller party than it would be for fewer monsters facing a larger party.
 
 When using the XP threshold for a given encounter (as identified by
-`xp_pool()`) the GM must pass their selected monsters’ total XP through
+`xp_pool`) the GM must pass their selected monsters’ total XP through
 this multiplier table to identify the true ‘cost’ to compare against
 their pool (to identify whether their encounter will be the desired
 level of difficulty.) See why I wanted to write functions to do this for
-me? Enter `xp_cost()`!
+me? Enter `xp_cost`!
 
 This function takes the total XP of the monsters you (the GM) have
 selected, the number of monsters that make up that total, and the size
 of your party and returns the true XP cost of the encounter for
-comparison with the threshold identified by `xp_pool()`.
+comparison with the threshold identified by `xp_pool`.
 
 ``` r
 dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 3)
@@ -196,18 +198,18 @@ badly or vice versa).
 Creatures that you create can be a great way to add flavor to an
 encounter of can form the centerpiece of a larger campaign arc! I have
 provided two functions to help provide a starting place for DMs in
-creating your own monsters: `monster_stats()` and `monster_creator()`.
+creating your own monsters: `monster_stats` and `monster_creator`.
 
-### Finding Official Monster Statistics with `monster_stats()`
+### Finding Official Monster Statistics with `monster_stats`
 
 The Dungeon Master’s Guide (DMG) provides a table (see p. 274) that
 gives the core vital statistics for creatures based on their Challenge
 Rating (CR) but this table can be cumbersome to compare to Experience
 Points (you know, the things used to determine how hard an encounter
-will be for your party?). `monster_stats()` streamlines this process by
+will be for your party?). `monster_stats` streamlines this process by
 allowing you to input either the XP you want to spend on this creature
-(you can use the value returned by `xp_cost()`) *or* the Challenge
-Rating (CR) if you know it. Note that if you specify both XP and CR, the
+(you can use the value returned by `xp_cost`) *or* the Challenge Rating
+(CR) if you know it. Note that if you specify both XP and CR, the
 function will ignore XP and proceed with CR alone. **Once either XP or
 CR is provided, the function returns the creatures statistics as they
 appear in the DMG for a creature of that difficulty.**
@@ -232,13 +234,13 @@ dndR::monster_stats(xp = 8000)
 #> 1      17
 ```
 
-### Homebrewing Custom Monsters with `monster_creator()`
+### Homebrewing Custom Monsters with `monster_creator`
 
 If you’d rather take a more customized approach, you can use
-`monster_creator()` instead of `monster_stats`. This function follows
-the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to
-build interesting, challenging monsters for your party. These monsters
-are built somewhat according to the Dungeon Master’s Guide for creating
+`monster_creator` instead of `monster_stats`. This function follows the
+advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to build
+interesting, challenging monsters for your party. These monsters are
+built somewhat according to the Dungeon Master’s Guide for creating
 monsters, partly Zee’s [YouTube video on homebrewing monsters based on
 The Witcher videogame](https://www.youtube.com/watch?v=GhjkPv4qo5w), and
 partly on my own sensibilities about scaling the difficulty of a
@@ -253,22 +255,22 @@ the monster’s strengths and weaknesses before the final showdown.
 
 ``` r
 dndR::monster_creator(party_level = 5, party_size = 4)
-#>             statistic                                                   value
-#> 1          Hit_Points                                                      92
-#> 2         Armor_Class                                                      16
-#> 3          Prof_Bonus                                                       3
-#> 4        Attack_Bonus                                                       7
-#> 5             Save_DC                                                      16
-#> 6  Prof_Saving_Throws                                                DEX; WIS
-#> 7           Immune_to                                           cold; psychic
-#> 8        Resistant_to thunder; lightning; piercing; non-magical damage; force
-#> 9       Vulnerable_to                                                slashing
-#> 10       STR_Modifier                                                      +2
-#> 11       DEX_Modifier                                                      +2
-#> 12       CON_Modifier                                                      +1
-#> 13       INT_Modifier                                                      +1
-#> 14       WIS_Modifier                                                      +1
-#> 15       CHA_Modifier                                                       0
+#>             statistic                                            value
+#> 1          Hit_Points                                               92
+#> 2         Armor_Class                                               16
+#> 3          Prof_Bonus                                                3
+#> 4        Attack_Bonus                                                7
+#> 5             Save_DC                                               16
+#> 6  Prof_Saving_Throws                                         CHA; DEX
+#> 7           Immune_to                                   fire; slashing
+#> 8        Resistant_to necrotic; acid; lightning; piercing; bludgeoning
+#> 9       Vulnerable_to                                             cold
+#> 10       STR_Modifier                                               +1
+#> 11       DEX_Modifier                                               +1
+#> 12       CON_Modifier                                                0
+#> 13       INT_Modifier                                               +1
+#> 14       WIS_Modifier                                               +1
+#> 15       CHA_Modifier                                               +3
 ```
 
 ## `dndR` versus DMG Comparisons
@@ -276,7 +278,7 @@ dndR::monster_creator(party_level = 5, party_size = 4)
 See below for some comparisons between my functions and the Dungeon
 Master’s Guide statistics they recapitulate.
 
-### `xp_pool()` vs. DMG
+### `xp_pool` vs. DMG
 
 The DMG specifies the XP threshold *per player* for a given difficulty
 while my function asks for the *average* player level and the party size
@@ -286,21 +288,21 @@ I calculated the formula for the relationship between XP and player
 level and used that calculation in lieu of embedding the DMG’s table in
 my function. This has the added benefit of being able to handle
 non-integer values for average party_level. Below is a comparison of the
-DMG’s XP-to-player level curve and the one obtained by `xp_pool()`.
+DMG’s XP-to-player level curve and the one obtained by `xp_pool`.
 
 <img src="man/figures/README-xp_dmg-to-pool_comparison-1.png" width="50%" style="display: block; margin: auto;" />
 
-### `cr_convert()` vs. DMG
+### `cr_convert` vs. DMG
 
 The DMG specifies the XP value of a monster of any challenge rating (CR)
 from 0 to 30. I calculated the formula for this parabola (actually two
 formulas; one for above and one for below a CR of 20) and coded it into
-`cr_convert()` to calculate it. This is pre-requisite to my idea of a
+`cr_convert` to calculate it. This is pre-requisite to my idea of a
 ‘monster creator’ function as it allows users to specify either CR or XP
 value of a monster to inform that function. Below is the comparison of
-the DMG’s XP-to-CR curve and the one produced by `cr_convert()`. Note
-that `cr_convert()` is a helper function invoked in `monster_stats()` to
-convert from CR to XP (done internally in that function).
+the DMG’s XP-to-CR curve and the one produced by `cr_convert`. Note that
+`cr_convert` is a helper function invoked in `monster_stats` to convert
+from CR to XP (done internally in that function).
 
 <img src="man/figures/README-cr_dmg-to-convert_comparison-1.png" width="50%" style="display: block; margin: auto;" />
 
