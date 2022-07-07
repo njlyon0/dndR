@@ -11,7 +11,8 @@ Dataframe with 7 columns and 34 rows
     \item{DMG_XP}{Experience Points (XP) for that CR as dictated by the DMG}
     \item{Prof_Bonus}{Modifier to add to rolls where the creature is proficient}
     \item{Armor_Class}{Armor class of the creature}
-    \item{Hit_Points}{Range of hit points (HP) for the creature}
+    \item{HP_Range}{Range of hit points (HP) for the creature}
+    \item{HP_Average}{Average of minimum and maximum HP of range for the creature}
     \item{Attack_Bonus}{Modifier to add to the creature's attack rolls}
     \item{Save_DC}{Save Difficulty Class (DC) for rolls against the creature's spells / certain abilities}
 }
