@@ -85,7 +85,7 @@ This function takes the total XP of the monsters you (the GM) have selected, the
 dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 3)
 ```
 
-### Quick Demonstration
+### Quick XP Demonstration
 
 Let's say I am running a game for four players, all level 3, and I want to design a hard encounter for them. This is how I would go about doing that using `dndR`:
 
@@ -113,15 +113,27 @@ Basically right on target! I can now pick out my four monsters that total up to 
 
 ## Creating Monsters
 
-Creating your own creatures can be a great way to add flavor to an encounter! Dungeon Master's Guide provides a table (see p. 274) that gives the core vital statistics for creatures based on their Challenge Rating (CR) but this table can be cumbersome to compare to Experience Points (you know, the things used to determine how hard an encounter will be for your party?). To aid with this, I've created `monster_quick()` which accepts either CR or XP and returns a quick summary of what statistics the DMG recommends for a creature of the CR/XP value.You can specify either XP or CR and it can convert between the two internally as needed. Note that if you specify both XP and CR, the function will ignore XP and proceed with CR alone.
+Creatures that you create can be a great way to add flavor to an encounter of can form the centerpiece of a larger campaign arc! I have provided two functions to help provide a starting place for DMs in creating your own monsters: `monster_stats()` and `monster_creator()`.
 
-```{r monster_quick_fxn1}
-dndR::monster_quick(xp = 1000, cr = 4)
+### Finding Official Monster Statistics with `monster_stats()`
+
+The Dungeon Master's Guide (DMG) provides a table (see p. 274) that gives the core vital statistics for creatures based on their Challenge Rating (CR) but this table can be cumbersome to compare to Experience Points (you know, the things used to determine how hard an encounter will be for your party?). `monster_stats()` streamlines this process by allowing you to input either the XP you want to spend on this creature (you can use the value returned by `xp_cost()`) *or* the Challenge Rating (CR) if you know it. Note that if you specify both XP and CR, the function will ignore XP and proceed with CR alone. **Once either XP or CR is provided, the function returns the creatures statistics as they appear in the DMG for a creature of that difficulty.**
+
+```{r monster_stats_fxn1}
+dndR::monster_stats(xp = 1000, cr = 4)
 ```
 
 Challenge Rating is more than a little esoteric so feel free to ignore that argument entirely if XP is more comfortable for you!
-```{r monster_quick_fxn2}
-dndR::monster_quick(xp = 8000)
+```{r monster_stats_fxn2}
+dndR::monster_stats(xp = 8000)
+```
+
+### Homebrewing Custom Monsters with `monster_creator()`
+
+If you'd rather take a more customized approach, you can use `monster_creator()` instead of `monster_stats`. This function follows the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to build interesting, challenging monsters for your party. These monsters are built somewhat according to the Dungeon Master's Guide for creating monsters, partly Zee's [YouTube video on homebrewing monsters based on The Witcher videogame](https://www.youtube.com/watch?v=GhjkPv4qo5w), and partly on my own sensibilities about scaling the difficulty of a creature. Creatures are spawned randomly so you may need to re-run the function several times (or mentally modify one or more parts of the output) to get a monster that fits your campaign and players. Each creature is provided with up to five damage resistances, up to two damage immunities, and a single vulnerability. This combination allows you to build complex and mysterious homebrew monsters with plenty of opportunities for the party to have to investigate around to discover the monster's strengths and weaknesses before the final showdown.
+
+```{r, monster_creator}
+dndR::monster_creator(party_level = 5, party_size = 4)
 ```
 
 ## `dndR` versus DMG Comparisons
@@ -172,7 +184,7 @@ ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp,
 
 ### `cr_convert()` vs. DMG
 
-The DMG specifies the XP value of a monster of any challenge rating (CR) from 0 to 30. I calculated the formula for this parabola (actually two formulas; one for above and one for below a CR of 20) and coded it into `cr_convert()` to calculate it. This is pre-requisite to my idea of a 'monster creator' function as it allows users to specify either CR or XP value of a monster to inform that function. Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert()`. Note that `cr_convert()` is a helper function invoked in `monster_quick()` to convert from CR to XP (done internally in that function).
+The DMG specifies the XP value of a monster of any challenge rating (CR) from 0 to 30. I calculated the formula for this parabola (actually two formulas; one for above and one for below a CR of 20) and coded it into `cr_convert()` to calculate it. This is pre-requisite to my idea of a 'monster creator' function as it allows users to specify either CR or XP value of a monster to inform that function. Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert()`. Note that `cr_convert()` is a helper function invoked in `monster_stats()` to convert from CR to XP (done internally in that function).
 
 ```{r cr_dmg-to-convert_comparison, warning = FALSE, message = FALSE, echo = FALSE, out.width = '50%',fig.align = 'center'}
 # Assemble a dataframe showing the DMG XP to CR relationship

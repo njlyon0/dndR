@@ -38,9 +38,9 @@ dice. “Standard” dice include the following numbers of sides: 100, 20,
 dndR::roll(dice = '2d20')
 #> Assuming you're rolling for (dis)advantage so both rolls returned.
 #>   roll_1 roll_2
-#> 1     19     20
+#> 1     17      7
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 11
+#> [1] 14
 ```
 
 ## Character Creation
@@ -53,11 +53,11 @@ ability scores.
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        18             2    20            +5
-#> 2     DEX        16             0    16            +3
-#> 3     CON        16             1    17            +3
-#> 4     INT        16             0    16            +3
-#> 5     WIS        15             0    15            +2
+#> 1     STR        16             2    18            +4
+#> 2     DEX        13             0    13            +1
+#> 3     CON        14             1    15            +2
+#> 4     INT        12             0    12            +1
+#> 5     WIS        10             0    10             0
 #> 6     CHA        14             0    14            +2
 ```
 
@@ -76,11 +76,11 @@ dndR::ability_scores(method = "4d6")
 #> Total score very low. Consider re-rolling?
 #> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1    13
+#> 1      V1     6
 #> 2      V2    10
-#> 3      V3    13
-#> 4      V4     7
-#> 5      V5    10
+#> 3      V3     9
+#> 4      V4    12
+#> 5      V5    11
 #> 6      V6    13
 ```
 
@@ -147,7 +147,7 @@ dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 3)
 #> [1] 1500
 ```
 
-### Quick Demonstration
+### Quick XP Demonstration
 
 Let’s say I am running a game for four players, all level 3, and I want
 to design a hard encounter for them. This is how I would go about doing
@@ -193,32 +193,82 @@ badly or vice versa).
 
 ## Creating Monsters
 
-Creating your own creatures can be a great way to add flavor to an
-encounter! Dungeon Master’s Guide provides a table (see p. 274) that
+Creatures that you create can be a great way to add flavor to an
+encounter of can form the centerpiece of a larger campaign arc! I have
+provided two functions to help provide a starting place for DMs in
+creating your own monsters: `monster_stats()` and `monster_creator()`.
+
+### Finding Official Monster Statistics with `monster_stats()`
+
+The Dungeon Master’s Guide (DMG) provides a table (see p. 274) that
 gives the core vital statistics for creatures based on their Challenge
 Rating (CR) but this table can be cumbersome to compare to Experience
 Points (you know, the things used to determine how hard an encounter
-will be for your party?). To aid with this, I’ve created
-`monster_quick()` which accepts either CR or XP and returns a quick
-summary of what statistics the DMG recommends for a creature of the
-CR/XP value.You can specify either XP or CR and it can convert between
-the two internally as needed. Note that if you specify both XP and CR,
-the function will ignore XP and proceed with CR alone.
+will be for your party?). `monster_stats()` streamlines this process by
+allowing you to input either the XP you want to spend on this creature
+(you can use the value returned by `xp_cost()`) *or* the Challenge
+Rating (CR) if you know it. Note that if you specify both XP and CR, the
+function will ignore XP and proceed with CR alone. **Once either XP or
+CR is provided, the function returns the creatures statistics as they
+appear in the DMG for a creature of that difficulty.**
 
 ``` r
-dndR::monster_quick(xp = 1000, cr = 4)
+dndR::monster_stats(xp = 1000, cr = 4)
 #> CR and XP both specified, proceeding with CR
-#>   Challenge DMG_XP Prof_Bonus Armor_Class Hit_Points Attack_Bonus Save_DC
-#> 1         4   1100          2          14    116-130            5      14
+#>   Challenge DMG_XP Prof_Bonus Armor_Class HP_Range HP_Average Attack_Bonus
+#> 1         4   1100          2          14  116-130        123            5
+#>   Save_DC
+#> 1      14
 ```
 
 Challenge Rating is more than a little esoteric so feel free to ignore
 that argument entirely if XP is more comfortable for you!
 
 ``` r
-dndR::monster_quick(xp = 8000)
-#>   Challenge DMG_XP Prof_Bonus Armor_Class Hit_Points Attack_Bonus Save_DC
-#> 1        11   7200          4          17    221-235            8      17
+dndR::monster_stats(xp = 8000)
+#>   Challenge DMG_XP Prof_Bonus Armor_Class HP_Range HP_Average Attack_Bonus
+#> 1        11   7200          4          17  221-235        228            8
+#>   Save_DC
+#> 1      17
+```
+
+### Homebrewing Custom Monsters with `monster_creator()`
+
+If you’d rather take a more customized approach, you can use
+`monster_creator()` instead of `monster_stats`. This function follows
+the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to
+build interesting, challenging monsters for your party. These monsters
+are built somewhat according to the Dungeon Master’s Guide for creating
+monsters, partly Zee’s [YouTube video on homebrewing monsters based on
+The Witcher videogame](https://www.youtube.com/watch?v=GhjkPv4qo5w), and
+partly on my own sensibilities about scaling the difficulty of a
+creature. Creatures are spawned randomly so you may need to re-run the
+function several times (or mentally modify one or more parts of the
+output) to get a monster that fits your campaign and players. Each
+creature is provided with up to five damage resistances, up to two
+damage immunities, and a single vulnerability. This combination allows
+you to build complex and mysterious homebrew monsters with plenty of
+opportunities for the party to have to investigate around to discover
+the monster’s strengths and weaknesses before the final showdown.
+
+``` r
+dndR::monster_creator(party_level = 5, party_size = 4)
+#>             statistic                                                   value
+#> 1          Hit_Points                                                      92
+#> 2         Armor_Class                                                      16
+#> 3          Prof_Bonus                                                       3
+#> 4        Attack_Bonus                                                       7
+#> 5             Save_DC                                                      16
+#> 6  Prof_Saving_Throws                                                DEX; WIS
+#> 7           Immune_to                                           cold; psychic
+#> 8        Resistant_to thunder; lightning; piercing; non-magical damage; force
+#> 9       Vulnerable_to                                                slashing
+#> 10       STR_Modifier                                                      +2
+#> 11       DEX_Modifier                                                      +2
+#> 12       CON_Modifier                                                      +1
+#> 13       INT_Modifier                                                      +1
+#> 14       WIS_Modifier                                                      +1
+#> 15       CHA_Modifier                                                       0
 ```
 
 ## `dndR` versus DMG Comparisons
@@ -249,7 +299,7 @@ formulas; one for above and one for below a CR of 20) and coded it into
 ‘monster creator’ function as it allows users to specify either CR or XP
 value of a monster to inform that function. Below is the comparison of
 the DMG’s XP-to-CR curve and the one produced by `cr_convert()`. Note
-that `cr_convert()` is a helper function invoked in `monster_quick()` to
+that `cr_convert()` is a helper function invoked in `monster_stats()` to
 convert from CR to XP (done internally in that function).
 
 <img src="man/figures/README-cr_dmg-to-convert_comparison-1.png" width="50%" style="display: block; margin: auto;" />
