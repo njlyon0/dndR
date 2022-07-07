@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-utils/pkg-checking.R
 ^README\.Rmd$
 ^\.github$
-utils/my-campaigns.R
-inst/
+utils/
+inst/images/
