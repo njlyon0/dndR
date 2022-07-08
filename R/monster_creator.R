@@ -24,14 +24,9 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
     stop("Party level and party size must be numeric.")
 
   # Identify challenge rating based on party size / level
-  ## Roughly modify party level based on party size
-  if(party_size <= 3){ party_lvl_mod <- party_level - 1}
-  if(party_size > 3 & party_size <= 5){ party_lvl_mod <- party_level}
-  if(party_size > 5){ party_lvl_mod <- party_level + 2}
-  ## Account for parties of <3 at level 1 (above step sets 'party_lvl_mod' to 0)
-  if(party_lvl_mod == 0){ party_lvl_actual <- 1 } else { party_lvl_actual <- party_lvl_mod }
-  ## Calculate CR
-  cr_actual <- party_lvl_actual + 3
+  if(party_size <= 3){ cr_actual <- party_level + 2}
+  if(party_size > 3 & party_size <= 5){ cr_actual <- party_level + 3}
+  if(party_size > 5){ cr_actual <- party_level + 5}
 
   # Identify the DMG's recommendation for that monster
   monster_raw <- dndR::monster_stats(cr = cr_actual)
