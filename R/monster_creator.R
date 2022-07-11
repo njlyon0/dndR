@@ -43,12 +43,21 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
   ## Identify vulnerabilities, resistances, and immunities
   vulnerable <- base::sample(x = base::setdiff(dnd_damage_types(), "non-magical damage"),
                                  size = 1, replace = FALSE)
-  resistant <- base::sample(x = base::setdiff(dnd_damage_types(), vulnerable),
-                            size = base::ifelse(test = (cr_actual > 5), yes = 5,
-                                                no = cr_actual), replace = FALSE)
-  immune <- base::sample(x = base::setdiff(dnd_damage_types(), c(vulnerable, resistant, "non-magical damage")),
+  ### If vulnerable includes bludgeoning/piercing/slashing, exclude 'non-magical damage' from resistances
+  if(unique(vulnerable) %in% c("bludgeoning", "piercing", "slashing")){
+    resistant <- base::sample(x = base::setdiff(dnd_damage_types(),
+                                                c(vulnerable, "non-magical damage")),
+                              size = base::ifelse(test = (cr_actual > 5), yes = 5,
+                                                  no = cr_actual), replace = FALSE)
+  } else { resistant <- base::sample(x = base::setdiff(dnd_damage_types(), vulnerable),
+                              size = base::ifelse(test = (cr_actual > 5), yes = 5,
+                                                  no = cr_actual), replace = FALSE) }
+## Immunity can't include vulnerabilities or resistances or non-magical damage
+  immune <- base::sample(x = base::setdiff(dnd_damage_types(),
+                                           c(vulnerable, resistant, "non-magical damage")),
                             size = base::ifelse(test = (cr_actual > 6), yes = 2,
-                                                no = base::floor(cr_actual / 3)), replace = FALSE)
+                                                no = base::floor(cr_actual / 3)),
+                         replace = FALSE)
 
   # Identify ability scores and modifiers ----
   ## Roll for scores
