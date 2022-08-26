@@ -146,7 +146,7 @@ The DMG specifies the XP threshold *per player* for a given difficulty while my 
 
 I calculated the formula for the relationship between XP and player level and used that calculation in lieu of embedding the DMG's table in my function. This has the added benefit of being able to handle non-integer values for average party_level. Below is a comparison of the DMG's XP-to-player level curve and the one obtained by `xp_pool`.
 
-```{r xp_dmg-to-pool_comparison, echo = FALSE,out.width = '50%',fig.align = 'center'}
+```{r xp_dmg-to-pool_comparison, echo = FALSE, out.width = '50%',fig.align = 'center', warning = FALSE}
 # Assemble a dataframe showing the DMG's party level versus easy encounter XP
 xp_df <- data.frame('pc_level' = 1:20,
                    'easy_xp' = c(25, 50, 75, 125, 250, 300, 350, 450, 550, 600,
@@ -186,7 +186,7 @@ ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp,
 
 The DMG specifies the XP value of a monster of any challenge rating (CR) from 0 to 30. I calculated the formula for this parabola (actually two formulas; one for above and one for below a CR of 20) and coded it into `cr_convert` to calculate it. This is pre-requisite to my idea of a 'monster creator' function as it allows users to specify either CR or XP value of a monster to inform that function. Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert`. Note that `cr_convert` is a helper function invoked in `monster_stats` to convert from CR to XP (done internally in that function).
 
-```{r cr_dmg-to-convert_comparison, warning = FALSE, message = FALSE, echo = FALSE, out.width = '50%',fig.align = 'center'}
+```{r cr_dmg-to-convert_comparison, warning = FALSE, message = FALSE, echo = FALSE, out.width = '50%', fig.align = 'center'}
 # Assemble a dataframe showing the DMG XP to CR relationship
 cr_actual <- data.frame(
   "cr" = c(0, 0.125, 0.25, 0.5, 1:30),

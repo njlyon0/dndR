@@ -38,9 +38,9 @@ dice. “Standard” dice include the following numbers of sides: 100, 20,
 dndR::roll(dice = '2d20')
 #> Assuming you're rolling for (dis)advantage so both rolls returned.
 #>   roll_1 roll_2
-#> 1      4      3
+#> 1     14     14
 dndR::roll('3d6') + dndR::roll('1d4')
-#> [1] 13
+#> [1] 19
 ```
 
 ## Character Creation
@@ -52,15 +52,13 @@ ability scores.
 
 ``` r
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
-#> Total score very low. Consider re-rolling?
-#> At least one ability very low. Consider re-rolling?
 #>   ability raw_score race_modifier score roll_modifier
-#> 1     STR        17             2    19            +4
-#> 2     DEX        10             0    10             0
-#> 3     CON        16             1    17            +3
-#> 4     INT         8             0     8            -1
-#> 5     WIS         5             0     5            -3
-#> 6     CHA        11             0    11             0
+#> 1     STR        16             2    18            +4
+#> 2     DEX        12             0    12            +1
+#> 3     CON        14             1    15            +2
+#> 4     INT        13             0    13            +1
+#> 5     WIS        12             0    12            +1
+#> 6     CHA         8             0     8            -1
 ```
 
 You can check which classes and races are currently supported by
@@ -76,14 +74,13 @@ assign them to specific abilities yourself.
 ``` r
 dndR::ability_scores(method = "4d6")
 #> Total score very low. Consider re-rolling?
-#> At least one ability very low. Consider re-rolling?
 #>   ability score
-#> 1      V1     6
-#> 2      V2    16
-#> 3      V3    10
-#> 4      V4    11
-#> 5      V5     8
-#> 6      V6     9
+#> 1      V1    11
+#> 2      V2    12
+#> 3      V3    11
+#> 4      V4    10
+#> 5      V5    12
+#> 6      V6     8
 ```
 
 ## Encounter Balancing
@@ -255,22 +252,22 @@ the monster’s strengths and weaknesses before the final showdown.
 
 ``` r
 dndR::monster_creator(party_level = 5, party_size = 4)
-#>             statistic                                            value
-#> 1          Hit_Points                                               92
-#> 2         Armor_Class                                               16
-#> 3          Prof_Bonus                                                3
-#> 4        Attack_Bonus                                                7
-#> 5             Save_DC                                               16
-#> 6  Prof_Saving_Throws                                         CHA; DEX
-#> 7           Immune_to                                   fire; slashing
-#> 8        Resistant_to necrotic; acid; lightning; piercing; bludgeoning
-#> 9       Vulnerable_to                                             cold
-#> 10       STR_Modifier                                               +1
-#> 11       DEX_Modifier                                               +1
-#> 12       CON_Modifier                                                0
-#> 13       INT_Modifier                                               +1
-#> 14       WIS_Modifier                                               +1
-#> 15       CHA_Modifier                                               +3
+#>             statistic                                  value
+#> 1          Hit_Points                                     92
+#> 2         Armor_Class                                     16
+#> 3          Prof_Bonus                                      3
+#> 4        Attack_Bonus                                      7
+#> 5             Save_DC                                     16
+#> 6  Prof_Saving_Throws                               CON; INT
+#> 7           Immune_to                             fire; acid
+#> 8        Resistant_to force; slashing; cold; thunder; poison
+#> 9       Vulnerable_to                            bludgeoning
+#> 10       STR_Modifier                                     +1
+#> 11       DEX_Modifier                                     +1
+#> 12       CON_Modifier                                     +1
+#> 13       INT_Modifier                                     +3
+#> 14       WIS_Modifier                                     +2
+#> 15       CHA_Modifier                                     +2
 ```
 
 ## `dndR` versus DMG Comparisons
