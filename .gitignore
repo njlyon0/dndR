@@ -49,3 +49,4 @@ utils/my-campaigns.R
 
 # PowerPoint for formatting/creating the hex logo
 inst/images/dndR-hex_design.pptx
+inst/doc

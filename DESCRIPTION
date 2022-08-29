@@ -20,4 +20,7 @@ Imports:
     purrr,
     stringr,
     tidyr
-    
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
