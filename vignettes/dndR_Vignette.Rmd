@@ -30,7 +30,7 @@ At its simplest, DnD involves significant amounts of dice rolling and (often) su
 
 ```{r roll_fxn_1}
 dndR::roll('3d6')
-dndR::roll('1d4')
+dndR::roll('3d8') + dndR::roll('1d4')
 ```
 
 Note that '2d20' is automatically assumed to be rolling with advantage/disadvantage so it will return a message to that effect and both numbers.
