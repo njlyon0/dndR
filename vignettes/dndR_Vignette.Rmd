@@ -11,9 +11,8 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
 ```
 
-```{r libraries, message = F, include = F}
-devtools::install_github("njlyon0/dndR")
-library(dndR); library(tidyverse)
+```{r install-libraries, echo = F, message = F}
+# devtools::install_github("njlyon0/dndR", force = TRUE)
 ```
 
 <img src="dndR_hex.png" align = "right" width = "15%" />
@@ -23,6 +22,13 @@ library(dndR); library(tidyverse)
 I am a big fan of both R and Dungeons and Dragons so I thought it would be a fun test of my coding skills to build an R package that supports this hobby! `dndR` includes several functions that can be broadly divided between functions for both players and dungeon masters (DMs) and functions that are intended primarily for DMs.
 
 If any of these functions break for you, please [post an Issue](https://github.com/njlyon0/dndR/issues) and I'll tweak the code ASAP. I hope that you enjoy the rest of this vignette as it demonstrates some of the use-cases for the functions currently included in `dndR`!
+
+Begin by ensuring that you have the development version of `dndR` installed.
+
+```{r library, message = F}
+# devtools::install_github("njlyon0/dndR")
+library(dndR)
+```
 
 ## Dice Rolling
 
