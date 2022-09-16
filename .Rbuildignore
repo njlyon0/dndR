@@ -4,3 +4,10 @@
 ^\.github$
 utils/
 inst/images/
+.nojekyll
+.quarto/
+_quarto.yml
+about.qmd
+index.qmd
+styles.css
+docs/
