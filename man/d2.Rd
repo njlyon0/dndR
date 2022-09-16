@@ -7,7 +7,7 @@
 d2()
 }
 \value{
-Numeric, the specified dice outcome
+(numeric) result of "roll" of specified dice type
 }
 \description{
 Picks a random number from 1-2. Essentially flips a coin.

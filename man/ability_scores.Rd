@@ -2,12 +2,14 @@
 % Please edit documentation in R/ability_scores.R
 \name{ability_scores}
 \alias{ability_scores}
-\title{Roll for all Ability Scores}
+\title{Roll for All Ability Scores}
 \usage{
-ability_scores(method = "4d6")
+ability_scores(method = "4d6", quiet = FALSE)
 }
 \arguments{
-\item{method}{a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)}
+\item{method}{(character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)}
+
+\item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low. I know it can be fun to have a terrible character but some tables like re-rolling above certain thresholds}
 }
 \value{
 a dataframe of two columns and six rows

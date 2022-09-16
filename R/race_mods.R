@@ -14,7 +14,7 @@
 #' race_mods(race = "mountain dwarf")
 #'
 race_mods <- function(race = NULL){
-  # If scores have been rolled but dataframe hasn't been provided, error out
+  # Error out if I haven't hard-coded the race's modifiers
   if(is.null(race) | !base::tolower(race) %in% dnd_races())
     stop("Race not in supported set. See `dnd_races()` for list of supported entries. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.")
 
@@ -93,6 +93,4 @@ race_mods <- function(race = NULL){
   #     ability == "" ~ 0, ability == "" ~ 0, TRUE ~ modifier)) }
 
   # Return filled block
-  return(block)
-}
-
+  return(block) }

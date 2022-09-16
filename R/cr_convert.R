@@ -34,5 +34,4 @@ cr_convert <- function(cr = NULL){
   xp <- base::ceiling(x = xp_raw)
 
   # Return XP
-  return(xp)
-}
+  return(xp) }

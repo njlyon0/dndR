@@ -7,9 +7,9 @@
 monster_stats(xp = NULL, cr = NULL)
 }
 \arguments{
-\item{xp}{(numeric) Experience Point value of the monster}
+\item{xp}{(numeric) experience point (XP) value of the monster}
 
-\item{cr}{(numeric) Challenge Rating of the monster. Note that this is NOT necessary if XP is provided}
+\item{cr}{(numeric) challenge rating (CR) of the monster. Note that this is NOT necessary if XP is provided}
 }
 \description{
 Quickly identify the vital statistics of a single creature worth the provided experience points (XP) or Challenge Rating (CR). Uses the table provided in p. 274-275 of the Dungeon Master's Guide. Accepts Challenge Ratings of 0, '1/8', '1/4, and '1/2' in addition to numbers between 1 and 30. CR is *not necessary* to provide **if** XP is provided.

@@ -7,14 +7,14 @@
 xp_pool(party_level = NULL, party_size = NULL, difficulty = NULL)
 }
 \arguments{
-\item{party_level}{a number indicating the average party level. If all players are the same level, that level is the average party level}
+\item{party_level}{(numeric) integer indicating the average party level. If all players are the same level, that level is the average party level}
 
-\item{party_size}{a number indicating how many player characters (PCs) are in the party}
+\item{party_size}{(numeric) integer indicating how many player characters (PCs) are in the party}
 
-\item{difficulty}{one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.}
+\item{difficulty}{(character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.}
 }
 \value{
-a number of total encounter XP
+(numeric) total encounter XP as an integer
 }
 \description{
 Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. NOTE: this does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.

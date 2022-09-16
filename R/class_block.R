@@ -2,10 +2,10 @@
 #'
 #' @description Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).
 #'
-#' @param class character string of class (supported classes returned by `dnd_classes()`)
-#' @param score_method character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Only values accepted by `ability_scores()` are accepted here
-#' @param scores_rolled logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
-#' @param scores_df if 'scores_rolled' is TRUE, the name of the dataframe returned by `ability_scores()`
+#' @param class (character) name of character class (supported classes returned by `dnd_classes()`)
+#' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here
+#' @param scores_rolled (logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
+#' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
 #'
 #' @return a dataframe of two columns and six rows
 #'
@@ -37,7 +37,7 @@ class_block <- function(class = NULL, score_method = "4d6",
 
   # Error out if class isn't one of supported vector
   if(base::is.null(class) | !base::tolower(class) %in% dnd_classes())
-    stop("Class either not provided or not one of accepted classes. Run `dnd_classes()` for the classes this function currently supports. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.")
+    stop("Class either not provided or not one of accepted classes. Run `dnd_classes()` for the classes this function currently supports")
 
   # Determine top two abilities based on class
   if(base::tolower(class) == "barbarian"){ top_two <- c("STR", "CON") }
@@ -79,5 +79,4 @@ class_block <- function(class = NULL, score_method = "4d6",
     as.data.frame()
 
   # Return the stat block
-  return(stat_block)
-  }
+  return(stat_block) }

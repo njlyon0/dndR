@@ -7,14 +7,14 @@
 xp_cost(monster_xp = NULL, monster_count = NULL, party_size = NULL)
 }
 \arguments{
-\item{monster_xp}{numeric XP total for the monsters}
+\item{monster_xp}{(numeric) XP total across all monsters}
 
-\item{monster_count}{numeric count for the number of monsters in the encounter}
+\item{monster_count}{(numeric) count for the number of monsters in the encounter}
 
-\item{party_size}{numeric value for the number of PCs in the party}
+\item{party_size}{(numeric) value for the number of PCs in the party}
 }
 \value{
-a numeric value for the output XP
+(numeric) value for "realized" XP
 }
 \description{
 Encounters are more difficult than the total of the monsters' experience points (XP). Both the number of monsters making attacks and the number of players attacking those creatures can affect the difficulty of an encounter. The Dungeon Master's Guide (DMG) accounts for this by providing an XP multiplier for given party sizes and numbers of monsters. This function accepts the unmodified total of the monsters' XP and adjusts this as specified in the DMG without the pain of the tables in that book.

@@ -7,7 +7,7 @@
 d6()
 }
 \value{
-Numeric, the specified dice outcome
+(numeric) result of "roll" of specified dice type
 }
 \description{
 Picks a random number from 1-6

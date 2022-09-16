@@ -7,10 +7,10 @@
 ability_singular(method = "4d6")
 }
 \arguments{
-\item{method}{a character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for an ability score ("4d6" drops lowest in the subsequent `stat_block()` function)}
+\item{method}{(character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)}
 }
 \value{
-a numeric vector
+(numeric) vector of roll outcomes (not summed)
 }
 \description{
 Rolls for a single ability score using the specified method of dice rolling.

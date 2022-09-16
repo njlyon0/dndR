@@ -12,13 +12,13 @@ class_block(
 )
 }
 \arguments{
-\item{class}{character string of class (supported classes returned by `dnd_classes()`)}
+\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`)}
 
-\item{score_method}{character string of "4d6", "3d6", or "1d20" ("d20" also accepted). Only values accepted by `ability_scores()` are accepted here}
+\item{score_method}{(character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here}
 
-\item{scores_rolled}{logical indicating whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE}
+\item{scores_rolled}{(logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE}
 
-\item{scores_df}{if 'scores_rolled' is TRUE, the name of the dataframe returned by `ability_scores()`}
+\item{scores_df}{(dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`}
 }
 \value{
 a dataframe of two columns and six rows

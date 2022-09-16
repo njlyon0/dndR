@@ -1,6 +1,7 @@
 #' @title Return Vector of Accepted Classes
 #'
 #' @description Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
+#' 
 #' @return character vector of accepted class names
 #'
 #' @export

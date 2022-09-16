@@ -2,11 +2,11 @@
 #'
 #' @description Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. NOTE: this does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.
 #'
-#' @param party_level a number indicating the average party level. If all players are the same level, that level is the average party level
-#' @param party_size a number indicating how many player characters (PCs) are in the party
-#' @param difficulty one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.
+#' @param party_level (numeric) integer indicating the average party level. If all players are the same level, that level is the average party level
+#' @param party_size (numeric) integer indicating how many player characters (PCs) are in the party
+#' @param difficulty (character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.
 #'
-#' @return a number of total encounter XP
+#' @return (numeric) total encounter XP as an integer
 #' @export
 #'
 #' @examples
@@ -16,20 +16,20 @@
 xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
 
   # Error out if party_level or difficulty is unspecified
-  if(base::is.null(party_level) | base::is.null(party_size) | base::is.null(difficulty)) stop("At least one parameter is unspecified. See `?dndR::xp_pool()` for details.")
+  if(base::is.null(party_level) | base::is.null(party_size) | base::is.null(difficulty)) stop("At least one parameter is unspecified. See `?dndR::xp_pool()` for details")
 
   if(base::is.numeric(party_level) != TRUE | base::is.numeric(party_size) != TRUE)
-    stop("Party level and party size must be a number.")
+    stop("Party level and party size must be a number")
 
   # Error out if too many party levels are provided
   if(base::length(party_level) > 1) stop("Too many values provided. What is the *average* level of PCs in the party?")
 
   # Error out if difficulty is not supported
   if(!base::tolower(difficulty) %in% c('easy', 'medium', 'hard', 'deadly'))
-    stop("Unrecognized difficulty level. Please use only one of 'easy', 'medium', 'hard', or 'deadly'.")
+    stop("Unrecognized difficulty level. Please use only one of 'easy', 'medium', 'hard', or 'deadly'")
 
   # Identify the quadratic coefficients
-  ## (Nick did this manually and got a decent fit for the line)
+  ## (Did this manually and got a decent fit for the line)
   a <- 8.216374
   b <- -26.49122
   c <- 43.27485
@@ -55,6 +55,4 @@ xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
   xp_actual <- base::trunc(x = xp_amount)
 
   # Return the xp_amount
-  return(xp_actual)
-}
-
+  return(xp_actual) }

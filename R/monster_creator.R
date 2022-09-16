@@ -2,8 +2,8 @@
 #'
 #' @description Returns the vital statistics of a randomized monster based on a the average player level and number of players in the party. This function follows the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to build interesting, challenging monsters for your party. These monsters are built somewhat according to the Dungeon Master's Guide for creating monsters, partly Zee's [YouTube video on homebrewing monsters based on The Witcher videogame](https://www.youtube.com/watch?v=GhjkPv4qo5w), and partly on my own sensibilities about scaling the difficulty of a creature. Creatures are spawned randomly so you may need to re-run the function several times (or mentally modify one or more parts of the output) to get a monster that fits your campaign and players, but the vulernabilities and resistances should allow for cool quest building around what this function provides. Happy DMing!
 #'
-#' @param party_level a number indicating the average party level. If all players are the same level, that level is the average party level
-#' @param party_size a number indicating how many player characters (PCs) are in the party
+#' @param party_level (numeric) indicating the average party level. If all players are the same level, that level is the average party level
+#' @param party_size (numeric) indicating how many player characters (PCs) are in the party
 #'
 #' @importFrom magrittr %>%
 #'
@@ -14,14 +14,17 @@
 #' @export
 monster_creator <- function(party_level = NULL, party_size = NULL){
   # Squelch 'visible bindings' note
-  HP_Average <- Hit_Points <- Armor_Class <- Prof_Bonus <- Attack_Bonus <- NULL
-  Save_DC <- score <- ability_actual <- modifier <- NULL
+  HP_Average <- Hit_Points <- Armor_Class <- NULL
+  Prof_Bonus <- Attack_Bonus <- Save_DC <- NULL
+  score <- ability_actual <- modifier <- NULL
 
-  # Provide errors for missing / improper argument specifications
+  # Error out if arguments aren't specified
   if(base::is.null(party_level) | base::is.null(party_size))
-    stop("Party level and party size must be provided")
+    stop("Party level and party size must both be provided")
+  
+  # Error out for improper argument specifications
   if(base::is.numeric(party_level) != TRUE | base::is.numeric(party_size) != TRUE)
-    stop("Party level and party size must be numeric.")
+    stop("Party level and party size must be numeric")
 
   # Identify challenge rating based on party size / level
   if(party_size <= 3){ cr_actual <- party_level + 2}
@@ -74,20 +77,13 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
         cr_actual > 5 & score <= 10 ~ (score + 2),
         TRUE ~ score) ) %>%
     # Identify roll modifiers
-    dplyr::mutate(
-      ability_actual = paste0(ability_actual, "_Modifier"),
-      modifier = dplyr::case_when(
-        score %in% c(10, 11) ~ '0',
-        score %in% c(12, 13) ~ '+1',
-        score %in% c(14, 15) ~ '+2',
-        score %in% c(16, 17) ~ '+3',
-        score %in% c(18, 19) ~ '+4',
-        score %in% c(20, 21) ~ '+5',
-        score %in% c(22, 23) ~ '+6',
-        score %in% c(24, 25) ~ '+7',
-        score %in% c(26, 27) ~ '+8',
-        score %in% c(28, 29) ~ '+9',
-        score %in% c(30) ~ '+10') ) %>%
+    dplyr::mutate(modifier_calc = base::floor(x = ((score - 10) / 2))) %>%
+    # Paste a plus if its positive
+    dplyr::mutate(modifier = ifelse(test = modifier_calc > 0,
+                                    yes = paste0("+", modifier_calc),
+                                    no = modifier_calc)) %>%
+    # Drop calculated modifier
+    dplyr::select(-modifier_calc) %>%
     # Pare down to needed columns
     dplyr::select(ability_actual, modifier) %>%
     # Reshape to wide format
@@ -121,5 +117,4 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
     base::as.data.frame()
 
   # Return the finished product
-  return(monster_block)
-}
+  return(monster_block) }

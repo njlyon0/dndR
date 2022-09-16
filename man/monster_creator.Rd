@@ -7,9 +7,9 @@
 monster_creator(party_level = NULL, party_size = NULL)
 }
 \arguments{
-\item{party_level}{a number indicating the average party level. If all players are the same level, that level is the average party level}
+\item{party_level}{(numeric) indicating the average party level. If all players are the same level, that level is the average party level}
 
-\item{party_size}{a number indicating how many player characters (PCs) are in the party}
+\item{party_size}{(numeric) indicating how many player characters (PCs) are in the party}
 }
 \description{
 Returns the vital statistics of a randomized monster based on a the average player level and number of players in the party. This function follows the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to build interesting, challenging monsters for your party. These monsters are built somewhat according to the Dungeon Master's Guide for creating monsters, partly Zee's [YouTube video on homebrewing monsters based on The Witcher videogame](https://www.youtube.com/watch?v=GhjkPv4qo5w), and partly on my own sensibilities about scaling the difficulty of a creature. Creatures are spawned randomly so you may need to re-run the function several times (or mentally modify one or more parts of the output) to get a monster that fits your campaign and players, but the vulernabilities and resistances should allow for cool quest building around what this function provides. Happy DMing!

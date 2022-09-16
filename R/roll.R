@@ -2,8 +2,7 @@
 #'
 #' @description Rolls the Specified Number and Type of Dice
 #'
-#' @param dice a character specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
-#'
+#' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
 #'
 #' @return Numeric, the sum of specified dice outcomes
 #' @export
@@ -18,15 +17,19 @@
 #'
 roll <- function(dice = "d20"){
 
+  # Error out if not a character
+  if(!is.character(dice))
+    stop("`dice` must be specified as a character (e.g., '3d8')")
+  
   # Identify number of dice to roll
   dice_count <- base::gsub(pattern = "d", replacement = "",
                            x = stringr::str_extract(string = dice,
                                      pattern = "[:digit:]{1,10000000}d"))
+  
   # If number is left blank, assume one but print warning
   if(base::nchar(dice_count) == 0 | is.na(dice_count)){
     base::message("Number of dice unspecified, assuming 1")
-    dice_count <- 1
-  }
+    dice_count <- 1 }
 
   # Identify which dice type
   dice_type <- stringr::str_extract(string = dice,
@@ -97,9 +100,7 @@ roll <- function(dice = "d20"){
   # If two d20 are rolled, assume they're rolling for advantage/disadvantage and don't sum
   if(dice == "2d20"){
     total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
-    base::message("Assuming you're rolling for (dis)advantage so both rolls returned.")
-    }
+    base::message("Assuming you're rolling for (dis)advantage so both rolls returned") }
 
   # Return total
   return(total) }
-

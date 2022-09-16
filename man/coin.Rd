@@ -7,7 +7,7 @@
 coin()
 }
 \value{
-Numeric, the specified dice outcome
+(numeric) result of coin flip (either 1 or 2)
 }
 \description{
 Picks a random number from 1-2. Essentially a "d2".
