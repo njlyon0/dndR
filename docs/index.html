@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An R Package for Dungeons &amp; Dragons: &lt;code&gt;dndR&lt;/code&gt;</title>
+<title>An R Package for Dungeons &amp; Dragons: dndR - Welcome to dndR!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,7 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="An R Package for Dungeons &amp; Dragons: `dndR`">
+<meta name="twitter:title" content="An R Package for Dungeons &amp; Dragons: dndR - Welcome to dndR!">
 <meta name="twitter:description" content="I am a big fan of both R and Dungeons and Dragons so I thought it would be a fun test of my coding skills to build an R package that supports this hobby!">
 <meta name="twitter:card" content="summary">
 </head>
@@ -156,7 +156,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <h1 class="quarto-secondary-nav-title">Welcome to <code>dndR</code>!</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -228,8 +228,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-dndr" id="toc-welcome-to-dndr" class="nav-link active" data-scroll-target="#welcome-to-dndr">Welcome to <code>dndR</code>!</a></li>
+  <li><a href="#dndr-motivations-goals" id="toc-dndr-motivations-goals" class="nav-link active" data-scroll-target="#dndr-motivations-goals"><code>dndR</code> Motivations &amp; Goals</a></li>
   <li><a href="#installing-dndr" id="toc-installing-dndr" class="nav-link" data-scroll-target="#installing-dndr">Installing <code>dndR</code></a></li>
+  <li><a href="#encounter-a-problem" id="toc-encounter-a-problem" class="nav-link" data-scroll-target="#encounter-a-problem">Encounter a Problem?</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/njlyon0/dndR/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     <div class="quarto-margin-footer"><div class="margin-footer-item">
@@ -238,13 +239,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Welcome to <code>dndR</code>!</h1>
+</div>
 
 
-<section id="welcome-to-dndr" class="level2">
-<h2 class="anchored" data-anchor-id="welcome-to-dndr">Welcome to <code>dndR</code>!</h2>
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="dndr-motivations-goals" class="level2">
+<h2 class="anchored" data-anchor-id="dndr-motivations-goals"><code>dndR</code> Motivations &amp; Goals</h2>
 <p><img src="inst/images/dndR_hex.png" width="25%" align="right"></p>
 <p>I am a big fan of both R and Dungeons and Dragons so I thought it would be a fun test of my coding skills to build an R package that supports this hobby! <code>dndR</code> includes several functions that can be broadly divided between functions for both players and dungeon masters (DMs) and functions that are intended primarily for DMs.</p>
-<p>If any of these functions break for you (or if you have a cool idea for a new function!), please <a href="https://github.com/njlyon0/dndR/issues">post an Issue</a> and I’ll tweak the code ASAP. I hope that you enjoy the rest of this vignette as it demonstrates some of the use-cases for the functions currently included in <code>dndR</code>!</p>
+<p>My hope for this R package is that you would be able to have an R or RStudio window open while you are playing (or preparing for a session) and could use it to help with some of the fundamental repeated operations in D&amp;D. When I play or DM D&amp;D I often use a virtual tabletop (VTT) and I use this package to complement those systems rather than try to replace them.</p>
 </section>
 <section id="installing-dndr" class="level2">
 <h2 class="anchored" data-anchor-id="installing-dndr">Installing <code>dndR</code></h2>
@@ -254,6 +269,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"njlyon0/dndR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I plan on submitting this package to CRAN in the future but for now the dev version is all that exists. I hope that doesn’t discourage you from using <code>dndR</code>!</p>
+</section>
+<section id="encounter-a-problem" class="level2">
+<h2 class="anchored" data-anchor-id="encounter-a-problem">Encounter a Problem?</h2>
+<p>If any of these functions break for you (or if you have a cool idea for a new function!), please <a href="https://github.com/njlyon0/dndR/issues">post a GitHub Issue</a> and I’ll tweak the code ASAP. If you’re posting an Issue because of a bug, including a <a href="https://stackoverflow.com/help/minimal-reproducible-example">reproducible example</a> will be really helpful to me and will make it quicker to identify and fix whatever the issue was.</p>
 
 
 </section>

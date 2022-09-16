@@ -1,5 +1,115 @@
 ---
-title: "About"
+title: "Monster Creation"
 ---
 
-About this site
+Creatures that you create (or "homebrew") can be a great way to add flavor to an encounter or can even form the centerpiece of a larger campaign arc! `dndR`'s `monster_stats` and `monster_creator` functions can help DMs to quickly stat out their custom monsters
+
+## Finding Official Monster Statistics
+
+The DMG provides a table (see p. 274) that gives the vital statistics of creatures based on their Challenge Rating (CR) but this table can be cumbersome to compare to Experience Points (you know, the things used to determine how hard an encounter will be for your party?).
+
+`monster_stats` streamlines this process by allowing you to either
+
+1. Input the XP you want to spend on this creature (you can use the value returned by `xp_cost`) 
+
+*OR*
+
+2. Input the challenge rating (CR) if you know it.
+
+Once either XP or CR is provided, `monster_stats` returns the creature's statistics as they appear in the DMG for a *single* creature of that difficulty.
+
+```{r monster_stats_fxn1}
+dndR::monster_stats(cr = 7)
+```
+
+Challenge Rating is more than a little esoteric so feel free to ignore that argument entirely if XP is more comfortable for you! Note that XP is rounded down to the nearest specified monster "tier" specified in the DMG.
+
+```{r monster_stats_fxn2}
+dndR::monster_stats(xp = 8000)
+```
+
+If you specify both CR and XP, the function prints a warning and proceeds *only* with CR (i.e., ignoring whatever you put in as XP). I figured if a user is confident enough to put CR at all it should be given priority but am happy to tweak this if desired!
+
+```{r monster_stats_fxn3}
+dndR::monster_stats(xp = 1000, cr = 4)
+```
+
+## Making Custom Monsters
+
+If you'd rather take a more individualized approach, you can use `monster_creator` instead. This function follows the advice of [Zee Bashew](https://twitter.com/Zeebashew) on how to build interesting, challenging monsters for your party. These monsters are built somewhat according to the Dungeon Master's Guide for creating monsters, partly Zee's [YouTube video on homebrewing monsters based on the videogame *The Witcher*](https://www.youtube.com/watch?v=GhjkPv4qo5w), and partly on my own intuition about scaling the difficulty of a creature. 
+
+Creatures made by `monster_creator` have the following information in addition to the statistics returned by `monster_stats`:
+
+- Up to **five** damage *resistances*
+- Up to **two** damage *immunities*
+- **One** *vulnerability*
+- Proficiency in **two** saving throws
+- Fully custom ability scores (returned only as their modifiers)
+
+This combination allows you to build complex and mysterious homebrew monsters with plenty of opportunities for the party to have to investigate around to discover the monster's strengths and weaknesses before the final showdown.
+
+```{r, monster_creator}
+dndR::monster_creator(party_level = 5, party_size = 4)
+```
+
+Creature's special traits are chosen randomly so you may want to re-run the function several times (or mentally modify one or more parts of the output) to get a monster that fits your campaign and players. 
+
+Note that if you use `monster_creator` you may want to help your players identify the creature's immunities and vulnerabilities *before* the actual confrontation with the creature to avoid sending them into a fight that is more difficult than your party can handle.
+
+## `cr_convert` versus the DMG
+
+`cr_convert` is the `dndR` function embedded in the `monster_stats` function and is what allows that function to handle either CR or XP inputs. 
+
+The DMG specifies the XP value of a monster of any CR from 0 to 30 so `cr_convert` uses the formula of that line to avoid querying the table for this conversion.
+
+Below is a comparison of the DMG's XP-to-CR curve (in **<span style="color:pink">pink</span>**) versus the one obtained by `cr_convert` (in **<span style="color:green">green</span>**).
+
+```{r cr_convert_vs_dmg_prep, include = F}
+# Load tidyverse
+library(tidyverse)
+
+cr_actual <- data.frame(
+  "cr" = c(0, 0.125, 0.25, 0.5, 1:30),
+  "dmg_xp" = c(0, 25, 50, 100, 200, 450, 700, 1100, 1800, 2300, 2900,
+               3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000,
+               18000, 20000, 22000, 25000, 33000, 41000, 50000, 62000,
+               75000, 90000, 105000, 120000, 135000, 155000) ) %>%
+  # For each row...
+  dplyr::rowwise() %>%
+  # Calculate XP for a given CR using `cr_convert`
+  dplyr::mutate("calc_xp" = dndR::cr_convert(cr = cr)) %>%
+  # Pivot to long format
+  tidyr::pivot_longer(cols = dplyr::contains('_xp'),
+                      names_to = "authority",
+                      values_to = "xp") %>%
+  # And clean up the entries of the source column
+  dplyr::mutate(source = base::ifelse(test = (authority == "calc_xp"),
+                                      yes = "dndR", no = "DMG"))
+
+# Creat the plot comparison
+cr_convert_plot <- ggplot(cr_actual, aes(x = cr, y = xp,
+                                         shape = source)) +
+  # geom_point(size = 3, pch = rep(x = c(17, 19), times = 34),
+  #            position = position_dodge(width = 0.5)) +
+  geom_point(aes(fill = source), color = 'black', size = 3,
+             pch = rep(x = c(21, 24), times = 34),
+             position = position_dodge(width = 0.5)) +
+  geom_smooth(aes(color = source), method = 'loess',
+              formula = 'y ~ x', se = FALSE) +
+  # geom_smooth(formula = 'y ~ x', method = 'loess', se = F) +
+  labs(x = "Challenge Rating (CR)", y = "Experience Points (XP)") +
+  scale_color_manual(values = c("#c51b7d", "#4d9221")) +
+  scale_fill_manual(values = c("#c51b7d", "#4d9221")) +
+  theme_classic() +
+  theme(legend.position = c(0.2, 0.9),
+        legend.title = element_blank(),
+        # axis.text.y = element_text(angle = 90, hjust = 0.5, size = 12),
+        axis.text.y = element_text(size = 12),
+        axis.text.x = element_text(size = 14),
+        axis.title = element_text(size = 16))
+```
+
+```{r cr_convert_vs_dmg_plot, echo = F, message = F, warning = F}
+cr_convert_plot
+```
+

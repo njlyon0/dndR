@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>An R Package for Dungeons &amp; Dragons: dndR - About</title>
+<title>An R Package for Dungeons &amp; Dragons: dndR - Character Creation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -59,8 +122,8 @@ ul.task-list{list-style: none;}
 
 
 <link rel="stylesheet" href="styles.css">
-<meta name="twitter:title" content="An R Package for Dungeons &amp; Dragons: dndR - About">
-<meta name="twitter:description" content="About this site">
+<meta name="twitter:title" content="An R Package for Dungeons &amp; Dragons: dndR - Character Creation">
+<meta name="twitter:description" content="Whether you’re just starting a campaign or you’re frantically trying to roll stats for your backup character after the tragic end of your now past character (RIP), creating a new Dungeons &amp; Dragons…">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -93,7 +156,7 @@ ul.task-list{list-style: none;}
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">About</h1>
+      <h1 class="quarto-secondary-nav-title">Character Creation</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -161,7 +224,15 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#start-to-finish-creation" id="toc-start-to-finish-creation" class="nav-link active" data-scroll-target="#start-to-finish-creation">Start-to-Finish Creation</a></li>
+  <li><a href="#class-only" id="toc-class-only" class="nav-link" data-scroll-target="#class-only">Class Only</a></li>
+  <li><a href="#only-roll-the-dice" id="toc-only-roll-the-dice" class="nav-link" data-scroll-target="#only-roll-the-dice">Only Roll the Dice</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/njlyon0/dndR/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     <div class="quarto-margin-footer"><div class="margin-footer-item">
 <p><img src="inst/images/dndR_hex.png" width="40%"></p>
 </div></div></div>
@@ -170,7 +241,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">About</h1>
+<h1 class="title d-none d-lg-block">Character Creation</h1>
 </div>
 
 
@@ -184,9 +255,62 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>About this site</p>
+<p>Whether you’re just starting a campaign or you’re frantically trying to roll stats for your backup character after the tragic end of your now past character (RIP), creating a new Dungeons &amp; Dragons character happens more than you might think! <code>dndR</code> includes a few functions to help streamline this process.</p>
+<section id="start-to-finish-creation" class="level2">
+<h2 class="anchored" data-anchor-id="start-to-finish-creation">Start-to-Finish Creation</h2>
+<p>For the ‘just create my character’ crowd, <code>pc_creator</code> rolls for a character’s ability scores (strength, dexterity, constitution, intelligence, wisdom, and charisma) given a particular class, race, and preferred method of rolling for ability scores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dndR<span class="sc">::</span><span class="fu">pc_creator</span>(<span class="at">class =</span> <span class="st">"barbarian"</span>, <span class="at">race =</span> <span class="st">"half orc"</span>, <span class="at">score_method =</span> <span class="st">"4d6"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ability raw_score race_modifier score roll_modifier
+1     STR        16             2    18            +4
+2     DEX         9             0     9            -1
+3     CON        14             1    15            +2
+4     INT        12             0    12            +1
+5     WIS        13             0    13            +1
+6     CHA         9             0     9            -1</code></pre>
+</div>
+</div>
+<p>The highest two scores are assigned based on the “quick build” recommendations in the source material (e.g., if you’re a fighter, the Player’s Handbook recommends making your top score strength and next best score constitution). The remaining four scores are assigned randomly.</p>
+<p>You can check which classes and races are currently supported by <code>pc_creator</code> by running <code>dndR::dnd_classes()</code> or <code>dndR::dnd_races()</code>. If you have a class/race in mind that isn’t supported you can <a href="https://github.com/njlyon0/dndR/issues">post a GitHub Issue</a> and I’ll add that class/race’s stats to the function ASAP!</p>
+<p>The <code>quiet</code> argument (default is <code>FALSE</code>) returns a warning message if any ability score is under an 8 or the total of all scores is under 70. I have had a lot of fun playing characters that have absolutely <em>awful</em> ability scores but I know that some tables use these thresholds to figure out whether it would be okay for you to re-roll and hope the dice are kinder to you.</p>
+</section>
+<section id="class-only" class="level2">
+<h2 class="anchored" data-anchor-id="class-only">Class Only</h2>
+<p>If you know the class you want your character to be but don’t want to worry about race-based modifiers at this point, use the <code>class_block</code> function instead of <code>pc_creator</code>. This function also assigns scores to abilities based on the source material’s quick build recommendations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class_block</span>(<span class="at">class =</span> <span class="st">"wizard"</span>, <span class="at">score_method =</span> <span class="st">"4d6"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ability score
+1     STR    12
+2     DEX    12
+3     CON    16
+4     INT    18
+5     WIS    12
+6     CHA     9</code></pre>
+</div>
+</div>
+<p>Also like <code>pc_creator</code>, it only works with supported classes so run <code>dndR::dnd_classes()</code> to see which classes I have currently built in.</p>
+</section>
+<section id="only-roll-the-dice" class="level2">
+<h2 class="anchored" data-anchor-id="only-roll-the-dice">Only Roll the Dice</h2>
+<p>If you’d rather assign your ability scores yourself (or are waiting for me to respond to your <a href="https://github.com/njlyon0/dndR/issues">GitHub Issue</a> asking me to add support for your PC’s race or class), you can run the simpler <code>ability_scores</code> function.</p>
+<p>This function uses your desired method for rolling ability scores (same as <code>pc_creator</code>), but doesn’t attempt to assign those scores to the six abilities or account for race- or class-based modifiers to particular scores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dndR<span class="sc">::</span><span class="fu">ability_scores</span>(<span class="at">method =</span> <span class="st">"4d6"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ability score
+1      V1     8
+2      V2    14
+3      V3    11
+4      V4    14
+5      V5     5
+6      V6    12</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

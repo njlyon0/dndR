@@ -1,5 +1,29 @@
 ---
-title: "About"
+title: "Dice Rolling"
 ---
 
-About this site
+```{r, include = F}
+library(dndR)
+```
+
+At its simplest, DnD involves significant amounts of dice rolling and (often) summing their values. So, `dndR` includes a `roll` function! This function supports 'rolling' up to 10 million of any of the standard dice and summing their results. "Standard" dice include the following numbers of sides: 100, 20, 12, 10, 8, 6, 4, and 2.
+
+Dice names are abbreviated as the <u>number</u> of dice to roll], a <u>lowercase "d"</u>, and the <u>type</u> of dice to roll
+
+For instance, to roll 3 six-sided dice we could do the following:
+```{r roll_fxn_1}
+dndR::roll(dice = '3d6')
+```
+
+The `roll` function returns the total of the side of the dice as a number so if you want to add multiple rolls together you can treat the function calls themselves as if they are numbers!
+
+```{r roll_fxn_2}
+dndR::roll('3d8') + dndR::roll('1d4')
+```
+
+Also, rolling two 20-sided dice (i.e., "2d20") is automatically assumed to be rolling with either advantage or disadvantage so it will return a message to that effect and both numbers.
+
+```{r roll_fxn_3}
+dndR::roll(dice = '2d20')
+```
+

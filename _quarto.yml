@@ -24,15 +24,11 @@ website:
       - section: "For Everyone"
         contents: 
           - href: dice.qmd
-            text: "Dice Rolling"
           - href: create-characters.qmd
-            text: "Character Creation"
       - section: "For DMs"
         contents: 
           - href: encounter-balance.qmd
-            text: "Balancing Encounters"
           - href: create-monsters.qmd
-            text: "Monster Creation"
   page-footer:
     center: "Copyright 2022, Nicholas J Lyon"
     background: primary
