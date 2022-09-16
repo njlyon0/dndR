@@ -35,7 +35,13 @@ monster_stats <- function(xp = NULL, cr = NULL){
   # Identify the relevant row using the provided arguments
   relevant_monster <- monsters %>%
     dplyr::filter(DMG_XP <= xp_actual) %>%
-    dplyr::slice_tail()
+    dplyr::slice_tail() %>%
+    # Turn all columns to characters
+    dplyr::mutate(dplyr::across(dplyr::everything(), base::as.character)) %>%
+    # Pivot to long format to make it easier to visualize
+    tidyr::pivot_longer(cols = dplyr::everything(),
+                        names_to = "statistic",
+                        values_to = "values")
 
   # Return that row
   return(relevant_monster) }

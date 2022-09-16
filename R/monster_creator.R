@@ -32,7 +32,11 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
   if(party_size > 5){ cr_actual <- party_level + 5}
 
   # Identify the DMG's recommendation for that monster
-  monster_raw <- dndR::monster_stats(cr = cr_actual)
+  monster_raw <- dndR::monster_stats(cr = cr_actual) %>%
+    # Pivot back to wide format to use these columns
+    tidyr::pivot_wider(names_from = "statistic", values_from = "values") %>%
+    # Fix any needed column format stuff broken by the pivot
+    dplyr::mutate(HP_Average = as.numeric(HP_Average))
 
   # Wrangle that dataframe
   monster_slim <- monster_raw %>%
