@@ -7,20 +7,21 @@
 #' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here
 #' @param scores_rolled (logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
 #' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
+#' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return (dataframe) raw ability score, race modifier, total ability score, and the roll modifier for each of the six abilities
 #' @export
 #'
 #' @examples
 #' # Create a PC's base statistics from scratch
-#' pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
+#' pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6", quiet = TRUE)
 #'
 #' # Or you can roll separately and then create a character with that dataframe
-#' my_scores <- ability_scores(method = "4d6")
+#' my_scores <- ability_scores(method = "4d6", quiet = TRUE)
 #' pc_creator(class = 'sorcerer', race = 'dragonborn', scores_rolled = TRUE, scores_df = my_scores)
 #'
 pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
-                       scores_rolled = FALSE, scores_df = NULL){
+                       scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
   # Squelch no visible bindings note
   score <- modifier <- raw_score <- race_modifier <- modifier_calc <- NULL
   
@@ -28,7 +29,7 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
   
   # Create class block
   class_df <- class_block(class = class, score_method = score_method,
-                    scores_rolled = scores_rolled, scores_df = scores_df)
+                    scores_rolled = scores_rolled, scores_df = scores_df, quiet = quiet)
 
   # Now identify racial modifers
   race_df <- race_mods(race = race)

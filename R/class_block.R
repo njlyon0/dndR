@@ -6,6 +6,7 @@
 #' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here
 #' @param scores_rolled (logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
 #' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
+#' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return a dataframe of two columns and six rows
 #'
@@ -21,7 +22,7 @@
 #' class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
 #'
 class_block <- function(class = NULL, score_method = "4d6",
-                       scores_rolled = FALSE, scores_df = NULL){
+                       scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
   # Squelch visible bindings note
   score <- ability <- NULL
 
@@ -33,7 +34,7 @@ class_block <- function(class = NULL, score_method = "4d6",
   if(scores_rolled == TRUE & !base::is.null(scores_df)){ scores <- scores_df }
 
   # If scores haven't been rolled, roll them here
-  if(scores_rolled == FALSE){ scores <- ability_scores(method = score_method) }
+  if(scores_rolled == FALSE){ scores <- ability_scores(method = score_method, quiet = quiet) }
 
   # Error out if class isn't one of supported vector
   if(base::is.null(class) | !base::tolower(class) %in% dnd_classes())

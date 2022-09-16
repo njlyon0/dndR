@@ -35,7 +35,7 @@ ability_singular <- function(method = "4d6"){
 #' @description Rolls for six ability scores using the desired method of rolling (4d6 drop lowest, 3d6, or 1d20). Doesn't assign abilities to facilitate player selection of which score should be each ability for a given character. Prints a warning if the total of all abilities is less than 70 or if any one ability is less than 8.
 #'
 #' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
-#' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low. I know it can be fun to have a terrible character but some tables like re-rolling above certain thresholds
+#' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return a dataframe of two columns and six rows
 #'

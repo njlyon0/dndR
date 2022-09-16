@@ -8,7 +8,8 @@ class_block(
   class = NULL,
   score_method = "4d6",
   scores_rolled = FALSE,
-  scores_df = NULL
+  scores_df = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ class_block(
 \item{scores_rolled}{(logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE}
 
 \item{scores_df}{(dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`}
+
+\item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low}
 }
 \value{
 a dataframe of two columns and six rows
