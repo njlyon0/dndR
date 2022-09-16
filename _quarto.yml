@@ -4,7 +4,7 @@ project:
   output-dir: docs
 
 website:
-  title: "`dndR` - An R Package for Dungeons & Dragons"
+  title: "An R Package for Dungeons & Dragons: `dndR`"
   favicon: inst/images/dndR_hex.png
   repo-url: https://github.com/njlyon0/dndR
   repo-actions: [issue]
@@ -21,10 +21,18 @@ website:
     contents: 
       - href: index.qmd
         text: "Package Overview"
-      - href: players
-        text: "Resources for Everyone"
-      - href: dms.qmd
-        text: "Resources for DMs"
+      - section: "For Everyone"
+        contents: 
+          - href: dice.qmd
+            text: "Dice Rolling"
+          - href: create-characters.qmd
+            text: "Character Creation"
+      - section: "For DMs"
+        contents: 
+          - href: encounter-balance.qmd
+            text: "Balancing Encounters"
+          - href: create-monsters.qmd
+            text: "Monster Creation"
   page-footer:
     center: "Copyright 2022, Nicholas J Lyon"
     background: primary
