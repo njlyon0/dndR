@@ -1,7 +1,19 @@
----
-title: "dndR"
----
+## Welcome to `dndR`!
 
-This is a Quarto website.
+<img src="inst/images/dndR_hex.png" width = "25%" align="right"/>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+I am a big fan of both R and Dungeons and Dragons so I thought it would be a fun test of my coding skills to build an R package that supports this hobby! `dndR` includes several functions that can be broadly divided between functions for both players and dungeon masters (DMs) and functions that are intended primarily for DMs.
+
+If any of these functions break for you (or if you have a cool idea for a new function!), please [post an Issue](https://github.com/njlyon0/dndR/issues) and I'll tweak the code ASAP. I hope that you enjoy the rest of this vignette as it demonstrates some of the use-cases for the functions currently included in `dndR`!
+
+## Installing `dndR`
+
+To install the development version of this package, run the following code:
+
+```{r install-dev-pkg, eval = F}
+# install.packages("devtools")
+devtools::install_github("njlyon0/dndR")
+```
+
+I plan on submitting this package to CRAN in the future but for now the dev version is all that exists. I hope that doesn't discourage you from using `dndR`!
+
