@@ -1,20 +1,41 @@
 project:
   type: website
+  execute-dir: project
   output-dir: docs
 
 website:
-  title: "dndR"
+  title: "`dndR` - An R Package for Dungeons & Dragons"
+  favicon: inst/images/dndR_hex.png
+  repo-url: https://github.com/njlyon0/dndR
+  repo-actions: [issue]
+  twitter-card: true
   navbar:
-    left:
+    background: primary
+    right:
+      - icon: github
+        href: https://github.com/njlyon0/dndR
+  sidebar:
+    style: "docked"
+    background: secondary
+    search: true
+    contents: 
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: "Package Overview"
+      - href: players
+        text: "Resources for Everyone"
+      - href: dms.qmd
+        text: "Resources for DMs"
+  page-footer:
+    center: "Copyright 2022, Nicholas J Lyon"
+    background: primary
+  margin-footer: <img src="inst/images/dndR_hex.png" width = "40%" />
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: minty
+      dark: darkly
     css: styles.css
     toc: true
-
-
-
+    link-external-newwindow: true
+    link-external-icon: false
