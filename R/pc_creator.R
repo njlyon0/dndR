@@ -22,7 +22,7 @@
 pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
                        scores_rolled = FALSE, scores_df = NULL){
   # Squelch no visible bindings note
-  score <- modifier <- raw_score <- race_modifier <- NULL
+  score <- modifier <- raw_score <- race_modifier <- modifier_calc <- NULL
   
   # No errors/warnings required because this is a wrapper for other custom functions that themselves have good error messages built in!
   

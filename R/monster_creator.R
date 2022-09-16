@@ -16,7 +16,7 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
   # Squelch 'visible bindings' note
   HP_Average <- Hit_Points <- Armor_Class <- NULL
   Prof_Bonus <- Attack_Bonus <- Save_DC <- NULL
-  score <- ability_actual <- modifier <- NULL
+  score <- ability_actual <- modifier <- modifier_calc <- NULL
 
   # Error out if arguments aren't specified
   if(base::is.null(party_level) | base::is.null(party_size))
