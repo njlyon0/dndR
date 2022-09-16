@@ -7,7 +7,6 @@ inst/images/
 .nojekyll
 .quarto/
 _quarto.yml
-about.qmd
-index.qmd
+^.*\.qmd$
 styles.css
 docs/
