@@ -1,0 +1,125 @@
+library(ggplot2)
+
+#' @title Rolls for a Single Ability Score
+#'
+#' @description Rolls for a single ability score using the specified method of dice rolling.
+#'
+#' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
+#'
+#' @return (numeric) vector of roll outcomes (not summed)
+#'
+#' @export
+#'
+#'
+party_diagram <- function(pc_stats, method){
+  if(missing(pc_stats)) {
+    pc_stats <- list()
+    base::message("Creating diagram for a new party")
+    base::message("Adding PC 1")
+    i <- 1
+    while (TRUE) {
+      pc_stat <- list()
+      name <- base::readline(prompt = sprintf("Name (leave empty for 'PC %s'): ", i))
+      if (name == "") {name <- sprintf("PC %s", i)}
+      pc_stat["STR"] <- base::readline(prompt = "STR: ")
+      pc_stat["DEX"] <- base::readline(prompt = "DEX: ")
+      pc_stat["CON"] <- base::readline(prompt = "CON: ")
+      pc_stat["INT"] <- base::readline(prompt = "INT: ")
+      pc_stat["WIS"] <- base::readline(prompt = "WIS: ")
+      pc_stat["CHA"] <- base::readline(prompt = "CHA: ")
+      pc_stats[[name]] <- pc_stat
+      i <- i + 1
+      if (substr(base::readline(prompt = sprintf("Add PC %s? (yes/no): ", i)), 1, 1) == "n") {
+        break
+      } else {
+        next
+    }
+  }
+  }
+  dput(pc_stats)
+  if (missing(method)) {
+    method <- "players"
+  }
+  fig <- make_diagram(pc_stats, method)
+  return(fig)
+}
+
+
+#' @title Rolls for a Single Ability Score
+#'
+#' @description Rolls for a single ability score using the specified method of dice rolling.
+#'
+#' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
+#'
+#' @return (numeric) vector of roll outcomes (not summed)
+#'
+#' @export
+#'
+#'
+make_diagram <- function(pc_stats, method) {
+    pc_stats <- do.call(
+    rbind, 
+    lapply(
+      names(pc_stats), 
+      \(pc) {
+	return(
+	  data.frame(
+            name = pc, 
+	    ability = rownames(t(data.frame(pc_stats[[pc]]))), 
+	    score = t(data.frame(pc_stats[[pc]]))
+	  )
+        )
+      }
+    )
+   )
+   pc_stats$score <- as.numeric(pc_stats$score)
+   pc_stats$ability <- factor(pc_stats$ability, levels = c("STR", "DEX", "CON", "INT", "WIS", "CHA"))
+   if (method == "players") {
+     stats_agg <- aggregate(pc_stats$score, list(pc_stats$name), FUN=mean)
+     names(stats_agg) <- c("name", "mean")
+     stats_agg$mean <- round(stats_agg$mean, 2)
+     stats_agg$name <- paste(stats_agg$name, " (Avg: ", stats_agg$mean, ")", sep = "")
+     pc_stats$name <- factor(pc_stats$name, levels = unique(pc_stats$name), labels = stats_agg$name)
+     pc_stats$ability <- factor(pc_stats$ability, levels = rev(levels(pc_stats$ability))) 
+     fig <- ggplot(pc_stats, aes(x = ability, y = score, color = ability)) +
+       geom_hline(data = stats_agg, aes(yintercept = mean), linetype = "dashed") +
+       geom_point(size = 3) +
+       geom_segment(aes(x = ability, y = 0, yend = score, xend = ability), size = 2, alpha = .7) +
+       geom_label(aes(x = ability, y = score - 4, label = score), color = "black") +
+       scale_y_continuous(limits=c(0, max(20, max(pc_stats$score)))) + 
+       coord_flip() +
+       facet_wrap(~name, scales="free") +
+       theme_minimal() +
+       guides(color = guide_legend(reverse = TRUE)) +
+       labs(
+         x = "Ability",
+	 y = "Score",
+	 title = "Ability Scores by Player",
+	 color = "Ability"
+      )
+   } else {
+     stats_agg <- aggregate(pc_stats$score, list(pc_stats$ability), FUN=mean)
+     names(stats_agg) <- c("ability", "mean")
+     stats_agg$mean <- round(stats_agg$mean, 2)
+     stats_agg$ability <- paste(stats_agg$ability, " (Avg: ", stats_agg$mean, ")", sep = "")
+     pc_stats$ability <- factor(pc_stats$ability, levels = levels(pc_stats$ability), labels = stats_agg$ability)
+     stats_agg$ability <- factor(stats_agg$ability)
+     fig <- ggplot(pc_stats, aes(x = name, y = score, color = name)) +
+         geom_hline(data = stats_agg, aes(yintercept = mean), linetype = "dashed") +
+         geom_point(size = 3) +
+         geom_segment(aes(x = name, y = 0, yend = score, xend = name), size = 2, alpha = .7) +
+         geom_label(aes(x = name, y = score - 4, label = score), color = "black") +
+         scale_y_continuous(limits=c(0, max(20, max(pc_stats$score)))) + 
+	 coord_flip() +
+	 facet_wrap(~ability, scales="free") +
+	 theme_minimal() +
+	 guides(color = guide_legend(reverse = TRUE)) +
+	 labs(
+	   x = "PC Name",
+	   y = "Score",
+	   title = "Players Scores by Ability",
+	   color = "PC Name"
+	 )
+   }
+  return(fig)  
+}
