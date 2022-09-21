@@ -35,9 +35,9 @@ party_diagram <- function(pc_stats, by){
         next
     }
   }
-  }
   # Print representation for easier access
   dput(pc_stats)
+  }
   if (missing(by)) { method <- "player" }
   fig <- make_diagram(pc_stats, by)
   return(fig)
@@ -74,7 +74,8 @@ make_diagram <- function(pc_stats, method) {
        geom_point(size = 3) +
        geom_segment(aes(x = ability, y = 0, yend = score, xend = ability), size = 2, alpha = .7) +
        geom_label(aes(x = ability, y = score - 4, label = score), color = "black") +
-       scale_y_continuous(limits=c(0, max(20, max(pc_stats$score)))) + 
+       scale_y_continuous(limits=c(0, max(20, max(pc_stats$score)))) +
+       scale_color_brewer(type = "qual", palette = "Dark2") + 
        coord_flip() +
        facet_wrap(~name, scales="free") +
        theme_minimal() +
@@ -98,6 +99,7 @@ make_diagram <- function(pc_stats, method) {
          geom_segment(aes(x = name, y = 0, yend = score, xend = name), size = 2, alpha = .7) +
          geom_label(aes(x = name, y = score - 4, label = score), color = "black") +
          scale_y_continuous(limits=c(0, max(20, max(pc_stats$score)))) + 
+         scale_color_brewer(type = "qual", palette = "Dark2") + 
 	 coord_flip() +
 	 facet_wrap(~ability, scales="free") +
 	 theme_minimal() +
