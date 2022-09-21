@@ -1,17 +1,17 @@
 library(ggplot2)
 
-#' @title Rolls for a Single Ability Score
+#' @title Generate a Diagram of a Party's Ability Scores
 #'
-#' @description Rolls for a single ability score using the specified method of dice rolling.
+#' @description Input a party's ability scores and visualize either by ability or player character.
 #'
-#' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
+#' @param by (character) Either "player" (default) or "ability". Define the facets of the party diagram.
 #'
-#' @return (numeric) vector of roll outcomes (not summed)
+#' @return (ggplot object) The party diagram as a ggplot object.
 #'
 #' @export
 #'
-#'
-party_diagram <- function(pc_stats, method){
+party_diagram <- function(pc_stats, by){
+  # If no ability scores are passed to the function, generate a new list
   if(missing(pc_stats)) {
     pc_stats <- list()
     base::message("Creating diagram for a new party")
@@ -36,26 +36,14 @@ party_diagram <- function(pc_stats, method){
     }
   }
   }
+  # Print representation for easier access
   dput(pc_stats)
-  if (missing(method)) {
-    method <- "players"
-  }
-  fig <- make_diagram(pc_stats, method)
+  if (missing(by)) { method <- "players" }
+  fig <- make_diagram(pc_stats, by)
   return(fig)
 }
 
-
-#' @title Rolls for a Single Ability Score
-#'
-#' @description Rolls for a single ability score using the specified method of dice rolling.
-#'
-#' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
-#'
-#' @return (numeric) vector of roll outcomes (not summed)
-#'
-#' @export
-#'
-#'
+# Built the diagram
 make_diagram <- function(pc_stats, method) {
     pc_stats <- do.call(
     rbind, 
