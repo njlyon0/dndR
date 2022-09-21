@@ -38,7 +38,7 @@ party_diagram <- function(pc_stats, by){
   }
   # Print representation for easier access
   dput(pc_stats)
-  if (missing(by)) { method <- "players" }
+  if (missing(by)) { method <- "player" }
   fig <- make_diagram(pc_stats, by)
   return(fig)
 }
@@ -62,7 +62,7 @@ make_diagram <- function(pc_stats, method) {
    )
    pc_stats$score <- as.numeric(pc_stats$score)
    pc_stats$ability <- factor(pc_stats$ability, levels = c("STR", "DEX", "CON", "INT", "WIS", "CHA"))
-   if (method == "players") {
+   if (method == "player") {
      stats_agg <- aggregate(pc_stats$score, list(pc_stats$name), FUN=mean)
      names(stats_agg) <- c("name", "mean")
      stats_agg$mean <- round(stats_agg$mean, 2)
