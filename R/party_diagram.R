@@ -14,7 +14,7 @@
 #'
 #' @export
 #'
-party_diagram <- function(pc_stats, by) {
+party_diagram <- function(by, pc_stats) {
   # Check if by is a valid option
   if (missing(by)) {
     by <- "player"
@@ -35,11 +35,29 @@ party_diagram <- function(pc_stats, by) {
         name <- sprintf("PC %s", i)
       }
       pc_stat["STR"] <- base::readline(prompt = "STR: ")
+      if (!grepl("^[0-9]*$", pc_stat["STR"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stat["DEX"] <- base::readline(prompt = "DEX: ")
+      if (!grepl("^[0-9]*$", pc_stat["DEX"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stat["CON"] <- base::readline(prompt = "CON: ")
+      if (!grepl("^[0-9]*$", pc_stat["CON"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stat["INT"] <- base::readline(prompt = "INT: ")
+      if (!grepl("^[0-9]*$", pc_stat["INT"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stat["WIS"] <- base::readline(prompt = "WIS: ")
+      if (!grepl("^[0-9]*$", pc_stat["WIS"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stat["CHA"] <- base::readline(prompt = "CHA: ")
+      if (!grepl("^[0-9]*$", pc_stat["CHA"])) {
+        stop("Ability score must only contain numbers")
+      }
       pc_stats[[name]] <- pc_stat
       i <- i + 1
       if (substr(base::readline(prompt = sprintf("Add PC %s? (yes/no): ", i)), 1, 1) == "n") {
@@ -99,7 +117,7 @@ party_diagram <- function(pc_stats, by) {
       scale_color_brewer(type = "qual", palette = "Dark2") +
       coord_flip() +
       facet_wrap( ~ name, scales = "free") +
-      theme_minimal() +
+      theme_classic() +
       guides(color = guide_legend(reverse = TRUE)) +
       labs(
         x = "Ability",
@@ -140,7 +158,7 @@ party_diagram <- function(pc_stats, by) {
       scale_color_brewer(type = "qual", palette = "Dark2") +
       coord_flip() +
       facet_wrap( ~ ability, scales = "free") +
-      theme_minimal() +
+      theme_classic() +
       guides(color = guide_legend(reverse = TRUE)) +
       labs(
         x = "PC Name",
