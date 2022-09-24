@@ -7,6 +7,8 @@
 party_diagram(pc_stats, by)
 }
 \arguments{
+\item{pc_stats}{(list) A named list of ability scores for each character.}
+
 \item{by}{(character) Either "player" (default) or "ability". Define the facets of the party diagram.}
 }
 \value{
