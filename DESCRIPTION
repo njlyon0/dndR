@@ -2,8 +2,12 @@ Package: dndR
 Type: Package
 Title: Dungeons and Dragons Functions in R
 Version: 0.1.0
-Author: person("Nicholas J", "Lyon", email = "njlyon@alumni.iastate.edu", role = c("aut", "cre"),
-    comment = 'https://orcid.org/0000-0003-3905-1078')
+Authors@R: c(
+  person(given = "Nicholas J", 
+         family = "Lyon",
+         role = c("aut", "cre"),
+         email = "njlyon@alumni.iastate.edu",
+         comment = c(ORCID = "0000-0003-3905-1078"))
   )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: More about what it does (maybe more than one line)
