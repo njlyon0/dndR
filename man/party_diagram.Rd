@@ -4,12 +4,12 @@
 \alias{party_diagram}
 \title{Generate a Diagram of a Party's Ability Scores}
 \usage{
-party_diagram(pc_stats, by)
+party_diagram(by, pc_stats)
 }
 \arguments{
-\item{pc_stats}{(list) A named list of ability scores for each character.}
-
 \item{by}{(character) Either "player" (default) or "ability". Define the facets of the party diagram.}
+
+\item{pc_stats}{(list) A named list of ability scores for each character.}
 }
 \value{
 (ggplot object) The party diagram as a ggplot object.

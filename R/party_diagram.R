@@ -2,9 +2,8 @@
 #'
 #' @description Input a party's ability scores and visualize either by ability or player character.
 #'
-#' @param by (character) Either "player" (default) or "ability". Define the facets of the party diagram.
-
 #' @param pc_stats (list) A named list of ability scores for each character.
+#' @param by (character) Either "player" (default) or "ability". Define the facets of the party diagram.
 #'
 #' @return (ggplot object) The party diagram as a ggplot object.
 #'
