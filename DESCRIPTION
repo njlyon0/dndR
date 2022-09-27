@@ -7,8 +7,11 @@ Authors@R: c(
          family = "Lyon",
          role = c("aut", "cre"),
          email = "njlyon@alumni.iastate.edu",
-         comment = c(ORCID = "0000-0003-3905-1078"))
-  )
+         comment = c(ORCID = "0000-0003-3905-1078")),
+  person(given = "Tim",
+         family = "Schatto-Eckrodt",
+         role = "ctb",
+         comment = c(Website = "https://kudusch.de/")) )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
@@ -20,11 +23,11 @@ Depends:
     R (>= 3.5)
 Imports:
     dplyr,
+    ggplot2,
     magrittr,
     purrr,
     stringr,
-    tidyr,
-    ggplot2
+    tidyr
 Suggests: 
     knitr,
     rmarkdown
