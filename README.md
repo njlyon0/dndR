@@ -64,6 +64,14 @@ repository!
         *Witcher*-esque homebrew
         monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
 
+-   **`party_diagram`** – Create a `ggplot2` diagram of party ability
+    scores separated either by player or by score. This plot can be
+    useful in identifying the strengths and weaknesses of the party as a
+    whole to help you (the DM) create encounters with that in mind
+
+    -   *Huge* thank you to [Tim Schatto-Eckrodt](https://kudusch.de/)
+        for contributing this function!
+
 ## Looking Ahead
 
 I know that there are rumblings of a change to statistic modifiers

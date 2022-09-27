@@ -51,6 +51,10 @@ Below are short descriptions of the functions currently included in `dndR`. I am
 
     - This function is inspired by [Zee Bashew's video on creating *Witcher*-esque homebrew monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
     
+- **`party_diagram`** -- Create a `ggplot2` diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind
+
+    - _Huge_ thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for contributing this function!
+    
 ## Looking Ahead
 
 I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I will create a suite of "5.5e" functions that follow those guidelines. The extant functions follow "5e" rules as detailed in the Player's Handbook (PHb) and Dungeon Master's Guide (DMG).
