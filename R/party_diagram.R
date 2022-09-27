@@ -168,7 +168,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
       # Facet the graph!
       facet_wrap(. ~ ability, scales = "free") +
       # Add better title
-      labs(title = "Party Diagram by Ability Scores")
+      labs(title = "Party Diagram by Ability Score")
   }
   
   # Finalize diagram ----
@@ -186,8 +186,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
     # Use a more streamlined theme
     theme_classic() +
     # Input better labels
-    labs(x = "Ability", y = "Score", color = "Ability",
-         title = "Diagram of Party Ability Scores")
+    labs(x = "Ability", y = "Score", color = "Ability")
   
   # Return the finished diagram
   return(diagram) }
