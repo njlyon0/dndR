@@ -4,9 +4,4 @@
 ^\.github$
 utils/
 inst/images/
-.nojekyll
-.quarto/
-_quarto.yml
-^.*\.qmd$
 styles.css
-docs/
