@@ -14,9 +14,9 @@ pc_creator(
 )
 }
 \arguments{
-\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`)}
+\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`). Also supports "random" and will randomly select a supported class. Random class returned as message}
 
-\item{race}{(character) name of character race (supported classes returned by `dnd_races()`)}
+\item{race}{(character) name of character race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race. Random race returned as message}
 
 \item{score_method}{(character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here}
 

@@ -2,8 +2,8 @@
 #'
 #' @description Stat out a player character (PC) of specified race and class using your preferred method for rolling ability scores.
 #'
-#' @param class (character) name of character class (supported classes returned by `dnd_classes()`)
-#' @param race (character) name of character race (supported classes returned by `dnd_races()`)
+#' @param class (character) name of character class (supported classes returned by `dnd_classes()`). Also supports "random" and will randomly select a supported class. Random class returned as message
+#' @param race (character) name of character race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race. Random race returned as message
 #' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here
 #' @param scores_rolled (logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
 #' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
@@ -24,9 +24,19 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
                        scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
   # Squelch no visible bindings note
   score <- modifier <- raw_score <- race_modifier <- modifier_calc <- NULL
-  
+
+  # If class is set to random, pick one
+  if(!is.null(class) & tolower(class) == "random"){
+    class <- sample(x = dnd_classes(), size = 1)
+    message("Random class selected: ", class) }
+
+  # Do the same for race
+  if(!is.null(race) & tolower(race) == "random"){
+    race <- sample(x = dnd_races(), size = 1)
+    message("Random class selected: ", race) }
+
   # No errors/warnings required because this is a wrapper for other custom functions that themselves have good error messages built in!
-  
+
   # Create class block
   class_df <- class_block(class = class, score_method = score_method,
                     scores_rolled = scores_rolled, scores_df = scores_df, quiet = quiet)
@@ -50,6 +60,6 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
     dplyr::select(-modifier_calc) %>%
     # Return as a dataframe
     as.data.frame()
-  
+
   # Return that table
   return(full_stats) }
