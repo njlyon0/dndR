@@ -7,7 +7,7 @@
 race_mods(race = NULL)
 }
 \arguments{
-\item{race}{character string of race (supported classes returned by `dnd_races()`)}
+\item{race}{character string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race}
 }
 \value{
 a dataframe of two columns and as many rows as there are abilities modified by the race.

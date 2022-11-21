@@ -13,7 +13,7 @@ class_block(
 )
 }
 \arguments{
-\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`)}
+\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`). Also supports "random" and will randomly select a supported class}
 
 \item{score_method}{(character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here}
 
