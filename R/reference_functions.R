@@ -1,7 +1,7 @@
 #' @title Return Vector of Accepted Classes
 #'
-#' @description Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a class added.
-#' 
+#' @description Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository if you want a class added.
+#'
 #' @return character vector of accepted class names
 #'
 #' @export
@@ -24,7 +24,7 @@ dnd_classes <- function(){
 
 #' @title Return Vector of Supported DnD Races
 #'
-#' @description Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.
+#' @description Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository if you want a race added.
 #'
 #' @return character vector of supported race designations
 #'

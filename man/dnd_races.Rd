@@ -10,7 +10,7 @@ dnd_races()
 character vector of supported race designations
 }
 \description{
-Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.
+Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository if you want a race added.
 }
 \examples{
 # Want to check which races this package supports?
