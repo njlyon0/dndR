@@ -99,26 +99,25 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Can roll up a new character of the desired class from scratch</span></span></span>
 <span class="r-in"><span><span class="fu">class_block</span><span class="op">(</span>class <span class="op">=</span> <span class="st">"wizard"</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total score low. Consider re-rolling?</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> At least one ability very low. Consider re-rolling?</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX    14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON    14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT    16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS    12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT    15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA    12</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or you can roll separately and then create a character with that dataframe</span></span></span>
 <span class="r-in"><span><span class="va">my_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">class_block</span><span class="op">(</span>class <span class="op">=</span> <span class="st">"fighter"</span>, scores_rolled <span class="op">=</span> <span class="cn">TRUE</span>, scores_df <span class="op">=</span> <span class="va">my_scores</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX    16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON    10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT    14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR    15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT    12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA    12</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
