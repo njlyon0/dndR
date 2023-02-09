@@ -2,6 +2,4 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.github$
-utils/
-inst/images/
-styles.css
+dev/
