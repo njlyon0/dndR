@@ -60,6 +60,6 @@ Below are short descriptions of the functions currently included in `dndR`. I am
     
 ## Looking Ahead
 
-I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I will create a suite of "5.5e" functions that follow those guidelines. The extant functions follow "5e" rules as detailed in the Player's Handbook (PHb) and Dungeon Master's Guide (DMG).
+I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I will create a suite of "5.5e" functions that follow those guidelines. The extant functions follow "5e" rules as detailed in the Player's Handbook (PHB) and Dungeon Master's Guide (DMG).
 
 If you have other function ideas, [post them as Issues](https://github.com/njlyon0/dndR/issues) on this repository!
