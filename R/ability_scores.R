@@ -59,13 +59,13 @@ ability_scores <- function(method = "4d6", quiet = FALSE){
   # Error out if method is not part of accepted list
   if(!method %in% c("4d6", "3d6", "1d20", "d20"))
     stop("`method` not recognized, must be one of '4d6', '3d6', '1d20', or  'd20'")
-  
+
   # Warn if quiet isn't logical
-  if(class(quiet) != "logical"){
+  if(is.logical(quiet) != TRUE){
     message("`quiet` must be a logical. Defaulting to FALSE")
     quiet <- FALSE }
-    
-  
+
+
   # Increase specificity of "d20" if someone enters that
   if(method == "d20"){method <- "1d20"}
 
