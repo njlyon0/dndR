@@ -25,16 +25,6 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
   # Squelch no visible bindings note
   score <- modifier <- raw_score <- race_modifier <- modifier_calc <- NULL
 
-  # If class is set to random, pick one
-  if(!is.null(class) & tolower(class) == "random"){
-    class <- sample(x = dnd_classes(), size = 1)
-    message("Random class selected: ", class) }
-
-  # Do the same for race
-  if(!is.null(race) & tolower(race) == "random"){
-    race <- sample(x = dnd_races(), size = 1)
-    message("Random class selected: ", race) }
-
   # No errors/warnings required because this is a wrapper for other custom functions that themselves have good error messages built in!
 
   # Create class block
