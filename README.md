@@ -8,6 +8,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/njlyon0/dndR/workflows/R-CMD-check/badge.svg)](https://github.com/njlyon0/dndR/actions)
+![GitHub last
+commit](https://img.shields.io/github/last-commit/njlyon0/dndR) ![GitHub
+issues](https://img.shields.io/github/issues-raw/njlyon0/dndR) ![GitHub
+pull requests](https://img.shields.io/github/issues-pr/njlyon0/dndR)
 <!-- badges: end -->
 
 The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth
