@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="inst/images/dndR_hex.png" align = "right" width = "15%" />
+<img src="man/figures/dndR_hex.png" align = "right" width = "15%" />
 
 # `dndR`: An R Package for Dungeons & Dragons
 
@@ -32,45 +32,45 @@ repository!
 
 ## For Players and DMs
 
--   **`roll`** – Roll specified number of standard dice and sum their
-    outcomes. “Standard” dice have the following number of sides: 100,
-    20, 12, 10, 8, 6, 4, and 2
+- **`roll`** – Roll specified number of standard dice and sum their
+  outcomes. “Standard” dice have the following number of sides: 100, 20,
+  12, 10, 8, 6, 4, and 2
 
--   **`ability_scores`** – Roll for six ability scores using specified
-    method (e.g., 4d6 drop lowest, 3d6, etc.)
+- **`ability_scores`** – Roll for six ability scores using specified
+  method (e.g., 4d6 drop lowest, 3d6, etc.)
 
--   **`pc_creator`** – Stat out a character of specified race and class
-    using your preferred method of rolling ability scores
+- **`pc_creator`** – Stat out a character of specified race and class
+  using your preferred method of rolling ability scores
 
-    -   Run `dnd_races()` or `dnd_classes()` to see which races/classes
-        are currently supported by `pc_creator`
+  - Run `dnd_races()` or `dnd_classes()` to see which races/classes are
+    currently supported by `pc_creator`
 
 ## For DMs
 
--   **`xp_pool`** – Identify experience point (XP) total for desired
-    encounter difficulty at a specified player level and party size
+- **`xp_pool`** – Identify experience point (XP) total for desired
+  encounter difficulty at a specified player level and party size
 
--   **`xp_cost`** – Find “realized” XP amount by applying appropriate
-    multiplier for “raw” XP based on number of creatures and party size
+- **`xp_cost`** – Find “realized” XP amount by applying appropriate
+  multiplier for “raw” XP based on number of creatures and party size
 
--   **`monster_stats`** – Return monster stat block of specified XP
-    value or challenge rating (CR)
+- **`monster_stats`** – Return monster stat block of specified XP value
+  or challenge rating (CR)
 
--   **`monster_creator`** – Generate a homebrew monster with additional
-    immunities and vulnerabilities of specified difficulty (adjustment
-    for these is performed automatically)
+- **`monster_creator`** – Generate a homebrew monster with additional
+  immunities and vulnerabilities of specified difficulty (adjustment for
+  these is performed automatically)
 
-    -   This function is inspired by [Zee Bashew’s video on creating
-        *Witcher*-esque homebrew
-        monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
+  - This function is inspired by [Zee Bashew’s video on creating
+    *Witcher*-esque homebrew
+    monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
 
--   **`party_diagram`** – Create a `ggplot2` diagram of party ability
-    scores separated either by player or by score. This plot can be
-    useful in identifying the strengths and weaknesses of the party as a
-    whole to help you (the DM) create encounters with that in mind
+- **`party_diagram`** – Create a `ggplot2` diagram of party ability
+  scores separated either by player or by score. This plot can be useful
+  in identifying the strengths and weaknesses of the party as a whole to
+  help you (the DM) create encounters with that in mind
 
-    -   *Huge* thank you to [Tim Schatto-Eckrodt](https://kudusch.de/)
-        for contributing this function!
+  - *Huge* thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for
+    contributing this function!
 
 ## Looking Ahead
 
