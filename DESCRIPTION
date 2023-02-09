@@ -13,8 +13,9 @@ Authors@R: c(
          role = "ctb",
          comment = c(Website = "https://kudusch.de/")) )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: The goal of `dndR` is to provide a suite of Dungeons & Dragons related functions.
+    This package is meant to be useful both to players and Dungeon Masters (DMs).
+    All functions currently focus on Fifth Edition (a.k.a. "5e") but once the next edition is published functions will likely be expanded to include any rule changes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
