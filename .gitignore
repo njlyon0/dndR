@@ -44,5 +44,5 @@ vignettes/*.pdf
 # Add R project file
 *.Rproj
 
-# Quarto background stuff
-/.quarto/
+# CRAN Submission info
+CRAN-SUBMISSION
