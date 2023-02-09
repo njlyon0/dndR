@@ -4,3 +4,7 @@
 ^\.github$
 dev/
 LICENSE.md
+^cran\-comments\.md$
+docs/
+pkgdown
+^CRAN-SUBMISSION$
