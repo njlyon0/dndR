@@ -32,6 +32,8 @@ devtools::install_github("njlyon0/dndR")
 
 Below are short descriptions of the functions currently included in `dndR`. I am always willing to expand that list though so if you have a DnD-related task that could be cool as a function, please [post it as an Issue](https://github.com/njlyon0/dndR/issues) on this package's GitHub repository!
 
+You can also check out the `pkgdown` style website for this package [here](https://njlyon0.github.io/dndR/) or a more--in my opinion--visually appealing vignette-style website I've created [here](https://njlyon0.github.io/dndR-website/). The latter website was created using [Quarto](https://quarto.org/).
+
 ## For Players and DMs
 
 - **`roll`** -- Roll specified number of standard dice and sum their outcomes. "Standard" dice have the following number of sides: 100, 20, 12, 10, 8, 6, 4, and 2

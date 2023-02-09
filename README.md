@@ -34,6 +34,12 @@ DnD-related task that could be cool as a function, please [post it as an
 Issue](https://github.com/njlyon0/dndR/issues) on this package’s GitHub
 repository!
 
+You can also check out the `pkgdown` style website for this package
+[here](https://njlyon0.github.io/dndR/) or a more–in my opinion–visually
+appealing vignette-style website I’ve created
+[here](https://njlyon0.github.io/dndR-website/). The latter website was
+created using [Quarto](https://quarto.org/).
+
 ## For Players and DMs
 
 - **`roll`** – Roll specified number of standard dice and sum their
