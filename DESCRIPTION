@@ -1,6 +1,6 @@
 Package: dndR
 Type: Package
-Title: An R Package for Dungeons & Dragons
+Title: Dungeons & Dragons Functions for Players and Dungeon Masters
 Version: 1.0.0
 Authors@R: c(
   person(given = "Nicholas", 
