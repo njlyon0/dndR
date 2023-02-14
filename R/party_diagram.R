@@ -5,15 +5,16 @@
 #' @param by (character) either "player" (default) or "ability". Defines the facets of the party diagram
 #' @param pc_stats (null / list) either `NULL` (default) or named list of ability scores for each character. If `NULL`, player names and scores are requested interactively in the console
 #' @param quiet (logical) if FALSE (default), prints interactively assembled PC list for ease of subsequent use
-#' 
+#'
 #' @return (ggplot object) party diagram as a ggplot object
 #'
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #'
 #' @export
-#' 
-#' @examples 
+#'
+#' @examples
+#' \donttest{
 #' # Create named list of PCs and their scores
 #' party_list <- list(
 #' Vax = list(
@@ -22,23 +23,23 @@
 #' STR = "20", DEX = "15", CON = "10", INT = "10", WIS = "11", CHA = "12"),
 #' Rook = list(
 #' STR = "10", DEX = "10", CON = "18", INT = "9", WIS = "11", CHA = "16"))
-#' 
+#'
 #' # Create a party diagram using that list (by player)
 #' party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
 #'
 #' # Can easily group by ability with the same list!
 #' party_diagram(by = "ability", pc_stats = party_list, quiet = FALSE)
-#'
+#' }
 party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
   # Squelch visible bindings note
   STR <- CHA <- player <- ability <- score <- NULL
-  
+
   # Error out if `by` is not valid
   if(!by %in% c("player", "ability"))
     stop("`by` must be 'player' or 'ability'")
-  
+
   # Assemble ability scores ----
-  
+
   # If no ability scores are passed to the function, generate a new list
   # Groundwork
   if (is.null(pc_stats)) {
@@ -52,7 +53,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
       name <-
         base::readline(prompt = sprintf("Name (leave empty for 'PC %s'): ", i))
       if (name == "") { name <- sprintf("PC %s", i) }
-      
+
       # Request ability scores for this PC from user
       ## Strength
       pc_value["STR"] <- base::readline(prompt = "STR: ")
@@ -78,11 +79,11 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
       pc_value["CHA"] <- base::readline(prompt = "CHA: ")
       if (!grepl("^[0-9]*$", pc_value["CHA"])) {
         stop("Ability score must only contain numbers") }
-      
+
       # Assemble statistics into list and advance counter
       pc_stats[[name]] <- pc_value
       i <- i + 1
-      
+
       # Ask user if they want to add another PC and if they do, return to top  of `while` loop
       if (base::substr(x = base::readline(prompt = sprintf("Add PC %s? (yes/no): ", i)), start = 1, stop = 1) == "n") {
         break
@@ -95,7 +96,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
   # Wrangle ability scores ----
   # Wrangle list to make it easier for `ggplot2`
   pc_df <- pc_stats %>%
-    # Condense list into a dataframe 
+    # Condense list into a dataframe
     purrr::map_df(.f = dplyr::bind_rows) %>%
     # Strip player name out of the list names as a column
     dplyr::mutate("player" = names(pc_stats), .before = STR) %>%
@@ -110,10 +111,10 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
     dplyr::mutate(ability = factor(x = ability, levels = c("STR", "DEX", "CON", "INT", "WIS", "CHA"))) %>%
     # Make it a dataframe
     as.data.frame()
-  
+
   # Create core diagram by player ----
   if(by == "player"){
-    
+
     ## Create summarized dataframe
     pc_summarized <- pc_df %>%
       dplyr::group_by(player) %>%
@@ -121,7 +122,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
         x = base::mean(x = score, na.rm = TRUE),
         digits = 2)) %>%
       as.data.frame()
-    
+
   ## Create fundamental plot (tiny stuff handled after)
   diagram_core <- ggplot(pc_summarized,
                          aes_string(x = "ability", y = "score",
@@ -140,10 +141,10 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
     # Add better title
     labs(title = "Party Diagram by Player")
   }
-  
+
   # Create core diagram by score ----
   if(by == "ability"){
-    
+
     ## Create summarized dataframe
     pc_summarized <- pc_df %>%
       dplyr::group_by(ability) %>%
@@ -151,7 +152,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
         x = base::mean(x = score, na.rm = TRUE),
         digits = 2)) %>%
       as.data.frame()
-   
+
     ## Create fundamental plot (tiny stuff handled after)
     diagram_core <- ggplot(pc_summarized,
                            aes_string(x = "player", y = "score",
@@ -170,7 +171,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
       # Add better title
       labs(title = "Party Diagram by Ability Score")
   }
-  
+
   # Finalize diagram ----
   diagram <- diagram_core +
     # Add a point geometry to scores (makes big end point)
@@ -187,6 +188,6 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
     theme_classic() +
     # Input better labels
     labs(x = "Ability", y = "Score", color = "Ability")
-  
+
   # Return the finished diagram
   return(diagram) }

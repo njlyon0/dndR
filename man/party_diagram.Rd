@@ -20,6 +20,7 @@ party_diagram(by = "player", pc_stats = NULL, quiet = FALSE)
 Input a party's ability scores and visualize either by ability or player character. Includes dashed line for average of ability scores within chosen `by` parameter.
 }
 \examples{
+\donttest{
 # Create named list of PCs and their scores
 party_list <- list(
 Vax = list(
@@ -34,5 +35,5 @@ party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
 
 # Can easily group by ability with the same list!
 party_diagram(by = "ability", pc_stats = party_list, quiet = FALSE)
-
+}
 }
