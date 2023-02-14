@@ -10,7 +10,7 @@ output: github_document
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "man/figures/README-")
 ```
 
-# `dndR`: An R Package for Dungeons & Dragons 
+# `dndR`: Dungeons & Dragons Functions for Players and Dungeon Masters
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/njlyon0/dndR/workflows/R-CMD-check/badge.svg)](https://github.com/njlyon0/dndR/actions)

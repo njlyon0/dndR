@@ -3,7 +3,7 @@
 
 <img src="man/figures/dndR_hex.png" align = "right" width = "15%" />
 
-# `dndR`: An R Package for Dungeons & Dragons
+# `dndR`: Dungeons & Dragons Functions for Players and Dungeon Masters
 
 <!-- badges: start -->
 
