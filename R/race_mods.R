@@ -2,9 +2,9 @@
 #'
 #' @description Identify the race-based ability modifiers identified in the Player's Handbook (PHB).
 #'
-#' @param race character string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race
+#' @param race (character) string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race
 #'
-#' @return a dataframe of two columns and as many rows as there are abilities modified by the race.
+#' @return (dataframe) two columns and as many rows as there are abilities modified by the race
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -15,7 +15,7 @@
 #'
 race_mods <- function(race = NULL){
   # Error out if I haven't hard-coded the race's modifiers
-  if(is.null(race) | 
+  if(is.null(race) |
      !base::tolower(race) %in% c(dnd_races(), "random"))
     stop("Race not in supported set. See `dnd_races()` for list of supported entries. Submit an issue on the GitHub repository (github.com/njlyon0/dndR) if you want a race added.")
 
@@ -23,7 +23,7 @@ race_mods <- function(race = NULL){
   if(!is.null(race) & tolower(race) == "random"){
     race <- sample(x = dnd_races(), size = 1)
     message("Random class selected: ", race) }
-  
+
   # Create an empty dataframe to hold modifiers
   empty_block <- data.frame('ability' = base::as.factor(c("STR", "DEX", "CON",
                                                           "INT", "WIS", "CHA")),

@@ -10,7 +10,7 @@ roll(dice = "d20")
 \item{dice}{(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice}
 }
 \value{
-Numeric, the sum of specified dice outcomes
+(numeric) sum of specified dice outcomes
 }
 \description{
 Rolls the Specified Number and Type of Dice

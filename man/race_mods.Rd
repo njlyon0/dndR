@@ -7,10 +7,10 @@
 race_mods(race = NULL)
 }
 \arguments{
-\item{race}{character string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race}
+\item{race}{(character) string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race}
 }
 \value{
-a dataframe of two columns and as many rows as there are abilities modified by the race.
+(dataframe) two columns and as many rows as there are abilities modified by the race
 }
 \description{
 Identify the race-based ability modifiers identified in the Player's Handbook (PHB).

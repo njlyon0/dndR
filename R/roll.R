@@ -4,7 +4,7 @@
 #'
 #' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
 #'
-#' @return Numeric, the sum of specified dice outcomes
+#' @return (numeric) sum of specified dice outcomes
 #' @export
 #'
 #' @examples
@@ -20,12 +20,12 @@ roll <- function(dice = "d20"){
   # Error out if not a character
   if(!is.character(dice))
     stop("`dice` must be specified as a character (e.g., '3d8')")
-  
+
   # Identify number of dice to roll
   dice_count <- base::gsub(pattern = "d", replacement = "",
                            x = stringr::str_extract(string = dice,
                                      pattern = "[:digit:]{1,10000000}d"))
-  
+
   # If number is left blank, assume one but print warning
   if(base::nchar(dice_count) == 0 | is.na(dice_count)){
     base::message("Number of dice unspecified, assuming 1")

@@ -8,7 +8,6 @@
 #'
 #' @export
 #'
-#'
 ability_singular <- function(method = "4d6"){
   # Create empty list
   blank <- list()
@@ -37,7 +36,7 @@ ability_singular <- function(method = "4d6"){
 #' @param method (character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
-#' @return a dataframe of two columns and six rows
+#' @return (dataframe) two columns and six rows for ability score for each ability
 #'
 #' @importFrom magrittr %>%
 #' @export

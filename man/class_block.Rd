@@ -24,7 +24,7 @@ class_block(
 \item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low}
 }
 \value{
-a dataframe of two columns and six rows
+(dataframe) two columns and six rows
 }
 \description{
 Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).

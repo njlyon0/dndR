@@ -4,7 +4,7 @@
 \name{dndR-package}
 \alias{dndR}
 \alias{dndR-package}
-\title{dndR: An R Package for Dungeons & Dragons}
+\title{dndR: Dungeons & Dragons Functions for Players and Dungeon Masters}
 \description{
 The goal of `dndR` is to provide a suite of Dungeons & Dragons related functions. This package is meant to be useful both to players and Dungeon Masters (DMs). All functions currently focus on Fifth Edition (a.k.a. "5e") but once the next edition is published functions will likely be expanded to include any rule changes.
 }

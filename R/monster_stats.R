@@ -7,6 +7,8 @@
 #'
 #' @importFrom magrittr %>%
 #'
+#' @return (dataframe) two columns and eight rows
+#'
 #' @export
 monster_stats <- function(xp = NULL, cr = NULL){
   # Squelch visible bindings note

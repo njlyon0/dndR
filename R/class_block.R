@@ -8,7 +8,7 @@
 #' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
-#' @return a dataframe of two columns and six rows
+#' @return (dataframe) two columns and six rows
 #'
 #' @importFrom magrittr %>%
 #' @export
@@ -44,7 +44,7 @@ class_block <- function(class = NULL, score_method = "4d6",
   if(!is.null(class) & tolower(class) == "random"){
     class <- sample(x = dnd_classes(), size = 1)
     message("Random class selected: ", class) }
-  
+
   # Determine top two abilities based on class
   if(base::tolower(class) == "barbarian"){ top_two <- c("STR", "CON") }
   if(base::tolower(class) == "bard"){ top_two <- c("CHA", "DEX") }

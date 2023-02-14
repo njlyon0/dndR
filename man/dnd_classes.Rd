@@ -7,7 +7,7 @@
 dnd_classes()
 }
 \value{
-character vector of accepted class names
+(character) vector of accepted class names
 }
 \description{
 Simply returns a vector of classes that `class_block()` accepts currently. Submit an issue on the GitHub repository if you want a class added.

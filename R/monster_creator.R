@@ -6,12 +6,14 @@
 #' @param party_size (numeric) indicating how many player characters (PCs) are in the party
 #'
 #' @importFrom magrittr %>%
+#' @export
+#'
+#' @return (dataframe) two columns and 15 rows
 #'
 #' @examples
 #' # Creates a monster from the specified average party level
 #' monster_creator(party_level = 4, party_size = 3)
 #'
-#' @export
 monster_creator <- function(party_level = NULL, party_size = NULL){
   # Squelch 'visible bindings' note
   HP_Average <- Hit_Points <- Armor_Class <- NULL

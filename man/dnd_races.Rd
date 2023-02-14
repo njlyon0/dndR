@@ -7,7 +7,7 @@
 dnd_races()
 }
 \value{
-character vector of supported race designations
+(character) vector of supported race designations
 }
 \description{
 Simply returns a vector of races that `race_mods()` accepts currently. Submit an issue on the GitHub repository if you want a race added.
