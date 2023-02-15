@@ -6,7 +6,7 @@
 \alias{dndR-package}
 \title{dndR: Dungeons & Dragons Functions for Players and Dungeon Masters}
 \description{
-The goal of `dndR` is to provide a suite of Dungeons & Dragons related functions. This package is meant to be useful both to players and Dungeon Masters (DMs). All functions currently focus on Fifth Edition (a.k.a. "5e") but once the next edition is published functions will likely be expanded to include any rule changes.
+The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions. This package is meant to be useful both to players and Dungeon Masters (DMs). All functions currently focus on Fifth Edition (a.k.a. "5e") but once the next edition is published functions will likely be expanded to include any rule changes.
 }
 \author{
 \strong{Maintainer}: Nicholas Lyon \email{njlyon@alumni.iastate.edu} (\href{https://orcid.org/0000-0003-3905-1078}{ORCID})
