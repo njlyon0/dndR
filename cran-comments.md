@@ -15,3 +15,10 @@ As noted in [R-hub issue #503](https://github.com/r-hub/rhub/issues/503), this c
 ## Downstream dependencies
 
 There are currently no downstream dependencies for this package.
+
+## Changes due to CRAN Reviewer Feedback
+
+- Omitted redundant "An R Package for" from package title
+- Wrapped `party_diagram` example in `donttest` as it exceeds 5 seconds
+- Added a `@return` field to the functions that were missing it on previous submission
+- Changed backticks to single quotation marks in DESCRIPTION file
