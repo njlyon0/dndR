@@ -4,10 +4,12 @@
 \alias{roll}
 \title{Roll Any Number of Dice}
 \usage{
-roll(dice = "d20")
+roll(dice = "d20", show_dice = FALSE)
 }
 \arguments{
 \item{dice}{(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die}
+
+\item{show_dice}{(logical) whether to print the values of each individual die included in the total. Defaults to FALSE}
 }
 \value{
 (numeric) sum of specified dice outcomes
