@@ -16,6 +16,15 @@ coin <- function(){ base::sample(x = 1:2, size = 1) }
 #'
 d2 <- function(){ base::sample(x = 1:2, size = 1) }
 
+#' @title Roll a Three-Sided Dice
+#'
+#' @description Picks a random number from 1-3
+#'
+#' @return (numeric) result of "roll" of specified dice type
+#' @export
+#'
+d3 <- function(){ base::sample(x = 1:3, size = 1) }
+
 #' @title Roll a Four-Sided Dice ("d4")
 #'
 #' @description Picks a random number from 1-4
