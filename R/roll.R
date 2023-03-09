@@ -2,7 +2,7 @@
 #'
 #' @description Rolls the Specified Number and Type of Dice
 #'
-#' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice
+#' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die
 #'
 #' @return (numeric) sum of specified dice outcomes
 #' @export

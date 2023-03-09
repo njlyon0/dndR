@@ -7,7 +7,7 @@
 roll(dice = "d20")
 }
 \arguments{
-\item{dice}{(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice}
+\item{dice}{(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die}
 }
 \value{
 (numeric) sum of specified dice outcomes
