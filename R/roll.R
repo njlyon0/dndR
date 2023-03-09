@@ -36,7 +36,7 @@ roll <- function(dice = "d20"){
                                     pattern = "d[:digit:]{1,3}")
 
   # Error out if dice_type not of recognized type
-  if(!dice_type %in% c("d2", "d4", "d6", "d8", "d10", "d12", "d20", "d100"))
+  if(!dice_type %in% c("d2", "d3", "d4", "d6", "d8", "d10", "d12", "d20", "d100"))
     stop('Dice type not recognized')
 
   # Create empty list to store roll result
@@ -48,7 +48,13 @@ roll <- function(dice = "d20"){
     for(k in 1:dice_count){
       dice_result[[k]] <- base::data.frame('result' = d2())
     } }
-
+  
+  ## d3
+  if(dice_type == "d3"){
+    for(k in 1:dice_count){
+      dice_result[[k]] <- base::data.frame('result' = d3())
+    } }
+  
   ## d4
   if(dice_type == "d4"){
     for(k in 1:dice_count){
@@ -80,7 +86,7 @@ roll <- function(dice = "d20"){
     } }
 
   ## d20
-  if(dice_type == "d20"){
+  if(dice_type == "d20" & dice_count != 2){
     for(k in 1:dice_count){
       dice_result[[k]] <- base::data.frame('result' = d20())
     } }
@@ -92,13 +98,13 @@ roll <- function(dice = "d20"){
     } }
 
   # Collapse list into dataframe
-  dice_result_df <- purrr::map_dfr(.x = dice_result, .f = dplyr::bind_rows)
+  dice_result_df <- purrr::list_rbind(x = dice_result)
 
   # Calculate final sum
   total <- base::sum(dice_result_df$result, na.rm = TRUE)
 
   # If two d20 are rolled, assume they're rolling for advantage/disadvantage and don't sum
-  if(dice == "2d20"){
+  if(dice_type == "d20" & dice_count == 2){
     total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
     base::message("Assuming you're rolling for (dis)advantage so both rolls returned") }
 
