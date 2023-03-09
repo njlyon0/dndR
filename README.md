@@ -44,7 +44,7 @@ created using [Quarto](https://quarto.org/).
 
 - **`roll`** – Roll specified number of standard dice and sum their
   outcomes. “Standard” dice have the following number of sides: 100, 20,
-  12, 10, 8, 6, 4, and 2
+  12, 10, 8, 6, 4, 3, and 2
 
 - **`ability_scores`** – Roll for six ability scores using specified
   method (e.g., 4d6 drop lowest, 3d6, etc.)
