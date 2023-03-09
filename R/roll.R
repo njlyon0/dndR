@@ -3,6 +3,7 @@
 #' @description Rolls the Specified Number and Type of Dice
 #'
 #' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die
+#' @param show_dice (logical) whether to print the values of each individual die included in the total. Defaults to FALSE
 #'
 #' @return (numeric) sum of specified dice outcomes
 #' @export
@@ -15,7 +16,7 @@
 #' roll('1d20') + 5
 #' roll('2d8') + roll('1d4')
 #'
-roll <- function(dice = "d20"){
+roll <- function(dice = "d20", show_dice = FALSE){
 
   # Error out if not a character
   if(!is.character(dice))
@@ -108,5 +109,9 @@ roll <- function(dice = "d20"){
     total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
     base::message("Assuming you're rolling for (dis)advantage so both rolls returned") }
 
+  # If desired (and necessary), message the individual roll values
+  if(show_dice == TRUE & dice_count > 1 & dice != "2d20"){
+    base::message("Individual rolls: ", paste(dice_result_df$result, collapse = ", ")) }
+  
   # Return total
   return(total) }
