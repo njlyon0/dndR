@@ -57,13 +57,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"d20"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"d20"</span>, show_dice <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dice</dt>
-<dd><p>(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a twenty-sided dice</p></dd>
+<dd><p>(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die</p></dd>
+
+
+<dt>show_dice</dt>
+<dd><p>(logical) whether to print the values of each individual die included in the total. Defaults to FALSE</p></dd>
 
 </dl></div>
     <div id="value">
@@ -81,9 +85,9 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Returned as a number so you can add rolls together or integers</span></span></span>
 <span class="r-in"><span><span class="fu">roll</span><span class="op">(</span><span class="st">'1d20'</span><span class="op">)</span> <span class="op">+</span> <span class="fl">5</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 24</span>
 <span class="r-in"><span><span class="fu">roll</span><span class="op">(</span><span class="st">'2d8'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">roll</span><span class="op">(</span><span class="st">'1d4'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
