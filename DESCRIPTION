@@ -12,7 +12,11 @@ Authors@R: c(
   person(given = "Tim",
          family = "Schatto-Eckrodt",
          role = "ctb",
-         comment = c(Website = "https://kudusch.de/")) )
+         comment = c(Website = "https://kudusch.de/")),
+  person(given = "Humberto",
+         family = "Coelho Nappo",
+         role = "ctb")
+         )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions.
     This package is meant to be useful both to players and Dungeon Masters (DMs).
