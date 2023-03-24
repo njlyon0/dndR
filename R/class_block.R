@@ -46,6 +46,7 @@ class_block <- function(class = NULL, score_method = "4d6",
     message("Random class selected: ", class) }
 
   # Determine top two abilities based on class
+  if(base::tolower(class) == "artificer"){ top_two <- c("INT", "DEX") }
   if(base::tolower(class) == "barbarian"){ top_two <- c("STR", "CON") }
   if(base::tolower(class) == "bard"){ top_two <- c("CHA", "DEX") }
   if(base::tolower(class) == "cleric"){ top_two <- c("WIS", "STR") }

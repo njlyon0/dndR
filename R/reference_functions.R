@@ -13,7 +13,7 @@
 dnd_classes <- function(){
 
   # Assemble vector of currently supported classes
-  current_classes <- c("barbarian", "bard", "cleric", "druid",
+  current_classes <- c("artificer", "barbarian", "bard", "cleric", "druid",
                        "fighter", "monk", "paladin", "ranger",
                        "rogue", "sorcerer", "warlock", "wizard")
 
@@ -38,12 +38,11 @@ dnd_races <- function(){
 
   # Assemble vector of currently supported classes
   current_races <- c(
-    "aarakocra", "dark elf", "dragonborn", "drow",
-    "forest gnome", "half elf", "half-elf",
-    "half orc", "half-orc", "high elf",
-    "hill dwarf", "human", "lightfoot halfling",
-    "mountain dwarf", "plasmoid", "rock gnome",
-    "stout halfling", "tiefling", "wood elf"
+    "aarakocra", "bugbear", "changeling", "dark elf", "dragonborn", "drow",
+    "forest gnome", "goblin", "half elf", "half-elf", "half orc", "half-orc", "high elf",
+    "hill dwarf", "hobgoblin", "human", "kalashtar", "lightfoot halfling",
+    "mountain dwarf", "orc", "plasmoid", "shifter", "rock gnome", "stout halfling",
+    "tiefling", "warforged", "wood elf"
   )
 
   # Return that vector

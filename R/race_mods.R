@@ -34,6 +34,15 @@ race_mods <- function(race = NULL){
   if(base::tolower(race) == "aarakocra"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "DEX" ~ 2, ability == "WIS" ~ 1, TRUE ~ modifier)) }
+  ## B
+  if(base::tolower(race) == "bugbear"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "STR" ~ 2, ability == "DEX" ~ 1, TRUE ~ modifier)) }
+  ## C
+  if(base::tolower(race) == "changeling"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "CHA" ~ 2, TRUE ~ modifier))
+  base::message("Changelings get +1 to one (non-CHA) ability. You'll need to do that manually.") }
   ## D
   if(base::tolower(race) == "dark elf" |
      base::tolower(race) == "drow"){ block <- empty_block %>%
@@ -46,6 +55,10 @@ race_mods <- function(race = NULL){
   if(base::tolower(race) == "forest gnome"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "INT" ~ 2, ability == "DEX" ~ 1, TRUE ~ modifier)) }
+  ## G
+  if(base::tolower(race) == "goblin"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "DEX" ~ 2, ability == "CON" ~ 1, TRUE ~ modifier)) }
   ## H
   if(base::tolower(race) == "half elf" |
      base::tolower(race) == "half-elf"){ block <- empty_block %>%
@@ -62,11 +75,18 @@ race_mods <- function(race = NULL){
   if(base::tolower(race) == "hill dwarf"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "CON" ~ 2, ability == "WIS" ~ 1, TRUE ~ modifier)) }
+  if(base::tolower(race) == "hobgoblin"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "CON" ~ 2, ability == "INT" ~ 1, TRUE ~ modifier)) }
   if(base::tolower(race) == "human"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "STR" ~ 1, ability == "CON" ~ 1,
       ability == "DEX" ~ 1, ability == "INT" ~ 1,
       ability == "WIS" ~ 1, ability == "CHA" ~ 1)) }
+  ## K
+  if(base::tolower(race) == "kalashtar"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "WIS" ~ 2, ability == "CHA" ~ 1, TRUE ~ modifier)) }
   ## L
   if(base::tolower(race) == "lightfoot halfling"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
@@ -75,6 +95,10 @@ race_mods <- function(race = NULL){
   if(base::tolower(race) == "mountain dwarf"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "CON" ~ 2, ability == "STR" ~ 2, TRUE ~ modifier)) }
+  ## O
+  if(base::tolower(race) == "orc"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "STR" ~ 2, ability == "CON" ~ 1, TRUE ~ modifier)) }
   ## P
   if(base::tolower(race) == "plasmoid"){ block <- empty_block
   message("Plasmoids get +2 to one ability and +1 to another OR +1 to three abilities. You'll need to do that manually.") }
@@ -83,6 +107,9 @@ race_mods <- function(race = NULL){
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "INT" ~ 2, ability == "CON" ~ 1, TRUE ~ modifier)) }
   ## S
+  if(base::tolower(race) == "shifter"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "CON" ~ 2, ability == "STR" ~ 1, TRUE ~ modifier)) }
   if(base::tolower(race) == "stout halfling"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "DEX" ~ 2, ability == "CON" ~ 1, TRUE ~ modifier)) }
@@ -91,12 +118,17 @@ race_mods <- function(race = NULL){
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "CHA" ~ 2, ability == "INT" ~ 1, TRUE ~ modifier)) }
   ## W
+  if(base::tolower(race) == "warforged"){ block <- empty_block %>%
+    dplyr::mutate(modifier = dplyr::case_when(
+      ability == "CON" ~ 2, TRUE ~ modifier))
+  base::message("Warforged get +1 to one (non-CON) ability. You'll need to do that manually.") }
   if(base::tolower(race) == "wood elf"){ block <- empty_block %>%
     dplyr::mutate(modifier = dplyr::case_when(
       ability == "DEX" ~ 2, ability == "WIS" ~ 1, TRUE ~ modifier)) }
+  ### TEMPLATE
   # if(base::tolower(race) == ""){ block <- empty_block %>%
   #   dplyr::mutate(modifier = dplyr::case_when(
-  #     ability == "" ~ 0, ability == "" ~ 0, TRUE ~ modifier)) }
+  #     ability == "" ~ 2, ability == "" ~ 1, TRUE ~ modifier)) }
 
   # Return filled block
   return(block) }
