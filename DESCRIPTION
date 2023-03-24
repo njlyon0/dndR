@@ -15,7 +15,8 @@ Authors@R: c(
          comment = c(Website = "https://kudusch.de/")),
   person(given = "Humberto",
          family = "Nappo",
-         role = "ctb")
+         role = "ctb",
+         comment = c(ORCID = "0000-0001-7810-1635"))
          )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions.
