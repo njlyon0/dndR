@@ -7,7 +7,6 @@
 #' @param quiet (logical) if FALSE (default), prints interactively assembled PC list for ease of subsequent use
 #'
 #' @return (ggplot object) party diagram as a ggplot object
-#'
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #'

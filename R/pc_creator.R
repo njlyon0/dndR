@@ -10,6 +10,8 @@
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return (dataframe) raw ability score, race modifier, total ability score, and the roll modifier for each of the six abilities
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples

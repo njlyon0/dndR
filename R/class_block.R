@@ -9,8 +9,8 @@
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return (dataframe) two columns and six rows
-#'
 #' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples

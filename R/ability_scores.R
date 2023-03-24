@@ -37,8 +37,8 @@ ability_singular <- function(method = "4d6"){
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return (dataframe) two columns and six rows for ability score for each ability
-#'
 #' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples

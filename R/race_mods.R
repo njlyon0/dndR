@@ -5,8 +5,8 @@
 #' @param race (character) string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race
 #'
 #' @return (dataframe) two columns and as many rows as there are abilities modified by the race
-#'
 #' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples

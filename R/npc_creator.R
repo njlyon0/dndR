@@ -5,6 +5,7 @@
 #' @param npc_count (numeric) number of NPCs for which to choose race/positions
 #'
 #' @return (dataframe) dataframe with two columns (one for race and one for job) and a number of rows equal to `npc_count`
+#'
 #' @export
 #'
 #' @examples

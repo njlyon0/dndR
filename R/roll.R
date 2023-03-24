@@ -6,6 +6,7 @@
 #' @param show_dice (logical) whether to print the values of each individual die included in the total. Defaults to FALSE
 #'
 #' @return (numeric) sum of specified dice outcomes
+#'
 #' @export
 #'
 #' @examples
@@ -49,13 +50,13 @@ roll <- function(dice = "d20", show_dice = FALSE){
     for(k in 1:dice_count){
       dice_result[[k]] <- base::data.frame('result' = d2())
     } }
-  
+
   ## d3
   if(dice_type == "d3"){
     for(k in 1:dice_count){
       dice_result[[k]] <- base::data.frame('result' = d3())
     } }
-  
+
   ## d4
   if(dice_type == "d4"){
     for(k in 1:dice_count){
@@ -112,6 +113,6 @@ roll <- function(dice = "d20", show_dice = FALSE){
   # If desired (and necessary), message the individual roll values
   if(show_dice == TRUE & dice_count > 1 & dice != "2d20"){
     base::message("Individual rolls: ", paste(dice_result_df$result, collapse = ", ")) }
-  
+
   # Return total
   return(total) }

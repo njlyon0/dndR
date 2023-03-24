@@ -5,10 +5,10 @@
 #' @param party_level (numeric) indicating the average party level. If all players are the same level, that level is the average party level
 #' @param party_size (numeric) indicating how many player characters (PCs) are in the party
 #'
-#' @importFrom magrittr %>%
-#' @export
-#'
 #' @return (dataframe) two columns and 15 rows
+#' @importFrom magrittr %>%
+#'
+#' @export
 #'
 #' @examples
 #' # Creates a monster from the specified average party level

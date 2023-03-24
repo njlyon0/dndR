@@ -4,10 +4,10 @@
 #'
 #' @param cr (numeric) Challenge rating for which you want to calculate experience points
 #'
-#' @importFrom magrittr %>%
-#' @export
-#'
 #' @return (numeric) value of XP equivalent to the user-supplied challenge rating
+#' @importFrom magrittr %>%
+#'
+#' @export
 #'
 cr_convert <- function(cr = NULL){
 

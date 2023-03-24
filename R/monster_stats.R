@@ -5,11 +5,11 @@
 #' @param xp (numeric) experience point (XP) value of the monster
 #' @param cr (numeric) challenge rating (CR) of the monster. Note that this is NOT necessary if XP is provided
 #'
+#' @return (dataframe) two columns and eight rows
 #' @importFrom magrittr %>%
 #'
-#' @return (dataframe) two columns and eight rows
-#'
 #' @export
+#'
 monster_stats <- function(xp = NULL, cr = NULL){
   # Squelch visible bindings note
   DMG_XP <- NULL
