@@ -16,23 +16,11 @@ pull requests](https://img.shields.io/github/issues-pr/njlyon0/dndR)
 
 The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth
 Edition a.k.a. “5e”) related functions to help both players and Dungeon
-Masters (DMs).
-
-## Installation
-
-You can install the development version of dndR from
-[GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("njlyon0/dndR")
-```
-
-Below are short descriptions of the functions currently included in
-`dndR`. I am always willing to expand that list though so if you have a
-DnD-related task that could be cool as a function, please [post it as an
-Issue](https://github.com/njlyon0/dndR/issues) on this package’s GitHub
-repository!
+Masters (DMs). Below are short descriptions of the functions currently
+included in `dndR`. I am always willing to expand that list though so if
+you have a DnD-related task that could be cool as a function, please
+[post it as an Issue](https://github.com/njlyon0/dndR/issues) on this
+package’s GitHub repository!
 
 You can also check out the `pkgdown` style website for this package
 [here](https://njlyon0.github.io/dndR/) or a more–in my opinion–visually
@@ -40,14 +28,24 @@ appealing vignette-style website I’ve created
 [here](https://njlyon0.github.io/dndR-website/). The latter website was
 created using [Quarto](https://quarto.org/).
 
+## Installation
+
+You can install the development version of `dndR` from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("njlyon0/dndR")
+```
+
 ## For Players and DMs
 
 - **`roll`** – Roll specified number of standard dice and sum their
   outcomes. “Standard” dice have the following number of sides: 100, 20,
-  12, 10, 8, 6, 4, 3, and 2
+  12, 10, 8, 6, 4, 3, or 2
 
 - **`ability_scores`** – Roll for six ability scores using specified
-  method (e.g., 4d6 drop lowest, 3d6, etc.)
+  method (e.g., 4d6 drop lowest, 3d6, or 1d20)
 
 - **`pc_creator`** – Stat out a character of specified race and class
   using your preferred method of rolling ability scores
@@ -56,15 +54,15 @@ created using [Quarto](https://quarto.org/).
     currently supported by `pc_creator`
 
 - **`pc_level_calc`** – Identify the current level of a player character
-  based on earned XP. Also returns the proficiency modifier to be used
-  at that level
+  based on earned experience points (XP). Also returns the proficiency
+  modifier to be used at that level
 
   - Thank you to Humberto Coelho Nappo for contributing this function!
 
 ## For DMs
 
-- **`xp_pool`** – Identify experience point (XP) total for desired
-  encounter difficulty at a specified player level and party size
+- **`xp_pool`** – Identify XP total for desired encounter difficulty at
+  a specified player level and party size
 
 - **`xp_cost`** – Find “realized” XP amount by applying appropriate
   multiplier for “raw” XP based on number of creatures and party size
@@ -97,7 +95,7 @@ created using [Quarto](https://quarto.org/).
 
 I know that there are rumblings of a change to statistic modifiers
 becoming based on background rather than race so once those details are
-finalized I will create a suite of “5.5e” functions that follow those
+finalized I plan on creating a suite of functions that follow those
 guidelines. The extant functions follow “5e” rules as detailed in the
 Player’s Handbook (PHB) and Dungeon Master’s Guide (DMG).
 
