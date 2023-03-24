@@ -79,8 +79,13 @@ created using [Quarto](https://quarto.org/).
   in identifying the strengths and weaknesses of the party as a whole to
   help you (the DM) create encounters with that in mind
 
-  - *Huge* thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for
+  - Thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for
     contributing this function!
+
+- **`npc_creator`** – Pick a job and race for any number of non-player
+  characters (NPCs). Hopefully this provides a useful starting point
+  when describing the patrons of a tavern or the travelers players
+  glimpse on the edge of the flickering light cast by their campfire
 
 ## Looking Ahead
 

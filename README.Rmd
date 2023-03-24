@@ -58,8 +58,10 @@ You can also check out the `pkgdown` style website for this package [here](https
     
 - **`party_diagram`** -- Create a `ggplot2` diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind
 
-    - _Huge_ thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for contributing this function!
-    
+    - Thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for contributing this function!
+
+- **`npc_creator`** -- Pick a job and race for any number of non-player characters (NPCs). Hopefully this provides a useful starting point when describing the patrons of a tavern or the travelers players glimpse on the edge of the flickering light cast by their campfire
+
 ## Looking Ahead
 
 I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I will create a suite of "5.5e" functions that follow those guidelines. The extant functions follow "5e" rules as detailed in the Player's Handbook (PHB) and Dungeon Master's Guide (DMG).

@@ -2,6 +2,7 @@
 
 Development version of `dndR`. The following changes from the preceding version have been made:
 
+- New function: `npc_creator` -- for picking race / job of a user-specified number of non-player characters
 - `roll` now supports three-sided dice (i.e., "d3")
 - `roll` now includeds a `show_dice` argument that accepts either `TRUE` or `FALSE` (the default). If `show_dice = T` (and more than one die is rolled), the individual die results will be returned as a message in addition to the sum of their results. Note that the behavior of "2d20" is unchanged and both values are returned as a two-column, one-row dataframe
 
