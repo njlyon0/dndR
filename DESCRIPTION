@@ -14,7 +14,7 @@ Authors@R: c(
          role = "ctb",
          comment = c(Website = "https://kudusch.de/")),
   person(given = "Humberto",
-         family = "Coelho Nappo",
+         family = "Nappo",
          role = "ctb")
          )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>

@@ -14,6 +14,7 @@ The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions
 Other contributors:
 \itemize{
   \item Tim Schatto-Eckrodt (https://kudusch.de/) [contributor]
+  \item Humberto Nappo [contributor]
 }
 
 }

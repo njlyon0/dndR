@@ -57,7 +57,7 @@ devtools::install_github("njlyon0/dndR")
   based on earned experience points (XP). Also returns the proficiency
   modifier to be used at that level
 
-  - Thank you to Humberto Coelho Nappo for contributing this function!
+  - Thank you to Humberto Nappo for contributing this function!
 
 ## For DMs
 
