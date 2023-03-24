@@ -2,6 +2,8 @@
 
 Development version of `dndR`. The following changes from the preceding version have been made:
 
+- New supported class: Artificer (Source: "Eberron")
+- New supported races: Bugbear, Changeling, Goblin, Hobgoblin, Kalashtar, Orc, Shifter, Warforged (Source: "Eberron")
 - New function: `npc_creator` -- picks race and job of some number of non-player characters
 - New function: `pc_level_calc` -- identifies player level based on earned XP
 - `roll` now supports three-sided dice (i.e., "d3")
