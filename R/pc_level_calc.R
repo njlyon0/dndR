@@ -14,6 +14,8 @@
 #' pc_level_calc(player_xp = 950)
 #'
 pc_level_calc <- function(player_xp = NULL){
+  # Squelch visible bindings note
+  xp_threshold <- NULL
 
   # Error out if `player_xp` isn't provided
   if(is.null(player_xp))
@@ -39,7 +41,7 @@ pc_level_calc <- function(player_xp = NULL){
   level_out <- xp_reftable %>%
     dplyr::filter(xp_threshold <= player_xp) %>%
     # Keep only last row (i.e., highest possible level for that amount of player XP)
-    utils::tail(x = ., n = 1)
+    utils::tail(n = 1)
 
   # Return that object
   return(level_out) }
