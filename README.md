@@ -55,6 +55,12 @@ created using [Quarto](https://quarto.org/).
   - Run `dnd_races()` or `dnd_classes()` to see which races/classes are
     currently supported by `pc_creator`
 
+- **`pc_level_calc`** – Identify the current level of a player character
+  based on earned XP. Also returns the proficiency modifier to be used
+  at that level
+
+  - Thank you to Humberto Coelho Nappo for contributing this function!
+
 ## For DMs
 
 - **`xp_pool`** – Identify experience point (XP) total for desired
