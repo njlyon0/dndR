@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dndR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.900</span>
       </span>
     </div>
 
@@ -110,9 +110,9 @@ million of any of the standard dice and summing their results.
 8, 6, 4, and 2.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d6'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 10</span></span>
+<span><span class="co">#&gt; [1] 14</span></span>
 <span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d8'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'1d4'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 21</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 17</span></span></code></pre></div>
 <p>Note that ‘2d20’ is automatically assumed to be rolling with
 advantage/disadvantage so it will return a message to that effect and
 both numbers.</p>
@@ -120,7 +120,7 @@ both numbers.</p>
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span>dice <span class="op">=</span> <span class="st">'2d20'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Assuming you're rolling for (dis)advantage so both rolls returned</span></span>
 <span><span class="co">#&gt;   roll_1 roll_2</span></span>
-<span><span class="co">#&gt; 1     19     20</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      1     18</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="character-creation">Character Creation<a class="anchor" aria-label="anchor" href="#character-creation"></a>
@@ -132,12 +132,12 @@ ability scores.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/pc_creator.html">pc_creator</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">'barbarian'</span>, race <span class="op">=</span> <span class="st">'half orc'</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   ability raw_score race_modifier score roll_modifier</span></span>
-<span><span class="co">#&gt; 1     STR        16             2    18            +4</span></span>
+<span><span class="co">#&gt; 1     STR        15             2    17            +3</span></span>
 <span><span class="co">#&gt; 2     DEX        12             0    12            +1</span></span>
-<span><span class="co">#&gt; 3     CON        14             1    15            +2</span></span>
-<span><span class="co">#&gt; 4     INT         9             0     9            -1</span></span>
-<span><span class="co">#&gt; 5     WIS        12             0    12            +1</span></span>
-<span><span class="co">#&gt; 6     CHA        11             0    11             0</span></span></code></pre></div>
+<span><span class="co">#&gt; 3     CON        13             1    14            +2</span></span>
+<span><span class="co">#&gt; 4     INT        12             0    12            +1</span></span>
+<span><span class="co">#&gt; 5     WIS        13             0    13            +1</span></span>
+<span><span class="co">#&gt; 6     CHA        12             0    12            +1</span></span></code></pre></div>
 <p>You can check which classes and races are currently supported by
 <code>pc_creator</code> by running <code>dnd_classes</code> or
 <code>dnd_races</code>. If you have a class/race in mind that isn’t
@@ -151,12 +151,20 @@ race/class/background based modifiers yourself.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   ability score</span></span>
-<span><span class="co">#&gt; 1      V1    13</span></span>
+<span><span class="co">#&gt; 1      V1    11</span></span>
 <span><span class="co">#&gt; 2      V2    12</span></span>
-<span><span class="co">#&gt; 3      V3    14</span></span>
-<span><span class="co">#&gt; 4      V4    10</span></span>
+<span><span class="co">#&gt; 3      V3     9</span></span>
+<span><span class="co">#&gt; 4      V4    15</span></span>
 <span><span class="co">#&gt; 5      V5    13</span></span>
-<span><span class="co">#&gt; 6      V6    12</span></span></code></pre></div>
+<span><span class="co">#&gt; 6      V6    14</span></span></code></pre></div>
+<p>If you do experience point-based leveling, you can use the
+<code>pc_level_calc</code> function to check what level your PC has
+reached with the amount of XP they have earned. Thanks to Humberto Nappo
+for contributing this function!</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/pc_level_calc.html">pc_level_calc</a></span><span class="op">(</span>player_xp <span class="op">=</span> <span class="fl">4100</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   player_level xp_threshold proficiency</span></span>
+<span><span class="co">#&gt; 4            4         2700          +2</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="encounter-balancing">Encounter Balancing<a class="anchor" aria-label="anchor" href="#encounter-balancing"></a>
@@ -187,7 +195,7 @@ is where <code>xp_pool</code> becomes useful.</p>
 <p><code>xp_pool</code> returns the amount of XP the GM can ‘spend’ on
 monsters in a given encounter to ensure the difficulty is as desired
 based on the three factors identified above.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">"medium"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 625</span></span></code></pre></div>
 </div>
@@ -218,7 +226,7 @@ number of player characters (PCs) and returns the “realized” XP. You can
 then quickly compare this with the value return by <code>xp_pool</code>
 to determine whether you need to add or remove creatures from your
 encounter.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">1000</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
 </div>
@@ -230,23 +238,23 @@ want to design a hard encounter for them and I want to use
 <code>dndR</code> to balance this encounter.</p>
 <p>To begin, I’d identify the total XP I can spend to make an encounter
 this difficult.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">'hard'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1112</span></span></code></pre></div>
 <p>Now that I know my XP threshold, I can check the value of two
 monsters worth (total) 500 XP against that threshold.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">500</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 750</span></span></code></pre></div>
 <p>I can see that I’m well under the XP threshold I have to play with so
 I can add a monster and see where that leaves me.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">750</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
 <p>A little over because of the multiplier, so let’s say I change my
 mind and keep three monsters but change their identity to one with a
 lower XP value.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">600</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1200</span></span></code></pre></div>
 <p>Basically right on target! I can now pick out my three monsters that
@@ -255,6 +263,54 @@ encounter for my players! (* “Likely” because there is dice rolling
 involved and it is possible that the monsters roll well while my players
 roll badly or vice versa).</p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="assessing-party-abilities">Assessing Party Abilities<a class="anchor" aria-label="anchor" href="#assessing-party-abilities"></a>
+</h2>
+<p>It can be useful as a GM to know what abilities your party is–as a
+whole–strong in versus weaker in. <code>party_diagram</code> allows GMs
+to visualize the ability scores of every player in a party either
+grouped by player or by ability score. The function supports both
+interactive (abilities entered via the Console) and non-interactive
+(abilities given as a list) entries. Thank you to <a href="https://kudusch.de/" class="external-link">Tim Schatto-Eckrodt</a> for contributing this
+function!</p>
+<p>Due to the static nature of a vignette, we’ll use the non-interactive
+path by assembling the party score list and then invoking
+<code>party_diagram</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create named list of PCs and their scores</span></span>
+<span><span class="va">party_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Vax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>STR <span class="op">=</span> <span class="st">"10"</span>, DEX <span class="op">=</span> <span class="st">"13"</span>, CON <span class="op">=</span> <span class="st">"14"</span>, </span>
+<span>                              INT <span class="op">=</span> <span class="st">"15"</span>, WIS <span class="op">=</span> <span class="st">"16"</span>, CHA <span class="op">=</span> <span class="st">"12"</span><span class="op">)</span>,</span>
+<span>                   Beldra <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>STR <span class="op">=</span> <span class="st">"20"</span>, DEX <span class="op">=</span> <span class="st">"15"</span>, CON <span class="op">=</span> <span class="st">"10"</span>,</span>
+<span>                                 INT <span class="op">=</span> <span class="st">"10"</span>, WIS <span class="op">=</span> <span class="st">"11"</span>, CHA <span class="op">=</span> <span class="st">"12"</span><span class="op">)</span>,</span>
+<span>                   Rook <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>STR <span class="op">=</span> <span class="st">"10"</span>, DEX <span class="op">=</span> <span class="st">"10"</span>, CON <span class="op">=</span> <span class="st">"18"</span>, </span>
+<span>                               INT <span class="op">=</span> <span class="st">"9"</span>, WIS <span class="op">=</span> <span class="st">"11"</span>, CHA <span class="op">=</span> <span class="st">"16"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a party diagram using that list (by player)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/party_diagram.html">party_diagram</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"player"</span>, pc_stats <span class="op">=</span> <span class="va">party_list</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="dndR_Vignette_files/figure-html/party_diagram_1-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>You can also group the diagram by score if that is of interest.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/party_diagram.html">party_diagram</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ability"</span>, pc_stats <span class="op">=</span> <span class="va">party_list</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="dndR_Vignette_files/figure-html/party_diagram_2-1.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="creating-non-player-characters">Creating Non-Player Characters<a class="anchor" aria-label="anchor" href="#creating-non-player-characters"></a>
+</h2>
+<p>Non-player characters (NPCs) are a key component of D&amp;D. It can
+be hard to come up with NPCs on the fly that aren’t directly linked to
+the current story arc but doing so is a great way to add realism to your
+world. The <code>npc_creator</code> function helps GMs speedily create
+some quick baseline information for a number of NPCs.</p>
+<p>Simply specify the number of NPCs you want to generate and this
+function will randomly select a race and job for each NPC. You can
+re-run the function if the race-job combinations returned by the
+function don’t match your current campaign tone / history.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/npc_creator.html">npc_creator</a></span><span class="op">(</span>npc_count <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             Race       Job</span></span>
+<span><span class="co">#&gt; 1       tiefling charlatan</span></span>
+<span><span class="co">#&gt; 2 stout halfling   scholar</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="creating-monsters">Creating Monsters<a class="anchor" aria-label="anchor" href="#creating-monsters"></a>
@@ -277,7 +333,7 @@ value returned by <code>xp_cost</code>) <em>or</em> the Challenge Rating
 (CR) if you know it. Once either XP or CR is provided,
 <code>monster_stats</code> returns the creature’s statistics as they
 appear in the DMG for a <em>single</em> creature of that difficulty.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_stats.html">monster_stats</a></span><span class="op">(</span>xp <span class="op">=</span> <span class="fl">1000</span>, cr <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; CR and XP both specified, proceeding with CR</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
@@ -293,7 +349,7 @@ appear in the DMG for a <em>single</em> creature of that difficulty.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Save_DC      14</span></span></code></pre></div>
 <p>Challenge Rating is more than a little esoteric so feel free to
 ignore that argument entirely if XP is more comfortable for you!</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_stats.html">monster_stats</a></span><span class="op">(</span>xp <span class="op">=</span> <span class="fl">8000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
 <span><span class="co">#&gt;   statistic    values </span></span>
@@ -326,24 +382,24 @@ damage immunities, and a single vulnerability. This combination allows
 you to build complex and mysterious homebrew monsters with plenty of
 opportunities for the party to have to investigate around to discover
 the monster’s strengths and weaknesses before the final showdown.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_creator.html">monster_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">5</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             statistic                                                     value</span></span>
-<span><span class="co">#&gt; 1          Hit_Points                                                        92</span></span>
-<span><span class="co">#&gt; 2         Armor_Class                                                        16</span></span>
-<span><span class="co">#&gt; 3          Prof_Bonus                                                         3</span></span>
-<span><span class="co">#&gt; 4        Attack_Bonus                                                         7</span></span>
-<span><span class="co">#&gt; 5             Save_DC                                                        16</span></span>
-<span><span class="co">#&gt; 6  Prof_Saving_Throws                                                  CON; DEX</span></span>
-<span><span class="co">#&gt; 7           Immune_to                                             radiant; acid</span></span>
-<span><span class="co">#&gt; 8        Resistant_to non-magical damage; bludgeoning; piercing; cold; necrotic</span></span>
-<span><span class="co">#&gt; 9       Vulnerable_to                                                     force</span></span>
-<span><span class="co">#&gt; 10                STR                                                         0</span></span>
-<span><span class="co">#&gt; 11                DEX                                                        +2</span></span>
-<span><span class="co">#&gt; 12                CON                                                        +2</span></span>
-<span><span class="co">#&gt; 13                INT                                                        +1</span></span>
-<span><span class="co">#&gt; 14                WIS                                                        +1</span></span>
-<span><span class="co">#&gt; 15                CHA                                                        +3</span></span></code></pre></div>
+<span><span class="co">#&gt;             statistic                                      value</span></span>
+<span><span class="co">#&gt; 1          Hit_Points                                         92</span></span>
+<span><span class="co">#&gt; 2         Armor_Class                                         16</span></span>
+<span><span class="co">#&gt; 3          Prof_Bonus                                          3</span></span>
+<span><span class="co">#&gt; 4        Attack_Bonus                                          7</span></span>
+<span><span class="co">#&gt; 5             Save_DC                                         16</span></span>
+<span><span class="co">#&gt; 6  Prof_Saving_Throws                                   INT; CON</span></span>
+<span><span class="co">#&gt; 7           Immune_to                         piercing; slashing</span></span>
+<span><span class="co">#&gt; 8        Resistant_to fire; lightning; necrotic; poison; radiant</span></span>
+<span><span class="co">#&gt; 9       Vulnerable_to                                      force</span></span>
+<span><span class="co">#&gt; 10                STR                                         +3</span></span>
+<span><span class="co">#&gt; 11                DEX                                         +1</span></span>
+<span><span class="co">#&gt; 12                CON                                         +4</span></span>
+<span><span class="co">#&gt; 13                INT                                         +2</span></span>
+<span><span class="co">#&gt; 14                WIS                                          0</span></span>
+<span><span class="co">#&gt; 15                CHA                                          0</span></span></code></pre></div>
 <p>Note that if you use <code>monster_creator</code> you may need to
 help your players identify the creature’s immunities and vulnerabilities
 <em>before</em> the actual confrontation with the creature to avoid
@@ -371,7 +427,7 @@ XP-party level curve implicit in the DMG. This has the added benefit of
 being able to handle non-integer values for average party_level.</p>
 <p>Below is a comparison of the DMG’s XP-to-party level curve versus the
 one obtained by <code>xp_pool</code>.</p>
-<p><img src="dndR_Vignette_files/figure-html/xp-pool-plot-1.png" width="60%"></p>
+<p><img src="dndR_Vignette_files/figure-html/xp-pool-plot-1.png" width="384" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="cr_convert-vs--dmg">
@@ -384,7 +440,7 @@ inputs. The DMG specifies the XP value of a monster of any CR from 0 to
 querying the table for this conversion.</p>
 <p>Below is the comparison of the DMG’s XP-to-CR curve and the one
 produced by <code>cr_convert</code>.</p>
-<p><img src="dndR_Vignette_files/figure-html/cr-convert-plot-1.png" width="60%"></p>
+<p><img src="dndR_Vignette_files/figure-html/cr-convert-plot-1.png" width="384" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
