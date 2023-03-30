@@ -1,6 +1,10 @@
+## dndR Version 1.1.0.900
+
+Development version of `dndR`. Changes from latest release will be listed here as they are made.
+
 ## dndR Version 1.1.0
 
-Development version of `dndR`. The following changes from the preceding version have been made:
+Latest version of `dndR`. The following changes from the preceding version were made:
 
 - New supported class: Artificer (Source: "Eberron")
 - New supported races: Bugbear, Changeling, Goblin, Hobgoblin, Kalashtar, Orc, Shifter, and Warforged (Source: "Eberron")
@@ -8,6 +12,8 @@ Development version of `dndR`. The following changes from the preceding version 
 - New function: `pc_level_calc` -- identifies player level based on earned XP
 - `roll` now supports three-sided dice (i.e., "d3")
 - `roll` now includes a `show_dice` argument that accepts either `TRUE` or `FALSE` (the default). If `show_dice = T` (and more than one die is rolled), the individual die results will be returned as a message in addition to the sum of their results. Note that the behavior of "2d20" is unchanged and both values are returned as a two-column, one-row dataframe
+
+There are no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
 
 ## dndR Version 1.0.0
 
