@@ -61,6 +61,12 @@ While waiting for me to act on your Issue, you can run the simpler `ability_scor
 dndR::ability_scores(method = "4d6")
 ```
 
+If you do experience point-based leveling, you can use the `pc_level_calc` function to check what level your PC has reached with the amount of XP they have earned. Thanks to Humberto Nappo for contributing this function!
+
+```{r pc_level_calc}
+dndR::pc_level_calc(player_xp = 4100)
+```
+
 ## Encounter Balancing
 
 When I am the Dungeon/Game Master (DM / GM) I find encounter balancing to be really difficult, in part because of the nest of inter-related tables and experience point multipliers outlined in the Dungeon Master's Guide (DMG) that must be consulted for novice GMs such as myself. To help other newbies, `dndR` includes the `xp_pool` and `xp_cost` functions.
@@ -125,6 +131,41 @@ dndR::xp_cost(monster_xp = 600, monster_count = 3, party_size = 4)
 
 Basically right on target! I can now pick out my three monsters that total up to 600 XP raw and know that they will likely* make a hard encounter for my players! (* "Likely" because there is dice rolling involved and it is possible that the monsters roll well while my players roll badly or vice versa).
 
+## Assessing Party Abilities
+
+It can be useful as a GM to know what abilities your party is--as a whole--strong in versus weaker in. `party_diagram` allows GMs to visualize the ability scores of every player in a party either grouped by player or by ability score. The function supports both interactive (abilities entered via the Console) and non-interactive (abilities given as a list) entries. Thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for contributing this function!
+
+Due to the static nature of a vignette, we'll use the non-interactive path by assembling the party score list and then invoking `party_diagram`.
+
+```{r party_diagram_1, fig.height = 6, fig.width = 6, fig.align = "center"}
+# Create named list of PCs and their scores
+party_list <- list(Vax = list(STR = "10", DEX = "13", CON = "14", 
+                              INT = "15", WIS = "16", CHA = "12"),
+                   Beldra = list(STR = "20", DEX = "15", CON = "10",
+                                 INT = "10", WIS = "11", CHA = "12"),
+                   Rook = list(STR = "10", DEX = "10", CON = "18", 
+                               INT = "9", WIS = "11", CHA = "16"))
+
+# Create a party diagram using that list (by player)
+dndR::party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
+```
+
+You can also group the diagram by score if that is of interest.
+
+```{r party_diagram_2, fig.height = 6, fig.width = 6, fig.align = "center"}
+dndR::party_diagram(by = "ability", pc_stats = party_list, quiet = TRUE)
+```
+
+## Creating Non-Player Characters
+
+Non-player characters (NPCs) are a key component of D&D. It can be hard to come up with NPCs on the fly that aren't directly linked to the current story arc but doing so is a great way to add realism to your world. The `npc_creator` function helps GMs speedily create some quick baseline information for a number of NPCs.
+
+Simply specify the number of NPCs you want to generate and this function will randomly select a race and job for each NPC. You can re-run the function if the race-job combinations returned by the function don't match your current campaign tone / history.
+
+```{r npc_creator}
+dndR::npc_creator(npc_count = 2)
+```
+
 ## Creating Monsters
 
 Creatures that you create can be a great way to add flavor to an encounter or can even form the centerpiece of a larger campaign arc! The `monster_stats` and `monster_creator` functions can help GMs to quickly stat out their homebrewed monsters.
@@ -165,7 +206,7 @@ Rather than embedding the DMG's table for encounter XP, `xp_pool` actually uses 
 
 Below is a comparison of the DMG's XP-to-party level curve versus the one obtained by `xp_pool`.
 
-```{r xp-pool-plot, echo = F, warning = F, error = F, out.width="60%"}
+```{r xp-pool-plot, echo = F, warning = F, error = F, fig.height = 4, fig.width = 4, fig.align = "center"}
 xp_df <- data.frame('pc_level' = 1:20,
                     'easy_xp' = c(25, 50, 75, 125, 250, 300, 350, 450, 550, 600, 800, 1000, 1100, 1250, 1400, 1600, 2000, 2100, 2400, 2800)
                     ) %>%
@@ -210,7 +251,7 @@ ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp, shape = authority))  +
 
 Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert`.
 
-```{r cr-convert-plot, echo = F, warning = F, error = F, out.width="60%"}
+```{r cr-convert-plot, echo = F, warning = F, error = F, fig.height = 4, fig.width = 4, fig.align = "center"}
 cr_actual <- data.frame(
   "cr" = c(0, 0.125, 0.25, 0.5, 1:30),
   "dmg_xp" = c(0, 25, 50, 100, 200, 450, 700, 1100, 1800, 2300, 2900,
