@@ -8,7 +8,7 @@ rm(list = ls())
 library(dndR)
 
 # Specify the dice to roll
-dice_arg <- "3d8"
+dice_arg <- "1d20"
 
 # Make a starter dataframe
 ( roll_results <- data.frame("outcome" = dndR::roll(dice = dice_arg, show_dice = F)) )
@@ -61,19 +61,19 @@ result_freq
 # Identify median outcome
 med_roll <- median(x = roll_results$outcome, na.rm = TRUE)
 
-
+# Create plot
 ggplot(data = result_freq, aes(x = outcome_fact, y = ct, fill = dice_type)) +
   # Add line for median
-  # geom_vline(xintercept = med_roll, linetype = 2) +
-  # Add points for outcomes
+  geom_vline(xintercept = factor(med_roll), linetype = 2, linewidth = 1.2,
+             color = dice_palette[names(dice_palette) == dice_type]) +
+  # Add outcome frequency bars
   geom_bar(stat = 'identity', alpha = 0.8) +
-  # Tweak x-axis
-  # scale_x_discrete(limits = result_freq$outcome) +
   # Handle plot formatting (consistent with other plotting functions in the package)
   scale_fill_manual(values = dice_palette) +
   theme_classic() +
   theme(legend.position = "none",
         axis.title.x = element_text(size = 16),
-        axis.title.y = element_text(size = 15)) +
+        axis.title.y = element_text(size = 15),
+        axis.text = element_text(size = 13)) +
   labs(x = "Roll Result", y = paste0("Frequency (", roll_iter, " Rolls)"))
 
