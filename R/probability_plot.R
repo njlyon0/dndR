@@ -16,6 +16,8 @@
 #' probability_plot(dice = "3d8", roll_num = 99)
 #'
 probability_plot <- function(dice = "2d20", roll_num = 999){
+  # Squelch visible bindings note
+  outcome <- outcome_fact <- ct <- NULL
 
   # Error out if roll number is not an integer
   if(!is.numeric(x = roll_num))
