@@ -44,7 +44,6 @@ Note that '2d20' is automatically assumed to be rolling with advantage/disadvant
 dndR::roll(dice = '2d20')
 ```
 
-
 ## Character Creation
 
 `pc_creator` rolls for a character's ability scores (strength, dexterity, constitution, intelligence, wisdom, and charisma) given a particular class, race, and preferred method of rolling for ability scores.
