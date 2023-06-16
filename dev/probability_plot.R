@@ -1,11 +1,14 @@
 
 # Testing ground for a plot that takes the input dice and creates a plot their possible outcomes
 
+# Clear environment
+rm(list = ls())
+
 # Load dndR
 library(dndR)
 
 # Specify the dice to roll
-dice_arg <- "2d6"
+dice_arg <- "3d8"
 
 # Make a starter dataframe
 ( roll_results <- data.frame("outcome" = dndR::roll(dice = dice_arg, show_dice = F)) )
@@ -50,18 +53,30 @@ result_freq <- roll_results %>%
   dplyr::summarize(ct = dplyr::n()) %>%
   dplyr::ungroup() %>%
   # Make outcome column a factor
-  dplyr::mutate(outcome = as.factor(outcome))
+  dplyr::mutate(outcome_fact = as.factor(outcome))
 
 # Check it out
 result_freq
 
+# Identify median outcome
+med_roll <- median(x = roll_results$outcome, na.rm = TRUE)
+
 # Make plot of results
 ggplot(data = result_freq, aes(x = outcome, y = ct, fill = dice_type)) +
-  geom_bar(stat = 'identity') +
+  # Add line for median
+  geom_vline(xintercept = med_roll, linetype = 2) +
+  # Add points for outcomes
+  # geom_bar(stat = 'identity') +
+  geom_point(shape = 21, alpha = 0.5, size = 3) +
+  # Tweak x-axis
+  scale_x_continuous(breaks = result_freq$outcome) +
+  # Handle plot formatting (consistent with other plotting functions in the package)
   scale_fill_manual(values = dice_palette) +
   theme_classic() +
-  theme(legend.position = "none") +
-  labs(x = "Roll Result", y = paste0("Frequency in ", roll_iter, " Rolls"))
+  theme(legend.position = "none",
+        axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 15)) +
+  labs(x = "Roll Result", y = paste0("Frequency (", roll_iter, " Rolls)"))
 
 
 
