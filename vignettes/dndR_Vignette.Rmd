@@ -44,6 +44,12 @@ Note that '2d20' is automatically assumed to be rolling with advantage/disadvant
 dndR::roll(dice = '2d20')
 ```
 
+You can also use `probability_plot` to roll dice a specified number of times and generate a `ggplot2` graph of the frequency of various outcomes. The median outcome is specified by a dashed vertical line.
+
+```{r prob_plot_fxn, warning = F, error = F, fig.height = 3, fig.width = 6, fig.align = "center"}
+dndR::probability_plot(dice = "2d6", roll_num = 499)
+```
+
 ## Character Creation
 
 `pc_creator` rolls for a character's ability scores (strength, dexterity, constitution, intelligence, wisdom, and charisma) given a particular class, race, and preferred method of rolling for ability scores.
