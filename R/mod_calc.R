@@ -14,6 +14,10 @@
 #'
 mod_calc <- function(score = 10){
 
+  # Error out if score isn't numeric
+  if(!is.numeric(score))
+    stop("`score` must be numeric")
+
   # Calculate modifier from score
   mod_num <- base::floor(x = ((score - 10) / 2))
 
