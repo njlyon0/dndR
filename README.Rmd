@@ -40,6 +40,8 @@ devtools::install_github("njlyon0/dndR")
 
 - **`ability_scores`** -- Roll for six ability scores using specified method (e.g., 4d6 drop lowest, 3d6, or 1d20)
 
+- **`mod_calc`** -- Calculate roll modifier for given ability score(s)
+
 - **`pc_creator`** -- Stat out a character of specified race and class using your preferred method of rolling ability scores
 
     - Run `dnd_races()` or `dnd_classes()` to see which races/classes are currently supported by `pc_creator`
