@@ -7,7 +7,7 @@
 mod_calc(score = 10)
 }
 \arguments{
-\item{(numeric)}{ability score value for which to identify the roll modifier}
+\item{score}{(numeric) ability score value for which to identify the roll modifier}
 }
 \value{
 (character) roll modifier for a given ability score. If positive, includes a plus sign to make the addition explicit. Negative values are also returned as characters for consistency with positive modifiers

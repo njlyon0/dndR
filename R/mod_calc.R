@@ -2,7 +2,7 @@
 #'
 #' @description Ability scores (typically 0-20 for most creatures) relate to roll modifiers. These values are what a player or DM actually adds to a given skill or ability check. This function performs the simple calculation to identify the roll modifier that relates to the supplied ability score.
 #'
-#' @param (numeric) ability score value for which to identify the roll modifier
+#' @param score (numeric) ability score value for which to identify the roll modifier
 #'
 #' @return (character) roll modifier for a given ability score. If positive, includes a plus sign to make the addition explicit. Negative values are also returned as characters for consistency with positive modifiers
 #'
