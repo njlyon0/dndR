@@ -15,7 +15,7 @@ roll(dice = "d20", show_dice = FALSE)
 (numeric) sum of specified dice outcomes
 }
 \description{
-Rolls the Specified Number and Type of Dice
+Rolls the specified number and type of dice. Dice are specified in the shorthand common to Dungeons & Dragons (i.e., number of dice, "d", number of faces of those dice). Includes an argument for whether each die's value should be returned as a message (rather than just the total of all dice in the roll). Rolling two twenty-sided dice (i.e., "2d20") is assumed to be rolling with advantage/disadvantage so both numbers are returned.
 }
 \examples{
 # Roll your desired dice (i.e., randomly sample the specified die)

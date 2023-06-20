@@ -1,6 +1,6 @@
 #' @title Roll Any Number of Dice
 #'
-#' @description Rolls the Specified Number and Type of Dice
+#' @description Rolls the specified number and type of dice. Dice are specified in the shorthand common to Dungeons & Dragons (i.e., number of dice, "d", number of faces of those dice). Includes an argument for whether each die's value should be returned as a message (rather than just the total of all dice in the roll). Rolling two twenty-sided dice (i.e., "2d20") is assumed to be rolling with advantage/disadvantage so both numbers are returned.
 #'
 #' @param dice (character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die
 #' @param show_dice (logical) whether to print the values of each individual die included in the total. Defaults to FALSE
