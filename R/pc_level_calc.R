@@ -1,6 +1,6 @@
 #' @title Calculate Player Character (PC) Level from Current Experience Points (XP)
 #'
-#' @description Uses total player experience points (XP) to identify player character (PC) level and proficiency modifier. Only works for a single PC at a time (though this is unlikely to be an issue if all party members have the same amount of XP)
+#' @description Uses total player experience points (XP) to identify player character (PC) level and proficiency modifier. Only works for a single PC at a time (though this is unlikely to be an issue if all party members have the same amount of XP). Big thanks to Humberto Nappo for contributing this function!
 #'
 #' @param player_xp (numeric) total value of experience points earned by one player
 #'

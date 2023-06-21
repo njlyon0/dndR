@@ -17,7 +17,7 @@ party_diagram(by = "player", pc_stats = NULL, quiet = FALSE)
 (ggplot object) party diagram as a ggplot object
 }
 \description{
-Input a party's ability scores and visualize either by ability or player character. Includes dashed line for average of ability scores within chosen `by` parameter.
+Input a party's ability scores and visualize either by ability or player character. Includes dashed line for average of ability scores within chosen `by` parameter. Huge shout out to Tim Schatto-Eckrodt for contributing this function!
 }
 \examples{
 \donttest{

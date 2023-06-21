@@ -1,6 +1,6 @@
 #' @title Generate a Diagram of a Party's Ability Scores
 #'
-#' @description Input a party's ability scores and visualize either by ability or player character. Includes dashed line for average of ability scores within chosen `by` parameter.
+#' @description Input a party's ability scores and visualize either by ability or player character. Includes dashed line for average of ability scores within chosen `by` parameter. Huge shout out to Tim Schatto-Eckrodt for contributing this function!
 #'
 #' @param by (character) either "player" (default) or "ability". Defines the facets of the party diagram
 #' @param pc_stats (null / list) either `NULL` (default) or named list of ability scores for each character. If `NULL`, player names and scores are requested interactively in the console

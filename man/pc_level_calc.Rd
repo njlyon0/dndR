@@ -13,7 +13,7 @@ pc_level_calc(player_xp = NULL)
 (dataframe) current player level, XP threshold for that level, and the proficiency modifier used at that level
 }
 \description{
-Uses total player experience points (XP) to identify player character (PC) level and proficiency modifier. Only works for a single PC at a time (though this is unlikely to be an issue if all party members have the same amount of XP)
+Uses total player experience points (XP) to identify player character (PC) level and proficiency modifier. Only works for a single PC at a time (though this is unlikely to be an issue if all party members have the same amount of XP). Big thanks to Humberto Nappo for contributing this function!
 }
 \examples{
 # Calculate player level from XP earned
