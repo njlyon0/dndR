@@ -37,6 +37,6 @@ In return for your generous contribution to `dndR` I'll give you the following m
  
  - Put your name in the README of the repository next to the description of your function
  
- - Add your name to the function description (see `?dndR::party_diagram` for an example)
+ - Add your name to the function description (see `?dndR::party_diagram` or `?dndR::pc_level_calc` as examples of this)
 
-I make no distinction between contributing a function idea and contributing written code in terms of credit received.
+Note that I make no distinction between contributing a function idea and contributing written code in terms of credit received.
