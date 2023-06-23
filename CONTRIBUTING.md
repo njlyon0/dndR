@@ -1,22 +1,22 @@
-## Contributing Guidelines
+# Contributing Guidelines
 
 I would love to have you contribute to `dndR` if that is of interest! I would divide contributions into two categories: (1) function ideas that aren't coded and (2) functions that are written in scripts. Once you've decided which of these categories you fall into, follow the instructions under the relevant subheading.
 
-### Function Ideas
+## Function Ideas
 
 If you have an idea for a function [open a GitHub issue](https://github.com/njlyon0/dndR/issues) and tell me about it! Be sure to include as much detail about what the function does (and the limits of its power) as possible. I'll read through your issue and comment on it with any follow-up questions/comments I have.
 
-### Function Script
+## Function Scripts
 
 If you've already written up an R function in a script you have two options for getting it added to `dndR`:
 
-**Option A**
+**Scripts Option A**
 
  - [Open a GitHub issue](https://github.com/njlyon0/dndR/issues) and paste your function into it
 
  - I can then do the necessary formatting to get it to fit in the larger package architecture
 
-**Option B**
+**Scripts Option B**
 
  - [Fork the `dndR` repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 
@@ -29,7 +29,7 @@ If you've already written up an R function in a script you have two options for 
 
  - I'll merge the pull request and then do the necessary formatting and development checks to get the function smoothly integrated with the package
 
-### Credit for Contributions
+## Contribution Credit
 
 In return for your generous contribution to `dndR` I'll give you the following modes of credit:
 
