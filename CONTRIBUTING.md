@@ -33,9 +33,10 @@ If you've already written up an R function in a script you have two options for 
 
 In return for your generous contribution to `dndR` I'll give you the following modes of credit:
 
- - 
+ - Add you as a contributor in the `DESCRIPTION` of the package with a link to a professional website of your choosing
+ 
+ - Put your name in the README of the repository next to the description of your function
+ 
+ - Add your name to the function description (see `?dndR::party_diagram` for an example)
 
-
-
-
-
+I make no distinction between contributing a function idea and contributing written code in terms of credit received.
