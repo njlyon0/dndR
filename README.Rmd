@@ -68,8 +68,14 @@ devtools::install_github("njlyon0/dndR")
 
 - **`npc_creator`** -- Pick a job and race for any number of non-player characters (NPCs). Hopefully this provides a useful starting point when describing the patrons of a tavern or the travelers players glimpse on the edge of the flickering light cast by their campfire
 
+## Contributing Functions
+
+If you'd like to contribute function scripts or ideas, that is more than welcome! For specific instructions check out `CONTRIBUTING.md` but at a glance:
+
+ - For function ideas, [open a Github issue](https://github.com/njlyon0/dndR/issues)
+ 
+ - For function scripts, either [open a Github issue](https://github.com/njlyon0/dndR/issues) *or* fork the repository and add your content to the `dev` folder
+
 ## Looking Ahead
 
 I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I plan on creating a suite of functions that follow those guidelines. The extant functions follow "5e" rules as detailed in the Player's Handbook (PHB) and Dungeon Master's Guide (DMG).
-
-If you have other function ideas, [post them as Issues](https://github.com/njlyon0/dndR/issues) on this repository!
