@@ -29,22 +29,7 @@ for(i in 1:length(grim_conts)){
 }
 
 
-grim_conts[[11]]
-
-
-# Grab the contents of that repo
-grimoire_gh <- httr::GET(url = paste0("https://api.github.com/repos/Traneptora/grimoire/tree/master", "?recursive=1"))
-grimoire_gh
-
-
-httr::GET(url = "")
-
-# Check for warnings / errors
-httr::stop_for_status(x = grimoire_gh)
-
-# Access files in that link
-httr::content(x = grimoire_gh)$tree
-
+grim_conts[[11]]$type
 
 
 
