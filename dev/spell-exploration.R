@@ -195,6 +195,8 @@ spells_v3 <- spells_v2 %>%
   # Pivot longer to get all description information into one column
   tidyr::pivot_longer(cols = dplyr::starts_with("description_"),
                       names_to = "desc_num", values_to = "text") %>%
+  # Drop description column names (will shortly be outdated)
+  dplyr::select(-desc_num) %>%
   # Drop NA rows
   dplyr::filter(!is.na(text)) %>%
   # Identify higher level spell information
@@ -225,7 +227,61 @@ spells_v3 <- spells_v2 %>%
                                        yes = "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
                                        no = higher_levels)) %>%
   # Drop the empty text rows created by removing the higher level information
-  dplyr::filter(!is.na(text))
+  dplyr::filter(!is.na(text)) %>%
+  # Identify creature stat blocks
+  dplyr::mutate(stat_block = ifelse(
+    test = stringr::str_detect(string = text, pattern = "## <u>"),
+    yes = T, no = NA)) %>%
+  # Fill NA for everything beneath stat block starts (i.e., stat block contents)
+  dplyr::group_by(name) %>%
+  tidyr::fill(stat_block, .direction = "down") %>%
+  dplyr::ungroup() %>%
+  # Remove creature stat block rows
+  dplyr::filter(is.na(stat_block)) %>%
+  # Count remaining text numbers
+  dplyr::group_by(name) %>%
+  dplyr::mutate(text_num = 1:dplyr::n()) %>%
+  dplyr::ungroup() %>%
+  # Simplify a few spell's descriptions manually
+  dplyr::mutate(text = dplyr::case_when(
+    ## Control weather has length tables that we can manually simplify
+    name == "Control Weather" & text == "**Precipitation**" ~ "Precipitation: 1 - Clear / 2 - Light Clouds / 3 - Overcast or ground fog / 4 - Rain, hail, or snow / 5 - Torrential rain, driving hail, or blizzard /// Temperature: 1 - Unbearable heat / 2 - Hot / 3 - Warm / 4 - Cool / 5 - Cold / 6 - Arctic cold /// Wind: 1 - Calm / 2 - Moderate wind / 3 - Strong wind / 4 - Gale / 5 - Storm",
+    ## If the spell isn't specified, don't mess with the text
+    TRUE ~ text)) %>%
+  # Remove unnecessary information from specific spells
+  ## Control Weather
+  dplyr::filter(name != "Control Weather" | name == "Control Weather" &
+                  stringr::str_detect(string = text, pattern = "control of the weather") |
+                  stringr::str_detect(string = text, pattern = "change the current weather") | stringr::str_detect(string = text, pattern = "Precipitation: 1 -")  ) %>%
+  ## Teleport
+  dplyr::filter(name != "Teleport" | name == "Teleport" &
+                  stringr::str_detect(string = text, pattern = "instantly transports") |
+                  stringr::str_detect(string = text, pattern = "rolls d100") ) %>%
+  ## Reincarnate
+  dplyr::filter(name != "Reincarnate" | name == "Reincarnate" &
+                  stringr::str_detect(string = text, pattern = "touch") |
+                  stringr::str_detect(string = text, pattern = "fashions") |
+                  stringr::str_detect(string = text, pattern = "reincarnated")) %>%
+  #  Re-count text numbers
+  dplyr::group_by(name) %>%
+  dplyr::mutate(text_num = 1:dplyr::n()) %>%
+  dplyr::ungroup()
+
+
+
+
+
+
+spells_v3 %>%
+  filter(text_num > 10) %>%
+  pull(name) %>%
+  unique()
+
+# tele = 2
+# control weath = 4
+
+spells_v3 %>% filter(name == "Reincarnate") %>% pull(text)
+
 
 # Re-check structure
 dplyr::glimpse(spells_v3)
