@@ -191,10 +191,41 @@ dplyr::glimpse(dplyr::select(spells_v2, -dplyr::starts_with("description")))
 dplyr::glimpse(spells_v2)
 
 # Wrangle descritpion into something more manageable
-spells_v3 <- spells_v2
-
-
-
+spells_v3 <- spells_v2 %>%
+  # Pivot longer to get all description information into one column
+  tidyr::pivot_longer(cols = dplyr::starts_with("description_"),
+                      names_to = "desc_num", values_to = "text") %>%
+  # Drop NA rows
+  dplyr::filter(!is.na(text)) %>%
+  # Identify higher level spell information
+  dplyr::mutate(
+    higher_levels = ifelse(
+      test = stringr::str_detect(string = text,
+                                 pattern = "This spell’s damage increases by") |
+        stringr::str_detect(string = text, pattern = "At Higher Levels."),
+      yes = text, no = NA) ) %>%
+  # Fill that in for the other rows of the spell
+  dplyr::group_by(name) %>%
+  tidyr::fill(higher_levels, .direction = "up") %>%
+  dplyr::ungroup() %>%
+  # Remove the higher level text from the general text column
+  dplyr::mutate(text = dplyr::case_when(
+    ## Fire bolt is malformed and needs special treatment
+    name == "Fire Bolt" &
+      stringr::str_detect(string = text, pattern = "This spell’s damage increases by") ~ "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn’t being worn or carried.",
+    ## For other spells, with that text, coerce that row to NA
+    name != "Fire Bolt" & (stringr::str_detect(string = text,
+                                               pattern = "This spell’s damage increases by") |
+                             stringr::str_detect(string = text,
+                                                 pattern = "At Higher Levels.")) ~ NA,
+    ## Retain any other text
+    TRUE ~ text)) %>%
+  # Remove the non-higher level stuff from fire bolt's description
+  dplyr::mutate(higher_levels = ifelse(name == "Fire Bolt",
+                                       yes = "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
+                                       no = higher_levels)) %>%
+  # Drop the empty text rows created by removing the higher level information
+  dplyr::filter(!is.na(text))
 
 # Re-check structure
 dplyr::glimpse(spells_v3)
