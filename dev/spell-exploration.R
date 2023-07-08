@@ -36,20 +36,23 @@ dplyr::glimpse(spell_mds)
       # Extract Spell Information ----
 ## ---------------------------------------- ##
 
-# Read lines of the first spell's Markdown as a test
-base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[1])))
-
 # Make an empty list to store individually-wrangled spells within
-spell_list <- list()
+list_o_spells <- list()
 
 # Loop across spell markdown files
 for(k in 1:length(spell_mds)){
 
+  # Define that spell's markdown URL
+  spell_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k]))
+
   # Strip out spell information as a vector
-  spell_info <- base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k])))
+  spell_info <- base::readLines(con = spell_con)
+
+  # Close the connection
+  base::close(spell_con)
 
   # Wrangle the markdown information into something more manageable & add to spell list
-  spell_list[[k]] <- as.data.frame(spell_info) %>%
+  list_o_spells[[k]] <- as.data.frame(spell_info) %>%
     # Drop irrelevant lines
     dplyr::filter(nchar(spell_info) != 0 & spell_info != "---") %>%
     # Add a column of what the true column names should be
@@ -65,11 +68,14 @@ for(k in 1:length(spell_mds)){
     dplyr::select(-title)
 
   # Message successful wrangling
-  message("Finished wrangling spell ", k, " '", spell_list[[k]]$name, "'") }
+  message("Finished wrangling spell ", k, " '", list_o_spells[[k]]$name, "'") }
 
-# Unlist that list into a dataframe for further wrangling
-spell_df <- spell_list %>%
-  purrr::list_rbind()
+# Perform further wrangling
+spell_df <- list_o_spells %>%
+  # Unlist that list into a dataframe
+  purrr::list_rbind() %>%
+  # Remove unwanted columns
+  dplyr::select(-layout, -date)
 
 # Check structure of that
 dplyr::glimpse(spell_df)
