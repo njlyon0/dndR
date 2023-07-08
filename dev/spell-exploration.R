@@ -33,24 +33,47 @@ spell_mds <- spell_repo$name
 dplyr::glimpse(spell_mds)
 
 ## ---------------------------------------- ##
-# Extract Spell Information ----
+      # Extract Spell Information ----
 ## ---------------------------------------- ##
 
 # Read lines of the first spell's Markdown as a test
 base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[1])))
 
-# Assign spell number as an object
-k <- 1
+# Make an empty list to store individually-wrangled spells within
+spell_list <- list()
 
-# Wrangle the markdown information into something more manageable
-spell_df <- base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k])))
+# Loop across spell markdown files
+for(k in 1:length(spell_mds)){
 
+  # Strip out spell information as a vector
+  spell_info <- base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k])))
 
+  # Wrangle the markdown information into something more manageable & add to spell list
+  spell_list[[k]] <- as.data.frame(spell_info) %>%
+    # Drop irrelevant lines
+    dplyr::filter(nchar(spell_info) != 0 & spell_info != "---") %>%
+    # Add a column of what the true column names should be
+    dplyr::mutate(names = c("layout", "title", "date", "sources", "tags", "type",
+                            "casting_time", "range", "components", "duration",
+                            paste0("description_", 1:(nrow(.)-10)))) %>%
+    # Pivot wider
+    tidyr::pivot_wider(names_from = names, values_from = spell_info) %>%
+    # Wrangle spell name
+    dplyr::mutate(name = gsub(pattern = "title:  |\"", replacement = "", x = title),
+                  .before = title) %>%
+    # Drop title column
+    dplyr::select(-title)
+
+  # Message successful wrangling
+  message("Finished wrangling spell ", k, " '", spell_list[[k]]$name, "'") }
+
+# Unlist that list into a dataframe for further wrangling
+spell_df <- spell_list %>%
+  purrr::list_rbind()
 
 # Check structure of that
 dplyr::glimpse(spell_df)
-
-
+## view(spell_df)
 
 
 
