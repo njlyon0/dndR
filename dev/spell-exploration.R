@@ -36,11 +36,15 @@ dplyr::glimpse(spell_mds)
       # Extract Spell Information ----
 ## ---------------------------------------- ##
 
+# Clean environment
+rm(list = setdiff(ls(), c("spell_mds")))
+
 # Make an empty list to store individually-wrangled spells within
 list_o_spells <- list()
 
 # Loop across spell markdown files
 for(k in 1:length(spell_mds)){
+# for(k in 2){
 
   # Define that spell's markdown URL
   spell_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k]))
@@ -52,13 +56,39 @@ for(k in 1:length(spell_mds)){
   base::close(spell_con)
 
   # Wrangle the markdown information into something more manageable & add to spell list
-  list_o_spells[[k]] <- as.data.frame(spell_info) %>%
+  raw_spell <- as.data.frame(spell_info) %>%
     # Drop irrelevant lines
     dplyr::filter(nchar(spell_info) != 0 & spell_info != "---") %>%
-    # Add a column of what the true column names should be
-    dplyr::mutate(names = c("layout", "title", "date", "sources", "tags", "type",
-                            "casting_time", "range", "components", "duration",
-                            paste0("description_", 1:(nrow(.)-10)))) %>%
+    # Split the contents by the colon for later use
+    tidyr::separate_wider_delim(cols = spell_info, delim = ":", cols_remove = F,
+                                names = c("left", "right"),
+                                too_few = "align_start", too_many = "merge") %>%
+    # Add a column of what the true column names should be based on the contents
+    dplyr::mutate(names_v1 = dplyr::case_when(
+      left == "layout" ~ "layout",
+      left == "title" ~ "title",
+      left == "date" ~ "date",
+      left == "sources" ~ "sources",
+      left == "tags" ~ "tags",
+      left == "subtags" ~ "subtags",
+      dplyr::lag(x = left, n = 1) == "subtags" ~ "type",
+      dplyr::lag(x = left, n = 1) == "tags" & !"subtags" %in% left ~ "type",
+      left == "**Casting Time**" ~ "casting_time",
+      left == "**Range**" ~ "range",
+      left == "**Components**" ~ "components",
+      left == "**Duration**" ~ "duration",
+      # If none of above, must be description text
+      TRUE ~ "description")) %>%
+    # Get a row number column
+    dplyr::mutate(row_num = 1:nrow(.)) %>%
+    # Identify highest non-description row
+    dplyr::mutate(temp_num = max(dplyr::filter(., names_v1 != "description")$row_num)) %>%
+    # Count number of description rows
+    dplyr::mutate(names = ifelse(test = names_v1 != "description",
+                                 yes = names_v1,
+                                 no = paste0("description_", (row_num - temp_num)))) %>%
+    # Pare down to only needed columns
+    dplyr::select(names, spell_info) %>%
     # Pivot wider
     tidyr::pivot_wider(names_from = names, values_from = spell_info) %>%
     # Wrangle spell name
@@ -67,19 +97,37 @@ for(k in 1:length(spell_mds)){
     # Drop title column
     dplyr::select(-title)
 
+  # Add to list
+  list_o_spells[[k]] <- raw_spell
+
   # Message successful wrangling
-  message("Finished wrangling spell ", k, " '", list_o_spells[[k]]$name, "'") }
+  message("Finished wrangling spell ", k, " '", raw_spell$name, "'") }
 
 # Perform further wrangling
-spell_df <- list_o_spells %>%
+spell_df_v1 <- list_o_spells %>%
   # Unlist that list into a dataframe
   purrr::list_rbind() %>%
   # Remove unwanted columns
-  dplyr::select(-layout, -date)
+  dplyr::select(-layout, -date) %>%
+  # Move the subtags column
+  dplyr::relocate(subtags, .after = tags) %>%
+  # Do some generally-valuable tidying
+  dplyr::mutate(
+    sources = gsub(pattern = "sources: |\\[|\\]", replacement = "", x = sources),
+    tags = gsub(pattern = "tags: |\\[|\\]", replacement = "", x = tags),
+    subtags = gsub(pattern = "subtags: |\\[|\\]", replacement = "", x = subtags),
+    type = gsub(pattern = "\\*\\*", replacement = "", x = type),
+    casting_time = gsub(pattern = "\\*\\*Casting Time\\*\\*: ", replacement = "",
+                        x = casting_time),
+    range = gsub(pattern = "\\*\\*Range\\*\\*: ", replacement = "", x = range),
+    components = gsub(pattern = "\\*\\*Components\\*\\*: ", replacement = "",
+                      x = components),
+    duration = gsub(pattern = "\\*\\*Duration\\*\\*: ", replacement = "",
+                    x = duration))
 
 # Check structure of that
-dplyr::glimpse(spell_df)
-## view(spell_df)
+dplyr::glimpse(spell_df_v1)
+## view(spell_df_v1)
 
 
 
