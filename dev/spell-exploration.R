@@ -104,7 +104,7 @@ for(k in 1:length(spell_mds)){
   message("Finished wrangling spell ", k, " '", raw_spell$name, "'") }
 
 # Perform further wrangling
-spell_df_v1 <- list_o_spells %>%
+spells_v1 <- list_o_spells %>%
   # Unlist that list into a dataframe
   purrr::list_rbind() %>%
   # Remove unwanted columns
@@ -126,8 +126,83 @@ spell_df_v1 <- list_o_spells %>%
                     x = duration))
 
 # Check structure of that
-dplyr::glimpse(spell_df_v1)
-## view(spell_df_v1)
+dplyr::glimpse(spells_v1)
+
+## ---------------------------------------- ##
+          # Wrangle Spell FAQs ----
+## ---------------------------------------- ##
+
+# Do wrangling of non-description bits of spells
+spells_v2 <- spells_v1 %>%
+  # Drop "concentration" & "ritual" from tags
+  dplyr::mutate(tags = gsub(pattern = "concentration, |concentration,|ritual, ",
+                            replacement = "", x = tags)) %>%
+  # Detect number of commas in tags
+  dplyr::mutate(class_ct = stringr::str_count(string = tags, pattern = ",") - 2) %>%
+  # Split apart tags information
+  tidyr::separate_wider_delim(cols = tags, delim = ", ", cols_remove = T,
+                              names = c(paste0("class_", 1:max(.$class_ct, na.rm = T)),
+                                        "level", "junk", "school"),
+                              too_few = "align_end", too_many = "merge") %>%
+  # Drop 'junk' column & class count column
+  dplyr::select(-junk, -class_ct) %>%
+  # Tidy up the level column
+  dplyr::mutate(level = gsub(pattern = "level", replacement = "level ", x = level)) %>%
+  # Combine class columns & subtags to get all classes with access to a given spell
+  tidyr::unite(col = "class", dplyr::starts_with("class_"), subtags,
+               sep = ", ", na.rm = T) %>%
+  # Tidy that column a small amount
+  dplyr::mutate(class = gsub(pattern = "  ", replacement = "", x = class)) %>%
+  # Drop now-superseded 'type' column
+  dplyr::select(-type) %>%
+  # Do some minor grammar fixes
+  dplyr::mutate(
+    casting_time = gsub(pattern = "1 minutes", replacement = "1 minute", x = casting_time),
+    components = gsub(pattern = "V,S", replacement = "V, S", x = components),
+    components = gsub(pattern = "V ", replacement = "V", x = components)) %>%
+  # Make these columns lowercase
+  dplyr::mutate(
+    casting_time = tolower(casting_time),
+    range = tolower(range),
+    duration = tolower(duration)
+  )
+
+# Check out 'tags' column products
+sort(unique(spells_v2$level))
+sort(unique(spells_v2$school))
+
+# Check out combination 'tags' and 'subtags' class/sub-class column
+sort(unique(spells_v2$class))
+
+# Check out other spell information
+sort(unique(spells_v2$casting_time))
+sort(unique(spells_v2$range))
+sort(unique(spells_v2$components))
+sort(unique(spells_v2$duration))
+
+# Re-check structure (ignore description columns for now)
+dplyr::glimpse(dplyr::select(spells_v2, -dplyr::starts_with("description")))
+
+## ---------------------------------------- ##
+# Wrangle Spell Descriptions ----
+## ---------------------------------------- ##
+
+# Glimpse the full structure
+dplyr::glimpse(spells_v2)
+
+# Wrangle descritpion into something more manageable
+spells_v3 <- spells_v2
+
+
+
+
+# Re-check structure
+dplyr::glimpse(spells_v3)
+## view(spells_v3)
+
+
+
+
 
 
 
