@@ -129,7 +129,7 @@ spells_v1 <- list_o_spells %>%
 dplyr::glimpse(spells_v1)
 
 ## ---------------------------------------- ##
-          # Wrangle Spell FAQs ----
+      # Wrangle Spell Information ----
 ## ---------------------------------------- ##
 
 # Do wrangling of non-description bits of spells
@@ -161,11 +161,12 @@ spells_v2 <- spells_v1 %>%
     components = gsub(pattern = "V,S", replacement = "V, S", x = components),
     components = gsub(pattern = "V ", replacement = "V", x = components)) %>%
   # Make these columns lowercase
-  dplyr::mutate(
-    casting_time = tolower(casting_time),
-    range = tolower(range),
-    duration = tolower(duration)
-  )
+  dplyr::mutate(casting_time = tolower(casting_time),
+                range = tolower(range),
+                duration = tolower(duration))
+
+# Check out source information
+sort(unique(spells_v2$sources))
 
 # Check out 'tags' column products
 sort(unique(spells_v2$level))
@@ -299,9 +300,12 @@ dplyr::glimpse(spells_v3)
 
 
 
+## ---------------------------------------- ##
+# Query Spells ----
+## ---------------------------------------- ##
 
 
-
+# Once I finish upstream of this I can work on a streamlined path for querying specific spells / spells by criteria (e.g., class, school, etc.)
 
 
 
