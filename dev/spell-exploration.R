@@ -59,7 +59,7 @@ for(k in 1:length(spell_mds)){
     # Pivot wider
     tidyr::pivot_wider(names_from = names, values_from = spell_info) %>%
     # Wrangle spell name
-    dplyr::mutate(name = gsub(pattern = "title:  |\"", replacement = "", x = title),
+    dplyr::mutate(name = gsub(pattern = "title:  |title: |\"", replacement = "", x = title),
                   .before = title) %>%
     # Drop title column
     dplyr::select(-title)
