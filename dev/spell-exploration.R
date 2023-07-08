@@ -230,7 +230,8 @@ spells_v3 <- spells_v2 %>%
   dplyr::filter(!is.na(text)) %>%
   # Identify creature stat blocks
   dplyr::mutate(stat_block = ifelse(
-    test = stringr::str_detect(string = text, pattern = "## <u>"),
+    test = stringr::str_detect(string = text, pattern = "## <u>") |
+      stringr::str_detect(string = text, pattern = "ANIMATED OBJECTS STATISTICS"),
     yes = T, no = NA)) %>%
   # Fill NA for everything beneath stat block starts (i.e., stat block contents)
   dplyr::group_by(name) %>%
@@ -244,48 +245,59 @@ spells_v3 <- spells_v2 %>%
   dplyr::ungroup() %>%
   # Simplify a few spell's descriptions manually
   dplyr::mutate(text = dplyr::case_when(
-    ## Control weather has length tables that we can manually simplify
+    ## Control weather has lengthy tables that we can manually simplify
     name == "Control Weather" & text == "**Precipitation**" ~ "Precipitation: 1 - Clear / 2 - Light Clouds / 3 - Overcast or ground fog / 4 - Rain, hail, or snow / 5 - Torrential rain, driving hail, or blizzard /// Temperature: 1 - Unbearable heat / 2 - Hot / 3 - Warm / 4 - Cool / 5 - Cold / 6 - Arctic cold /// Wind: 1 - Calm / 2 - Moderate wind / 3 - Strong wind / 4 - Gale / 5 - Storm",
+    ## Choas Bolt also has a lengthy table
+    name == "Chaos Bolt" & text == "|d8 |Damage Type|" ~ "1 - Acid / 2 - Cold / 3 - Fire / 4 - Force / 5 - Lightning / 6 - Poison / 7 - Psychic / 8 - Thunder",
     ## If the spell isn't specified, don't mess with the text
     TRUE ~ text)) %>%
   # Remove unnecessary information from specific spells
+  ## Chaos Bolt
+  dplyr::filter(name != "Chaos Bolt" | name == "Chaos Bolt" &
+                  stringr::str_detect(string = text, pattern = "d8s") |
+                  stringr::str_detect(string = text, pattern = "1 - Acid") |
+                  stringr::str_detect(string = text, pattern = "creature")) %>%
   ## Control Weather
   dplyr::filter(name != "Control Weather" | name == "Control Weather" &
-                  stringr::str_detect(string = text, pattern = "control of the weather") |
-                  stringr::str_detect(string = text, pattern = "change the current weather") | stringr::str_detect(string = text, pattern = "Precipitation: 1 -")  ) %>%
+                  stringr::str_detect(string = text, pattern = "weather") |
+                  stringr::str_detect(string = text, pattern = "Precipitation: 1 -")) %>%
   ## Teleport
   dplyr::filter(name != "Teleport" | name == "Teleport" &
                   stringr::str_detect(string = text, pattern = "instantly transports") |
-                  stringr::str_detect(string = text, pattern = "rolls d100") ) %>%
+                  stringr::str_detect(string = text, pattern = "rolls d100")) %>%
   ## Reincarnate
   dplyr::filter(name != "Reincarnate" | name == "Reincarnate" &
                   stringr::str_detect(string = text, pattern = "touch") |
                   stringr::str_detect(string = text, pattern = "fashions") |
                   stringr::str_detect(string = text, pattern = "reincarnated")) %>%
-  #  Re-count text numbers
-  dplyr::group_by(name) %>%
-  dplyr::mutate(text_num = 1:dplyr::n()) %>%
-  dplyr::ungroup()
+  ## Scrying
+  dplyr::filter(name != "Scrying" | name == "Scrying" &
+                  stringr::str_detect(string = text, pattern = "saving throw") |
+                  stringr::str_detect(string = text, pattern = "save") |
+                  stringr::str_detect(string = text, pattern = "choose a location")) %>%
+  ## Misc. Other
+  dplyr::filter(!name %in% c("Creation", "Summon Lesser Demons", "Reality Break") |
+                  name %in% c("Creation", "Summon Lesser Demons", "Reality Break") &
+                  stringr::str_detect(string = text, pattern = "\\|") != T) %>%
+  # Collapse all description text into one row / spell
+  dplyr::group_by(name, sources, class, level, school, casting_time, range, components, duration, higher_levels) %>%
+  dplyr::summarize(description = paste(text, collapse = ". ")) %>%
+  dplyr::ungroup() %>%
+  # Remove some unnecessary formatting from the higher level info
+  dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
+                                     replacement = "", x = higher_levels),
+                .after = description)
 
-
-
-
-
-
-spells_v3 %>%
-  filter(text_num > 10) %>%
-  pull(name) %>%
-  unique()
-
-# tele = 2
-# control weath = 4
-
-spells_v3 %>% filter(name == "Reincarnate") %>% pull(text)
+## Need to fix secondary spell formatting within description of current spell
+## Like this:
+# *[Gust of Wind](gust-of-wind)*
 
 
 # Re-check structure
 dplyr::glimpse(spells_v3)
 ## view(spells_v3)
+
+
 
 
 
