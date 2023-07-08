@@ -6,18 +6,22 @@
 
 
 # Load libraries
-librarian::shelf(tidyverse, dndR)
-# librarian::shelf(oganm/wizaRd)
+librarian::shelf(tidyverse, supportR, dndR)
+## librarian::shelf(oganm/wizaRd) # possibly useful package
 
-# Grimoire link (list of 5e spells)
-## https://github.com/Traneptora/grimoire/tree/master
+# Identify spells in Grimoire (GitHub repo with markdown files of _ D&D spells)
+spell_repo <- supportR::github_ls(repo = 'https://github.com/Traneptora/grimoire',
+                                 folder = "_posts", recursive = F, quiet = F)
 
+# Strip out just markdown file names
+spell_mds <- spell_repo$name
 
-# Can read Markdown in GitHub Grimoire from R
-base::readLines(con = url("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/2014-08-24-acid-splash.markdown"))
+# Check that out
+dplyr::glimpse(spell_mds)
 
-## Need to figure out how to list out all of those URLs...
-
-# Working on solve in function-form in `supportR`
+# Read lines of the first spell's Markdown as a test
+base::readLines(con = url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[1])))
 
 #
+
+
