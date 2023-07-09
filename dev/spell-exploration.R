@@ -467,6 +467,8 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
 
   # Filter by casting time
   if(is.null(cast_time) != T){
+
+    # Actually do initial filtering
     spell_v6a <- dplyr::filter(.data = spell_v5,
                                grepl(pattern = ifelse(test = length(cast_time) > 1,
                                                       yes = paste(cast_time, collapse = "|"),
@@ -474,12 +476,14 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
                                      x = casting_time, ignore.case = T))
 
     # If reaction isn't specified by user, drop it
+    ## Necessary because of partial string match of "action" with "reaction"
     if(!"reaction" %in% cast_time){
       spell_v6b <- dplyr::filter(.data = spell_v6a, grepl(pattern = "reaction", x = casting_time,
                                                          ignore.case = TRUE) == FALSE)
     } else { spell_v6b <- spell_v6a }
 
     # Ditto for bonus action
+    ## Necessary because of partial string match of "action" with "bonus action"
     if(!"bonus action" %in% cast_time){
       spell_v6c <- dplyr::filter(.data = spell_v6b, grepl(pattern = "bonus action", x = casting_time,
                                                          ignore.case = TRUE) == FALSE)
@@ -492,13 +496,17 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
     # Drop empty columns (likely only the 'higher level' column for some spells)
     dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
 
-  # Return final subsetted object
-  return(spell_actual) }
+  # If there are no spells identified by those arguments...
+  if(nrow(spell_actual) == 0){
+    # Return a message
+    message("No spells match these criteria; consider revising search")
+
+    ## Otherwise... return final subsetted object
+  } else { return(spell_actual) } }
+
 
 # Needed tweaks
-## 2. Allow filtering by casting time (action vs. bonus action vs. reaction)
-## 3. Consider reshaping final data into one column per spell for increased readability
-### (Maybe?)
+## Consider reshaping final data into one column per spell for increased readability (Maybe?)
 
 
 # Test with one entry for each argument separately
@@ -525,11 +533,11 @@ dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation")
 # Try out ritual argument
 dplyr::glimpse(spell_list(class = "paladin", ritual = T))
 
-# And finish up by specifying multiple options for several arguments
+# Try another precise query
 dplyr::glimpse(spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")))
 
-
-
+# Make a query that is too precise
+spell_list(name = "spell doesnt exist", class = "bard", level = "10")
 
 
 
