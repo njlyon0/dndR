@@ -155,6 +155,32 @@ spells_v2 <- spells_v1 %>%
   dplyr::mutate(class = gsub(pattern = "  ", replacement = "", x = class)) %>%
   # Drop now-superseded 'type' column
   dplyr::select(-type) %>%
+  # Expand source acronyms for accessibility
+  ## A
+  dplyr::mutate(sources = gsub(pattern = "AAG", replacement = "Astral Adventurer's Guide", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "AVT", replacement = "A Verdant Tomb", x = sources)) %>%
+  ## E
+  dplyr::mutate(sources = gsub(pattern = "EE", replacement = "Elemental Evil", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "EGW", replacement = "Explorer’s Guide to Wildemount", x = sources)) %>%
+  ## F
+  dplyr::mutate(sources = gsub(pattern = "FCD", replacement = "From Cyan Depths", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "FTD", replacement = "Fizban’s Treasure of Dragons", x = sources)) %>%
+  ## G
+  dplyr::mutate(sources = gsub(pattern = "GGR", replacement = "Guildmasters’ Guide to Ravnica", x = sources)) %>%
+  ## I
+  dplyr::mutate(sources = gsub(pattern = "IDRF", replacement = "Icewind Dale: Rime of the Frostmaiden", x = sources)) %>%
+  ## L
+  dplyr::mutate(sources = gsub(pattern = "LLK", replacement = "Lost Laboratory of Kwalish", x = sources)) %>%
+  ## P
+  dplyr::mutate(sources = gsub(pattern = "PHB", replacement = "Player's Handbook", x = sources)) %>%
+  ## S
+  dplyr::mutate(sources = gsub(pattern = "SCC", replacement = "Strixhaven: A Curriculum of Chaos", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "SCAG", replacement = "Sword Coast Adventurer’s Guide", x = sources)) %>%
+  ## T
+  dplyr::mutate(sources = gsub(pattern = "TCE", replacement = "Tasha’s Cauldron of Everything", x = sources)) %>%
+  ## X
+  dplyr::mutate(sources = gsub(pattern = "XGE", replacement = "Xanathar’s Guide to Everything", x = sources)) %>%
+  # dplyr::mutate(sources = gsub(pattern = "", replacement = "", x = sources)) %>%
   # Do some minor grammar fixes
   dplyr::mutate(
     casting_time = gsub(pattern = "1 minutes", replacement = "1 minute", x = casting_time),
