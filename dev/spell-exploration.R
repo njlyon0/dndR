@@ -457,7 +457,9 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
   return(spell_actual) }
 
 # Needed tweaks
-## 1. Consider reshaping final data into one column per spell for increased readability
+## 1. Retain ritual casting information
+## 2. Allow filtering by casting time (action vs. bonus action vs. reaction)
+## 3. Consider reshaping final data into one column per spell for increased readability
 ### (Maybe?)
 
 
