@@ -433,6 +433,13 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
   # Return final subsetted object
   return(spell_v4) }
 
+# Needed tweaks
+## 1. Support partial string matching for all categories
+## 2. Partial string matching is *vital* for class information
+### (Could pivot longer and subset that way?)
+## 3. Consider reshaping final data into one column per spell for increased readability
+### (Maybe?)
+
 # Invoke function to test
 spell_list(name = c("fire bolt", "ACID SPLASH"))
 spell_list(class = "wizard")
