@@ -128,6 +128,9 @@ dplyr::glimpse(spells_v1)
 # Export this for later
 write.csv(x = spells_v1, file = file.path("dev", "raw_spells.csv"), na = '', row.names = F)
 
+# Read back in if needed
+## spells_v1 <- read.csv(file = file.path("dev", "raw_spells.csv"))
+
 # Clean environment
 rm(list = setdiff(ls(), c("spells_v1")))
 
@@ -216,7 +219,7 @@ sort(unique(spells_v2$duration))
 dplyr::glimpse(dplyr::select(spells_v2, -dplyr::starts_with("description")))
 
 ## ---------------------------------------- ##
-# Wrangle Spell Descriptions ----
+      # Wrangle Spell Descriptions ----
 ## ---------------------------------------- ##
 
 # Glimpse the full structure
@@ -346,10 +349,20 @@ spells_v3 <- spells_v2 %>%
                               too_few = "align_end", too_many = "merge") %>%
   tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
   dplyr::select(-junk) %>%
-  # Collapse all description text into one row / spell
-  dplyr::group_by(name, sources, class, level, school, casting_time, range, components, duration, higher_levels) %>%
-  dplyr::summarize(description = paste(text, collapse = ". ")) %>%
+  # Drop other unwanted column(s)
+  dplyr::select(-stat_block, -text_num) %>%
+  # Pare down to only non-unique columns
+  dplyr::distinct() %>%
+  # Drop empty description text rows
+  dplyr::filter(!is.na(text) & nchar(text) != 0) %>%
+  # Re-count lines of description
+  dplyr::group_by(name) %>%
+  dplyr::mutate(description_num = paste0("description_", 1:dplyr::n())) %>%
   dplyr::ungroup() %>%
+  # Pivot to wide format
+  tidyr::pivot_wider(names_from = description_num, values_from = text) %>%
+  # Combine separate description text columns
+  tidyr::unite(col = "description", dplyr::starts_with("description_"), sep = ". ", na.rm = T) %>%
   # Remove some unnecessary formatting from the higher level info
   dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
                                      replacement = "", x = higher_levels),
@@ -358,21 +371,83 @@ spells_v3 <- spells_v2 %>%
 # Re-check structure
 dplyr::glimpse(spells_v3)
 
-# Export locally!
-write.csv(x = spells_v3, file = file.path("dev", "spells.csv"), row.names = F, na = '')
+## ---------------------------------------- ##
+# Final Wrangling ----
+## ---------------------------------------- ##
 
+# Do final tidying
+spells_v4 <- spells_v3 %>%
+  # Rename some columns
+  dplyr::rename(spell_name = name,
+                spell_source = sources,
+                pc_class = class,
+                spell_level = level,
+                spell_school = school) %>%
+  # Move higher_levels column to right of description column
+  dplyr::relocate(higher_levels, .after = description)
+
+# Last structure check
+dplyr::glimpse(spells_v4)
+
+# Export locally!
+write.csv(x = spells_v4, file = file.path("dev", "spells.csv"), row.names = F, na = '')
+
+## ---------------------------------------- ##
+              # Query Spells ----
+## ---------------------------------------- ##
 # Clear environment completely
 rm(list = ls())
-
-## ---------------------------------------- ##
-# Query Spells ----
-## ---------------------------------------- ##
 
 # Read in spell data
 spells <- read.csv(file = file.path("dev", "spells.csv"))
 
 # Re-check structure
 dplyr::glimpse(spells)
+
+# Begin work on a function for querying spells
+spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
+
+  # Read in spell data
+  spell_v0 <- read.csv(file = file.path("dev", "spells.csv"))
+
+  # Filter by name if names are provided
+  if(is.null(name) != T){
+    spell_v1 <- dplyr::filter(.data = spell_v0, tolower(spell_name) %in% tolower(name))
+  } else { spell_v1 <- spell_v0 }
+
+  # Filter by class if classes are provided
+  if(is.null(class) != T){
+    spell_v2 <- dplyr::filter(.data = spell_v1, tolower(pc_class) %in% tolower(class))
+  } else { spell_v2 <- spell_v1 }
+
+  # Filter by level if levels are provided
+  if(is.null(level) != T){
+    spell_v3 <- dplyr::filter(.data = spell_v2, tolower(spell_level) %in% tolower(level))
+  } else { spell_v3 <- spell_v2 }
+
+  # Filter by school if schools are provided
+  if(is.null(school) != T){
+    spell_v4 <- dplyr::filter(.data = spell_v3, tolower(spell_school) %in% tolower(school))
+  } else { spell_v4 <- spell_v3 }
+
+  # Return final subsetted object
+  return(spell_v4) }
+
+# Invoke function to test
+spell_list(name = c("fire bolt", "ACID SPLASH"))
+spell_list(class = "wizard")
+spell_list(level = "cantrip")
+spell_list(school = "divination")
+
+
+
+
+
+
+
+
+
+
 
 # End ----
 
