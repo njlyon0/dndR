@@ -438,6 +438,11 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
 
   # Filter by level if levels are provided
   if(is.null(level) != T){
+
+    # If level isn't a character, make it so
+    if(is.character(level) != TRUE) { level <- as.character(level) }
+
+    # Do actual subsetting
     spell_v3 <- dplyr::filter(.data = spell_v2,
                               grepl(pattern = ifelse(test = length(level) > 1,
                                                      yes = paste(level, collapse = "|"),
@@ -539,7 +544,8 @@ dplyr::glimpse(spell_list(name = "bolt", class = "sorcerer", level = c("1", "2",
 # Make a query that is too precise
 spell_list(name = "spell doesnt exist", class = "bard", level = "10")
 
-
+# Test numeric specification of level
+dplyr::glimpse(spell_list(class = "sorcerer", level = 7:9))
 
 
 
