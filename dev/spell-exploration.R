@@ -36,9 +36,6 @@ dplyr::glimpse(spell_mds)
       # Extract Spell Information ----
 ## ---------------------------------------- ##
 
-# Clean environment
-rm(list = setdiff(ls(), c("spell_mds")))
-
 # Make an empty list to store individually-wrangled spells within
 list_o_spells <- list()
 
@@ -128,6 +125,12 @@ spells_v1 <- list_o_spells %>%
 # Check structure of that
 dplyr::glimpse(spells_v1)
 
+# Export this for later
+write.csv(x = spells_v1, file = file.path("dev", "raw_spells.csv"), na = '', row.names = F)
+
+# Clean environment
+rm(list = setdiff(ls(), c("spells_v1")))
+
 ## ---------------------------------------- ##
       # Wrangle Spell Information ----
 ## ---------------------------------------- ##
@@ -153,6 +156,7 @@ spells_v2 <- spells_v1 %>%
                sep = ", ", na.rm = T) %>%
   # Tidy that column a small amount
   dplyr::mutate(class = gsub(pattern = "  ", replacement = "", x = class)) %>%
+  dplyr::mutate(class = gsub(pattern = "-", replacement = " ", x = class)) %>%
   # Drop now-superseded 'type' column
   dplyr::select(-type) %>%
   # Expand source acronyms for accessibility
@@ -307,6 +311,41 @@ spells_v3 <- spells_v2 %>%
   dplyr::filter(!name %in% c("Creation", "Summon Lesser Demons", "Reality Break") |
                   name %in% c("Creation", "Summon Lesser Demons", "Reality Break") &
                   stringr::str_detect(string = text, pattern = "\\|") != T) %>%
+  # Handle [Spell Name](spell-name) formatting weirdness in text
+  ## Split text by first square bracket
+  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
+                              too_few = "align_start", too_many = "merge") %>%
+  ## Split remaining text by `](`
+  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
+                              too_few = "align_start", too_many = "merge") %>%
+  ## Tidy up that spell name that is now separate
+  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
+  ## Split by closing parentheses
+  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
+                              too_few = "align_end", too_many = "merge") %>%
+  ## Recombine the parts we want and drop the column we don't
+  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
+  dplyr::select(-junk) %>%
+  # Do that again to catch multiple spells in the same text row
+  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
+                              too_few = "align_start", too_many = "merge") %>%
+  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
+                              too_few = "align_start", too_many = "merge") %>%
+  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
+  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
+                              too_few = "align_end", too_many = "merge") %>%
+  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
+  dplyr::select(-junk) %>%
+  # Re-do one final time for the two spells that reference three spells in one line of description
+  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
+                              too_few = "align_start", too_many = "merge") %>%
+  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
+                              too_few = "align_start", too_many = "merge") %>%
+  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
+  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
+                              too_few = "align_end", too_many = "merge") %>%
+  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
+  dplyr::select(-junk) %>%
   # Collapse all description text into one row / spell
   dplyr::group_by(name, sources, class, level, school, casting_time, range, components, duration, higher_levels) %>%
   dplyr::summarize(description = paste(text, collapse = ". ")) %>%
@@ -316,25 +355,24 @@ spells_v3 <- spells_v2 %>%
                                      replacement = "", x = higher_levels),
                 .after = description)
 
-## Need to fix secondary spell formatting within description of current spell
-## Like this:
-# *[Gust of Wind](gust-of-wind)*
-
-
 # Re-check structure
 dplyr::glimpse(spells_v3)
-## view(spells_v3)
 
+# Export locally!
+write.csv(x = spells_v3, file = file.path("dev", "spells.csv"), row.names = F, na = '')
 
+# Clear environment completely
+rm(list = ls())
 
 ## ---------------------------------------- ##
 # Query Spells ----
 ## ---------------------------------------- ##
 
+# Read in spell data
+spells <- read.csv(file = file.path("dev", "spells.csv"))
 
-# Once I finish upstream of this I can work on a streamlined path for querying specific spells / spells by criteria (e.g., class, school, etc.)
-
-
+# Re-check structure
+dplyr::glimpse(spells)
 
 # End ----
 
