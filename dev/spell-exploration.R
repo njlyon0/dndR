@@ -375,7 +375,7 @@ spells_v3 <- spells_v2 %>%
 dplyr::glimpse(spells_v3)
 
 ## ---------------------------------------- ##
-# Final Wrangling ----
+            # Final Wrangling ----
 ## ---------------------------------------- ##
 
 # Do final tidying
@@ -385,9 +385,10 @@ spells_v4 <- spells_v3 %>%
                 spell_source = sources,
                 pc_class = class,
                 spell_level = level,
-                spell_school = school) %>%
+                spell_school = school,
+                ritual_cast = ritual) %>%
   # Move some columns to new places
-  dplyr::relocate(ritual, .before = casting_time) %>%
+  dplyr::relocate(ritual_cast, .before = casting_time) %>%
   dplyr::relocate(higher_levels, .after = description)
 
 # Last structure check
@@ -409,7 +410,7 @@ spells <- read.csv(file = file.path("dev", "spells.csv"))
 dplyr::glimpse(spells)
 
 # Begin work on a function for querying spells
-spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
+spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL, ritual = NULL){
 
   # Read in spell data
   spell_v0 <- read.csv(file = file.path("dev", "spells.csv"))
@@ -452,8 +453,20 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
                                     x = spell_school, ignore.case = T))
     } else { spell_v4 <- spell_v3 }
 
+  # Filter for/against ritual spells if specified
+  if(is.null(ritual) != T){
+
+    # Error out if ritual isn't logical
+    if(is.logical(ritual) != TRUE)
+      stop("`ritual` argument must be a `TRUE`, `FALSE`, or `NULL`")
+
+    # Otherwise, use it to filter by
+    spell_v5 <- dplyr::filter(.data = spell_v4, ritual_cast == ritual)
+  } else { spell_v5 <- spell_v4 }
+
+
   # Wrangle that object a little before returning
-  spell_actual <- spell_v4 %>%
+  spell_actual <- spell_v5 %>%
     # Drop empty columns (likely only the 'higher level' column for some spells)
     dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
 
@@ -461,7 +474,6 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
   return(spell_actual) }
 
 # Needed tweaks
-## 1. Retain ritual casting information
 ## 2. Allow filtering by casting time (action vs. bonus action vs. reaction)
 ## 3. Consider reshaping final data into one column per spell for increased readability
 ### (Maybe?)
@@ -481,6 +493,9 @@ dplyr::glimpse(spell_list(school = c("necro", "evoc")))
 
 # Test out a function with multiple specified arguments
 dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation"))
+
+# Try out ritual argument
+dplyr::glimpse(spell_list(class = "paladin", ritual = T))
 
 # And finish up by specifying multiple options for several arguments
 dplyr::glimpse(spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")))
