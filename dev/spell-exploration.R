@@ -174,8 +174,9 @@ spells_v2 <- spells_v1 %>%
   ## P
   dplyr::mutate(sources = gsub(pattern = "PHB", replacement = "Player's Handbook", x = sources)) %>%
   ## S
-  dplyr::mutate(sources = gsub(pattern = "SCC", replacement = "Strixhaven: A Curriculum of Chaos", x = sources)) %>%
   dplyr::mutate(sources = gsub(pattern = "SCAG", replacement = "Sword Coast Adventurer’s Guide", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "SCC", replacement = "Strixhaven: A Curriculum of Chaos", x = sources)) %>%
+  dplyr::mutate(sources = gsub(pattern = "SRD", replacement = "System Reference Document", x = sources)) %>%
   ## T
   dplyr::mutate(sources = gsub(pattern = "TCE", replacement = "Tasha’s Cauldron of Everything", x = sources)) %>%
   ## X
