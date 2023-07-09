@@ -538,16 +538,35 @@ dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation")
 # Try out ritual argument
 dplyr::glimpse(spell_list(class = "paladin", ritual = T))
 
-# Try another precise query
-dplyr::glimpse(spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")))
-
 # Make a query that is too precise
 spell_list(name = "spell doesnt exist", class = "bard", level = "10")
 
 # Test numeric specification of level
 dplyr::glimpse(spell_list(class = "sorcerer", level = 7:9))
 
+# Experiment with more human readable outputs
+test_result <- spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3"))
+## view(test_result)
 
+test_mod <- test_result %>%
+  # Break into a list (one element per spell)
+  dplyr::group_by(spell_name) %>%
+  dplyr::group_split() %>%
+  # Flip orientation
+  purrr::map(.x = ., .f = dplyr::mutate, dplyr::across(.cols = dplyr::everything(),
+                                                       .fns = as.character)) %>%
+  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything()) %>%
+  # Create a row number column
+  purrr::map(.x = ., .f = dplyr::mutate, row_num = 1:length(name)) %>%
+  # Count characters in description / higher levels
+  purrr::map(.x = ., .f = dplyr::mutate, char_num = ifelse(test = name %in% c("description",
+                                                                              "higher_levels"),
+                                                           yes = ceiling(x = nchar(value) / 86),
+                                                           no = NA))
+
+
+# Check that out
+test_mod
 
 # End ----
 
