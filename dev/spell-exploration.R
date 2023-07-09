@@ -362,7 +362,7 @@ spells_v3 <- spells_v2 %>%
   # Pivot to wide format
   tidyr::pivot_wider(names_from = description_num, values_from = text) %>%
   # Combine separate description text columns
-  tidyr::unite(col = "description", dplyr::starts_with("description_"), sep = ". ", na.rm = T) %>%
+  tidyr::unite(col = "description", dplyr::starts_with("description_"), sep = " ", na.rm = T) %>%
   # Remove some unnecessary formatting from the higher level info
   dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
                                      replacement = "", x = higher_levels),
