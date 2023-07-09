@@ -548,6 +548,20 @@ dplyr::glimpse(spell_list(class = "sorcerer", level = 7:9))
 test_result <- spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3"))
 ## view(test_result)
 
+
+# Check out test_result
+test_result %>%
+  # Calculate number of 86 character chunks there would be in the description
+  dplyr::mutate(chunk_num = ceiling(x = nchar(description) / 86))
+  tidyr::separate_wider_position(cols = description,
+                                 widths = paste0(),
+                                 too_few = "align_start", too_many = "merge")
+
+
+  # Need to break description/higher level text every 86 characters for optimal printing in long-form lists
+
+
+# Look at a list-based version
 test_mod <- test_result %>%
   # Break into a list (one element per spell)
   dplyr::group_by(spell_name) %>%
@@ -555,14 +569,14 @@ test_mod <- test_result %>%
   # Flip orientation
   purrr::map(.x = ., .f = dplyr::mutate, dplyr::across(.cols = dplyr::everything(),
                                                        .fns = as.character)) %>%
-  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything()) %>%
-  # Create a row number column
-  purrr::map(.x = ., .f = dplyr::mutate, row_num = 1:length(name)) %>%
-  # Count characters in description / higher levels
-  purrr::map(.x = ., .f = dplyr::mutate, char_num = ifelse(test = name %in% c("description",
-                                                                              "higher_levels"),
-                                                           yes = ceiling(x = nchar(value) / 86),
-                                                           no = NA))
+  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything()) # %>%
+  # # Create a row number column
+  # purrr::map(.x = ., .f = dplyr::mutate, row_num = 1:length(name)) %>%
+  # # Count characters in description / higher levels
+  # purrr::map(.x = ., .f = dplyr::mutate, char_num = ifelse(test = name %in% c("description",
+  #                                                                             "higher_levels"),
+  #                                                          yes = ceiling(x = nchar(value) / 86),
+  #                                                          no = NA))
 
 
 # Check that out
