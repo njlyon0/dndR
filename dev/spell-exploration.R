@@ -410,7 +410,8 @@ spells <- read.csv(file = file.path("dev", "spells.csv"))
 dplyr::glimpse(spells)
 
 # Begin work on a function for querying spells
-spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL, ritual = NULL){
+spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
+                       ritual = NULL, cast_time = NULL){
 
   # Read in spell data
   spell_v0 <- read.csv(file = file.path("dev", "spells.csv"))
@@ -464,9 +465,30 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL, r
     spell_v5 <- dplyr::filter(.data = spell_v4, ritual_cast == ritual)
   } else { spell_v5 <- spell_v4 }
 
+  # Filter by casting time
+  if(is.null(cast_time) != T){
+    spell_v6a <- dplyr::filter(.data = spell_v5,
+                               grepl(pattern = ifelse(test = length(cast_time) > 1,
+                                                      yes = paste(cast_time, collapse = "|"),
+                                                      no = cast_time),
+                                     x = casting_time, ignore.case = T))
+
+    # If reaction isn't specified by user, drop it
+    if(!"reaction" %in% cast_time){
+      spell_v6b <- dplyr::filter(.data = spell_v6a, grepl(pattern = "reaction", x = casting_time,
+                                                         ignore.case = TRUE) == FALSE)
+    } else { spell_v6b <- spell_v6a }
+
+    # Ditto for bonus action
+    if(!"bonus action" %in% cast_time){
+      spell_v6c <- dplyr::filter(.data = spell_v6b, grepl(pattern = "bonus action", x = casting_time,
+                                                         ignore.case = TRUE) == FALSE)
+    } else { spell_v6c <- spell_v6b }
+
+  } else { spell_v6c <- spell_v5 } # Skip this mess if the argument isn't specified to begin with
 
   # Wrangle that object a little before returning
-  spell_actual <- spell_v5 %>%
+  spell_actual <- spell_v6c %>%
     # Drop empty columns (likely only the 'higher level' column for some spells)
     dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
 
@@ -484,12 +506,18 @@ dplyr::glimpse(spell_list(name = "chaos bolt"))
 dplyr::glimpse(spell_list(class = "paladin"))
 dplyr::glimpse(spell_list(level = "9"))
 dplyr::glimpse(spell_list(school = "divination"))
+dplyr::glimpse(spell_list(ritual = T))
+spell_list(cast_time = "action") %>% dplyr::pull(casting_time) %>% unique()
 
 # Test multiple entries for each argument separately
 dplyr::glimpse(spell_list(name = c("fire bolt", "ACID SPLASH")))
 dplyr::glimpse(spell_list(class = c("WiZaRd", "barD")))
 dplyr::glimpse(spell_list(level = c("cantrip", "1")))
 dplyr::glimpse(spell_list(school = c("necro", "evoc")))
+spell_list(cast_time = c("bonus action", "action")) %>% dplyr::pull(casting_time) %>% unique()
+
+# Double check something about casting time argument
+spell_list(cast_time = c("bonus action", "reaction")) %>% dplyr::pull(casting_time) %>% unique()
 
 # Test out a function with multiple specified arguments
 dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation"))
