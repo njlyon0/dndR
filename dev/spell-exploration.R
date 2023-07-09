@@ -412,42 +412,72 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL){
 
   # Filter by name if names are provided
   if(is.null(name) != T){
-    spell_v1 <- dplyr::filter(.data = spell_v0, tolower(spell_name) %in% tolower(name))
+    spell_v1 <- dplyr::filter(.data = spell_v0,
+                              # More than one name given? Collapse into one string match pattern
+                              grepl(pattern = ifelse(test = length(name) > 1,
+                                                     yes = paste(name, collapse = "|"),
+                                                     no = name),
+                                    # Compare string(s) against spell names (case insensitive)
+                                    x = spell_name, ignore.case = T))
   } else { spell_v1 <- spell_v0 }
 
   # Filter by class if classes are provided
   if(is.null(class) != T){
-    spell_v2 <- dplyr::filter(.data = spell_v1, tolower(pc_class) %in% tolower(class))
+    spell_v2 <- dplyr::filter(.data = spell_v1,
+                              grepl(pattern = ifelse(test = length(class) > 1,
+                                                     yes = paste(class, collapse = "|"),
+                                                     no = class),
+                                    x = pc_class, ignore.case = T))
   } else { spell_v2 <- spell_v1 }
 
   # Filter by level if levels are provided
   if(is.null(level) != T){
-    spell_v3 <- dplyr::filter(.data = spell_v2, tolower(spell_level) %in% tolower(level))
-  } else { spell_v3 <- spell_v2 }
+    spell_v3 <- dplyr::filter(.data = spell_v2,
+                              grepl(pattern = ifelse(test = length(level) > 1,
+                                                     yes = paste(level, collapse = "|"),
+                                                     no = level),
+                                    x = spell_level, ignore.case = T))
+    } else { spell_v3 <- spell_v2 }
 
   # Filter by school if schools are provided
   if(is.null(school) != T){
-    spell_v4 <- dplyr::filter(.data = spell_v3, tolower(spell_school) %in% tolower(school))
-  } else { spell_v4 <- spell_v3 }
+    spell_v4 <- dplyr::filter(.data = spell_v3,
+                              grepl(pattern = ifelse(test = length(school) > 1,
+                                                     yes = paste(school, collapse = "|"),
+                                                     no = school),
+                                    x = spell_school, ignore.case = T))
+    } else { spell_v4 <- spell_v3 }
+
+  # Wrangle that object a little before returning
+  spell_actual <- spell_v4 %>%
+    # Drop empty columns (likely only the 'higher level' column for some spells)
+    dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
 
   # Return final subsetted object
-  return(spell_v4) }
+  return(spell_actual) }
 
 # Needed tweaks
-## 1. Support partial string matching for all categories
-## 2. Partial string matching is *vital* for class information
-### (Could pivot longer and subset that way?)
-## 3. Consider reshaping final data into one column per spell for increased readability
+## 1. Consider reshaping final data into one column per spell for increased readability
 ### (Maybe?)
 
-# Invoke function to test
-spell_list(name = c("fire bolt", "ACID SPLASH"))
-spell_list(class = "wizard")
-spell_list(level = "cantrip")
-spell_list(school = "divination")
 
+# Test with one entry for each argument separately
+dplyr::glimpse(spell_list(name = "chaos bolt"))
+dplyr::glimpse(spell_list(class = "paladin"))
+dplyr::glimpse(spell_list(level = "9"))
+dplyr::glimpse(spell_list(school = "divination"))
 
+# Test multiple entries for each argument separately
+dplyr::glimpse(spell_list(name = c("fire bolt", "ACID SPLASH")))
+dplyr::glimpse(spell_list(class = c("WiZaRd", "barD")))
+dplyr::glimpse(spell_list(level = c("cantrip", "1")))
+dplyr::glimpse(spell_list(school = c("necro", "evoc")))
 
+# Test out a function with multiple specified arguments
+dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation"))
+
+# And finish up by specifying multiple options for several arguments
+dplyr::glimpse(spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")))
 
 
 
