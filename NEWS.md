@@ -1,6 +1,6 @@
 ## dndR Version 1.1.0.900
 
-Development version of `dndR`. Changes from latest release will be listed here as they are made.
+Development version of `dndR`. The following changes were made from the preceding version:
 
 - New function: `spell_list` -- identifies official Dungeons & Dragons spells based on user specifications of various criteria (e.g., school of magic, which character class list has the spell, casting time, etc.)
 - New function: `spell_text` -- retrieves full description text of spell(s) specified by user
@@ -14,7 +14,7 @@ There are no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
 
 ## dndR Version 1.1.0
 
-Latest version of `dndR`. The following changes from the preceding version were made:
+The following changes were made from the preceding version:
 
 - New supported class: Artificer (Source: "Eberron")
 - New supported races: Bugbear, Changeling, Goblin, Hobgoblin, Kalashtar, Orc, Shifter, and Warforged (Source: "Eberron")
@@ -27,4 +27,4 @@ There are no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
 
 ## dndR Version 1.0.0
 
-This is the first fully functioning version of the package. There are currently no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
+First fully functioning version of the package. There are currently no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
