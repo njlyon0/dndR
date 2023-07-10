@@ -543,5 +543,12 @@ dplyr::glimpse(spell_list(name = "chromatic orb"))
 spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")) %>%
   tibble::view()
 
+
+## Next Up
+### Maybe split 'spell list' and 'spell description' functions into separate bits?
+### Would make viewing the description easier
+### Also makes spell list more navigable because it's focused on bigger picture informaiton
+
+
 # End ----
 
