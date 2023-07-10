@@ -7,7 +7,7 @@
 roll(dice = "d20", show_dice = FALSE)
 }
 \arguments{
-\item{dice}{(character) specifying the number of dice and which type (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die}
+\item{dice}{(character) number and type of dice to roll specified in Dungeons & Dragons shorthand (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die (e.g, "1d20")}
 
 \item{show_dice}{(logical) whether to print the values of each individual die included in the total. Defaults to FALSE}
 }
