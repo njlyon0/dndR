@@ -1,11 +1,15 @@
-#' @title
+#' @title List Spells Based on Criteria
 #'
-#' @description
+#' @description Query list of all Dungeons & Dragons spells based on partial string matches between user inputs and the relevant column of the spell information data table. Currently supports users querying the spell list by spell name, which class lists allow the spell, spell's level, the school of magic the spell belongs in, whether or not the spell can be cast as a ritual, and the time it takes to cast the spell. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude spells from the returned set of spells
 #'
-#' @param
-#' @param
+#' @param name (character) text to look for in spell names
+#' @param class (character) character class(es) with the spell(s) on their list
+#' @param level (character) "cantrip" and/or the minimum required spell slot level
+#' @param school (character) school(s) of magic within which the spell belongs (e.g., 'evocation', 'necromancy', etc.)
+#' @param ritual (logical) whether the spell can be cast as a ritual
+#' @param cast_time (character) either the phase of a turn needed to cast the spell or the in-game time required (e.g., "reaction", "1 minute", etc.)
 #'
-#' @return
+#' @return (dataframe) 10 columns of information with one row per spell(s) that fit(s) the user-specified criteria. If no spells fit the criteria, returns a message to that effect instead of a data object
 #' @importFrom magrittr %>%
 #'
 #' @export
@@ -13,9 +17,11 @@
 #' @examples
 #' spell_list(name = "fire", class = "wizard", school = "evocation")
 #'
-
 spell_list <- function(name = NULL, class = NULL, level = NULL,
                        school = NULL, ritual = NULL, cast_time = NULL){
+  # Squelch visible bindings note
+  spell_name <- pc_class <- spell_level <- spell_school <- NULL
+  ritual_cast <- casting_time <- description <- higher_levels <- NULL
 
   # Read in spell data
   spell_v0 <- dndR::spells
@@ -116,4 +122,4 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
       dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
 
     # Return that object
-    return(spell_actual) } }
+    return(as.data.frame(spell_actual)) } }
