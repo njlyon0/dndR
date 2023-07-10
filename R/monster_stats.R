@@ -32,7 +32,7 @@ monster_stats <- function(xp = NULL, cr = NULL){
     xp_actual <- xp }
 
   # Load in the DMG's monster table
-  monsters <- dndR::monsters
+  monsters <- dndR::monster_table
 
   # Identify the relevant row using the provided arguments
   relevant_monster <- monsters %>%
