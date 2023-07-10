@@ -496,18 +496,45 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
 
   } else { spell_v6c <- spell_v5 } # Skip this mess if the argument isn't specified to begin with
 
-  # Wrangle that object a little before returning
-  spell_actual <- spell_v6c %>%
-    # Drop empty columns (likely only the 'higher level' column for some spells)
-    dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
-
   # If there are no spells identified by those arguments...
-  if(nrow(spell_actual) == 0){
+  if(nrow(spell_v6c) == 0){
     # Return a message
     message("No spells match these criteria; consider revising search")
 
-    ## Otherwise... return final subsetted object
-  } else { return(spell_actual) } }
+  } else {
+
+  # Set a per-text column character count limit
+  char_limit <- 52
+
+  # Identify how many description columns are needed to avoid weird broken text wrapping
+  desc_vec <- rep(x = char_limit,
+                  times = max(ceiling(x = nchar(spell_v6c$description) / char_limit)))
+  names(desc_vec) <- paste0("description_", 1:length(desc_vec))
+
+  # Wrangle that object as needed before returning
+  spell_v7 <- spell_v6c %>%
+    # Split description column by character numbers
+    tidyr::separate_wider_position(cols = description, widths = desc_vec,
+                                   too_few = "align_start") %>%
+    # Drop empty columns (likely only the 'higher level' column for some spells)
+    dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
+
+  # Process the higher level column in the same way if it's in the data
+  if("higher_levels" %in% names(spell_v7)){
+
+    # Figure out how many columns are needed
+    high_vec <- rep(x = char_limit,
+                    times = max(ceiling(x = nchar(spell_v7$higher_levels) / char_limit)))
+    names(high_vec) <- paste0("higher_levels_", 1:length(high_vec))
+
+    # Split the column that many times
+    spell_actual <- spell_v7 %>%
+      tidyr::separate_wider_position(cols = higher_levels, widths = high_vec,
+                                     too_few = "align_start")
+  } else { spell_actual <- spell_v7 }
+
+    # Return
+    return(spell_actual) } }
 
 
 # Needed tweaks
@@ -544,50 +571,9 @@ spell_list(name = "spell doesnt exist", class = "bard", level = "10")
 # Test numeric specification of level
 dplyr::glimpse(spell_list(class = "sorcerer", level = 7:9))
 
-# Experiment with more human readable outputs
-test_result <- spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3"))
-## view(test_result)
-
-
-# Set character wrap limit
-char_num <- 52
-
-# Create named vector of new description column names
-desc_vec <- rep(x = char_num, times = max(ceiling(x = nchar(test_result$description) / char_num)))
-names(desc_vec) <- paste0("description_", 1:length(desc_vec))
-
-# Do the same for the higher level information
-high_vec <- rep(x = char_num, times = max(ceiling(x = nchar(test_result$higher_levels) / char_num)))
-names(high_vec) <- paste0("higher_levels_", 1:length(high_vec))
-
-# Check out test_result
-test2 <- test_result %>%
-  # Split description column by character numbers
-  tidyr::separate_wider_position(cols = description, widths = desc_vec,
-                                 too_few = "align_start") %>%
-  # And do the same for the higher level information
-  tidyr::separate_wider_position(cols = higher_levels, widths = high_vec,
-                                 too_few = "align_start")
-
-# Re-check structure
-str(test2)
-## view(test2)
-
-  # Need to break description/higher level text every 86 characters for optimal printing in long-form lists
-
-
-# Look at a list-based version
-test_mod <- test2 %>%
-  # Make ritual column into a character
-  dplyr::mutate(ritual_cast = as.character(ritual_cast)) %>%
-  # Break into a list (one element per spell)
-  dplyr::group_by(spell_name) %>%
-  dplyr::group_split() %>%
-  # Flip orientation
-  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything())
-
-# Check that out
-print(x = test_mod, n = 23, na.print = '')
+# View the outputs to check human readability
+spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")) %>%
+  tibble::view()
 
 # End ----
 
