@@ -536,40 +536,8 @@ spell_list <- function(name = NULL, class = NULL, level = NULL, school = NULL,
     # Return
     return(spell_actual) } }
 
-
-# Needed tweaks
-## Consider reshaping final data into one column per spell for increased readability (Maybe?)
-
-
-# Test with one entry for each argument separately
-dplyr::glimpse(spell_list(name = "chaos bolt"))
-dplyr::glimpse(spell_list(class = "paladin"))
-dplyr::glimpse(spell_list(level = "9"))
-dplyr::glimpse(spell_list(school = "divination"))
-dplyr::glimpse(spell_list(ritual = T))
-spell_list(cast_time = "action") %>% dplyr::pull(casting_time) %>% unique()
-
-# Test multiple entries for each argument separately
-dplyr::glimpse(spell_list(name = c("fire bolt", "ACID SPLASH")))
-dplyr::glimpse(spell_list(class = c("WiZaRd", "barD")))
-dplyr::glimpse(spell_list(level = c("cantrip", "1")))
-dplyr::glimpse(spell_list(school = c("necro", "evoc")))
-spell_list(cast_time = c("bonus action", "action")) %>% dplyr::pull(casting_time) %>% unique()
-
-# Double check something about casting time argument
-spell_list(cast_time = c("bonus action", "reaction")) %>% dplyr::pull(casting_time) %>% unique()
-
-# Test out a function with multiple specified arguments
-dplyr::glimpse(spell_list(name = "fire", class = "wizard", school = "evocation"))
-
-# Try out ritual argument
-dplyr::glimpse(spell_list(class = "paladin", ritual = T))
-
-# Make a query that is too precise
-spell_list(name = "spell doesnt exist", class = "bard", level = "10")
-
-# Test numeric specification of level
-dplyr::glimpse(spell_list(class = "sorcerer", level = 7:9))
+## Some testing runs of the function
+dplyr::glimpse(spell_list(name = "chromatic orb"))
 
 # View the outputs to check human readability
 spell_list(name = "bolt", class = "sorcerer", level = c("1", "2", "3")) %>%
