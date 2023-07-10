@@ -674,20 +674,25 @@ find_spells <- function(name = NULL, class = NULL, level = NULL,
 # Test the function
 find_spells(name = "fire", class = "wizard")
 
-# Wrangle larger spell info data object
-spells %>%
-  # Filter to one spell
-  dplyr::filter(grepl(pattern = "fire bolt", x = spell_name, ignore.case = T)) %>%
-  # Pare down to only some columns
-  dplyr::select(-spell_source)
+# Function for returning the description text of just one spell
+spell_text <- function(name = NULL){
 
+  # Read in spell dataframe
+  all_spells <- read.csv(file = file.path("dev", "spells.csv"))
 
+  # Pare down to just this spell
+  focal_spell <- dplyr::filter(.data = all_spells,
+                               tolower(spell_name) %in% tolower(name))
 
-# Function for stripping description of specified spell
+  # If there is not a spell of that name print a message
+  if(nrow(focal_spell) == 0){
+    message("No spell(s) found matching that name; consider checking spelling")
+    # Otherwise, return the spell's info
+  } else { return(focal_spell) } }
 
-
-
-
+# Check that function
+spell_text(name = "FIREBALL")
+spell_text(name = c("chill touch", "poison spray"))
 
 
 
