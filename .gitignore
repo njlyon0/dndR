@@ -46,3 +46,6 @@ vignettes/*.pdf
 
 # CRAN Submission info
 CRAN-SUBMISSION
+
+# Ignore dev data that is too large to track neatly
+dev/spells.csv
