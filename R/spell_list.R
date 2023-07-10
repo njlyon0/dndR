@@ -27,27 +27,27 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
   spell_v0 <- dndR::spells
 
   # Filter by name if names are provided
-  if(is.null(name) != T){
+  if(is.null(name) != TRUE){
     spell_v1 <- dplyr::filter(.data = spell_v0,
                               # More than one name given? Collapse into one string match pattern
                               grepl(pattern = ifelse(test = length(name) > 1,
                                                      yes = paste(name, collapse = "|"),
                                                      no = name),
                                     # Compare string(s) against spell names (case insensitive)
-                                    x = spell_name, ignore.case = T))
+                                    x = spell_name, ignore.case = TRUE))
   } else { spell_v1 <- spell_v0 }
 
   # Filter by class if classes are provided
-  if(is.null(class) != T){
+  if(is.null(class) != TRUE){
     spell_v2 <- dplyr::filter(.data = spell_v1,
                               grepl(pattern = ifelse(test = length(class) > 1,
                                                      yes = paste(class, collapse = "|"),
                                                      no = class),
-                                    x = pc_class, ignore.case = T))
+                                    x = pc_class, ignore.case = TRUE))
   } else { spell_v2 <- spell_v1 }
 
   # Filter by level if levels are provided
-  if(is.null(level) != T){
+  if(is.null(level) != TRUE){
 
     # If level isn't a character, make it so
     if(is.character(level) != TRUE) { level <- as.character(level) }
@@ -57,20 +57,20 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
                               grepl(pattern = ifelse(test = length(level) > 1,
                                                      yes = paste(level, collapse = "|"),
                                                      no = level),
-                                    x = spell_level, ignore.case = T))
+                                    x = spell_level, ignore.case = TRUE))
   } else { spell_v3 <- spell_v2 }
 
   # Filter by school if schools are provided
-  if(is.null(school) != T){
+  if(is.null(school) != TRUE){
     spell_v4 <- dplyr::filter(.data = spell_v3,
                               grepl(pattern = ifelse(test = length(school) > 1,
                                                      yes = paste(school, collapse = "|"),
                                                      no = school),
-                                    x = spell_school, ignore.case = T))
+                                    x = spell_school, ignore.case = TRUE))
   } else { spell_v4 <- spell_v3 }
 
   # Filter for/against ritual spells if specified
-  if(is.null(ritual) != T){
+  if(is.null(ritual) != TRUE){
 
     # Error out if ritual isn't logical
     if(is.logical(ritual) != TRUE)
@@ -81,14 +81,14 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
   } else { spell_v5 <- spell_v4 }
 
   # Filter by casting time
-  if(is.null(cast_time) != T){
+  if(is.null(cast_time) != TRUE){
 
     # Actually do initial filtering
     spell_v6a <- dplyr::filter(.data = spell_v5,
                                grepl(pattern = ifelse(test = length(cast_time) > 1,
                                                       yes = paste(cast_time, collapse = "|"),
                                                       no = cast_time),
-                                     x = casting_time, ignore.case = T))
+                                     x = casting_time, ignore.case = TRUE))
 
     # If reaction isn't specified by user, drop it
     ## Necessary because of partial string match of "action" with "reaction"
