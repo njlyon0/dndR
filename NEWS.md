@@ -1,6 +1,10 @@
-## dndR Version 1.1.0.900
+## dndR Version 1.3.0.900
 
 Development version of `dndR`. The following changes were made from the preceding version:
+
+## dndR Version 1.3.0
+
+The following changes were made from the preceding version:
 
 - New function: `spell_list` -- identifies official Dungeons & Dragons spells based on user specifications of various criteria (e.g., school of magic, which character class list has the spell, casting time, etc.)
 - New function: `spell_text` -- retrieves full description text of spell(s) specified by user
