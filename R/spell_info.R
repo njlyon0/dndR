@@ -18,7 +18,19 @@
 #'     \item{higher_levels}{Some spells can be cast using a higher level spell slot for an increased effect. Similarly, damage-dealing cantrips tend to deal more damage as PCs gain levels. This text describes how a spell's effects change with higher spell slot levels or PC levels or is NA for spells that remain constant}
 #' }
 #'
-#' @source {Mearls, M., Crawford, J. Dungeons & Dragons Player's Handbook (Fifth Edition). Wizards of the Coast 2014.}
-#'
+#' @source {Mearls, M. and Crawford, J. Dungeons & Dragons Player's Handbook (Fifth Edition). Wizards of the Coast 2014}
+#' @source {System Reference Document (Fifth Edition). Wizards of the Coast 2014}
+#' @source {Elemental Evil. Wizards of the Coast 2015}
+#' @source {Sword Coast Adventurer’s Guide. Wizards of the Coast 2015}
+#' @source {Xanathar’s Guide to Everything. Wizards of the Coast 2017}
+#' @source {Guildmasters’ Guide to Ravnica. Wizards of the Coast 2018}
+#' @source {Lost Laboratory of Kwalish. Wizards of the Coast 2018}
+#' @source {Explorer's Guide to Wildemount. Wizards of the Coast 2020}
+#' @source {Icewind Dale: Rime of the Frostmaiden. Wizards of the Coast 2020}
+#' @source {Tasha’s Cauldron of Everything. Wizards of the Coast 2020}
+#' @source {Fizban's Treasury of Dragons. Wizards of the Coast 2021}
+#' @source {From Cyan Depths. Wizards of the Coast 2021}
+#' @source {Strixhaven: A Curriculum of Chaos. Wizards of the Coast 2021}
+#' @source {A Verdant Tomb. Wizards of the Coast 2021}
+#' @source {Astral Adventurer's Guide. Wizards of the Coast 2022}
 "spells"
-
