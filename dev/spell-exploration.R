@@ -549,38 +549,45 @@ test_result <- spell_list(name = "bolt", class = "sorcerer", level = c("1", "2",
 ## view(test_result)
 
 
-# Check out test_result
-test_result %>%
-  # Calculate number of 86 character chunks there would be in the description
-  dplyr::mutate(chunk_num = ceiling(x = nchar(description) / 86))
-  tidyr::separate_wider_position(cols = description,
-                                 widths = paste0(),
-                                 too_few = "align_start", too_many = "merge")
+# Set character wrap limit
+char_num <- 52
 
+# Create named vector of new description column names
+desc_vec <- rep(x = char_num, times = max(ceiling(x = nchar(test_result$description) / char_num)))
+names(desc_vec) <- paste0("description_", 1:length(desc_vec))
+
+# Do the same for the higher level information
+high_vec <- rep(x = char_num, times = max(ceiling(x = nchar(test_result$higher_levels) / char_num)))
+names(high_vec) <- paste0("higher_levels_", 1:length(high_vec))
+
+# Check out test_result
+test2 <- test_result %>%
+  # Split description column by character numbers
+  tidyr::separate_wider_position(cols = description, widths = desc_vec,
+                                 too_few = "align_start") %>%
+  # And do the same for the higher level information
+  tidyr::separate_wider_position(cols = higher_levels, widths = high_vec,
+                                 too_few = "align_start")
+
+# Re-check structure
+str(test2)
+## view(test2)
 
   # Need to break description/higher level text every 86 characters for optimal printing in long-form lists
 
 
 # Look at a list-based version
-test_mod <- test_result %>%
+test_mod <- test2 %>%
+  # Make ritual column into a character
+  dplyr::mutate(ritual_cast = as.character(ritual_cast)) %>%
   # Break into a list (one element per spell)
   dplyr::group_by(spell_name) %>%
   dplyr::group_split() %>%
   # Flip orientation
-  purrr::map(.x = ., .f = dplyr::mutate, dplyr::across(.cols = dplyr::everything(),
-                                                       .fns = as.character)) %>%
-  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything()) # %>%
-  # # Create a row number column
-  # purrr::map(.x = ., .f = dplyr::mutate, row_num = 1:length(name)) %>%
-  # # Count characters in description / higher levels
-  # purrr::map(.x = ., .f = dplyr::mutate, char_num = ifelse(test = name %in% c("description",
-  #                                                                             "higher_levels"),
-  #                                                          yes = ceiling(x = nchar(value) / 86),
-  #                                                          no = NA))
-
+  purrr::map(.x = ., .f = tidyr::pivot_longer, cols = dplyr::everything())
 
 # Check that out
-test_mod
+print(x = test_mod, n = 23, na.print = '')
 
 # End ----
 
