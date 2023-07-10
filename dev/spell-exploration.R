@@ -156,6 +156,9 @@ spells_v2 <- spells_v1 %>%
   dplyr::select(-junk, -class_ct) %>%
   # Tidy up the level column
   dplyr::mutate(level = gsub(pattern = "level", replacement = "level ", x = level)) %>%
+  # If subtags column is empty, replace with NA
+  dplyr::mutate(subtags = ifelse(test = nchar(subtags) == 0,
+                                 yes = NA, no = subtags)) %>%
   # Combine class columns & subtags to get all classes with access to a given spell
   tidyr::unite(col = "class", dplyr::starts_with("class_"), subtags,
                sep = ", ", na.rm = T) %>%
@@ -563,7 +566,7 @@ spells <- read.csv(file = file.path("dev", "spells.csv"))
 # Re-check structure
 dplyr::glimpse(spells)
 
-# Begin work on a function for querying spells
+# Function for querying spells
 find_spells <- function(name = NULL, class = NULL, level = NULL,
                         school = NULL, ritual = NULL, cast_time = NULL){
 
@@ -670,6 +673,18 @@ find_spells <- function(name = NULL, class = NULL, level = NULL,
 
 # Test the function
 find_spells(name = "fire", class = "wizard")
+
+# Wrangle larger spell info data object
+spells %>%
+  # Filter to one spell
+  dplyr::filter(grepl(pattern = "fire bolt", x = spell_name, ignore.case = T)) %>%
+  # Pare down to only some columns
+  dplyr::select(-spell_source)
+
+
+
+# Function for stripping description of specified spell
+
 
 
 
