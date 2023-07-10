@@ -56,6 +56,6 @@ Dataframe with 12 columns and 513 rows
 spells
 }
 \description{
-Spells in Dungeons and Dragons fit within several categories and their effects are well-documneted. This table summarizes all of that information into a long format dataframe for easy navigation. Unless otherwise noted, all spell querying functions in `dndR` use this table as their starting point.
+Spells in Dungeons and Dragons fit within several categories and their effects are well-documented. This table summarizes all of that information into a long format dataframe for easy navigation. Unless otherwise noted, all spell querying functions in `dndR` use this table as their starting point.
 }
 \keyword{datasets}
