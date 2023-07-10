@@ -1,20 +1,18 @@
 ## ---------------------------------------- ##
-            # Spell Exploration
+          # Update Spell Information
 ## ---------------------------------------- ##
 # Author(s): Nick Lyon
 
 # PURPOSE:
-## Develop a function that allows users to query extant D&D spells based on various criteria
-## `wizaRd` (github.com/oganm/wizaRd) has something similar but it is very list-y
-## Ideally this will create something that is structurally similar to other `dndR` functions
-### E.g., vectors / dataframes (I feel those are a little more accessible to R novices)
+## Strip spell information from markdown files in Traneptora's GitHub repo 'grimoire'
+## See here: https://github.com/Traneptora/grimoire
 
 ## ---------------------------------------- ##
             # Housekeeping ----
 ## ---------------------------------------- ##
 
 # Load libraries
-librarian::shelf(tidyverse, supportR, dndR)
+librarian::shelf(tidyverse, supportR)
 
 # Clear environment
 rm(list = ls())
@@ -33,7 +31,7 @@ spell_mds <- spell_repo$name
 dplyr::glimpse(spell_mds)
 
 ## ---------------------------------------- ##
-      # Extract Spell Information ----
+      # Extract Markdown Content ----
 ## ---------------------------------------- ##
 
 # Make an empty list to store individually-wrangled spells within
@@ -100,7 +98,11 @@ for(k in 1:length(spell_mds)){
   # Message successful wrangling
   message("Finished wrangling spell ", k, " '", raw_spell$name, "'") }
 
-# Perform further wrangling
+## ---------------------------------------- ##
+      # Wrangle Markdown Content ----
+## ---------------------------------------- ##
+
+# Perform further wrangling on extracted markdown content
 spells_v1 <- list_o_spells %>%
   # Unlist that list into a dataframe
   purrr::list_rbind() %>%
@@ -135,7 +137,7 @@ write.csv(x = spells_v1, file = file.path("dev", "raw_spells.csv"), na = '', row
 rm(list = setdiff(ls(), c("spells_v1")))
 
 ## ---------------------------------------- ##
-      # Wrangle Spell Information ----
+        # Tidy Spell Information ----
 ## ---------------------------------------- ##
 
 # Do wrangling of non-description bits of spells
@@ -177,7 +179,7 @@ spells_v2 <- spells_v1 %>%
     sources = gsub(pattern = "EGW", replacement = "Explorer’s Guide to Wildemount", x = sources),
     ## F
     sources = gsub(pattern = "FCD", replacement = "From Cyan Depths", x = sources),
-    sources = gsub(pattern = "FTD", replacement = "Fizban’s Treasure of Dragons", x = sources),
+    sources = gsub(pattern = "FTD", replacement = "Fizban’s Treasury of Dragons", x = sources),
     ## G
     sources = gsub(pattern = "GGR", replacement = "Guildmasters’ Guide to Ravnica", x = sources),
     ## I
@@ -206,7 +208,8 @@ spells_v2 <- spells_v1 %>%
                 duration = tolower(duration))
 
 # Check out source information
-sort(unique(spells_v2$sources))
+sort(unique(gsub(pattern = "0|1|2|3|4|5|6|7|8|9", replacement = "",
+                 x = spells_v2$sources)))
 
 # Check out 'tags' column products
 sort(unique(spells_v2$level))
@@ -225,7 +228,7 @@ sort(unique(spells_v2$duration))
 dplyr::glimpse(dplyr::select(spells_v2, -dplyr::starts_with("description")))
 
 ## ---------------------------------------- ##
-      # Wrangle Spell Descriptions ----
+      # Tidy Spell Descriptions ----
 ## ---------------------------------------- ##
 
 # Glimpse the full structure
@@ -372,17 +375,20 @@ spells_v3 <- spells_v2 %>%
   # Remove some unnecessary formatting from the higher level info
   dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
                                      replacement = "", x = higher_levels),
-                .after = description)
+                .after = description) %>%
+  # Fix weird not-quotes in text columns
+  dplyr::mutate(description = gsub(pattern = "’", "'", x = description)) %>%
+  dplyr::mutate(higher_levels = gsub(pattern = "’", "'", x = higher_levels))
 
 # Re-check structure
 dplyr::glimpse(spells_v3)
 
 ## ---------------------------------------- ##
-            # Final Wrangling ----
+            # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-spells_v4 <- spells_v3 %>%
+spells <- spells_v3 %>%
   # Rename some columns
   dplyr::rename(spell_name = name,
                 spell_source = sources,
@@ -395,10 +401,18 @@ spells_v4 <- spells_v3 %>%
   dplyr::relocate(higher_levels, .after = description)
 
 # Last structure check
-dplyr::glimpse(spells_v4)
+dplyr::glimpse(spells)
 
-# Export locally!
-write.csv(x = spells_v4, file = file.path("dev", "spells.csv"), row.names = F, na = '')
+## ---------------------------------------- ##
+                # Export ----
+## ---------------------------------------- ##
+
+# Export locally to dev folder for experimental purposes
+## Already ignored by package (because `dev` folder) and added to `.gitignore`
+write.csv(x = spells, file = file.path("dev", "spells.csv"), row.names = F, na = '')
+
+## If desired, export into package as a .rda object
+# save(spells, file = file.path("data", "spells.rda"))
 
 ## ---------------------------------------- ##
               # Query Spells ----
@@ -697,4 +711,10 @@ spell_text(name = c("chill touch", "poison spray"))
 
 
 # End ----
+
+
+
+
+
+
 
