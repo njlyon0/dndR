@@ -44,10 +44,6 @@ devtools::install_github("njlyon0/dndR")
   outcomes. “Standard” dice have the following number of sides: 100, 20,
   12, 10, 8, 6, 4, 3, or 2
 
-- **`probability_plot`** – Generate a `ggplot2` plot of the frequency of
-  roll outcomes for the specified type and number of dice. You can also
-  specify the number of times to roll those dice to inform the plot
-
 - **`ability_scores`** – Roll for six ability scores using specified
   method (e.g., 4d6 drop lowest, 3d6, or 1d20)
 
@@ -58,6 +54,16 @@ devtools::install_github("njlyon0/dndR")
 
   - Run `dnd_races()` or `dnd_classes()` to see which races/classes are
     currently supported by `pc_creator`
+
+- **`spell_list`** – Identify all spells that fit certain criteria
+  (e.g., spell level, school of magic, character class list, etc.)
+
+- **`spell_text`** – Retrieve full information and description text for
+  specified spell(s)
+
+- **`probability_plot`** – Generate a `ggplot2` plot of the frequency of
+  roll outcomes for the specified type and number of dice. You can also
+  specify the number of times to roll those dice to inform the plot
 
 - **`pc_level_calc`** – Identify the current level of a player character
   based on earned experience points (XP). Also returns the proficiency
