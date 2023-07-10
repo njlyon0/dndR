@@ -94,6 +94,9 @@
     <loc>/reference/monster_stats.html</loc>
   </url>
   <url>
+    <loc>/reference/monster_table.html</loc>
+  </url>
+  <url>
     <loc>/reference/monsters.html</loc>
   </url>
   <url>
@@ -116,6 +119,15 @@
   </url>
   <url>
     <loc>/reference/roll.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spell_list.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spell_text.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spells.html</loc>
   </url>
   <url>
     <loc>/reference/xp_cost.html</loc>

@@ -110,9 +110,9 @@ million of any of the standard dice and summing their results.
 8, 6, 4, and 2.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d6'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 11</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
 <span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d8'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'1d4'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 11</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 14</span></span></code></pre></div>
 <p>Note that ‘2d20’ is automatically assumed to be rolling with
 advantage/disadvantage so it will return a message to that effect and
 both numbers.</p>
@@ -120,7 +120,7 @@ both numbers.</p>
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span>dice <span class="op">=</span> <span class="st">'2d20'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Assuming you're rolling for (dis)advantage so both rolls returned</span></span>
 <span><span class="co">#&gt;   roll_1 roll_2</span></span>
-<span><span class="co">#&gt; 1     15      1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      7      1</span></span></code></pre></div>
 <p>You can also use <code>probability_plot</code> to roll dice a
 specified number of times and generate a <code>ggplot2</code> graph of
 the frequency of various outcomes. The median outcome is specified by a
@@ -139,12 +139,12 @@ ability scores.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/pc_creator.html">pc_creator</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">'barbarian'</span>, race <span class="op">=</span> <span class="st">'half orc'</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   ability raw_score race_modifier score roll_modifier</span></span>
-<span><span class="co">#&gt; 1     STR        15             2    17            +3</span></span>
+<span><span class="co">#&gt; 1     STR        13             2    15            +2</span></span>
 <span><span class="co">#&gt; 2     DEX        11             0    11             0</span></span>
-<span><span class="co">#&gt; 3     CON        14             1    15            +2</span></span>
-<span><span class="co">#&gt; 4     INT        14             0    14            +2</span></span>
-<span><span class="co">#&gt; 5     WIS        10             0    10             0</span></span>
-<span><span class="co">#&gt; 6     CHA        11             0    11             0</span></span></code></pre></div>
+<span><span class="co">#&gt; 3     CON        13             1    14            +2</span></span>
+<span><span class="co">#&gt; 4     INT        10             0    10             0</span></span>
+<span><span class="co">#&gt; 5     WIS        13             0    13            +1</span></span>
+<span><span class="co">#&gt; 6     CHA        13             0    13            +1</span></span></code></pre></div>
 <p>You can check which classes and races are currently supported by
 <code>pc_creator</code> by running <code>dnd_classes</code> or
 <code>dnd_races</code>. If you have a class/race in mind that isn’t
@@ -157,14 +157,13 @@ and manually assign them to specific abilities and handle
 race/class/background based modifiers yourself.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Total score low. Consider re-rolling?</span></span>
 <span><span class="co">#&gt;   ability score</span></span>
-<span><span class="co">#&gt; 1      V1     8</span></span>
-<span><span class="co">#&gt; 2      V2    14</span></span>
-<span><span class="co">#&gt; 3      V3    11</span></span>
+<span><span class="co">#&gt; 1      V1    14</span></span>
+<span><span class="co">#&gt; 2      V2    15</span></span>
+<span><span class="co">#&gt; 3      V3    13</span></span>
 <span><span class="co">#&gt; 4      V4    14</span></span>
-<span><span class="co">#&gt; 5      V5    10</span></span>
-<span><span class="co">#&gt; 6      V6     8</span></span></code></pre></div>
+<span><span class="co">#&gt; 5      V5    15</span></span>
+<span><span class="co">#&gt; 6      V6    10</span></span></code></pre></div>
 <p>If you do experience point-based leveling, you can use the
 <code>pc_level_calc</code> function to check what level your PC has
 reached with the amount of XP they have earned. Thanks to Humberto Nappo
@@ -173,6 +172,82 @@ for contributing this function!</p>
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/pc_level_calc.html">pc_level_calc</a></span><span class="op">(</span>player_xp <span class="op">=</span> <span class="fl">4100</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   player_level xp_threshold proficiency</span></span>
 <span><span class="co">#&gt; 4            4         2700          +2</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="spell-related-functions">Spell-Related Functions<a class="anchor" aria-label="anchor" href="#spell-related-functions"></a>
+</h2>
+<p>There are <em>a lot</em> of spells in the various Dungeons &amp;
+Dragons source books that your character might be able to invoke.
+Finding specific spells can be a daunting task in the face of the sheer
+number of spells that exist so <code>dndR</code> has some functions to
+hopefully make this effort more manageable for your magic-using
+characters and NPCs.</p>
+<p><code>spell_list</code> lets you search through official spells based
+on several categories. A dataframe including all of the big picture
+information for spells that meet your criteria is returned to help
+orient you for any subsequent steps you plan on taking. Note that all
+<code>spell_list</code> arguments that accept characters are case
+insensitive and queries use partial string matching so you don’t need to
+try to engineer exact matches. Specifically, you can query spells based
+on one or more of the following criteria:</p>
+<ul>
+<li>Spell name(s)</li>
+<li>Character classes with access to the spell(s)</li>
+<li>Minimum spell slot required to cast the spell and/or “cantrip”</li>
+<li>School(s) of magic to which the spell belongs (e.g., “abjuration”,
+etc.)</li>
+<li>Whether or not the spell can be cast as a ritual (note this argument
+accepts only <code>TRUE</code> or <code>FALSE</code>)</li>
+<li>Time to cast the spell (either the phase of a turn required or the
+in-game time for spells that take more than one turn to cast)</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/spell_list.html">spell_list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"bolt"</span>, class <span class="op">=</span> <span class="st">"sorcerer"</span>, ritual <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       spell_name                                         spell_source</span></span>
+<span><span class="co">#&gt; 1      Fire Bolt Player's Handbook.241, System Reference Document.144</span></span>
+<span><span class="co">#&gt; 2     Witch Bolt                                Player's Handbook.289</span></span>
+<span><span class="co">#&gt; 3 Lightning Bolt Player's Handbook.255, System Reference Document.159</span></span>
+<span><span class="co">#&gt; 4     Chaos Bolt                   Xanathar’s Guide to Everything.151</span></span>
+<span><span class="co">#&gt;                                                                     pc_class</span></span>
+<span><span class="co">#&gt; 1                                                artificer, sorcerer, wizard</span></span>
+<span><span class="co">#&gt; 2                                                  sorcerer, warlock, wizard</span></span>
+<span><span class="co">#&gt; 3 sorcerer, wizard, artificer: armorer, druid: mountain, warlock: fathomless</span></span>
+<span><span class="co">#&gt; 4                                                                   sorcerer</span></span>
+<span><span class="co">#&gt;   spell_level spell_school ritual_cast casting_time                range</span></span>
+<span><span class="co">#&gt; 1     cantrip    evocation       FALSE     1 action             120 feet</span></span>
+<span><span class="co">#&gt; 2     level 1    evocation       FALSE     1 action              30 feet</span></span>
+<span><span class="co">#&gt; 3     level 3    evocation       FALSE     1 action self (100-foot line)</span></span>
+<span><span class="co">#&gt; 4     level 1    evocation       FALSE     1 action             120 feet</span></span>
+<span><span class="co">#&gt;                                                       components</span></span>
+<span><span class="co">#&gt; 1                                                           V, S</span></span>
+<span><span class="co">#&gt; 2 V, S, M (a twig from a tree that has been struck by lightning)</span></span>
+<span><span class="co">#&gt; 3   V, S, M (a bit of fur and a rod of amber, crystal, or glass)</span></span>
+<span><span class="co">#&gt; 4                                                           V, S</span></span>
+<span><span class="co">#&gt;                        duration</span></span>
+<span><span class="co">#&gt; 1                 instantaneous</span></span>
+<span><span class="co">#&gt; 2 concentration, up to 1 minute</span></span>
+<span><span class="co">#&gt; 3                 instantaneous</span></span>
+<span><span class="co">#&gt; 4                 instantaneous</span></span></code></pre></div>
+<p>If you have a specific spell (or several spells) for which you want
+the complete spell information (including the description text),
+<code>spell_text</code> is there to help. <code>spell_text</code> only
+accepts the spell name(s) for which you want information and returns all
+of the information that <code>spell_list</code> does but also gives you
+the spell description text and (if applicable) how the spell changes
+when cast with a higher level spell slot or by a higher level player
+character.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/spell_text.html">spell_text</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"chill touch"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    spell_name                                         spell_source</span></span>
+<span><span class="co">#&gt; 1 Chill Touch Player's Handbook.221, System Reference Document.124</span></span>
+<span><span class="co">#&gt;                                   pc_class spell_level spell_school ritual_cast</span></span>
+<span><span class="co">#&gt; 1 sorcerer, warlock, wizard, druid: spores     cantrip   necromancy       FALSE</span></span>
+<span><span class="co">#&gt;   casting_time    range components duration</span></span>
+<span><span class="co">#&gt; 1     1 action 120 feet       V, S  1 round</span></span>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                              description</span></span>
+<span><span class="co">#&gt; 1 You create a ghostly, skeletal hand in the space of a creature within range. Make a ranged spell attack against the creature to assail it with the chill of the grave. On a hit, the target takes 1d8 necrotic damage, and it can't regain hit points until the start of your next turn. Until then, the hand clings to the target. If you hit an undead target, it also has disadvantage on attack rolls against you until the end of your next turn.</span></span>
+<span><span class="co">#&gt;                                                                                                  higher_levels</span></span>
+<span><span class="co">#&gt; 1 This spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="encounter-balancing">Encounter Balancing<a class="anchor" aria-label="anchor" href="#encounter-balancing"></a>
@@ -203,7 +278,7 @@ is where <code>xp_pool</code> becomes useful.</p>
 <p><code>xp_pool</code> returns the amount of XP the GM can ‘spend’ on
 monsters in a given encounter to ensure the difficulty is as desired
 based on the three factors identified above.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">"medium"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 625</span></span></code></pre></div>
 </div>
@@ -234,7 +309,7 @@ number of player characters (PCs) and returns the “realized” XP. You can
 then quickly compare this with the value return by <code>xp_pool</code>
 to determine whether you need to add or remove creatures from your
 encounter.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">1000</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
 </div>
@@ -246,23 +321,23 @@ want to design a hard encounter for them and I want to use
 <code>dndR</code> to balance this encounter.</p>
 <p>To begin, I’d identify the total XP I can spend to make an encounter
 this difficult.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">'hard'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1112</span></span></code></pre></div>
 <p>Now that I know my XP threshold, I can check the value of two
 monsters worth (total) 500 XP against that threshold.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">500</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 750</span></span></code></pre></div>
 <p>I can see that I’m well under the XP threshold I have to play with so
 I can add a monster and see where that leaves me.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">750</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
 <p>A little over because of the multiplier, so let’s say I change my
 mind and keep three monsters but change their identity to one with a
 lower XP value.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">600</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1200</span></span></code></pre></div>
 <p>Basically right on target! I can now pick out my three monsters that
@@ -285,7 +360,7 @@ function!</p>
 <p>Due to the static nature of a vignette, we’ll use the non-interactive
 path by assembling the party score list and then invoking
 <code>party_diagram</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create named list of PCs and their scores</span></span>
 <span><span class="va">party_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Vax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>STR <span class="op">=</span> <span class="st">"10"</span>, DEX <span class="op">=</span> <span class="st">"13"</span>, CON <span class="op">=</span> <span class="st">"14"</span>, </span>
 <span>                              INT <span class="op">=</span> <span class="st">"15"</span>, WIS <span class="op">=</span> <span class="st">"16"</span>, CHA <span class="op">=</span> <span class="st">"12"</span><span class="op">)</span>,</span>
@@ -298,7 +373,7 @@ path by assembling the party score list and then invoking
 <span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/party_diagram.html">party_diagram</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"player"</span>, pc_stats <span class="op">=</span> <span class="va">party_list</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="dndR_Vignette_files/figure-html/party_diagram_1-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>You can also group the diagram by score if that is of interest.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/party_diagram.html">party_diagram</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ability"</span>, pc_stats <span class="op">=</span> <span class="va">party_list</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="dndR_Vignette_files/figure-html/party_diagram_2-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
@@ -314,11 +389,11 @@ some quick baseline information for a number of NPCs.</p>
 function will randomly select a race and job for each NPC. You can
 re-run the function if the race-job combinations returned by the
 function don’t match your current campaign tone / history.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/npc_creator.html">npc_creator</a></span><span class="op">(</span>npc_count <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         Race        Job</span></span>
-<span><span class="co">#&gt; 1 rock gnome inquisitor</span></span>
-<span><span class="co">#&gt; 2  aarakocra    scholar</span></span></code></pre></div>
+<span><span class="co">#&gt;        Race    Job</span></span>
+<span><span class="co">#&gt; 1       orc farmer</span></span>
+<span><span class="co">#&gt; 2 kalashtar hermit</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="creating-monsters">Creating Monsters<a class="anchor" aria-label="anchor" href="#creating-monsters"></a>
@@ -341,7 +416,7 @@ value returned by <code>xp_cost</code>) <em>or</em> the Challenge Rating
 (CR) if you know it. Once either XP or CR is provided,
 <code>monster_stats</code> returns the creature’s statistics as they
 appear in the DMG for a <em>single</em> creature of that difficulty.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_stats.html">monster_stats</a></span><span class="op">(</span>xp <span class="op">=</span> <span class="fl">1000</span>, cr <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; CR and XP both specified, proceeding with CR</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
@@ -357,7 +432,7 @@ appear in the DMG for a <em>single</em> creature of that difficulty.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Save_DC      14</span></span></code></pre></div>
 <p>Challenge Rating is more than a little esoteric so feel free to
 ignore that argument entirely if XP is more comfortable for you!</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_stats.html">monster_stats</a></span><span class="op">(</span>xp <span class="op">=</span> <span class="fl">8000</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
 <span><span class="co">#&gt;   statistic    values </span></span>
@@ -390,24 +465,24 @@ damage immunities, and a single vulnerability. This combination allows
 you to build complex and mysterious homebrew monsters with plenty of
 opportunities for the party to have to investigate around to discover
 the monster’s strengths and weaknesses before the final showdown.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_creator.html">monster_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">5</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             statistic                                       value</span></span>
-<span><span class="co">#&gt; 1          Hit_Points                                          92</span></span>
-<span><span class="co">#&gt; 2         Armor_Class                                          16</span></span>
-<span><span class="co">#&gt; 3          Prof_Bonus                                           3</span></span>
-<span><span class="co">#&gt; 4        Attack_Bonus                                           7</span></span>
-<span><span class="co">#&gt; 5             Save_DC                                          16</span></span>
-<span><span class="co">#&gt; 6  Prof_Saving_Throws                                    CON; INT</span></span>
-<span><span class="co">#&gt; 7           Immune_to                             acid; lightning</span></span>
-<span><span class="co">#&gt; 8        Resistant_to radiant; bludgeoning; psychic; poison; fire</span></span>
-<span><span class="co">#&gt; 9       Vulnerable_to                                    slashing</span></span>
-<span><span class="co">#&gt; 10                STR                                          +1</span></span>
-<span><span class="co">#&gt; 11                DEX                                          +3</span></span>
-<span><span class="co">#&gt; 12                CON                                          +1</span></span>
-<span><span class="co">#&gt; 13                INT                                          +1</span></span>
-<span><span class="co">#&gt; 14                WIS                                           0</span></span>
-<span><span class="co">#&gt; 15                CHA                                          +1</span></span></code></pre></div>
+<span><span class="co">#&gt;             statistic                                     value</span></span>
+<span><span class="co">#&gt; 1          Hit_Points                                        92</span></span>
+<span><span class="co">#&gt; 2         Armor_Class                                        16</span></span>
+<span><span class="co">#&gt; 3          Prof_Bonus                                         3</span></span>
+<span><span class="co">#&gt; 4        Attack_Bonus                                         7</span></span>
+<span><span class="co">#&gt; 5             Save_DC                                        16</span></span>
+<span><span class="co">#&gt; 6  Prof_Saving_Throws                                  CON; DEX</span></span>
+<span><span class="co">#&gt; 7           Immune_to                      bludgeoning; thunder</span></span>
+<span><span class="co">#&gt; 8        Resistant_to lightning; acid; poison; radiant; psychic</span></span>
+<span><span class="co">#&gt; 9       Vulnerable_to                                  necrotic</span></span>
+<span><span class="co">#&gt; 10                STR                                        +2</span></span>
+<span><span class="co">#&gt; 11                DEX                                        +1</span></span>
+<span><span class="co">#&gt; 12                CON                                        +1</span></span>
+<span><span class="co">#&gt; 13                INT                                        +1</span></span>
+<span><span class="co">#&gt; 14                WIS                                        +1</span></span>
+<span><span class="co">#&gt; 15                CHA                                        +1</span></span></code></pre></div>
 <p>Note that if you use <code>monster_creator</code> you may need to
 help your players identify the creature’s immunities and vulnerabilities
 <em>before</em> the actual confrontation with the creature to avoid
