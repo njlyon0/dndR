@@ -72,6 +72,29 @@ If you do experience point-based leveling, you can use the `pc_level_calc` funct
 dndR::pc_level_calc(player_xp = 4100)
 ```
 
+## Spell-Related Functions
+
+There are _a lot_ of spells in the various Dungeons & Dragons source books that your character might be able to invoke. Finding specific spells can be a daunting task in the face of the sheer number of spells that exist so `dndR` has some functions to hopefully make this effort more manageable for your magic-using characters and NPCs.
+
+`spell_list` lets you search through official spells based on several categories. A dataframe including all of the big picture information for spells that meet your criteria is returned to help orient you for any subsequent steps you plan on taking. Note that all `spell_list` arguments that accept characters are case insensitive and queries use partial string matching so you don't need to try to engineer exact matches. Specifically, you can query spells based on one or more of the following criteria:
+
+- Spell name(s)
+- Character classes with access to the spell(s)
+- Minimum spell slot required to cast the spell and/or "cantrip"
+- School(s) of magic to which the spell belongs (e.g., "abjuration", etc.)
+- Whether or not the spell can be cast as a ritual (note this argument accepts only `TRUE` or `FALSE`)
+- Time to cast the spell (either the phase of a turn required or the in-game time for spells that take more than one turn to cast)
+
+```{r spell_list_fxn}
+dndR::spell_list(name = "bolt", class = "sorcerer", ritual = FALSE)
+```
+
+If you have a specific spell (or several spells) for which you want the complete spell information (including the description text), `spell_text` is there to help. `spell_text` only accepts the spell name(s) for which you want information and returns all of the information that `spell_list` does but also gives you the spell description text and (if applicable) how the spell changes when cast with a higher level spell slot or by a higher level player character.
+
+```{r spell_text_fxn}
+dndR::spell_text(name = "chill touch")
+```
+
 ## Encounter Balancing
 
 When I am the Dungeon/Game Master (DM / GM) I find encounter balancing to be really difficult, in part because of the nest of inter-related tables and experience point multipliers outlined in the Dungeon Master's Guide (DMG) that must be consulted for novice GMs such as myself. To help other newbies, `dndR` includes the `xp_pool` and `xp_cost` functions.
