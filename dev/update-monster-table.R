@@ -21,7 +21,7 @@ rm(list = ls())
 ## ---------------------------------------- ##
 
 # Read in data
-monster_table_v1 <- read.csv(file = file.path("dev", "quick_monster_dmg.csv"))
+monster_table_v1 <- read.csv(file = file.path("dev", "raw_data", "quick_monster_dmg.csv"))
 
 # Check structure
 dplyr::glimpse(monster_table_v1)
@@ -35,7 +35,7 @@ monster_table <- monster_table_v1
 
 # Export locally to dev folder for experimental purposes
 ## Already ignored by package (because `dev` folder) and added to `.gitignore`
-write.csv(x = monster_table, file = file.path("dev", "monster_table.csv"),
+write.csv(x = monster_table, file = file.path("dev", "tidy_data", "monster_table.csv"),
           row.names = F, na = '')
 
 ## If desired, export into package as a .rda object

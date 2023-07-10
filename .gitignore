@@ -47,6 +47,5 @@ vignettes/*.pdf
 # CRAN Submission info
 CRAN-SUBMISSION
 
-# Ignore dev data that is too large to track neatly
-dev/spells.csv
-dev/monster_table.csv
+# Ignore dev data created by `update-...R` scripts
+dev/tidy_data/*.csv

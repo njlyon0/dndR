@@ -128,10 +128,11 @@ spells_v1 <- list_o_spells %>%
 dplyr::glimpse(spells_v1)
 
 # Export this for later
-write.csv(x = spells_v1, file = file.path("dev", "raw_spells.csv"), na = '', row.names = F)
+write.csv(x = spells_v1, file = file.path("dev", "raw_data", "raw_spells.csv"),
+          na = '', row.names = F)
 
 # Read back in if needed
-## spells_v1 <- read.csv(file = file.path("dev", "raw_spells.csv"))
+## spells_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_spells.csv"))
 
 # Clean environment
 rm(list = setdiff(ls(), c("spells_v1")))
@@ -409,7 +410,8 @@ dplyr::glimpse(spells)
 
 # Export locally to dev folder for experimental purposes
 ## Already ignored by package (because `dev` folder) and added to `.gitignore`
-write.csv(x = spells, file = file.path("dev", "spells.csv"), row.names = F, na = '')
+write.csv(x = spells, file = file.path("dev", "tidy_data", "spells.csv"),
+          row.names = F, na = '')
 
 ## If desired, export into package as a .rda object
 # save(spells, file = file.path("data", "spells.rda"))
