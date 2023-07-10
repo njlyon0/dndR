@@ -7,7 +7,8 @@ Development version of `dndR`. Changes from latest release will be listed here a
 - New function: `probability_plot` -- makes plot of frequency of dice outcome for specified dice number/type and number of rolls
 - New function: `mod_calc` -- identifies roll modifier for a specified ability score
 - `roll` description is more detailed/useful now (rather than simple recapitulation of the function title)
-- Added function contributor names to the description fields of their respective functions (`pc_level_calc` and `party_diagram`)
+- Added specific contributing instructions (see `CONTRIBUTING.md`)
+- Added function contributor names to the description fields of existing contributed functions (`pc_level_calc` and `party_diagram`) per `CONTRIBUTING.md` guidelines
 
 There are no ERRORs, WARNINGs, or NOTEs returned by `devtools::check()`
 
