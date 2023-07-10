@@ -13,5 +13,7 @@
 #'     \item{Attack_Bonus}{Modifier to add to the creature's attack rolls}
 #'     \item{Save_DC}{Save Difficulty Class (DC) for rolls against the creature's spells / certain abilities}
 #' }
+#'
 #' @source {Mearls, M., Crawford, J., Perkins, C., Wyatt, J. et al. Dungeon Master's Guide (Fifth Edition). 2014.}
+#'
 "monsters"
