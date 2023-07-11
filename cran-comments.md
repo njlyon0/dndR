@@ -23,6 +23,10 @@ checking for non-standard things in the check directory ... NOTE
 
 [R-hub issue #560](https://github.com/r-hub/rhub/issues/560) indicates that this note can also is not related to any issue with this package and can be ignored.
 
+### Changes per CRAN Reviewer Instructions
+
+- Fixed a broken URL ("htttps" -> "https")
+
 ## Downstream dependencies
 
 There are currently no downstream dependencies for this package.
