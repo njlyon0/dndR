@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dndR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.900</span>
       </span>
     </div>
 
@@ -110,9 +110,9 @@ million of any of the standard dice and summing their results.
 8, 6, 4, and 2.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d6'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 9</span></span>
+<span><span class="co">#&gt; [1] 13</span></span>
 <span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'3d8'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span><span class="st">'1d4'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 13</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 14</span></span></code></pre></div>
 <p>Note that ‘2d20’ is automatically assumed to be rolling with
 advantage/disadvantage so it will return a message to that effect and
 both numbers.</p>
@@ -120,7 +120,7 @@ both numbers.</p>
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/roll.html">roll</a></span><span class="op">(</span>dice <span class="op">=</span> <span class="st">'2d20'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Assuming you're rolling for (dis)advantage so both rolls returned</span></span>
 <span><span class="co">#&gt;   roll_1 roll_2</span></span>
-<span><span class="co">#&gt; 1      6     12</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     16     20</span></span></code></pre></div>
 <p>You can also use <code>probability_plot</code> to roll dice a
 specified number of times and generate a <code>ggplot2</code> graph of
 the frequency of various outcomes. The median outcome is specified by a
@@ -139,12 +139,12 @@ ability scores.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/pc_creator.html">pc_creator</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">'barbarian'</span>, race <span class="op">=</span> <span class="st">'half orc'</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   ability raw_score race_modifier score roll_modifier</span></span>
-<span><span class="co">#&gt; 1     STR        17             2    19            +4</span></span>
+<span><span class="co">#&gt; 1     STR        16             2    18            +4</span></span>
 <span><span class="co">#&gt; 2     DEX        14             0    14            +2</span></span>
-<span><span class="co">#&gt; 3     CON        14             1    15            +2</span></span>
-<span><span class="co">#&gt; 4     INT        12             0    12            +1</span></span>
-<span><span class="co">#&gt; 5     WIS        13             0    13            +1</span></span>
-<span><span class="co">#&gt; 6     CHA        12             0    12            +1</span></span></code></pre></div>
+<span><span class="co">#&gt; 3     CON        15             1    16            +3</span></span>
+<span><span class="co">#&gt; 4     INT         8             0     8            -1</span></span>
+<span><span class="co">#&gt; 5     WIS        10             0    10             0</span></span>
+<span><span class="co">#&gt; 6     CHA        15             0    15            +2</span></span></code></pre></div>
 <p>You can check which classes and races are currently supported by
 <code>pc_creator</code> by running <code>dnd_classes</code> or
 <code>dnd_races</code>. If you have a class/race in mind that isn’t
@@ -157,13 +157,14 @@ and manually assign them to specific abilities and handle
 race/class/background based modifiers yourself.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; At least one ability very low. Consider re-rolling?</span></span>
 <span><span class="co">#&gt;   ability score</span></span>
-<span><span class="co">#&gt; 1      V1    14</span></span>
-<span><span class="co">#&gt; 2      V2    13</span></span>
-<span><span class="co">#&gt; 3      V3     8</span></span>
-<span><span class="co">#&gt; 4      V4    14</span></span>
-<span><span class="co">#&gt; 5      V5    17</span></span>
-<span><span class="co">#&gt; 6      V6    10</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      V1    18</span></span>
+<span><span class="co">#&gt; 2      V2    11</span></span>
+<span><span class="co">#&gt; 3      V3    10</span></span>
+<span><span class="co">#&gt; 4      V4    16</span></span>
+<span><span class="co">#&gt; 5      V5    13</span></span>
+<span><span class="co">#&gt; 6      V6     7</span></span></code></pre></div>
 <p>If you do experience point-based leveling, you can use the
 <code>pc_level_calc</code> function to check what level your PC has
 reached with the amount of XP they have earned. Thanks to Humberto Nappo
@@ -392,8 +393,8 @@ function don’t match your current campaign tone / history.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/npc_creator.html">npc_creator</a></span><span class="op">(</span>npc_count <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        Race       Job</span></span>
-<span><span class="co">#&gt; 1 kalashtar charlatan</span></span>
-<span><span class="co">#&gt; 2 aarakocra       spy</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 kalashtar mercenary</span></span>
+<span><span class="co">#&gt; 2  tiefling navigator</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="creating-monsters">Creating Monsters<a class="anchor" aria-label="anchor" href="#creating-monsters"></a>
@@ -467,22 +468,38 @@ opportunities for the party to have to investigate around to discover
 the monster’s strengths and weaknesses before the final showdown.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_creator.html">monster_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">5</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             statistic                                                   value</span></span>
-<span><span class="co">#&gt; 1          Hit_Points                                                      92</span></span>
-<span><span class="co">#&gt; 2         Armor_Class                                                      16</span></span>
-<span><span class="co">#&gt; 3          Prof_Bonus                                                       3</span></span>
-<span><span class="co">#&gt; 4        Attack_Bonus                                                       7</span></span>
-<span><span class="co">#&gt; 5             Save_DC                                                      16</span></span>
-<span><span class="co">#&gt; 6  Prof_Saving_Throws                                                STR; DEX</span></span>
-<span><span class="co">#&gt; 7           Immune_to                                          necrotic; fire</span></span>
-<span><span class="co">#&gt; 8        Resistant_to piercing; thunder; poison; non-magical damage; slashing</span></span>
-<span><span class="co">#&gt; 9       Vulnerable_to                                                   force</span></span>
-<span><span class="co">#&gt; 10                STR                                                      +1</span></span>
-<span><span class="co">#&gt; 11                DEX                                                      +1</span></span>
-<span><span class="co">#&gt; 12                CON                                                      +1</span></span>
-<span><span class="co">#&gt; 13                INT                                                      +3</span></span>
-<span><span class="co">#&gt; 14                WIS                                                      +2</span></span>
-<span><span class="co">#&gt; 15                CHA                                                      +2</span></span></code></pre></div>
+<span><span class="co">#&gt;             statistic</span></span>
+<span><span class="co">#&gt; 1          Hit_Points</span></span>
+<span><span class="co">#&gt; 2         Armor_Class</span></span>
+<span><span class="co">#&gt; 3          Prof_Bonus</span></span>
+<span><span class="co">#&gt; 4        Attack_Bonus</span></span>
+<span><span class="co">#&gt; 5             Save_DC</span></span>
+<span><span class="co">#&gt; 6  Prof_Saving_Throws</span></span>
+<span><span class="co">#&gt; 7           Immune_to</span></span>
+<span><span class="co">#&gt; 8        Resistant_to</span></span>
+<span><span class="co">#&gt; 9       Vulnerable_to</span></span>
+<span><span class="co">#&gt; 10                STR</span></span>
+<span><span class="co">#&gt; 11                DEX</span></span>
+<span><span class="co">#&gt; 12                CON</span></span>
+<span><span class="co">#&gt; 13                INT</span></span>
+<span><span class="co">#&gt; 14                WIS</span></span>
+<span><span class="co">#&gt; 15                CHA</span></span>
+<span><span class="co">#&gt;                                                          value</span></span>
+<span><span class="co">#&gt; 1                                                           92</span></span>
+<span><span class="co">#&gt; 2                                                           16</span></span>
+<span><span class="co">#&gt; 3                                                            3</span></span>
+<span><span class="co">#&gt; 4                                                            7</span></span>
+<span><span class="co">#&gt; 5                                                           16</span></span>
+<span><span class="co">#&gt; 6                                                     WIS; STR</span></span>
+<span><span class="co">#&gt; 7                                          piercing; lightning</span></span>
+<span><span class="co">#&gt; 8  psychic; bludgeoning; radiant; necrotic; non-magical damage</span></span>
+<span><span class="co">#&gt; 9                                                         fire</span></span>
+<span><span class="co">#&gt; 10                                                          +1</span></span>
+<span><span class="co">#&gt; 11                                                          +2</span></span>
+<span><span class="co">#&gt; 12                                                           0</span></span>
+<span><span class="co">#&gt; 13                                                           0</span></span>
+<span><span class="co">#&gt; 14                                                          +1</span></span>
+<span><span class="co">#&gt; 15                                                           0</span></span></code></pre></div>
 <p>Note that if you use <code>monster_creator</code> you may need to
 help your players identify the creature’s immunities and vulnerabilities
 <em>before</em> the actual confrontation with the creature to avoid
