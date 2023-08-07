@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">dndR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1.900</span>
       </span>
     </div>
 
@@ -105,23 +105,23 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a PC's base statistics from scratch</span></span></span>
 <span class="r-in"><span><span class="fu">pc_creator</span><span class="op">(</span>class <span class="op">=</span> <span class="st">'barbarian'</span>, race <span class="op">=</span> <span class="st">'half orc'</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability raw_score race_modifier score roll_modifier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        14             2    16            +3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        12             0    12            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        13             1    14            +2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT         7             0     7            -2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS        11             0    11             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA         8             0     8            -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        17             2    19            +4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        10             0    10             0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        16             1    17            +3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT        13             0    13            +1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS        12             0    12            +1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA         6             0     6            -2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or you can roll separately and then create a character with that dataframe</span></span></span>
 <span class="r-in"><span><span class="va">my_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">pc_creator</span><span class="op">(</span>class <span class="op">=</span> <span class="st">'sorcerer'</span>, race <span class="op">=</span> <span class="st">'dragonborn'</span>, scores_rolled <span class="op">=</span> <span class="cn">TRUE</span>, scores_df <span class="op">=</span> <span class="va">my_scores</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability raw_score race_modifier score roll_modifier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR         8             2    10             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX         5             0     5            -3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        12             0    12            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT        12             0    12            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS        10             0    10             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA        14             1    15            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR         9             2    11             0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        14             0    14            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        14             0    14            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT        10             0    10             0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS         9             0     9            -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA        17             1    18            +4</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

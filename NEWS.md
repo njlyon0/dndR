@@ -1,4 +1,4 @@
-## dndR Version 1.3.0.900
+## dndR Version 1.3.1.900
 
 Development version of `dndR`. The following changes were made from the preceding version:
 
