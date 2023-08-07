@@ -397,6 +397,8 @@ spells <- spells_v3 %>%
                 spell_level = level,
                 spell_school = school,
                 ritual_cast = ritual) %>%
+  # Fix any lingering name issues
+  dplyr::mutate(spell_name = gsub(pattern = "’", replacement = "'", x = spell_name)) %>%
   # Move some columns to new places
   dplyr::relocate(ritual_cast, .before = casting_time) %>%
   dplyr::relocate(higher_levels, .after = description)
