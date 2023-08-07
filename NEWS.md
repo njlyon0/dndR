@@ -2,6 +2,12 @@
 
 Development version of `dndR`. The following changes were made from the preceding version:
 
+## dndR Version 1.3.1
+
+The following changes were made from the preceding version:
+
+- Fixed curly apostrophes in spell names (causes failure to find spell with `spell_text` and `spell_list`)
+
 ## dndR Version 1.3.0
 
 The following changes were made from the preceding version:
