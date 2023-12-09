@@ -1,37 +1,17 @@
-#' @title Roll Any Number of Dice
+#' @title Re-Roll 1s from a Prior Dice Roll
 #'
-#' @description Rolls the specified number and type of dice. Dice are specified in the shorthand common to Dungeons & Dragons (i.e., number of dice, "d", number of faces of those dice). Includes an argument for whether each die's value should be returned as a message (rather than just the total of all dice in the roll). Rolling two twenty-sided dice (i.e., "2d20") is assumed to be rolling with advantage/disadvantage so both numbers are returned.
+#' @description Re-rolls only the dice that "landed on" 1 from a prior use of `roll`. Retains other dice results from the first roll but replaces the ones.
 #'
-#' @param dice (character) number and type of dice to roll specified in Dungeons & Dragons shorthand (e.g., "2d4" to roll two four-sided dice). Defaults to a single twenty-sided die (i.e., "1d20")
-#' @param show_dice (logical) whether to print the values of each individual die included in the total. Defaults to FALSE
+#' @param dice_faces (numeric) number of faces on the die/dice to re-roll
+#' @param first_result (numeric) vector of original dice results (including 1s to reroll)
 #'
-#' @return (numeric) sum of specified dice outcomes
-#'
-#' @export
+#' @return (numeric) vector of non-1 original dice results with re-rolled dice results appended
 #'
 #' @examples
-#' # Roll your desired dice
-#' roll(dice = "4d6", show_dice = TRUE)
-
-
-
-
-
-
-
-# Working on a re-roll function
-
-
-# Function variant ----
-
-# Clear environment
-rm(list = ls())
-
-# Define function
-reroll <- function(dice_type, first_result = NULL){
-
-  # Identify number of sides (without "d")
-  dice_faces <- base::as.numeric(base::gsub(pattern = "d", replacement = "", x = dice_type))
+#' # Re-roll ones from a prior result
+#' reroll(dice_faces = 8, first_result = c(1, 3, 1))
+#'
+reroll <- function(dice_faces, first_result = NULL){
 
   # Count number of dice to re-roll
   reroll_ct <- base::sum(first_result == 1, na.rm = F)
@@ -47,8 +27,3 @@ reroll <- function(dice_type, first_result = NULL){
 
   # Return new results
   return(full_vals) }
-
-# Invoke function
-reroll(dice_type = "d8", first_result = c(1, 5, 3, 7, 1))
-
-
