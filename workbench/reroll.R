@@ -50,7 +50,7 @@ reroll <- function(dice_type, first_result = NULL){
   reroll_ct <- base::sum(first_result == 1, na.rm = F)
 
   # Re-roll with the specified dice type
-  new_vals <- base::sample(x = 1:dice_faces, size = reroll_ct)
+  new_vals <- base::sample(x = 1:dice_faces, size = reroll_ct, replace = TRUE)
 
   # Drop 1s in original result
   partial_result <- base::setdiff(x = first_result, y = 1)
