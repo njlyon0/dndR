@@ -2,6 +2,9 @@
 
 Development version of `dndR`. The following changes were made from the preceding version:
 
+- Adding support for re-rolling of 1s in `roll` result
+- Streamlined internal mechanics of `roll` such that dice with any number (integer) of faces can be rolled (e.g., "2d57", "d13", etc.)
+
 ## dndR Version 1.3.1
 
 The following changes were made from the preceding version:

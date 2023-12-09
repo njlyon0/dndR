@@ -34,7 +34,7 @@ devtools::install_github("njlyon0/dndR")
 
 ## For Players and DMs
 
-- **`roll`** -- Roll specified number of standard dice and sum their outcomes. "Standard" dice have the following number of sides: 100, 20, 12, 10, 8, 6, 4, 3, or 2
+- **`roll`** -- Roll specified number of dice and sums their outcomes. Supports returning the individual die results as a message and/or re-rolling 1s via optional arguments.
 
 - **`ability_scores`** -- Roll for six ability scores using specified method (e.g., 4d6 drop lowest, 3d6, or 1d20)
 
