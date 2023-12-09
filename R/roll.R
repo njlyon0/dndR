@@ -15,7 +15,7 @@
 #'
 #' # Returned as a number so you can add rolls together or integers
 #' roll('1d20') + 5
-#' roll('2d8') + roll('1d4')
+#' roll('2d8', show_dice = TRUE)
 #'
 roll <- function(dice = "d20", show_dice = FALSE){
 
@@ -37,82 +37,89 @@ roll <- function(dice = "d20", show_dice = FALSE){
   dice_type <- stringr::str_extract(string = dice,
                                     pattern = "d[:digit:]{1,3}")
 
-  # Error out if dice_type not of recognized type
-  if(!dice_type %in% c("d2", "d3", "d4", "d6", "d8", "d10", "d12", "d20", "d100"))
-    stop('Dice type not recognized')
+  # Identify number of dice faces (i.e., drop "d")
+  dice_faces <- base::as.numeric(base::gsub(pattern = "d", replacement = "", x = dice_type))
 
-  # Create empty list to store roll result
-  dice_result <- base::list()
+  # # Error out if dice_type not of recognized type
+  # if(!dice_type %in% c("d2", "d3", "d4", "d6", "d8", "d10", "d12", "d20", "d100"))
+  #   stop('Dice type not recognized')
+
+  # # Create empty list to store roll result
+  # dice_result <- base::list()
 
   # Roll the specified type of dice the specified number of times
-  ## d2
-  if(dice_type == "d2"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d2())
-    } }
+  results <- base::sample(x = 1:dice_faces, size = dice_count, replace = TRUE)
 
-  ## d3
-  if(dice_type == "d3"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d3())
-    } }
 
-  ## d4
-  if(dice_type == "d4"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d4())
-    } }
-
-  ## d6
-  if(dice_type == "d6"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d6())
-    } }
-
-  ## d8
-  if(dice_type == "d8"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d8())
-    } }
-
-  ## d10
-  if(dice_type == "d10"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d10())
-    } }
-
-  ## d12
-  if(dice_type == "d12"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d12())
-    } }
-
-  ## d20
-  if(dice_type == "d20" & dice_count != 2){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d20())
-    } }
-
-  ## d100
-  if(dice_type == "d100"){
-    for(k in 1:dice_count){
-      dice_result[[k]] <- base::data.frame('result' = d100())
-    } }
-
-  # Collapse list into dataframe
-  dice_result_df <- purrr::list_rbind(x = dice_result)
+  # # Roll the specified type of dice the specified number of times
+  # ## d2
+  # if(dice_type == "d2"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d2())
+  #   } }
+  #
+  # ## d3
+  # if(dice_type == "d3"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d3())
+  #   } }
+  #
+  # ## d4
+  # if(dice_type == "d4"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d4())
+  #   } }
+  #
+  # ## d6
+  # if(dice_type == "d6"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d6())
+  #   } }
+  #
+  # ## d8
+  # if(dice_type == "d8"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d8())
+  #   } }
+  #
+  # ## d10
+  # if(dice_type == "d10"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d10())
+  #   } }
+  #
+  # ## d12
+  # if(dice_type == "d12"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d12())
+  #   } }
+  #
+  # ## d20
+  # if(dice_type == "d20" & dice_count != 2){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d20())
+  #   } }
+  #
+  # ## d100
+  # if(dice_type == "d100"){
+  #   for(k in 1:dice_count){
+  #     dice_result[[k]] <- base::data.frame('result' = d100())
+  #   } }
+  #
+  # # Collapse list into dataframe
+  # dice_result_df <- purrr::list_rbind(x = dice_result)
 
   # Calculate final sum
-  total <- base::sum(dice_result_df$result, na.rm = TRUE)
+  total <- base::sum(results, na.rm = TRUE)
 
   # If two d20 are rolled, assume they're rolling for advantage/disadvantage and don't sum
   if(dice_type == "d20" & dice_count == 2){
-    total <- base::data.frame('roll_1' = d20(), 'roll_2' = d20())
+    total <- base::data.frame('roll_1' = results[1], 'roll_2' = results[2])
     base::message("Assuming you're rolling for (dis)advantage so both rolls returned") }
 
   # If desired (and necessary), message the individual roll values
   if(show_dice == TRUE & dice_count > 1 & dice != "2d20"){
-    base::message("Individual rolls: ", paste(dice_result_df$result, collapse = ", ")) }
+    base::message("Individual rolls: ", paste(results, collapse = ", ")) }
 
   # Return total
   return(total) }
