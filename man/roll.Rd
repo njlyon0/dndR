@@ -4,12 +4,14 @@
 \alias{roll}
 \title{Roll Any Number of Dice}
 \usage{
-roll(dice = "d20", show_dice = FALSE)
+roll(dice = "d20", show_dice = FALSE, re_roll = FALSE)
 }
 \arguments{
 \item{dice}{(character) number and type of dice to roll specified in Dungeons & Dragons shorthand (e.g., "2d4" to roll two four-sided dice). Defaults to a single twenty-sided die (i.e., "1d20")}
 
 \item{show_dice}{(logical) whether to print the values of each individual die included in the total. Defaults to FALSE}
+
+\item{re_roll}{(logical) whether to re-roll 1s from the initial roll result. Defaults to FALSE}
 }
 \value{
 (numeric) sum of specified dice outcomes
@@ -22,6 +24,9 @@ Rolls the specified number and type of dice. Dice are specified in the shorthand
 roll(dice = "4d6", show_dice = TRUE)
 
 # Returned as a number so you can add rolls together or integers
-roll('1d20') + 5
+roll(dice = '1d20') + 5
+
+# Can also re-roll ones if desired
+roll(dice = '4d4', re_roll = TRUE)
 
 }

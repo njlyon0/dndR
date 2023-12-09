@@ -4,6 +4,7 @@
 #'
 #' @param dice (character) number and type of dice to roll specified in Dungeons & Dragons shorthand (e.g., "2d4" to roll two four-sided dice). Defaults to a single twenty-sided die (i.e., "1d20")
 #' @param show_dice (logical) whether to print the values of each individual die included in the total. Defaults to FALSE
+#' @param re_roll (logical) whether to re-roll 1s from the initial roll result. Defaults to FALSE
 #'
 #' @return (numeric) sum of specified dice outcomes
 #'
@@ -14,9 +15,12 @@
 #' roll(dice = "4d6", show_dice = TRUE)
 #'
 #' # Returned as a number so you can add rolls together or integers
-#' roll('1d20') + 5
+#' roll(dice = '1d20') + 5
 #'
-roll <- function(dice = "d20", show_dice = FALSE){
+#' # Can also re-roll ones if desired
+#' roll(dice = '4d4', re_roll = TRUE)
+#'
+roll <- function(dice = "d20", show_dice = FALSE, re_roll = FALSE){
 
   # Error out if not a character
   if(!is.character(dice))
@@ -40,6 +44,11 @@ roll <- function(dice = "d20", show_dice = FALSE){
 
   # Roll the specified type of dice the specified number of times
   results <- base::sample(x = 1:dice_faces, size = dice_count, replace = TRUE)
+
+  # If re-rolling is desired, do so here
+  if(re_roll == TRUE){
+    results <- dndR:::reroll(dice_faces = dice_faces, first_result = results)
+    message("Re-rolling 1s") }
 
   # Calculate final sum
   total <- base::sum(results, na.rm = TRUE)
