@@ -46,7 +46,7 @@ roll <- function(dice = "d20", show_dice = FALSE, re_roll = FALSE){
   results <- base::sample(x = 1:dice_faces, size = dice_count, replace = TRUE)
 
   # If re-rolling is desired, do so here
-  if(re_roll == TRUE){
+  if(re_roll == TRUE & 1 %in% results){
     results <- dndR::reroll(dice_faces = dice_faces, first_result = results)
     message("Re-rolling 1s") }
 

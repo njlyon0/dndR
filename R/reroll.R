@@ -21,8 +21,8 @@ reroll <- function(dice_faces, first_result = NULL){
   # Re-roll with the specified dice type
   new_vals <- base::sample(x = 1:dice_faces, size = reroll_ct, replace = TRUE)
 
-  # Drop 1s in original result
-  partial_result <- base::setdiff(x = first_result, y = 1)
+  # Drop 1s in original result but keep other rolls
+  partial_result <- first_result[first_result != 1]
 
   # Attach the new rolls to the old rolls without 1s
   full_vals <- c(partial_result, new_vals)
