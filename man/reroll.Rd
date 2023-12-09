@@ -17,8 +17,3 @@ reroll(dice_faces, first_result = NULL)
 \description{
 Re-rolls only the dice that "landed on" 1 from a prior use of `roll`. Retains other dice results from the first roll but replaces the ones.
 }
-\examples{
-# Re-roll ones from a prior result
-reroll(dice_faces = 8, first_result = c(1, 3, 1))
-
-}
