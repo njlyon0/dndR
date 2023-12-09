@@ -57,17 +57,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"d20"</span>, show_dice <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"d20"</span>, show_dice <span class="op">=</span> <span class="cn">FALSE</span>, re_roll <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dice</dt>
-<dd><p>(character) number and type of dice to roll specified in Dungeons &amp; Dragons shorthand (e.g., "2d4" for two, four-sided dice). Defaults to a single twenty-sided die (e.g, "1d20")</p></dd>
+<dd><p>(character) number and type of dice to roll specified in Dungeons &amp; Dragons shorthand (e.g., "2d4" to roll two four-sided dice). Defaults to a single twenty-sided die (i.e., "1d20")</p></dd>
 
 
 <dt>show_dice</dt>
 <dd><p>(logical) whether to print the values of each individual die included in the total. Defaults to FALSE</p></dd>
+
+
+<dt>re_roll</dt>
+<dd><p>(logical) whether to re-roll 1s from the initial roll result. Defaults to FALSE</p></dd>
 
 </dl></div>
     <div id="value">
@@ -79,15 +83,19 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Roll your desired dice (i.e., randomly sample the specified die)</span></span></span>
-<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"4d6"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Roll your desired dice</span></span></span>
+<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">"4d6"</span>, show_dice <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Individual rolls: 4, 1, 2, 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Returned as a number so you can add rolls together or integers</span></span></span>
-<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span><span class="st">'1d20'</span><span class="op">)</span> <span class="op">+</span> <span class="fl">5</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span><span class="st">'2d8'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">roll</span><span class="op">(</span><span class="st">'1d4'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11</span>
+<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">'1d20'</span><span class="op">)</span> <span class="op">+</span> <span class="fl">5</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 25</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Can also re-roll ones if desired</span></span></span>
+<span class="r-in"><span><span class="fu">roll</span><span class="op">(</span>dice <span class="op">=</span> <span class="st">'4d4'</span>, re_roll <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Re-rolling 1s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
