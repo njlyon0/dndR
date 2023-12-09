@@ -47,7 +47,7 @@ roll <- function(dice = "d20", show_dice = FALSE, re_roll = FALSE){
 
   # If re-rolling is desired, do so here
   if(re_roll == TRUE){
-    results <- dndR:::reroll(dice_faces = dice_faces, first_result = results)
+    results <- dndR::reroll(dice_faces = dice_faces, first_result = results)
     message("Re-rolling 1s") }
 
   # Calculate final sum

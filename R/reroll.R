@@ -7,6 +7,12 @@
 #'
 #' @return (numeric) vector of non-1 original dice results with re-rolled dice results appended
 #'
+#' @export
+#'
+#' @examples
+#' # Re-roll ones from a prior result
+#' reroll(dice_faces = 8, first_result = c(1, 3, 1))
+#'
 reroll <- function(dice_faces, first_result = NULL){
 
   # Count number of dice to re-roll
