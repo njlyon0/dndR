@@ -18,17 +18,17 @@ librarian::shelf(tidyverse, supportR)
 rm(list = ls())
 
 # Identify spells in Grimoire (GitHub repo with markdown files of _ D&D spells)
-spell_repo <- supportR::github_ls(repo = 'https://github.com/Traneptora/grimoire',
-                                 folder = "_posts", recursive = F, quiet = F)
+beast_repo <- supportR::github_ls(repo = 'https://github.com/Dr-Eigenvalue/bestiary',
+                                  folder = "_creatures", recursive = F, quiet = F)
 
 # Check structure
-dplyr::glimpse(spell_repo)
+dplyr::glimpse(beast_repo)
 
 # Strip out just markdown file names
-spell_mds <- spell_repo$name
+beast_mds <- beast_repo$name
 
 # Check that out
-dplyr::glimpse(spell_mds)
+dplyr::glimpse(beast_mds)
 
 ## ---------------------------------------- ##
       # Extract Markdown Content ----
