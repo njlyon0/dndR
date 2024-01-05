@@ -35,27 +35,27 @@ dplyr::glimpse(beast_mds)
 ## ---------------------------------------- ##
 
 # Make an empty list to store individually-wrangled spells within
-list_o_spells <- list()
+list_o_beasts <- list()
 
-# Loop across spell markdown files
-for(k in 1:length(spell_mds)){
+# Loop across creature markdown files
+for(k in 1:length(beast_mds)){
 # for(k in 2){
 
-  # Define that spell's markdown URL
-  spell_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k]))
+  # Define that beast's markdown URL
+  beast_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", beast_mds[k]))
 
-  # Strip out spell information as a vector
-  spell_info <- base::readLines(con = spell_con)
+  # Strip out creature information as a vector
+  beast_info <- base::readLines(con = beast_con)
 
   # Close the connection
-  base::close(spell_con)
+  base::close(beast_con)
 
-  # Wrangle the markdown information into something more manageable & add to spell list
-  raw_spell <- as.data.frame(spell_info) %>%
+  # Wrangle the markdown information into something more manageable & add to creature list
+  raw_beast <- as.data.frame(beast_info) %>%
     # Drop irrelevant lines
-    dplyr::filter(nchar(spell_info) != 0 & spell_info != "---") %>%
+    dplyr::filter(nchar(beast_info) != 0 & beast_info != "---") %>%
     # Split the contents by the colon for later use
-    tidyr::separate_wider_delim(cols = spell_info, delim = ":", cols_remove = F,
+    tidyr::separate_wider_delim(cols = beast_info, delim = ":", cols_remove = F,
                                 names = c("left", "right"),
                                 too_few = "align_start", too_many = "merge") %>%
     # Add a column of what the true column names should be based on the contents
@@ -83,27 +83,27 @@ for(k in 1:length(spell_mds)){
                                  yes = names_v1,
                                  no = paste0("description_", (row_num - temp_num)))) %>%
     # Pare down to only needed columns
-    dplyr::select(names, spell_info) %>%
+    dplyr::select(names, beast_info) %>%
     # Pivot wider
-    tidyr::pivot_wider(names_from = names, values_from = spell_info) %>%
-    # Wrangle spell name
+    tidyr::pivot_wider(names_from = names, values_from = beast_info) %>%
+    # Wrangle beast name
     dplyr::mutate(name = gsub(pattern = "title:  |title: |\"", replacement = "", x = title),
                   .before = title) %>%
     # Drop title column
     dplyr::select(-title)
 
   # Add to list
-  list_o_spells[[k]] <- raw_spell
+  list_o_beasts[[k]] <- raw_beast
 
   # Message successful wrangling
-  message("Finished wrangling spell ", k, " '", raw_spell$name, "'") }
+  message("Finished wrangling creature ", k, " '", raw_beast$name, "'") }
 
 ## ---------------------------------------- ##
       # Wrangle Markdown Content ----
 ## ---------------------------------------- ##
 
 # Perform further wrangling on extracted markdown content
-spells_v1 <- list_o_spells %>%
+beasts_v1 <- list_o_beasts %>%
   # Unlist that list into a dataframe
   purrr::list_rbind() %>%
   # Remove unwanted columns
@@ -125,25 +125,25 @@ spells_v1 <- list_o_spells %>%
                     x = duration))
 
 # Check structure of that
-dplyr::glimpse(spells_v1)
+dplyr::glimpse(beasts_v1)
 
 # Export this for later
-write.csv(x = spells_v1, file = file.path("dev", "raw_data", "raw_spells.csv"),
+write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_beasts.csv"),
           na = '', row.names = F)
 
 # Read back in if needed
-## spells_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_spells.csv"))
+## beasts_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_beasts.csv"))
 
 # Clean environment
-rm(list = setdiff(ls(), c("spells_v1")))
+rm(list = setdiff(ls(), c("beasts_v1")))
 
 ## ---------------------------------------- ##
-        # Tidy Spell Information ----
+        # Tidy Creature Information ----
 ## ---------------------------------------- ##
 
-# Do wrangling of non-description bits of spells
-spells_v2 <- spells_v1 %>%
-  # Create a column for whether the spell can be cast as a ritual
+# Do wrangling of non-description bits of creatures
+beasts_v2 <- beasts_v1 %>%
+  # Create a column for whether the creature can be cast as a ritual
   dplyr::mutate(ritual = stringr::str_detect(string = tags, pattern = "ritual")) %>%
   # Drop "concentration" & "ritual" from tags
   dplyr::mutate(tags = gsub(pattern = "concentration, |concentration,|ritual, ",
@@ -162,7 +162,7 @@ spells_v2 <- spells_v1 %>%
   # If subtags column is empty, replace with NA
   dplyr::mutate(subtags = ifelse(test = nchar(subtags) == 0,
                                  yes = NA, no = subtags)) %>%
-  # Combine class columns & subtags to get all classes with access to a given spell
+  # Combine class columns & subtags to get all classes with access to a given creature
   tidyr::unite(col = "class", dplyr::starts_with("class_"), subtags,
                sep = ", ", na.rm = T) %>%
   # Tidy that column a small amount
@@ -210,33 +210,33 @@ spells_v2 <- spells_v1 %>%
 
 # Check out source information
 sort(unique(gsub(pattern = "0|1|2|3|4|5|6|7|8|9", replacement = "",
-                 x = spells_v2$sources)))
+                 x = beasts_v2$sources)))
 
 # Check out 'tags' column products
-sort(unique(spells_v2$level))
-sort(unique(spells_v2$school))
+sort(unique(beasts_v2$level))
+sort(unique(beasts_v2$school))
 
 # Check out combination 'tags' and 'subtags' class/sub-class column
-sort(unique(spells_v2$class))
+sort(unique(beasts_v2$class))
 
-# Check out other spell information
-sort(unique(spells_v2$casting_time))
-sort(unique(spells_v2$range))
-sort(unique(spells_v2$components))
-sort(unique(spells_v2$duration))
+# Check out other creature information
+sort(unique(beasts_v2$casting_time))
+sort(unique(beasts_v2$range))
+sort(unique(beasts_v2$components))
+sort(unique(beasts_v2$duration))
 
 # Re-check structure (ignore description columns for now)
-dplyr::glimpse(dplyr::select(spells_v2, -dplyr::starts_with("description")))
+dplyr::glimpse(dplyr::select(beasts_v2, -dplyr::starts_with("description")))
 
 ## ---------------------------------------- ##
-      # Tidy Spell Descriptions ----
+      # Tidy Creature Descriptions ----
 ## ---------------------------------------- ##
 
 # Glimpse the full structure
-dplyr::glimpse(spells_v2)
+dplyr::glimpse(beasts_v2)
 
 # Wrangle descritpion into something more manageable
-spells_v3 <- spells_v2 %>%
+beasts_v3 <- beasts_v2 %>%
   # Pivot longer to get all description information into one column
   tidyr::pivot_longer(cols = dplyr::starts_with("description_"),
                       names_to = "desc_num", values_to = "text") %>%
@@ -244,14 +244,14 @@ spells_v3 <- spells_v2 %>%
   dplyr::select(-desc_num) %>%
   # Drop NA rows
   dplyr::filter(!is.na(text)) %>%
-  # Identify higher level spell information
+  # Identify higher level creature information
   dplyr::mutate(
     higher_levels = ifelse(
       test = stringr::str_detect(string = text,
                                  pattern = "This spell’s damage increases by") |
         stringr::str_detect(string = text, pattern = "At Higher Levels."),
       yes = text, no = NA) ) %>%
-  # Fill that in for the other rows of the spell
+  # Fill that in for the other rows of the creature
   dplyr::group_by(name) %>%
   tidyr::fill(higher_levels, .direction = "up") %>%
   dplyr::ungroup() %>%
@@ -288,15 +288,15 @@ spells_v3 <- spells_v2 %>%
   dplyr::group_by(name) %>%
   dplyr::mutate(text_num = 1:dplyr::n()) %>%
   dplyr::ungroup() %>%
-  # Simplify a few spell's descriptions manually
+  # Simplify a few creature's descriptions manually
   dplyr::mutate(text = dplyr::case_when(
     ## Control weather has lengthy tables that we can manually simplify
     name == "Control Weather" & text == "**Precipitation**" ~ "Precipitation: 1 - Clear / 2 - Light Clouds / 3 - Overcast or ground fog / 4 - Rain, hail, or snow / 5 - Torrential rain, driving hail, or blizzard /// Temperature: 1 - Unbearable heat / 2 - Hot / 3 - Warm / 4 - Cool / 5 - Cold / 6 - Arctic cold /// Wind: 1 - Calm / 2 - Moderate wind / 3 - Strong wind / 4 - Gale / 5 - Storm",
     ## Choas Bolt also has a lengthy table
     name == "Chaos Bolt" & text == "|d8 |Damage Type|" ~ "1 - Acid / 2 - Cold / 3 - Fire / 4 - Force / 5 - Lightning / 6 - Poison / 7 - Psychic / 8 - Thunder",
-    ## If the spell isn't specified, don't mess with the text
+    ## If the creature isn't specified, don't mess with the text
     TRUE ~ text)) %>%
-  # Remove unnecessary information from specific spells
+  # Remove unnecessary information from specific creatures
   ## Chaos Bolt
   dplyr::filter(name != "Chaos Bolt" | name == "Chaos Bolt" &
                   stringr::str_detect(string = text, pattern = "d8s") |
@@ -382,29 +382,29 @@ spells_v3 <- spells_v2 %>%
   dplyr::mutate(higher_levels = gsub(pattern = "’", "'", x = higher_levels))
 
 # Re-check structure
-dplyr::glimpse(spells_v3)
+dplyr::glimpse(beasts_v3)
 
 ## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-spells <- spells_v3 %>%
+menagerie <- beasts_v3 %>%
   # Rename some columns
-  dplyr::rename(spell_name = name,
-                spell_source = sources,
+  dplyr::rename(beast_name = name,
+                beast_source = sources,
                 pc_class = class,
-                spell_level = level,
-                spell_school = school,
+                beast_level = level,
+                beast_school = school,
                 ritual_cast = ritual) %>%
   # Fix any lingering name issues
-  dplyr::mutate(spell_name = gsub(pattern = "’", replacement = "'", x = spell_name)) %>%
+  dplyr::mutate(beast_name = gsub(pattern = "’", replacement = "'", x = beast_name)) %>%
   # Move some columns to new places
   dplyr::relocate(ritual_cast, .before = casting_time) %>%
   dplyr::relocate(higher_levels, .after = description)
 
 # Last structure check
-dplyr::glimpse(spells)
+dplyr::glimpse(menagerie)
 
 ## ---------------------------------------- ##
                 # Export ----
@@ -412,10 +412,10 @@ dplyr::glimpse(spells)
 
 # Export locally to dev folder for experimental purposes
 ## Already ignored by package (because `dev` folder) and added to `.gitignore`
-write.csv(x = spells, file = file.path("dev", "tidy_data", "spells.csv"),
+write.csv(x = menagerie, file = file.path("dev", "tidy_data", "menagerie.csv"),
           row.names = F, na = '')
 
 ## If desired, export into package as a .rda object
-# save(spells, file = file.path("data", "spells.rda"))
+# save(menagerie, file = file.path("data", "menagerie.rda"))
 
 # End ----
