@@ -5,8 +5,7 @@
 
 # PURPOSE:
 ## Strip spell information from markdown files in Traneptora's GitHub repo 'grimoire'
-## Original repo here: https://github.com/Traneptora/grimoire
-## My fork here:       https://github.com/njlyon0/dnd_grimoire
+## My forked repo here: https://github.com/njlyon0/dnd_grimoire
 
 ## ---------------------------------------- ##
             # Housekeeping ----
