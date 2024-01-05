@@ -4,7 +4,7 @@
 # Author(s): Nick Lyon
 
 # PURPOSE:
-## Strip spell information from markdown files in Traneptora's GitHub repo 'grimoire'
+## Strip spell information from markdown files in a GitHub repository
 ## My forked repo here: https://github.com/njlyon0/dnd_grimoire
 
 ## ---------------------------------------- ##
