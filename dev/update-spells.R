@@ -5,7 +5,8 @@
 
 # PURPOSE:
 ## Strip spell information from markdown files in Traneptora's GitHub repo 'grimoire'
-## See here: https://github.com/Traneptora/grimoire
+## Original repo here: https://github.com/Traneptora/grimoire
+## My fork here:       https://github.com/njlyon0/dnd_grimoire
 
 ## ---------------------------------------- ##
             # Housekeeping ----
@@ -17,15 +18,19 @@ librarian::shelf(tidyverse, supportR)
 # Clear environment
 rm(list = ls())
 
+# Define repo name
+spell_repo <- "njlyon0/dnd_grimoire"
+
 # Identify spells in Grimoire (GitHub repo with markdown files of _ D&D spells)
-spell_repo <- supportR::github_ls(repo = 'https://github.com/Traneptora/grimoire',
-                                 folder = "_posts", recursive = F, quiet = F)
+spell_contents <- supportR::github_ls(repo = paste0("https://github.com/", spell_repo),
+                                      folder = "_posts",
+                                      recursive = F, quiet = F)
 
 # Check structure
-dplyr::glimpse(spell_repo)
+dplyr::glimpse(spell_contents)
 
 # Strip out just markdown file names
-spell_mds <- spell_repo$name
+spell_mds <- spell_contents$name
 
 # Check that out
 dplyr::glimpse(spell_mds)
@@ -42,7 +47,8 @@ for(k in 1:length(spell_mds)){
 # for(k in 2){
 
   # Define that spell's markdown URL
-  spell_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", spell_mds[k]))
+  spell_con <- base::url(paste0("https://raw.githubusercontent.com/", spell_repo,
+                                "/main/_posts/", spell_mds[k]))
 
   # Strip out spell information as a vector
   spell_info <- base::readLines(con = spell_con)
