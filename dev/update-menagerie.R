@@ -64,11 +64,14 @@ for(k in 1:length(beast_mds)){
     tidyr::separate_wider_delim(cols = beast_info, delim = ":", cols_remove = F,
                                 names = c("left", "right"),
                                 too_few = "align_start", too_many = "merge") %>%
+    # Make left bit lowercase
+    dplyr::mutate(left = tolower(left)) %>%
     # Add a column of what the true column names should be based on the contents
     dplyr::mutate(names_v1 = dplyr::case_when(
       left == "layout" ~ "layout",
       left == "name" ~ "name",
       left == "tags" ~ "tags",
+      left == "page_number" ~ "source_page",
       left == "cha" ~ "CHA",
       left == "wis" ~ "WIS",
       left == "int" ~ "INT",
@@ -79,13 +82,22 @@ for(k in 1:length(beast_mds)){
       left == "alignment" ~ "alignment",
       left == "challenge" ~ "challenge",
       left == "languages" ~ "languages",
+      left == "senses" ~ "senses",
       left == "skills" ~ "skills",
+      left == "saving_throws" ~ "saving_throws",
       left == "speed" ~ "speed",
       left == "hit_points" ~ "hit_points",
       left == "armor_class" ~ "armor_class",
-      # grepl(pattern = "*", x = left, fixed = T) == T ~ beast_info,
+      left == "damage_vulnerabilities" ~ "damage_vulnerabilities",
+      left == "damage_resistances" ~ "damage_resistances",
+      left == "damage_immunities" ~ "damage_immunities",
+      left == "condition_immunities" ~ "condition_immunities",
       # If none of above, must be description text
       TRUE ~ "description")) %>%
+    # Remove some of that information from the information column
+    dplyr::mutate(beast_info = gsub(pattern = c("layout: |name: |tags: |cha: |wis: |int: |dex: |str: |con: |size: |alignment: |challenge: |languages: |senses: |skills: |saving_throws: |speed: |hit_points: |armor_class: |damage_vulnerabilities: |damage_resistances: |damage_immunities: |condition_immunities: "),
+                                    replacement = "", x = beast_info)) %>%
+
     # Get a row number column
     dplyr::mutate(row_num = 1:nrow(.)) %>%
     # Identify highest non-description row
@@ -103,8 +115,8 @@ for(k in 1:length(beast_mds)){
   list_o_beasts[[k]] <- raw_beast
 
   # Message successful wrangling
-  message("Finished wrangling creature ", k, " '", raw_beast$name,
-          "' (of ", length(beast_mds), ")") }
+  message("Finished wrangling creature ", k, " (", raw_beast$name,
+          ") of ", length(beast_mds)) }
 
 ## ---------------------------------------- ##
       # Wrangle Markdown Content ----
@@ -115,32 +127,20 @@ beasts_v1 <- list_o_beasts %>%
   # Unlist that list into a dataframe
   purrr::list_rbind() %>%
   # Remove unwanted columns
-  dplyr::select(-layout, -date) %>%
-  # Move the subtags column
-  dplyr::relocate(subtags, .after = tags) %>%
-  # Do some generally-valuable tidying
-  dplyr::mutate(
-    sources = gsub(pattern = "sources: |\\[|\\]", replacement = "", x = sources),
-    tags = gsub(pattern = "tags: |\\[|\\]", replacement = "", x = tags),
-    subtags = gsub(pattern = "subtags: |\\[|\\]", replacement = "", x = subtags),
-    type = gsub(pattern = "\\*\\*", replacement = "", x = type),
-    casting_time = gsub(pattern = "\\*\\*Casting Time\\*\\*: ", replacement = "",
-                        x = casting_time),
-    range = gsub(pattern = "\\*\\*Range\\*\\*: ", replacement = "", x = range),
-    components = gsub(pattern = "\\*\\*Components\\*\\*: ", replacement = "",
-                      x = components),
-    duration = gsub(pattern = "\\*\\*Duration\\*\\*: ", replacement = "",
-                    x = duration))
+  dplyr::select(-layout) %>%
+  # Move the description columns
+  dplyr::relocate(dplyr::starts_with("description"),
+                  .after = dplyr::everything())
 
 # Check structure of that
 dplyr::glimpse(beasts_v1)
 
 # Export this for later
-write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_beasts.csv"),
+write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_menagerie.csv"),
           na = '', row.names = F)
 
 # Read back in if needed
-## beasts_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_beasts.csv"))
+## beasts_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_menagerie.csv"))
 
 # Clean environment
 rm(list = setdiff(ls(), c("beasts_v1")))
