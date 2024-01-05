@@ -4,8 +4,8 @@
 # Author(s): Nick Lyon
 
 # PURPOSE:
-## Strip creature information from markdown files in Dr. Eigenvalue's GitHub repo 'bestiary'
-## See here: https://github.com/Dr-Eigenvalue/bestiary
+## Strip creature information from markdown files in a GitHub repository
+## My forked repo here: https://github.com/njlyon0/dnd_menagerie
 
 ## ---------------------------------------- ##
             # Housekeeping ----
@@ -17,15 +17,20 @@ librarian::shelf(tidyverse, supportR)
 # Clear environment
 rm(list = ls())
 
+# Define repo name
+beast_repo <- "njlyon0/dnd_menagerie"
+
 # Identify spells in Grimoire (GitHub repo with markdown files of _ D&D spells)
-beast_repo <- supportR::github_ls(repo = 'https://github.com/Dr-Eigenvalue/bestiary',
-                                  folder = "_creatures", recursive = F, quiet = F)
+beast_contents <- supportR::github_ls(repo = paste0("https://github.com/", beast_repo),
+                                      folder = "_creatures", recursive = T, quiet = F) %>%
+  # Drop subfolders
+  dplyr::filter(type != "dir")
 
 # Check structure
-dplyr::glimpse(beast_repo)
+dplyr::glimpse(beast_contents)
 
 # Strip out just markdown file names
-beast_mds <- beast_repo$name
+beast_mds <- beast_contents$name
 
 # Check that out
 dplyr::glimpse(beast_mds)
@@ -42,7 +47,8 @@ for(k in 1:length(beast_mds)){
 # for(k in 2){
 
   # Define that beast's markdown URL
-  beast_con <- base::url(paste0("https://raw.githubusercontent.com/Traneptora/grimoire/master/_posts/", beast_mds[k]))
+  beast_con <-  base::url(paste0("https://raw.githubusercontent.com/", beast_repo,
+                                 "/main/", beast_contents$path[k], "/", beast_mds[k]))
 
   # Strip out creature information as a vector
   beast_info <- base::readLines(con = beast_con)
@@ -61,17 +67,23 @@ for(k in 1:length(beast_mds)){
     # Add a column of what the true column names should be based on the contents
     dplyr::mutate(names_v1 = dplyr::case_when(
       left == "layout" ~ "layout",
-      left == "title" ~ "title",
-      left == "date" ~ "date",
-      left == "sources" ~ "sources",
+      left == "name" ~ "name",
       left == "tags" ~ "tags",
-      left == "subtags" ~ "subtags",
-      dplyr::lag(x = left, n = 1) == "subtags" ~ "type",
-      dplyr::lag(x = left, n = 1) == "tags" & !"subtags" %in% left ~ "type",
-      left == "**Casting Time**" ~ "casting_time",
-      left == "**Range**" ~ "range",
-      left == "**Components**" ~ "components",
-      left == "**Duration**" ~ "duration",
+      left == "cha" ~ "CHA",
+      left == "wis" ~ "WIS",
+      left == "int" ~ "INT",
+      left == "con" ~ "CON",
+      left == "dex" ~ "DEX",
+      left == "str" ~ "STR",
+      left == "size" ~ "size",
+      left == "alignment" ~ "alignment",
+      left == "challenge" ~ "challenge",
+      left == "languages" ~ "languages",
+      left == "skills" ~ "skills",
+      left == "speed" ~ "speed",
+      left == "hit_points" ~ "hit_points",
+      left == "armor_class" ~ "armor_class",
+      # grepl(pattern = "*", x = left, fixed = T) == T ~ beast_info,
       # If none of above, must be description text
       TRUE ~ "description")) %>%
     # Get a row number column
@@ -85,18 +97,14 @@ for(k in 1:length(beast_mds)){
     # Pare down to only needed columns
     dplyr::select(names, beast_info) %>%
     # Pivot wider
-    tidyr::pivot_wider(names_from = names, values_from = beast_info) %>%
-    # Wrangle beast name
-    dplyr::mutate(name = gsub(pattern = "title:  |title: |\"", replacement = "", x = title),
-                  .before = title) %>%
-    # Drop title column
-    dplyr::select(-title)
+    tidyr::pivot_wider(names_from = names, values_from = beast_info)
 
   # Add to list
   list_o_beasts[[k]] <- raw_beast
 
   # Message successful wrangling
-  message("Finished wrangling creature ", k, " '", raw_beast$name, "'") }
+  message("Finished wrangling creature ", k, " '", raw_beast$name,
+          "' (of ", length(beast_mds), ")") }
 
 ## ---------------------------------------- ##
       # Wrangle Markdown Content ----
