@@ -380,7 +380,7 @@ spells_v3 <- spells_v2 %>%
   # Combine separate description text columns
   tidyr::unite(col = "description", dplyr::starts_with("description_"), sep = " ", na.rm = T) %>%
   # Remove some unnecessary formatting from the higher level info
-  dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
+  dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*\\*At Higher Levels.\\*\\*\\* |\\*\\*At Higher Levels.\\*\\* ",
                                      replacement = "", x = higher_levels),
                 .after = description) %>%
   # Fix weird not-quotes in text columns
