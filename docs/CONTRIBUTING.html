@@ -38,7 +38,13 @@
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/njlyon0/dndR/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -61,26 +67,32 @@
 <h2 id="function-scripts">Function Scripts<a class="anchor" aria-label="anchor" href="#function-scripts"></a></h2>
 <p>If you’ve already written up an R function in a script you have two options for getting it added to <code>dndR</code>:</p>
 <p><strong>Scripts Option A</strong></p>
-<ul><li><p><a href="https://github.com/njlyon0/dndR/issues" class="external-link">Open a GitHub issue</a> and paste your function into it</p></li>
-<li><p>I can then do the necessary formatting to get it to fit in the larger package architecture</p></li>
+<ul><li>
+<a href="https://github.com/njlyon0/dndR/issues" class="external-link">Open a GitHub issue</a> and paste your function into it</li>
+<li>I can then do the necessary formatting to get it to fit in the larger package architecture</li>
 </ul><p><strong>Scripts Option B</strong></p>
-<ul><li><p><a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" class="external-link">Fork the <code>dndR</code> repository</a></p></li>
-<li>
-<p>Add your function script (and any necessary data files) <strong><u>into the <code>dev</code> folder</u></strong> (see <a href="https://github.com/njlyon0/dndR/tree/main/dev" class="external-link">here</a>)</p>
+<ul><li><a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" class="external-link">Fork the <code>dndR</code> repository</a></li>
+<li>Add your function script (and any necessary data files) <strong><u>into the <code>dev</code> folder</u></strong> (see <a href="https://github.com/njlyon0/dndR/tree/main/dev" class="external-link">here</a>)
 <ul><li>The <code>dev</code> folder is crucial because it’s tracked by Git but not built into <code>dndR</code>. Putting your content there means small errors in your script (if any exist) won’t affect the larger development version of <code>dndR</code>
 </li>
 </ul></li>
-<li><p>Commit / push those changes to your fork</p></li>
-<li><p><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests" class="external-link">Open a pull request</a> with your changes</p></li>
-<li><p>I’ll merge the pull request and then do the necessary formatting and development checks to get the function smoothly integrated with the package</p></li>
+<li>Commit / push those changes to your fork</li>
+<li>
+<a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests" class="external-link">Open a pull request</a> with your changes</li>
+<li>I’ll merge the pull request and then do the necessary formatting and development checks to get the function smoothly integrated with the package</li>
 </ul></div>
 <div class="section level2">
 <h2 id="contribution-credit">Contribution Credit<a class="anchor" aria-label="anchor" href="#contribution-credit"></a></h2>
 <p>In return for your generous contribution to <code>dndR</code> I’ll give you the following modes of credit:</p>
-<ul><li><p>Add you as a contributor in the <code>DESCRIPTION</code> of the package with a link to a professional website of your choosing</p></li>
-<li><p>Put your name in the README of the repository next to the description of your function</p></li>
-<li><p>Add your name to the function description (see <code><a href="reference/party_diagram.html">?dndR::party_diagram</a></code> or <code><a href="reference/pc_level_calc.html">?dndR::pc_level_calc</a></code> as examples of this)</p></li>
-</ul><p>Note that I make no distinction between contributing a function idea and contributing written code in terms of credit received.</p>
+<ul><li>Add you as a contributor/author in the <code>DESCRIPTION</code> of the package with a link to a professional website of your choosing</li>
+<li>Put your name in the README of the repository next to the description of your function</li>
+<li>Add your name to the function description (see <code><a href="reference/party_diagram.html">?dndR::party_diagram</a></code> or <code><a href="reference/pc_level_calc.html">?dndR::pc_level_calc</a></code> as examples of this)</li>
+</ul></div>
+<div class="section level2">
+<h2 id="style-guide">Style Guide<a class="anchor" aria-label="anchor" href="#style-guide"></a></h2>
+<p>When you contribute code you <em>do not</em> need to make sure that code adheres to a particular style. That said, all functions in <code>dndR</code> will eventually need to be in “snake case” (i.e., all lowercase with words separated by underscores). I am happy to make those style edits though so if that level of edit does not spark joy for you, don’t sweat it!</p>
+<p>For functions that print informative messages, there will also need to be a <code>quiet</code> argument that allows for easy silencing of those messages. Check out <code><a href="reference/party_diagram.html">?dndR::party_diagram</a></code> for an example. Just like the snake case though, I’m happy to add this argument!</p>
+<p>Style guide TL;DR (Too Long; Didn’t Read): <code>dndR</code> has specific style guidelines but I’d rather you submit functions that don’t meet those guidelines than not contribute your ideas because the style bits were too cumbersome.</p>
 </div>
 </div>
 
