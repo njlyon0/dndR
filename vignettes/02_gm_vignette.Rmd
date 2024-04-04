@@ -1,0 +1,21 @@
+---
+title: "Functions For GMs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Functions For GMs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r install-libraries, echo = F, message = F}
+# devtools::install_github("njlyon0/dndR", force = TRUE)
+library(dplyr); library(ggplot2); library(magrittr); library(tidyr)
+```
+
+
+
+
