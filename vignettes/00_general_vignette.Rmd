@@ -1,14 +1,14 @@
 ---
-title: "dndR_Vignette"
+title: "General Vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{dndR_Vignette}
+  %\VignetteIndexEntry{General Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE,comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ```{r install-libraries, echo = F, message = F}
