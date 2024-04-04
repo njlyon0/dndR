@@ -11,8 +11,7 @@ The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://njlyon0.github.io/dndR-website/}
-  \item \url{https://github.com/njlyon0/dndR}
+  \item \url{https://njlyon0.github.io/dndR/}
   \item Report bugs at \url{https://github.com/njlyon0/dndR/issues}
 }
 
