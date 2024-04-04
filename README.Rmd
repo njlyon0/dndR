@@ -21,8 +21,6 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "man/figures/R
 
 The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth Edition a.k.a. "5e") related functions to help both players and Dungeon Masters (DMs). Below are short descriptions of the functions currently included in `dndR`. I am always willing to expand that list though so if you have a DnD-related task that could be cool as a function, please [post it as an Issue](https://github.com/njlyon0/dndR/issues) on this package's GitHub repository!
 
-You can also check out the `pkgdown` style website for this package [here](https://njlyon0.github.io/dndR/) or a more--in my opinion--visually appealing vignette-style website I've created [here](https://njlyon0.github.io/dndR-website/). The latter website was created using [Quarto](https://quarto.org/).
-
 ## Installation
 
 You can install the development version of `dndR` from [GitHub](https://github.com/) with:
