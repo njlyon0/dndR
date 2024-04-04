@@ -2,10 +2,11 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.github$
-dev/
+^dev$
 LICENSE.md
 ^cran\-comments\.md$
-docs/
-pkgdown
 ^CRAN-SUBMISSION$
 CONTRIBUTING.md
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

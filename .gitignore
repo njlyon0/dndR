@@ -47,6 +47,9 @@ vignettes/*.pdf
 # CRAN Submission info
 CRAN-SUBMISSION
 
+# pkgdown site information
+docs
+
 # Ignore (some of) the dev data created by `update-...R` scripts
 dev/tidy_data/*.csv
 dev/raw_data/raw_menagerie.csv
