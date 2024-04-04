@@ -11,11 +11,80 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-```{r install-libraries, echo = F, message = F}
+```{r libs, echo = F, message = F}
 # devtools::install_github("njlyon0/dndR", force = TRUE)
-library(dplyr); library(ggplot2); library(magrittr); library(tidyr)
+library(dndR)
 ```
 
+## Dice Rolling
 
+At its simplest, DnD involves significant amounts of dice rolling and (often) summing their values. So, `dndR` includes a `roll` function! This function supports 'rolling' up to 10 million of any of the standard dice and summing their results. "Standard" dice include the following numbers of sides: 100, 20, 12, 10, 8, 6, 4, and 2.
 
+Dice names are abbreviated as the <u>number</u> of dice to roll], a <u>lowercase "d"</u>, and the <u>type</u> of dice to roll
 
+For instance, to roll 3 six-sided dice we could do the following:
+```{r roll_fxn_1}
+dndR::roll(dice = '3d6')
+```
+
+The `roll` function returns the total of the side of the dice as a number so if you want to add multiple rolls together you can treat the function calls themselves as if they are numbers!
+
+```{r roll_fxn_2}
+dndR::roll('3d8') + dndR::roll('1d4')
+```
+
+Also, rolling two 20-sided dice (i.e., "2d20") is automatically assumed to be rolling with either advantage or disadvantage so it will return a message to that effect and both numbers.
+
+```{r roll_fxn_3}
+dndR::roll(dice = '2d20')
+```
+
+## Calculate Player Level
+
+If your group does levelling based on experience points, `dndR` includes a function to help you figure out what level your PC is at a given amount of XP earned!
+
+To use `pc_level_calc`, simply enter the amount of XP a given player character has earned. The function will return the current level that PC should be at as well as the minimum amount of XP to reach that level and the proficiency modifier they should be using.
+
+```{r pc_level_calc_fxn}
+dndR::pc_level_calc(player_xp = 1050)
+```
+
+This function is short and sweet and hopefully it saves you a trip to your source books (or Google) to remember what the level XP thresholds are. Big thanks to <u>Humberto Nappo</u> for contributing this function!
+
+## Character Creation
+
+Whether you're just starting a campaign or you're frantically trying to roll stats for your backup character after the tragic end of your now past character (RIP), creating a new Dungeons & Dragons character happens more than you might think! `dndR` includes a few functions to help streamline this process.
+
+### Start-to-Finish Creation
+
+For the 'just create my character' crowd, `pc_creator` rolls for a character's ability scores (strength, dexterity, constitution, intelligence, wisdom, and charisma) given a particular class, race, and preferred method of rolling for ability scores.
+
+```{r pc_creator_fxn}
+dndR::pc_creator(class = "barbarian", race = "half orc", score_method = "4d6", quiet = TRUE)
+```
+
+The highest two scores are assigned based on the "quick build" recommendations in the source material (e.g., if you're a fighter, the Player's Handbook recommends making your top score strength and next best score constitution). The remaining four scores are assigned randomly.
+
+You can check which classes and races are currently supported by `pc_creator` by running `dndR::dnd_classes()` or `dndR::dnd_races()`. If you have a class/race in mind that isn't supported you can [post a GitHub Issue](https://github.com/njlyon0/dndR/issues) and I'll add that class/race's stats to the function ASAP!
+
+The `quiet` argument (default is `FALSE`) returns a warning message if any ability score is under an 8 or the total of all scores is under 70. I have had a lot of fun playing characters that have absolutely *awful* ability scores but I know that some tables use these thresholds to figure out whether it would be okay for you to re-roll and hope the dice are kinder to you.
+
+### Class Only
+
+If you know the class you want your character to be but don't want to worry about race-based modifiers at this point, use the `class_block` function instead of `pc_creator`. This function also assigns scores to abilities based on the source material's quick build recommendations.
+
+```{r class_block_fxn}
+class_block(class = "wizard", score_method = "4d6", quiet = TRUE)
+```
+
+Also like `pc_creator`, it only works with supported classes so run `dndR::dnd_classes()` to see which classes I have currently built in.
+
+### Only Roll the Dice
+
+If you'd rather assign your ability scores yourself (or are waiting for me to respond to your [GitHub Issue](https://github.com/njlyon0/dndR/issues) asking me to add support for your PC's race or class), you can run the simpler `ability_scores` function.
+
+This function uses your desired method for rolling ability scores (same as `pc_creator`), but doesn't attempt to assign those scores to the six abilities or account for race- or class-based modifiers to particular scores.
+
+```{r ability_scores_fxn}
+dndR::ability_scores(method = "4d6", quiet = TRUE)
+```
