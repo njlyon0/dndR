@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">dndR</a>
 
@@ -295,22 +295,22 @@ investigate around to discover the monster’s strengths and weaknesses
 before the final showdown.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/monster_creator.html">monster_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">5</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             statistic                                       value</span></span>
-<span><span class="co">#&gt; 1          Hit_Points                                          92</span></span>
-<span><span class="co">#&gt; 2         Armor_Class                                          16</span></span>
-<span><span class="co">#&gt; 3          Prof_Bonus                                           3</span></span>
-<span><span class="co">#&gt; 4        Attack_Bonus                                           7</span></span>
-<span><span class="co">#&gt; 5             Save_DC                                          16</span></span>
-<span><span class="co">#&gt; 6  Prof_Saving_Throws                                    INT; CON</span></span>
-<span><span class="co">#&gt; 7           Immune_to                               cold; radiant</span></span>
-<span><span class="co">#&gt; 8        Resistant_to acid; force; psychic; piercing; bludgeoning</span></span>
-<span><span class="co">#&gt; 9       Vulnerable_to                                     thunder</span></span>
-<span><span class="co">#&gt; 10                STR                                          +2</span></span>
-<span><span class="co">#&gt; 11                DEX                                          +1</span></span>
-<span><span class="co">#&gt; 12                CON                                          +1</span></span>
-<span><span class="co">#&gt; 13                INT                                          +1</span></span>
-<span><span class="co">#&gt; 14                WIS                                          +1</span></span>
-<span><span class="co">#&gt; 15                CHA                                          +2</span></span></code></pre></div>
+<span><span class="co">#&gt;             statistic                                                  value</span></span>
+<span><span class="co">#&gt; 1          Hit_Points                                                     92</span></span>
+<span><span class="co">#&gt; 2         Armor_Class                                                     16</span></span>
+<span><span class="co">#&gt; 3          Prof_Bonus                                                      3</span></span>
+<span><span class="co">#&gt; 4        Attack_Bonus                                                      7</span></span>
+<span><span class="co">#&gt; 5             Save_DC                                                     16</span></span>
+<span><span class="co">#&gt; 6  Prof_Saving_Throws                                               WIS; INT</span></span>
+<span><span class="co">#&gt; 7           Immune_to                                       poison; slashing</span></span>
+<span><span class="co">#&gt; 8        Resistant_to necrotic; fire; non-magical damage; psychic; lightning</span></span>
+<span><span class="co">#&gt; 9       Vulnerable_to                                                  force</span></span>
+<span><span class="co">#&gt; 10                STR                                                     +2</span></span>
+<span><span class="co">#&gt; 11                DEX                                                     +3</span></span>
+<span><span class="co">#&gt; 12                CON                                                     +2</span></span>
+<span><span class="co">#&gt; 13                INT                                                     +1</span></span>
+<span><span class="co">#&gt; 14                WIS                                                     +3</span></span>
+<span><span class="co">#&gt; 15                CHA                                                     +1</span></span></code></pre></div>
 <p>Creature’s special traits are chosen randomly so you may want to
 re-run the function several times (or mentally modify one or more parts
 of the output) to get a monster that fits your campaign and players.</p>
@@ -350,10 +350,10 @@ myself running the function without assigning it to an object so that it
 prints in the console.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/npc_creator.html">npc_creator</a></span><span class="op">(</span>npc_count <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        Race              Job</span></span>
-<span><span class="co">#&gt; 1  half orc student of magic</span></span>
-<span><span class="co">#&gt; 2  high elf     investigator</span></span>
-<span><span class="co">#&gt; 3 warforged         smuggler</span></span></code></pre></div>
+<span><span class="co">#&gt;        Race      Job</span></span>
+<span><span class="co">#&gt; 1   bugbear initiate</span></span>
+<span><span class="co">#&gt; 2 kalashtar     sage</span></span>
+<span><span class="co">#&gt; 3       orc  acolyte</span></span></code></pre></div>
 <p>If your players decide to go chat with the goblin carpenter passing
 them on the street (or whoever else they cross paths with) you can then
 improv more details about the NPC as needed. Hopefully this function
@@ -433,7 +433,7 @@ into an R script or note for later if you think it will be valuable.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
