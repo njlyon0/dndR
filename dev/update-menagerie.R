@@ -45,55 +45,65 @@ list_o_beasts <- list()
 # Loop across creature markdown files
 for(k in 1:length(beast_mds)){
 # for(k in 2){
+# k <- 2
 
   # Define that beast's markdown URL
   beast_con <-  base::url(paste0("https://raw.githubusercontent.com/", beast_repo,
                                  "/main/", beast_contents$path[k], "/", beast_mds[k]))
 
-  # Strip out creature information as a vector
-  beast_info <- base::readLines(con = beast_con)
+  # Tabularize the markdown file of beast info
+  beast_info <- supportR::tabularize_md(file = beast_con)
 
   # Close the connection
   base::close(beast_con)
 
-  # Wrangle the markdown information into something more manageable & add to creature list
-  raw_beast <- as.data.frame(beast_info) %>%
+  # Wrangle the markdown information into something more manageable
+  raw_beast <- beast_info %>%
     # Drop irrelevant lines
-    dplyr::filter(nchar(beast_info) != 0 & beast_info != "---") %>%
+    dplyr::filter(nchar(text) != 0 & text != "---") %>%
     # Split the contents by the colon for later use
-    tidyr::separate_wider_delim(cols = beast_info, delim = ":", cols_remove = F,
+    tidyr::separate_wider_delim(cols = text, delim = ":", cols_remove = F,
                                 names = c("left", "right"),
                                 too_few = "align_start", too_many = "merge") %>%
     # Make left bit lowercase
-    dplyr::mutate(left = tolower(left)) %>%
+    # dplyr::mutate(left = tolower(left)) %>%
     # Add a column of what the true column names should be based on the contents
-    dplyr::mutate(names_v1 = dplyr::case_when(
-      left == "layout" ~ "layout",
-      left == "name" ~ "name",
-      left == "tags" ~ "tags",
-      left == "page_number" ~ "source_page",
+    dplyr::mutate(names = dplyr::case_when(
+      # Some can be allowed to remain as they are
+      tolower(left) %in% c("layout", "name", "tags", "page_number",
+                           "alignment", "challenge", "languages",
+                           "senses", "skills", "saving_throws", "speed",
+                           "hit_points", "armor_class", "condition_immunities",
+                           "damage_vulnerabilities", "damage_resistances",
+                           "damage_immunities") ~ tolower(left),
+      # Others must be changed
+      tolower(left) == "size" ~ "type",
+      # Capitalize ability scores
       left == "cha" ~ "CHA",
       left == "wis" ~ "WIS",
       left == "int" ~ "INT",
       left == "con" ~ "CON",
       left == "dex" ~ "DEX",
       left == "str" ~ "STR",
-      left == "size" ~ "size",
-      left == "alignment" ~ "alignment",
-      left == "challenge" ~ "challenge",
-      left == "languages" ~ "languages",
-      left == "senses" ~ "senses",
-      left == "skills" ~ "skills",
-      left == "saving_throws" ~ "saving_throws",
-      left == "speed" ~ "speed",
-      left == "hit_points" ~ "hit_points",
-      left == "armor_class" ~ "armor_class",
-      left == "damage_vulnerabilities" ~ "damage_vulnerabilities",
-      left == "damage_resistances" ~ "damage_resistances",
-      left == "damage_immunities" ~ "damage_immunities",
-      left == "condition_immunities" ~ "condition_immunities",
+      # If there is an "actions" heading then it must be that
+      level_3 == "Actions" ~ "actions",
       # If none of above, must be description text
-      TRUE ~ "description")) %>%
+      TRUE ~ "abilities")) %>%
+    # Get actual text of information (i.e., not section titles) into one columns
+    dplyr::mutate(description = dplyr::case_when(
+      names == "abilities" ~ paste(left, right),
+      names == "actions" ~ text,
+      T ~ gsub(pattern = '"', replacement = "", x = right)))
+
+
+
+  str(raw_beast)
+  # view(raw_beast)
+
+    raw_beast <- as.data.frame(beast_info) %>%
+
+     %>%
+     %>%
     # Remove some of that information from the information column
     dplyr::mutate(beast_info = gsub(pattern = c("layout: |name: |tags: |cha: |wis: |int: |dex: |str: |con: |size: |alignment: |challenge: |languages: |senses: |skills: |saving_throws: |speed: |hit_points: |armor_class: |damage_vulnerabilities: |damage_resistances: |damage_immunities: |condition_immunities: "),
                                     replacement = "", x = beast_info)) %>%
