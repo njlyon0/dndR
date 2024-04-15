@@ -8,11 +8,16 @@
 ?dndR::spell_text
 
 ## ------------------------------ ##
-# Housekeeping ----
+        # Housekeeping ----
 ## ------------------------------ ##
+# Load libraries
+librarian::shelf(tidyverse, supportR)
 
+# Clear environment
+rm(list = ls())
 
-
+# Load monster info
+monster_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
 
 ## ------------------------------ ##
 # Script Var.
