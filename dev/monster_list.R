@@ -20,9 +20,20 @@ rm(list = ls())
 # Load monster info
 monster_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
 
+# Check structure
+dplyr::glimpse(monster_info)
+
 ## ------------------------------ ##
 # Script Var.
 ## ------------------------------ ##
+
+# Want to search by:
+## name
+## size
+## type
+## XP / CR
+
+
 
 
 
