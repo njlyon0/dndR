@@ -45,6 +45,10 @@ dplyr::glimpse(beast_mds)
 # Make an empty list to store individually-wrangled spells within
 list_o_beasts <- list()
 
+# Make another list to store malformed markdown files
+## Or those without expected components
+quarantine <- list()
+
 # Loop across creature markdown files
 for(k in 1:length(beast_mds)){
   # for(k in 2){
@@ -60,11 +64,16 @@ for(k in 1:length(beast_mds)){
   base::close(beast_con)
 
   # Skip homebrew monsters
-  if(any(stringr::str_detect(string = beast_info$text, pattern = "out-of-the-box-5e"))){
+  if(any(stringr::str_detect(string = beast_info$text, pattern = "out-of-the-box-5e")) |
+     !"level_3" %in% names(beast_info)){
+
+    # Add to quarantine list for later evaluation
+    quarantine[[k]] <- beast_info
 
     # Skip message
     message("Skipping creature ", k, " (homebrewed)")
 
+    # If not homebrewed, attempt wrangling
   } else {
 
     # Wrangle the markdown information into something more manageable
