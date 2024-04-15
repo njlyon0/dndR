@@ -91,9 +91,12 @@ for(k in 1:length(beast_mds)){
       TRUE ~ "abilities")) %>%
     # Get actual text of information (i.e., not section titles) into one columns
     dplyr::mutate(description = dplyr::case_when(
-      names == "abilities" ~ paste(left, right),
+      names == "abilities" & !is.na(right) ~ paste(left, right),
+      names == "abilities" & is.na(right) ~ left,
       names == "actions" ~ text,
-      T ~ gsub(pattern = '"', replacement = "", x = right)))
+      T ~ gsub(pattern = '"', replacement = "", x = right))) %>%
+    # Pare down to only desired columns
+    dplyr::select(names, description)
 
 
 
