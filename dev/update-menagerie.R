@@ -161,6 +161,9 @@ for(k in 1:length(beast_mds)){
       dplyr::bind_rows(ability_v2) %>%
       # Drop trailing/leading white space
       dplyr::mutate(description = base::trimws(x = description, which = "both")) %>%
+      # Remove any multiple spaces
+      dplyr::mutate(description = gsub(pattern = "  |   | ", replacement = " ",
+                                       x = description)) %>%
       # And pivot to wide format
       tidyr::pivot_wider(names_from = names, values_from = description)
 
