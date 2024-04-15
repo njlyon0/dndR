@@ -33,7 +33,10 @@ beast_contents <- supportR::github_ls(repo = paste0("https://github.com/", beast
 dplyr::glimpse(beast_contents)
 
 # Strip out just markdown file names
-beast_mds <- beast_contents$name
+beast_files <- beast_contents$name
+
+# Drop any "template" markdown files
+beast_mds <- beast_files[stringr::str_detect(string = beast_files, pattern = "template") != TRUE]
 
 # Check that out
 dplyr::glimpse(beast_mds)
