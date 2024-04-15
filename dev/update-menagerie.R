@@ -14,6 +14,9 @@
 # Load libraries
 librarian::shelf(tidyverse, supportR)
 
+# Silence summarize
+options(dplyr.summarise.inform = F)
+
 # Clear environment
 rm(list = ls())
 
@@ -44,8 +47,7 @@ list_o_beasts <- list()
 
 # Loop across creature markdown files
 for(k in 1:length(beast_mds)){
-# for(k in 2){
-# k <- 2
+  # for(k in 2){
 
   # Define that beast's markdown URL
   beast_con <-  base::url(paste0("https://raw.githubusercontent.com/", beast_repo,
@@ -57,101 +59,111 @@ for(k in 1:length(beast_mds)){
   # Close the connection
   base::close(beast_con)
 
-  # Wrangle the markdown information into something more manageable
-  raw_beast <- beast_info %>%
-    # Drop irrelevant lines
-    dplyr::filter(nchar(text) != 0 & text != "---") %>%
-    # Split the contents by the colon for later use
-    tidyr::separate_wider_delim(cols = text, delim = ":", cols_remove = F,
-                                names = c("left", "right"),
-                                too_few = "align_start", too_many = "merge") %>%
-    # Make left bit lowercase
-    # dplyr::mutate(left = tolower(left)) %>%
-    # Add a column of what the true column names should be based on the contents
-    dplyr::mutate(names = dplyr::case_when(
-      # Some can be allowed to remain as they are
-      tolower(left) %in% c("layout", "name", "tags", "page_number",
-                           "alignment", "challenge", "languages",
-                           "senses", "skills", "saving_throws", "speed",
-                           "hit_points", "armor_class", "condition_immunities",
-                           "damage_vulnerabilities", "damage_resistances",
-                           "damage_immunities") ~ tolower(left),
-      # Others must be changed
-      tolower(left) == "size" ~ "type",
-      # Capitalize ability scores
-      left == "cha" ~ "CHA",
-      left == "wis" ~ "WIS",
-      left == "int" ~ "INT",
-      left == "con" ~ "CON",
-      left == "dex" ~ "DEX",
-      left == "str" ~ "STR",
-      # If there is an "actions" heading then it must be that
-      level_3 == "Actions" ~ "action",
-      # If none of above, must be description text
-      TRUE ~ "ability")) %>%
-    # Get actual text of information (i.e., not section titles) into one columns
-    dplyr::mutate(description = dplyr::case_when(
-      names == "ability" & !is.na(right) ~ paste(left, right),
-      names == "ability" & is.na(right) ~ left,
-      names == "action" ~ text,
-      T ~ gsub(pattern = '"', replacement = "", x = right))) %>%
-    # Pare down to only desired columns
-    dplyr::select(names, description)
+  # Skip homebrew monsters
+  if(any(stringr::str_detect(string = beast_info$text, pattern = "out-of-the-box-5e"))){
 
-  # Split off chunks that need separate handling
-  tag <- dplyr::filter(raw_beast, names %in% c("layout", "name", "tags"))
-  stat <- dplyr::filter(raw_beast, names %in% c("STR", "DEX", "CON", "INT", "WIS", "CHA"))
-  ability <- dplyr::filter(raw_beast, names %in% c("ability", "action"))
-  skill <- dplyr::filter(raw_beast, !names %in% c(tag$names, stat$names,
-                                                  "ability", "action"))
+    # Skip message
+    message("Skipping creature ", k, " (homebrewed)")
 
-  # Reorder statistics
-  stat_v2 <- stat %>%
-    # Make stats into a factor
-    dplyr::mutate(names = factor(names, levels = c("STR", "DEX", "CON",
-                                                   "INT", "WIS", "CHA"))) %>%
-    # Order by stats
-    dplyr::arrange(names) %>%
-    # Change names back into a character
-    dplyr::mutate(names = as.character(names))
+  } else {
 
-  # Handle ability/action coalescing
-  ability_v2 <- ability %>%
-    # Identify the start of each ability
-    dplyr::mutate(start = ifelse(stringr::str_count(string = description,
-                                                    pattern = "\\*\\*\\*") == 2,
-                                 yes = description, no = NA)) %>%
-    # Fill down
-    tidyr::fill(start, .direction = "down") %>%
-    # Collapse separate lines into one line
-    dplyr::group_by(names, start) %>%
-    dplyr::summarize(description = paste(description, collapse = " ")) %>%
-    dplyr::ungroup() %>%
-    # Count number of abilities / actions
-    dplyr::group_by(names) %>%
-    dplyr::mutate(ct = dplyr::row_number()) %>%
-    dplyr::ungroup() %>%
-    # Paste count together with name
-    dplyr::mutate(names = paste0(names, "_", ct)) %>%
-    # Drop superseded columns
-    dplyr::select(-start, -ct)
+    # Wrangle the markdown information into something more manageable
+    raw_beast <- beast_info %>%
+      # Drop irrelevant lines
+      dplyr::filter(nchar(text) != 0 & text != "---") %>%
+      # Split the contents by the colon for later use
+      tidyr::separate_wider_delim(cols = text, delim = ":", cols_remove = F,
+                                  names = c("left", "right"),
+                                  too_few = "align_start", too_many = "merge") %>%
+      # Make left bit lowercase
+      # dplyr::mutate(left = tolower(left)) %>%
+      # Add a column of what the true column names should be based on the contents
+      dplyr::mutate(names = dplyr::case_when(
+        # Some can be allowed to remain as they are
+        tolower(left) %in% c("layout", "name", "tags", "page_number",
+                             "alignment", "challenge", "languages",
+                             "senses", "skills", "saving_throws", "speed",
+                             "hit_points", "armor_class", "condition_immunities",
+                             "damage_vulnerabilities", "damage_resistances",
+                             "damage_immunities") ~ tolower(left),
+        # Others must be changed
+        tolower(left) == "size" ~ "type",
+        # Capitalize ability scores
+        left == "cha" ~ "CHA",
+        left == "wis" ~ "WIS",
+        left == "int" ~ "INT",
+        left == "con" ~ "CON",
+        left == "dex" ~ "DEX",
+        left == "str" ~ "STR",
+        # If there is an "actions" heading then it must be that
+        level_3 == "Actions" ~ "action",
+        # If none of above, must be description text
+        TRUE ~ "ability")) %>%
+      # Get actual text of information (i.e., not section titles) into one columns
+      dplyr::mutate(description = dplyr::case_when(
+        names == "ability" & !is.na(right) ~ paste(left, right),
+        names == "ability" & is.na(right) ~ left,
+        names == "action" ~ text,
+        T ~ gsub(pattern = '"', replacement = "", x = right))) %>%
+      # Pare down to only desired columns
+      dplyr::select(names, description)
 
-  # Reassemble into a single dataframe
-  tidy_beast <- tag %>%
-    dplyr::bind_rows(stat_v2) %>%
-    dplyr::bind_rows(skill) %>%
-    dplyr::bind_rows(ability_v2) %>%
-    # Drop trailing/leading white space
-    dplyr::mutate(description = base::trimws(x = description, which = "both")) %>%
-    # And pivot to wide format
-    tidyr::pivot_wider(names_from = names, values_from = description)
+    # Split off chunks that need separate handling
+    tag <- dplyr::filter(raw_beast, names %in% c("layout", "name", "tags"))
+    stat <- dplyr::filter(raw_beast, names %in% c("STR", "DEX", "CON", "INT", "WIS", "CHA"))
+    ability <- dplyr::filter(raw_beast, names %in% c("ability", "action"))
+    skill <- dplyr::filter(raw_beast, !names %in% c(tag$names, stat$names,
+                                                    "ability", "action"))
 
-  # Add to list
-  list_o_beasts[[k]] <- tidy_beast
+    # Reorder statistics
+    stat_v2 <- stat %>%
+      # Make stats into a factor
+      dplyr::mutate(names = factor(names, levels = c("STR", "DEX", "CON",
+                                                     "INT", "WIS", "CHA"))) %>%
+      # Order by stats
+      dplyr::arrange(names) %>%
+      # Change names back into a character
+      dplyr::mutate(names = as.character(names))
 
-  # Message successful wrangling
-  message("Finished wrangling creature ", k, " (", tidy_beast$name,
-          ") of ", length(beast_mds)) }
+    # Handle ability/action coalescing
+    ability_v2 <- ability %>%
+      # Identify the start of each ability
+      dplyr::mutate(start = ifelse(stringr::str_count(string = description,
+                                                      pattern = "\\*\\*\\*") == 2,
+                                   yes = description, no = NA)) %>%
+      # Fill down
+      tidyr::fill(start, .direction = "down") %>%
+      # Collapse separate lines into one line
+      dplyr::group_by(names, start) %>%
+      dplyr::summarize(description = paste(description, collapse = " ")) %>%
+      dplyr::ungroup() %>%
+      # Count number of abilities / actions
+      dplyr::group_by(names) %>%
+      dplyr::mutate(ct = dplyr::row_number()) %>%
+      dplyr::ungroup() %>%
+      # Paste count together with name
+      dplyr::mutate(names = paste0(names, "_", ct)) %>%
+      # Drop superseded columns
+      dplyr::select(-start, -ct)
+
+    # Reassemble into a single dataframe
+    tidy_beast <- tag %>%
+      dplyr::bind_rows(stat_v2) %>%
+      dplyr::bind_rows(skill) %>%
+      dplyr::bind_rows(ability_v2) %>%
+      # Drop trailing/leading white space
+      dplyr::mutate(description = base::trimws(x = description, which = "both")) %>%
+      # And pivot to wide format
+      tidyr::pivot_wider(names_from = names, values_from = description)
+
+    # Add to list
+    list_o_beasts[[k]] <- tidy_beast
+
+    # Message successful wrangling
+    message("Finished wrangling creature ", k, " (", tidy_beast$name,
+            ") of ", length(beast_mds))
+  } # Close wrangling conditional
+} # Close loop
 
 ## ---------------------------------------- ##
       # Wrangle Markdown Content ----
