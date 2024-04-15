@@ -208,7 +208,7 @@ write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_menagerie.csv"
 rm(list = setdiff(ls(), c("beasts_v1")))
 
 ## ---------------------------------------- ##
-# Wrangle Markdown Content ----
+      # Wrangle Markdown Content ----
 ## ---------------------------------------- ##
 
 # Check structure of current object
@@ -256,36 +256,17 @@ dplyr::glimpse(beasts_v2[,1:26])
 
 # Next we need to handle "A" versus "B" variants of creatures
 ## So that only one value is returned for a given creature
+beasts_v3 <- beasts_v2 %>%
+  # Drop all "B" variants
+  dplyr::filter(stringr::str_detect(string = name, pattern = "\\(B\\)") != TRUE) %>%
+  # Remove "(A)" from end of remaining variants' names
+  dplyr::mutate(name = gsub(pattern = " \\(A\\)", replacement = "", x = name))
 
-# Get all beasts *without* variants
-beasts_v3a <- beasts_v2 %>%
-  dplyr::filter(stringr::str_detect(string = name, pattern = "\\(A\\)") != TRUE &
-                  stringr::str_detect(string = name, pattern = "\\(B\\)") != TRUE)
+# Check to make sure that only dropped unwanted entries
+supportR::diff_check(old = unique(beasts_v2$name), new = unique(beasts_v3$name))
 
-# And all that *do* have variants
-beasts_v3b <- beasts_v2 %>%
-  dplyr::filter(stringr::str_detect(string = name, pattern = "\\(A\\)") == TRUE |
-                  stringr::str_detect(string = name, pattern = "\\(B\\)") == TRUE)
-
-# For those with variants, prepare to choose one
-beasts_v3b_v2 <- beasts_v3b %>%
-  # Pivot to long format
-  tidyr::pivot_longer(cols = -name, names_to = "cols", values_to = "vals") %>%
-  # Count rows of content for each beast
-  dplyr::group_by(name) %>%
-  dplyr::mutate(content_ct = dplyr::n()) %>%
-  dplyr::ungroup() %>%
-  # Remove empty rows
-  dplyr::filter(!is.na(vals) & nchar(vals) != 0) %>%
-  # Generate a name column without the variant information
-  dplyr::mutate(name_fix = gsub(pattern = " \\(A\\)| \\(B\\)", replacement = "", x = name),
-                .before = name)
-
-
-
-View(beasts_v3b_v2)
-
-
+# Check overall structure again
+dplyr::glimpse(beasts_v3[,1:26])
 
 ## ---------------------------------------- ##
 # Tidy Creature Information ----
