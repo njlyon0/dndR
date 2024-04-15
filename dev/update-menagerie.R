@@ -269,24 +269,19 @@ supportR::diff_check(old = unique(beasts_v2$name), new = unique(beasts_v3$name))
 dplyr::glimpse(beasts_v3[,1:26])
 
 ## ---------------------------------------- ##
-# Tidy Creature Information ----
-## ---------------------------------------- ##
-
-
-## ---------------------------------------- ##
-      # Tidy Creature Descriptions ----
-## ---------------------------------------- ##
-
-
-## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v2 %>%
+menagerie <- beasts_v3 %>%
   # Make XP and CR into numbers
   dplyr::mutate(xp = as.numeric(xp),
-                cr = as.numeric(cr))
+                cr = as.numeric(cr)) %>%
+  # Reorder "damage_..." columns
+  dplyr::relocate(dplyr::starts_with("damage_"),
+                  .after = saving_throws) %>%
+  # Drop 'page number' column
+  dplyr::select(-page_number)
 
 # Last structure check
 dplyr::glimpse(menagerie)
