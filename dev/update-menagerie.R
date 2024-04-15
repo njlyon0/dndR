@@ -67,7 +67,7 @@ for(k in 1:length(beast_mds)){
   if(!"level_3" %in% names(beast_info)){
 
     # Add to quarantine list for later evaluation
-    quarantine[[k]] <- beast_info
+    quarantine[[paste("beast_", k)]] <- beast_info
 
     # Skip message
     message("Quarantining creature ", k, " (expected markdown formatting not found)")
@@ -165,7 +165,7 @@ for(k in 1:length(beast_mds)){
       tidyr::pivot_wider(names_from = names, values_from = description)
 
     # Add to list
-    list_o_beasts[[k]] <- tidy_beast
+    list_o_beasts[[paste("beast_", k)]] <- tidy_beast
 
     # Message successful wrangling
     message("Finished wrangling creature ", k, " (", tidy_beast$name,
@@ -180,15 +180,21 @@ for(k in 1:length(beast_mds)){
 # Perform further wrangling on extracted markdown content
 beasts_v1 <- list_o_beasts %>%
   # Unlist that list into a dataframe
-  purrr::list_rbind() %>%
+  purrr::list_rbind(x = .) %>%
   # Remove unwanted columns
   dplyr::select(-layout) %>%
-  # Move the description columns
-  dplyr::relocate(dplyr::starts_with("description"),
+  # Move the longer format columns
+  dplyr::relocate(dplyr::starts_with("ability_"),
+                  dplyr::starts_with("action_"),
                   .after = dplyr::everything())
 
 # Check structure of that
 dplyr::glimpse(beasts_v1)
+
+# Identify "quarantined" creatures
+quarantine %>%
+  purrr::list_rbind(x = .) %>%
+  dplyr::filter(stringr::str_detect(string = text, pattern = "name: "))
 
 # Export this for later
 write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_menagerie.csv"),
