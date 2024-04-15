@@ -64,14 +64,13 @@ for(k in 1:length(beast_mds)){
   base::close(beast_con)
 
   # Skip homebrew monsters
-  if(any(stringr::str_detect(string = beast_info$text, pattern = "out-of-the-box-5e")) |
-     !"level_3" %in% names(beast_info)){
+  if(!"level_3" %in% names(beast_info)){
 
     # Add to quarantine list for later evaluation
     quarantine[[k]] <- beast_info
 
     # Skip message
-    message("Skipping creature ", k, " (homebrewed)")
+    message("Quarantining creature ", k, " (expected markdown formatting not found)")
 
     # If not homebrewed, attempt wrangling
   } else {
