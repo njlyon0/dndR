@@ -58,6 +58,7 @@ monster_text <- function(name = NULL){
       category == "damage_resistances" ~ paste0("Damage Resistances:", info),
       category == "damage_vulnerabilities" ~ paste0("Damage Vulnerabilities:", info),
       category == "condition_immunities" ~ paste0("Condition Immunities: ", info),
+      category == "saving_throws" ~ paste0("Saving Throws: ", info),
       # Otherwise just information is fine
       T ~ info)) %>%
     # Ditch category column altogether (now unneeded)
