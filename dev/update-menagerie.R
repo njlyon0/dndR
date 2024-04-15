@@ -274,14 +274,16 @@ dplyr::glimpse(beasts_v3[,1:26])
 
 # Do final tidying
 menagerie <- beasts_v3 %>%
+  # Rename name column
+  dplyr::rename(monster_name = name) %>%
   # Make XP and CR into numbers
   dplyr::mutate(xp = as.numeric(xp),
                 cr = as.numeric(cr)) %>%
   # Reorder "damage_..." columns
   dplyr::relocate(dplyr::starts_with("damage_"),
                   .after = saving_throws) %>%
-  # Drop 'page number' column
-  dplyr::select(-page_number)
+  # Drop unwanted columns
+  dplyr::select(-tags, -page_number)
 
 # Last structure check
 dplyr::glimpse(menagerie)
