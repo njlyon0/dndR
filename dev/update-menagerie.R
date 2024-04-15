@@ -243,281 +243,52 @@ beasts_v2 <- beasts_v1 %>%
     cr == "1/8" ~ "0.125",
     T ~ cr))) %>%
   # Drop superseded 'challenge' information
-  dplyr::select(-challenge)
-  # Handle A vs. B variants
-
-  # Other wrangling tasks???
-
-
-
+  dplyr::select(-challenge) %>%
+  # Parse 'type' into size versus type
+  tidyr::separate_wider_delim(cols = type, delim = " ",
+                              names = c("size", "type"),
+                              too_many = "merge") %>%
+  # Make most character columns lowercase
+  dplyr::mutate(dplyr::across(.cols = c("tags", "size", "type", "languages",
+                                        "skills", "senses", "damage_immunities",
+                                        "damage_resistances", "condition_immunities",
+                                        "damage_vulnerabilities"),
+                              .fns = tolower))
 
 # Check structure
-dplyr::glimpse(beasts_v2)
+dplyr::glimpse(beasts_v2[,1:26])
+
+# Next we need to handle "A" versus "B" variants of creatures
+## So that only one value is returned for a given creature
+
+# Get all beasts *without* variants
+beasts_v3a <- beasts_v2 %>%
+  dplyr::filter(stringr::str_detect(string = name, pattern = "\\(A\\)") != TRUE &
+                  stringr::str_detect(string = name, pattern = "\\(B\\)") != TRUE)
+
+# And all that *do* have variants
+beasts_v3b <- beasts_v2 %>%
+  dplyr::filter(stringr::str_detect(string = name, pattern = "\\(A\\)") == TRUE |
+                  stringr::str_detect(string = name, pattern = "\\(B\\)") == TRUE)
 
 
 
 
-# Do wrangling of non-description bits of creatures
-beasts_v2 <- beasts_v1 %>%
-  # Create a column for whether the creature can be cast as a ritual
-  dplyr::mutate(ritual = stringr::str_detect(string = tags, pattern = "ritual")) %>%
-  # Drop "concentration" & "ritual" from tags
-  dplyr::mutate(tags = gsub(pattern = "concentration, |concentration,|ritual, ",
-                            replacement = "", x = tags)) %>%
-  # Detect number of commas in tags
-  dplyr::mutate(class_ct = stringr::str_count(string = tags, pattern = ",") - 2) %>%
-  # Split apart tags information
-  tidyr::separate_wider_delim(cols = tags, delim = ", ", cols_remove = T,
-                              names = c(paste0("class_", 1:max(.$class_ct, na.rm = T)),
-                                        "level", "junk", "school"),
-                              too_few = "align_end", too_many = "merge") %>%
-  # Drop 'junk' column & class count column
-  dplyr::select(-junk, -class_ct) %>%
-  # Tidy up the level column
-  dplyr::mutate(level = gsub(pattern = "level", replacement = "level ", x = level)) %>%
-  # If subtags column is empty, replace with NA
-  dplyr::mutate(subtags = ifelse(test = nchar(subtags) == 0,
-                                 yes = NA, no = subtags)) %>%
-  # Combine class columns & subtags to get all classes with access to a given creature
-  tidyr::unite(col = "class", dplyr::starts_with("class_"), subtags,
-               sep = ", ", na.rm = T) %>%
-  # Tidy that column a small amount
-  dplyr::mutate(class = gsub(pattern = "  ", replacement = "", x = class)) %>%
-  dplyr::mutate(class = gsub(pattern = "-", replacement = " ", x = class)) %>%
-  # Drop now-superseded 'type' column
-  dplyr::select(-type) %>%
-  # Expand source acronyms for accessibility
-  ## A
-  dplyr::mutate(
-    sources = gsub(pattern = "AAG", replacement = "Astral Adventurer's Guide", x = sources),
-    sources = gsub(pattern = "AVT", replacement = "A Verdant Tomb", x = sources),
-    ## E
-    sources = gsub(pattern = "EE", replacement = "Elemental Evil", x = sources),
-    sources = gsub(pattern = "EGW", replacement = "Explorer’s Guide to Wildemount", x = sources),
-    ## F
-    sources = gsub(pattern = "FCD", replacement = "From Cyan Depths", x = sources),
-    sources = gsub(pattern = "FTD", replacement = "Fizban’s Treasury of Dragons", x = sources),
-    ## G
-    sources = gsub(pattern = "GGR", replacement = "Guildmasters’ Guide to Ravnica", x = sources),
-    ## I
-    sources = gsub(pattern = "IDRF", replacement = "Icewind Dale: Rime of the Frostmaiden",
-                   x = sources),
-    ## L
-    sources = gsub(pattern = "LLK", replacement = "Lost Laboratory of Kwalish", x = sources),
-    ## P
-    sources = gsub(pattern = "PHB", replacement = "Player's Handbook", x = sources),
-    ## S
-    sources = gsub(pattern = "SCAG", replacement = "Sword Coast Adventurer’s Guide", x = sources),
-    sources = gsub(pattern = "SCC", replacement = "Strixhaven: A Curriculum of Chaos", x = sources),
-    sources = gsub(pattern = "SRD", replacement = "System Reference Document", x = sources),
-    ## T
-    sources = gsub(pattern = "TCE", replacement = "Tasha’s Cauldron of Everything", x = sources),
-    ## X
-    sources = gsub(pattern = "XGE", replacement = "Xanathar’s Guide to Everything", x = sources)) %>%
-  # Do some minor grammar fixes
-  dplyr::mutate(
-    casting_time = gsub(pattern = "1 minutes", replacement = "1 minute", x = casting_time),
-    components = gsub(pattern = "V,S", replacement = "V, S", x = components),
-    components = gsub(pattern = "V ", replacement = "V", x = components)) %>%
-  # Make these columns lowercase
-  dplyr::mutate(casting_time = tolower(casting_time),
-                range = tolower(range),
-                duration = tolower(duration))
 
-# Check out source information
-sort(unique(gsub(pattern = "0|1|2|3|4|5|6|7|8|9", replacement = "",
-                 x = beasts_v2$sources)))
 
-# Check out 'tags' column products
-sort(unique(beasts_v2$level))
-sort(unique(beasts_v2$school))
 
-# Check out combination 'tags' and 'subtags' class/sub-class column
-sort(unique(beasts_v2$class))
-
-# Check out other creature information
-sort(unique(beasts_v2$casting_time))
-sort(unique(beasts_v2$range))
-sort(unique(beasts_v2$components))
-sort(unique(beasts_v2$duration))
-
-# Re-check structure (ignore description columns for now)
-dplyr::glimpse(dplyr::select(beasts_v2, -dplyr::starts_with("description")))
 
 ## ---------------------------------------- ##
       # Tidy Creature Descriptions ----
 ## ---------------------------------------- ##
 
-# Glimpse the full structure
-dplyr::glimpse(beasts_v2)
-
-# Wrangle descritpion into something more manageable
-beasts_v3 <- beasts_v2 %>%
-  # Pivot longer to get all description information into one column
-  tidyr::pivot_longer(cols = dplyr::starts_with("description_"),
-                      names_to = "desc_num", values_to = "text") %>%
-  # Drop description column names (will shortly be outdated)
-  dplyr::select(-desc_num) %>%
-  # Drop NA rows
-  dplyr::filter(!is.na(text)) %>%
-  # Identify higher level creature information
-  dplyr::mutate(
-    higher_levels = ifelse(
-      test = stringr::str_detect(string = text,
-                                 pattern = "This spell’s damage increases by") |
-        stringr::str_detect(string = text, pattern = "At Higher Levels."),
-      yes = text, no = NA) ) %>%
-  # Fill that in for the other rows of the creature
-  dplyr::group_by(name) %>%
-  tidyr::fill(higher_levels, .direction = "up") %>%
-  dplyr::ungroup() %>%
-  # Remove the higher level text from the general text column
-  dplyr::mutate(text = dplyr::case_when(
-    ## Fire bolt is malformed and needs special treatment
-    name == "Fire Bolt" &
-      stringr::str_detect(string = text, pattern = "This spell’s damage increases by") ~ "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn’t being worn or carried.",
-    ## For other spells, with that text, coerce that row to NA
-    name != "Fire Bolt" & (stringr::str_detect(string = text,
-                                               pattern = "This spell’s damage increases by") |
-                             stringr::str_detect(string = text,
-                                                 pattern = "At Higher Levels.")) ~ NA,
-    ## Retain any other text
-    TRUE ~ text)) %>%
-  # Remove the non-higher level stuff from fire bolt's description
-  dplyr::mutate(higher_levels = ifelse(name == "Fire Bolt",
-                                       yes = "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
-                                       no = higher_levels)) %>%
-  # Drop the empty text rows created by removing the higher level information
-  dplyr::filter(!is.na(text)) %>%
-  # Identify creature stat blocks
-  dplyr::mutate(stat_block = ifelse(
-    test = stringr::str_detect(string = text, pattern = "## <u>") |
-      stringr::str_detect(string = text, pattern = "ANIMATED OBJECTS STATISTICS"),
-    yes = T, no = NA)) %>%
-  # Fill NA for everything beneath stat block starts (i.e., stat block contents)
-  dplyr::group_by(name) %>%
-  tidyr::fill(stat_block, .direction = "down") %>%
-  dplyr::ungroup() %>%
-  # Remove creature stat block rows
-  dplyr::filter(is.na(stat_block)) %>%
-  # Count remaining text numbers
-  dplyr::group_by(name) %>%
-  dplyr::mutate(text_num = 1:dplyr::n()) %>%
-  dplyr::ungroup() %>%
-  # Simplify a few creature's descriptions manually
-  dplyr::mutate(text = dplyr::case_when(
-    ## Control weather has lengthy tables that we can manually simplify
-    name == "Control Weather" & text == "**Precipitation**" ~ "Precipitation: 1 - Clear / 2 - Light Clouds / 3 - Overcast or ground fog / 4 - Rain, hail, or snow / 5 - Torrential rain, driving hail, or blizzard /// Temperature: 1 - Unbearable heat / 2 - Hot / 3 - Warm / 4 - Cool / 5 - Cold / 6 - Arctic cold /// Wind: 1 - Calm / 2 - Moderate wind / 3 - Strong wind / 4 - Gale / 5 - Storm",
-    ## Choas Bolt also has a lengthy table
-    name == "Chaos Bolt" & text == "|d8 |Damage Type|" ~ "1 - Acid / 2 - Cold / 3 - Fire / 4 - Force / 5 - Lightning / 6 - Poison / 7 - Psychic / 8 - Thunder",
-    ## If the creature isn't specified, don't mess with the text
-    TRUE ~ text)) %>%
-  # Remove unnecessary information from specific creatures
-  ## Chaos Bolt
-  dplyr::filter(name != "Chaos Bolt" | name == "Chaos Bolt" &
-                  stringr::str_detect(string = text, pattern = "d8s") |
-                  stringr::str_detect(string = text, pattern = "1 - Acid") |
-                  stringr::str_detect(string = text, pattern = "creature")) %>%
-  ## Control Weather
-  dplyr::filter(name != "Control Weather" | name == "Control Weather" &
-                  stringr::str_detect(string = text, pattern = "weather") |
-                  stringr::str_detect(string = text, pattern = "Precipitation: 1 -")) %>%
-  ## Teleport
-  dplyr::filter(name != "Teleport" | name == "Teleport" &
-                  stringr::str_detect(string = text, pattern = "instantly transports") |
-                  stringr::str_detect(string = text, pattern = "rolls d100")) %>%
-  ## Reincarnate
-  dplyr::filter(name != "Reincarnate" | name == "Reincarnate" &
-                  stringr::str_detect(string = text, pattern = "touch") |
-                  stringr::str_detect(string = text, pattern = "fashions") |
-                  stringr::str_detect(string = text, pattern = "reincarnated")) %>%
-  ## Scrying
-  dplyr::filter(name != "Scrying" | name == "Scrying" &
-                  stringr::str_detect(string = text, pattern = "saving throw") |
-                  stringr::str_detect(string = text, pattern = "save") |
-                  stringr::str_detect(string = text, pattern = "choose a location")) %>%
-  ## Misc. Other
-  dplyr::filter(!name %in% c("Creation", "Summon Lesser Demons", "Reality Break") |
-                  name %in% c("Creation", "Summon Lesser Demons", "Reality Break") &
-                  stringr::str_detect(string = text, pattern = "\\|") != T) %>%
-  # Handle [Spell Name](spell-name) formatting weirdness in text
-  ## Split text by first square bracket
-  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
-                              too_few = "align_start", too_many = "merge") %>%
-  ## Split remaining text by `](`
-  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
-                              too_few = "align_start", too_many = "merge") %>%
-  ## Tidy up that spell name that is now separate
-  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
-  ## Split by closing parentheses
-  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
-                              too_few = "align_end", too_many = "merge") %>%
-  ## Recombine the parts we want and drop the column we don't
-  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
-  dplyr::select(-junk) %>%
-  # Do that again to catch multiple spells in the same text row
-  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
-                              too_few = "align_start", too_many = "merge") %>%
-  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
-                              too_few = "align_start", too_many = "merge") %>%
-  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
-  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
-                              too_few = "align_end", too_many = "merge") %>%
-  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
-  dplyr::select(-junk) %>%
-  # Re-do one final time for the two spells that reference three spells in one line of description
-  tidyr::separate_wider_delim(cols = text, delim = "[", names = c("want1", "xtra1"),
-                              too_few = "align_start", too_many = "merge") %>%
-  tidyr::separate_wider_delim(cols = xtra1, delim = "](", names = c("want2", "xtra2"),
-                              too_few = "align_start", too_many = "merge") %>%
-  dplyr::mutate(want2 = stringr::str_to_title(want2)) %>%
-  tidyr::separate_wider_delim(cols = xtra2, delim = ")", names = c("junk", "want3"),
-                              too_few = "align_end", too_many = "merge") %>%
-  tidyr::unite(col = "text", dplyr::starts_with("want"), sep = "", na.rm = T) %>%
-  dplyr::select(-junk) %>%
-  # Drop other unwanted column(s)
-  dplyr::select(-stat_block, -text_num) %>%
-  # Pare down to only non-unique columns
-  dplyr::distinct() %>%
-  # Drop empty description text rows
-  dplyr::filter(!is.na(text) & nchar(text) != 0) %>%
-  # Re-count lines of description
-  dplyr::group_by(name) %>%
-  dplyr::mutate(description_num = paste0("description_", 1:dplyr::n())) %>%
-  dplyr::ungroup() %>%
-  # Pivot to wide format
-  tidyr::pivot_wider(names_from = description_num, values_from = text) %>%
-  # Combine separate description text columns
-  tidyr::unite(col = "description", dplyr::starts_with("description_"), sep = " ", na.rm = T) %>%
-  # Remove some unnecessary formatting from the higher level info
-  dplyr::mutate(higher_levels = gsub(pattern = "\\*\\*At Higher Levels.\\*\\* ",
-                                     replacement = "", x = higher_levels),
-                .after = description) %>%
-  # Fix weird not-quotes in text columns
-  dplyr::mutate(description = gsub(pattern = "’", "'", x = description)) %>%
-  dplyr::mutate(higher_levels = gsub(pattern = "’", "'", x = higher_levels))
-
-# Re-check structure
-dplyr::glimpse(beasts_v3)
 
 ## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v3 %>%
-  # Rename some columns
-  dplyr::rename(beast_name = name,
-                beast_source = sources,
-                pc_class = class,
-                beast_level = level,
-                beast_school = school,
-                ritual_cast = ritual) %>%
-  # Fix any lingering name issues
-  dplyr::mutate(beast_name = gsub(pattern = "’", replacement = "'", x = beast_name)) %>%
-  # Move some columns to new places
-  dplyr::relocate(ritual_cast, .before = casting_time) %>%
-  dplyr::relocate(higher_levels, .after = description)
+menagerie <- beasts_v3
 
 # Last structure check
 dplyr::glimpse(menagerie)
