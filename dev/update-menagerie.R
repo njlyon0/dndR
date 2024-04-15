@@ -215,6 +215,48 @@ rm(list = setdiff(ls(), c("beasts_v1")))
         # Tidy Creature Information ----
 ## ---------------------------------------- ##
 
+# Check structure of current object
+dplyr::glimpse(beasts_v1)
+
+# Do wrangling of non-descriptive bits of creatures
+beasts_v2 <- beasts_v1 %>%
+  # Remove commas from raw challenge rating
+  dplyr::mutate(challenge = gsub(pattern = ",", replacement = "", x = challenge)) %>%
+  # Separate XP and CR information
+  dplyr::mutate(xp = stringr::str_extract(string = challenge,
+                                          pattern = "((\\d+){1,50} XP)"),
+                cr = stringr::str_extract(string = challenge,
+                                          pattern = "1\\/(\\d+){1,50} \\("),
+                .after = challenge) %>%
+  # Fill in missing CRs (non-fractional ones)
+  dplyr::mutate(cr = ifelse(is.na(cr) == TRUE,
+                            yes = stringr::str_extract(string = challenge,
+                                                       pattern = "(\\d+){1,50} \\("),
+                            no = cr)) %>%
+  # Remove dangling non-numbers
+  dplyr::mutate(xp = as.numeric(gsub(pattern = " XP", replacement = "", x = xp)),
+                cr = gsub(pattern = " \\(", replacement = "", x = cr)) %>%
+  # Convert fraction CRs into decimals
+  dplyr::mutate(cr = as.numeric(dplyr::case_when(
+    cr == "1/2" ~ "0.5",
+    cr == "1/4" ~ "0.25",
+    cr == "1/8" ~ "0.125",
+    T ~ cr))) %>%
+  # Drop superseded 'challenge' information
+  dplyr::select(-challenge)
+  # Handle A vs. B variants
+
+  # Other wrangling tasks???
+
+
+
+
+# Check structure
+dplyr::glimpse(beasts_v2)
+
+
+
+
 # Do wrangling of non-description bits of creatures
 beasts_v2 <- beasts_v1 %>%
   # Create a column for whether the creature can be cast as a ritual
