@@ -27,16 +27,15 @@ beast_repo <- "njlyon0/dnd_menagerie"
 beast_contents <- supportR::github_ls(repo = paste0("https://github.com/", beast_repo),
                                       folder = "_creatures", recursive = T, quiet = F) %>%
   # Drop subfolders
-  dplyr::filter(type != "dir")
+  dplyr::filter(type != "dir") %>%
+  # Remove any template markdown files
+  dplyr::filter(stringr::str_detect(string = name, pattern = "template") != TRUE)
 
 # Check structure
 dplyr::glimpse(beast_contents)
 
 # Strip out just markdown file names
-beast_files <- beast_contents$name
-
-# Drop any "template" markdown files
-beast_mds <- beast_files[stringr::str_detect(string = beast_files, pattern = "template") != TRUE]
+beast_mds <- beast_contents$name
 
 # Check that out
 dplyr::glimpse(beast_mds)
