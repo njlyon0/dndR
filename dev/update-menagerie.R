@@ -279,6 +279,10 @@ menagerie <- beasts_v3 %>%
   # Make XP and CR into numbers
   dplyr::mutate(xp = as.numeric(xp),
                 cr = as.numeric(cr)) %>%
+  # Make skills in 'title case'
+  dplyr::mutate(skills = stringr::str_to_title(string = skills)) %>%
+  # Make saving throws uppercase
+  dplyr::mutate(saving_throws = toupper(saving_throws)) %>%
   # Reorder "damage_..." columns
   dplyr::relocate(dplyr::starts_with("damage_"),
                   .after = saving_throws) %>%
