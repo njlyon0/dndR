@@ -178,10 +178,6 @@ for(k in 1:length(beast_mds)){
   } # Close wrangling conditional
 } # Close loop
 
-## ---------------------------------------- ##
-      # Wrangle Markdown Content ----
-## ---------------------------------------- ##
-
 # Perform further wrangling on extracted markdown content
 beasts_v1 <- list_o_beasts %>%
   # Unlist that list into a dataframe
@@ -212,7 +208,7 @@ write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_menagerie.csv"
 rm(list = setdiff(ls(), c("beasts_v1")))
 
 ## ---------------------------------------- ##
-        # Tidy Creature Information ----
+# Wrangle Markdown Content ----
 ## ---------------------------------------- ##
 
 # Check structure of current object
@@ -234,14 +230,14 @@ beasts_v2 <- beasts_v1 %>%
                                                        pattern = "(\\d+){1,50} \\("),
                             no = cr)) %>%
   # Remove dangling non-numbers
-  dplyr::mutate(xp = as.numeric(gsub(pattern = " XP", replacement = "", x = xp)),
+  dplyr::mutate(xp = gsub(pattern = " XP", replacement = "", x = xp),
                 cr = gsub(pattern = " \\(", replacement = "", x = cr)) %>%
   # Convert fraction CRs into decimals
-  dplyr::mutate(cr = as.numeric(dplyr::case_when(
+  dplyr::mutate(cr = dplyr::case_when(
     cr == "1/2" ~ "0.5",
     cr == "1/4" ~ "0.25",
     cr == "1/8" ~ "0.125",
-    T ~ cr))) %>%
+    T ~ cr)) %>%
   # Drop superseded 'challenge' information
   dplyr::select(-challenge) %>%
   # Parse 'type' into size versus type
@@ -271,11 +267,29 @@ beasts_v3b <- beasts_v2 %>%
   dplyr::filter(stringr::str_detect(string = name, pattern = "\\(A\\)") == TRUE |
                   stringr::str_detect(string = name, pattern = "\\(B\\)") == TRUE)
 
+# For those with variants, prepare to choose one
+beasts_v3b_v2 <- beasts_v3b %>%
+  # Pivot to long format
+  tidyr::pivot_longer(cols = -name, names_to = "cols", values_to = "vals") %>%
+  # Count rows of content for each beast
+  dplyr::group_by(name) %>%
+  dplyr::mutate(content_ct = dplyr::n()) %>%
+  dplyr::ungroup() %>%
+  # Remove empty rows
+  dplyr::filter(!is.na(vals) & nchar(vals) != 0) %>%
+  # Generate a name column without the variant information
+  dplyr::mutate(name_fix = gsub(pattern = " \\(A\\)| \\(B\\)", replacement = "", x = name),
+                .before = name)
 
 
 
+View(beasts_v3b_v2)
 
 
+
+## ---------------------------------------- ##
+# Tidy Creature Information ----
+## ---------------------------------------- ##
 
 
 ## ---------------------------------------- ##
@@ -288,7 +302,10 @@ beasts_v3b <- beasts_v2 %>%
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v3
+menagerie <- beasts_v2 %>%
+  # Make XP and CR into numbers
+  dplyr::mutate(xp = as.numeric(xp),
+                cr = as.numeric(cr))
 
 # Last structure check
 dplyr::glimpse(menagerie)
