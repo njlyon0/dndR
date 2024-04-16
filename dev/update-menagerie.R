@@ -268,17 +268,43 @@ supportR::diff_check(old = unique(beasts_v2$name), new = unique(beasts_v3$name))
 # Check overall structure again
 dplyr::glimpse(beasts_v3[,1:26])
 
+# Break tags apart to the component pieces of information
+beasts_v4 <- beasts_v3 %>%
+  # Remove brackets
+  dplyr::mutate(tags = gsub(pattern = "\\[|\\]", replacement = "", x = tags)) %>%
+  # Remove one monster that has a weird tag (I suspect it's homebrew)
+  dplyr::filter(name != "Angulotl Blade") %>%
+  # Serparate by commas
+  tidyr::separate_wider_delim(cols = tags, delim = ", ",
+                              names = c("junk_1", "junk_2", "junk_3", "source")) %>%
+  # Drop 'junk' columns (redundant with existing info)
+  dplyr::select(-dplyr::starts_with("junk_")) %>%
+  # Tidy up source column
+  dplyr::mutate(source = stringr::str_to_title(gsub(pattern = "\\-", replacement = " ", x = source)))
+
+# Re-re-re-check structure
+dplyr::glimpse(beasts_v4[,1:26])
+
 ## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v3 %>%
-  # Rename name column
-  dplyr::rename(monster_name = name) %>%
+menagerie <- beasts_v4 %>%
+  # Remove all homebrewed entries
+  dplyr::filter(!source %in% c("Homebrew", "Out of The Box 5e")) %>%
+  # Rename columns to be more explicit that they are about monsters
+  ## (Allows for simpler argument names in downstream functions)
+  dplyr::rename(monster_name = name,
+                monster_source = source,
+                monster_size = size,
+                monster_type = type,
+                monster_alignment = alignment,
+                monster_xp = xp,
+                monster_cr = cr) %>%
   # Make XP and CR into numbers
-  dplyr::mutate(xp = as.numeric(xp),
-                cr = as.numeric(cr)) %>%
+  dplyr::mutate(monster_xp = as.numeric(monster_xp),
+                monster_cr = as.numeric(monster_cr)) %>%
   # Make skills in 'title case'
   dplyr::mutate(skills = stringr::str_to_title(string = skills)) %>%
   # Make saving throws uppercase
@@ -287,7 +313,7 @@ menagerie <- beasts_v3 %>%
   dplyr::relocate(dplyr::starts_with("damage_"),
                   .after = saving_throws) %>%
   # Drop unwanted columns
-  dplyr::select(-tags, -page_number)
+  dplyr::select(-page_number)
 
 # Last structure check
 dplyr::glimpse(menagerie)
