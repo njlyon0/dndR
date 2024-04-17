@@ -1,23 +1,22 @@
-## ---------------------------------------------------------- ##
-              # List Creatures Based on Criteria
-## ---------------------------------------------------------- ##
-# Script author(s): Nick J Lyon
-
-# PURPOSE
-# Create creature equivalent of existing creature function
-?dndR::spell_list
-
-## ------------------------------ ##
-        # Housekeeping ----
-## ------------------------------ ##
-
-# Load libraries
-librarian::shelf(tidyverse, supportR, dndR)
-
-# Clear environment
-rm(list = ls())
-
-# Define function
+#' @title List Creatures Based on Criteria
+#'
+#' @description Query list of all Dungeons & Dragons creatures based on partial string matches between user inputs and the relevant column of the creature information data table. Currently supports users querying the creature list by creature name, which class lists allow the creature, creature's level, the school of magic the creature belongs in, whether or not the creature can be cast as a ritual, and the time it takes to cast the creature. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude creatures from the returned set of creatures
+#'
+#' @param name (character) text to look for in creature names
+#' @param class (character) character class(es) with the creature(s) on their list
+#' @param level (character) "cantrip" and/or the minimum required creature slot level
+#' @param school (character) school(s) of magic within which the creature belongs (e.g., 'evocation', 'necromancy', etc.)
+#' @param ritual (logical) whether the creature can be cast as a ritual
+#' @param cast_time (character) either the phase of a turn needed to cast the creature or the in-game time required (e.g., "reaction", "1 minute", etc.)
+#'
+#' @return (dataframe) 10 columns of information with one row per creature(s) that fit(s) the user-specified criteria. If no creatures fit the criteria, returns a message to that effect instead of a data object
+#' @importFrom magrittr %>%
+#'
+#' @export
+#'
+#' @examples
+#' # Identify medium undead creatures from the Monster Manual
+#' creature_list(type = "undead", size = "medium", source = "monster manual")
 creature_list <- function(name = NULL, size = NULL, type = NULL,
                          source = NULL, xp = NULL, cr = NULL){
   # Squelch visible bindings note
@@ -103,7 +102,7 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
     # Do some final processing
     creature_actual <- creature_v6 %>%
       # Drop all action/ability information
-      dplyr::select(-dplyr::starts_with("ability_"), -dplyr::starts_with("action_")) %>%
+      dplyr::select(-dplyr::contains("abili"), -dplyr::contains("action")) %>%
       # Drop any empty columns in this query
       dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) )) %>%
       # Make it a dataframe
@@ -111,21 +110,3 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
 
     # Return that
     return(creature_actual) } }
-
-# Invoke function
-creature_list(name = c("giant", "goblin")) %>% nrow()
-creature_list(size = c("tiny", "gargantuan")) %>% nrow()
-creature_list(type = c("elemental", "undead")) %>% nrow()
-unique(creature_list(source = c("monster manual", "v'o'l'o's guide", "strahd"))$creature_source)
-creature_list(xp = c("100", "10000")) %>% nrow()
-creature_list(cr = c("0.125", "5")) %>% nrow()
-
-
-
-creature_list(name = "giant", size = "tiny")
-
-
-
-
-
-# End ----
