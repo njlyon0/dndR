@@ -56,6 +56,8 @@ monster_test$monster_name
 ## ------------------------------ ##
 # Function Var.
 ## ------------------------------ ##
+# Clear environment
+rm(list = ls())
 
 # Define function
 monster_list <- function(name = NULL, size = NULL, type = NULL,
@@ -152,17 +154,20 @@ monster_list <- function(name = NULL, size = NULL, type = NULL,
     # Return that
     return(monster_actual) } }
 
+# Invoke function
+monster_list(name = c("giant", "goblin")) %>% nrow()
+monster_list(size = c("tiny", "gargantuan")) %>% nrow()
+monster_list(type = c("elemental", "undead")) %>% nrow()
+unique(monster_list(source = c("monster manual", "v'o'l'o's guide", "strahd"))$monster_source)
+monster_list(xp = c("100", "10000")) %>% nrow()
+monster_list(cr = c("0.125", "5")) %>% nrow()
 
 
 
+monster_list(name = "giant", size = "tiny")
 
 
-name <- c("giant", "goblin")
-size <- c("tiny", "gargantuan")
-type <- c("elemental", "undead")
-source <- c("monster manual", "volos guide", "strahd")
-xp <- "10000"
-cr = c("0.125", "5")
+
 
 
 # End ----
