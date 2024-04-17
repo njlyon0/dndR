@@ -198,11 +198,11 @@ quarantine %>%
   dplyr::filter(stringr::str_detect(string = text, pattern = "name: "))
 
 # Export this for later
-write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_menagerie.csv"),
+write.csv(x = beasts_v1, file = file.path("dev", "raw_data", "raw_creatures.csv"),
           na = '', row.names = F)
 
 # Read back in if needed
-## beasts_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_menagerie.csv"))
+## beasts_v1 <- read.csv(file = file.path("dev", "raw_data", "raw_creatures.csv"))
 
 # Clean environment
 rm(list = setdiff(ls(), c("beasts_v1")))
@@ -324,7 +324,7 @@ dplyr::glimpse(beasts_v5)
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v5 %>%
+creatures <- beasts_v5 %>%
   # Remove all homebrewed entries
   dplyr::filter(!source %in% c("Homebrew", "Out Of The Box 5e",
                                "Nerzugals Extended Bestiary",
@@ -352,7 +352,7 @@ menagerie <- beasts_v5 %>%
   dplyr::select(-page_number)
 
 # Last structure check
-dplyr::glimpse(menagerie)
+dplyr::glimpse(creatures)
 
 ## ---------------------------------------- ##
                 # Export ----
@@ -360,10 +360,11 @@ dplyr::glimpse(menagerie)
 
 # Export locally to dev folder for experimental purposes
 ## Already ignored by package (because `dev` folder) and added to `.gitignore`
-write.csv(x = menagerie, file = file.path("dev", "tidy_data", "menagerie.csv"),
+write.csv(x = creatures, file = file.path("dev", "tidy_data", "creatures.csv"),
           row.names = F, na = '')
 
 ## If desired, export into package as a .rda object
-# save(menagerie, file = file.path("data", "menagerie.rda"))
+# creatures <- read.csv(file = file.path("dev", "tidy_data", "creatures.csv"))
+# save(creatures, file = file.path("data", "creatures.rda"), compress = "xz")
 
 # End ----
