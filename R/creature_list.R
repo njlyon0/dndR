@@ -1,22 +1,22 @@
 #' @title List Creatures Based on Criteria
 #'
-#' @description Query list of all Dungeons & Dragons creatures based on partial string matches between user inputs and the relevant column of the creature information data table. Currently supports users querying the creature list by creature name, which class lists allow the creature, creature's level, the school of magic the creature belongs in, whether or not the creature can be cast as a ritual, and the time it takes to cast the creature. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude creatures from the returned set of creatures
+#' @description Query list of Dungeons & Dragons creatures based on partial string matches between user inputs and the relevant column of the creature information data table. Currently supports users querying the creature list by creature name, size, type, source document, experience point (XP), and challenge rating (CR). All characters arguments are case-insensitive. XP and CR may be specified as either characters or numbers but match to creature must be exact in either case (rather than partial). Any argument set to `NULL` (the default) will not be used to include/exclude creatures from the returned set of creatures
 #'
 #' @param name (character) text to look for in creature names
-#' @param class (character) character class(es) with the creature(s) on their list
-#' @param level (character) "cantrip" and/or the minimum required creature slot level
-#' @param school (character) school(s) of magic within which the creature belongs (e.g., 'evocation', 'necromancy', etc.)
-#' @param ritual (logical) whether the creature can be cast as a ritual
-#' @param cast_time (character) either the phase of a turn needed to cast the creature or the in-game time required (e.g., "reaction", "1 minute", etc.)
+#' @param size (character) size(s) of creature
+#' @param type (character) creature 'type' (e.g., "undead", "elemental", etc.)
+#' @param source (character) source book/document of creature
+#' @param xp (character/numeric) experience point (XP) value of creature (note this must be an exact match as opposed to partial matches tolerated by other arguments)
+#' @param cr (character/numeric) challenge rating (CR) value of creature (note this must be an exact match as opposed to partial matches tolerated by other arguments)
 #'
-#' @return (dataframe) 10 columns of information with one row per creature(s) that fit(s) the user-specified criteria. If no creatures fit the criteria, returns a message to that effect instead of a data object
+#' @return (dataframe) Up to 23 columns of information with one row per creature(s) that fit(s) the user-specified criteria. Fewer columns are returned when no creatures that fit the criteria have information for a particular category (e.g., if no queried creatures have damage vulnerabilities, that column will be excluded from the results). If no creatures fit the criteria, returns a message to that effect instead of a data object
 #' @importFrom magrittr %>%
 #'
 #' @export
 #'
 #' @examples
-#' # Identify medium undead creatures from the Monster Manual
-#' creature_list(type = "undead", size = "medium", source = "monster manual")
+#' # Identify medium undead creatures from the Monster Manual worth 450 XP
+#' creature_list(type = "undead", size = "medium", source = "monster manual", xp = 450)
 creature_list <- function(name = NULL, size = NULL, type = NULL,
                          source = NULL, xp = NULL, cr = NULL){
   # Squelch visible bindings note
