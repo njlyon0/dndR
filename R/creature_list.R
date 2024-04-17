@@ -20,7 +20,8 @@
 creature_list <- function(name = NULL, size = NULL, type = NULL,
                          source = NULL, xp = NULL, cr = NULL){
   # Squelch visible bindings note
-
+  creature_name <- creature_size <- creature_type <- NULL
+  creature_source <- creature_xp <- creature_cr <- NULL
 
   # Read in creature data
   creature_v0 <- dndR::creatures
