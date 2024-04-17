@@ -17,42 +17,6 @@ librarian::shelf(tidyverse, supportR, dndR)
 # Clear environment
 rm(list = ls())
 
-# Load creature info
-creature_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
-
-# Check structure
-dplyr::glimpse(creature_info)
-
-## ------------------------------ ##
-# Script Var.
-## ------------------------------ ##
-
-# Want to search by:
-name <- c("giant", "goblin")
-size <- c("tiny", "gargantuan")
-type <- c("elemental", "undead")
-source <- c("creature manual", "volos guide", "strahd")
-xp <- "10000"
-cr = c("0.125", "5")
-
-
-# Search for just one
-creature_test <- creature_info %>%
-  # More than one name given? Collapse into one string match pattern
-  dplyr::filter(grepl(pattern = ifelse(test = length(name) > 1,
-                                       yes = paste(name, collapse = "|"),
-                                       no = name),
-                      # Compare string(s) against creature names (case insensitive)
-                      x = creature_name, ignore.case = TRUE))
-
-
-creature_test$creature_name
-
-
-
-
-
-
 ## ------------------------------ ##
 # Function Var.
 ## ------------------------------ ##
@@ -66,7 +30,7 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
 
 
   # Read in creature data
-  creature_v0 <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
+  creature_v0 <- dndR::creatures
 
   # Filter by name if names are provided
   if(is.null(name) != TRUE){

@@ -17,7 +17,7 @@ librarian::shelf(tidyverse, supportR)
 rm(list = ls())
 
 # Load creature info
-creature_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
+creature_info <- dndR::creatures
 
 ## ------------------------------ ##
 # Function Var.
@@ -29,7 +29,7 @@ creature_text <- function(name = NULL){
   creature_name <- NULL
 
   # Read in spell dataframe
-  all_creatures <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
+  all_creatures <- dndR::creatures
 
   # Perform the desired query
   focal_creature <- all_creatures %>%
