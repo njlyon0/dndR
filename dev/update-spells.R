@@ -421,6 +421,7 @@ write.csv(x = spells, file = file.path("dev", "tidy_data", "spells.csv"),
           row.names = F, na = '')
 
 ## If desired, export into package as a .rda object
-# save(spells, file = file.path("data", "spells.rda"))
+# spells <- read.csv(file = file.path("dev", "tidy_data", "spells.csv"))
+# save(spells, file = file.path("data", "spells.rda"), compress = "xz")
 
 # End ----
