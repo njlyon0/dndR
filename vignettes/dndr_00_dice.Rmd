@@ -11,9 +11,9 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-```{r libs, echo = F, message = F}
+```{r libs, echo = FALSE, message = FALSE}
 # devtools::install_github("njlyon0/dndR", force = TRUE)
-library(dplyr); library(ggplot2); library(magrittr); library(tidyr)
+library(dndR)
 ```
 
 ## Welcome to `dndR`!
