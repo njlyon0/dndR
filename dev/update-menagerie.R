@@ -286,11 +286,45 @@ beasts_v4 <- beasts_v3 %>%
 dplyr::glimpse(beasts_v4[,1:26])
 
 ## ---------------------------------------- ##
+       # Action / Ability Tidying ----
+## ---------------------------------------- ##
+
+# Identify column names other than the ability/action description columns
+creature_id <- setdiff(x = names(beasts_v4), y = c(paste0("ability_", 1:10^3),
+                                                   paste0("action_", 1:10^3)))
+
+beasts_v5 <- beasts_v4 %>%
+  # Pivot description text into longer format
+  tidyr::pivot_longer(cols = c(dplyr::starts_with("ability_"),
+                               dplyr::starts_with("action_")),
+                      names_to = "description_type",
+                      values_to = "description_text") %>%
+  # Drop NAs that introduces
+  dplyr::filter(!is.na(description_text) & nchar(description_text) != 0) %>%
+  # Simplify description 'type'
+  dplyr::mutate(description_type = gsub(pattern = paste0("\\_(\\d+)"),
+                                        replacement = "",
+                                        x = description_type)) %>%
+  # Other wrangling
+  group_by(across(all_of(c(creature_id, "description_type")))) %>%
+  summarize(text = paste(description_text, collapse = " ")) %>%
+  dplyr::ungroup() %>%
+  # Pivot back to wide format
+  tidyr::pivot_wider(names_from = description_type,
+                     values_from = text) %>%
+  # Rename resulting columns
+  dplyr::rename(abilities = ability,
+                actions = action)
+
+# Check structure
+dplyr::glimpse(beasts_v5)
+
+## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-menagerie <- beasts_v4 %>%
+menagerie <- beasts_v5 %>%
   # Remove all homebrewed entries
   dplyr::filter(!source %in% c("Homebrew", "Out Of The Box 5e",
                                "Nerzugals Extended Bestiary",
@@ -315,14 +349,7 @@ menagerie <- beasts_v4 %>%
   dplyr::relocate(dplyr::starts_with("damage_"),
                   .after = saving_throws) %>%
   # Drop unwanted columns
-  dplyr::select(-page_number) %>%
-  # Pivot (slightly) longer for ease of documentation
-  tidyr::pivot_longer(cols = c(dplyr::starts_with("ability_"),
-                               dplyr::starts_with("action_")),
-                      names_to = "description_type",
-                      values_to = "description_text") %>%
-  # Drop NAs that introduces
-  dplyr::filter(!is.na(description_text) & nchar(description_text) != 0)
+  dplyr::select(-page_number)
 
 # Last structure check
 dplyr::glimpse(menagerie)
