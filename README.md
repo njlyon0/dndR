@@ -18,11 +18,11 @@ The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth
 Edition a.k.a. “5e”) related functions to help both players and Dungeon
 Masters (DMs). Below are short descriptions of the functions currently
 included in `dndR`. I am always willing to expand that list though so if
-you have a DnD-related task that could be cool as a function, please
+you have a D&D-related task that could be cool as a function, please
 [post it as an Issue](https://github.com/njlyon0/dndR/issues) on this
 package’s GitHub repository!
 
-## Installation
+### Installation
 
 You can install the development version of `dndR` from
 [GitHub](https://github.com/) with:
@@ -32,13 +32,15 @@ You can install the development version of `dndR` from
 devtools::install_github("njlyon0/dndR")
 ```
 
-## Dice Rolling
+## Function Descriptions
+
+### Dice Rolling
 
 - **`roll`** – Roll specified number of dice and sums their outcomes.
   Supports returning the individual die results as a message and/or
   re-rolling 1s via optional arguments.
 
-## Character Creation
+### Character Creation
 
 - **`pc_creator`** – Stat out a character of specified race and class
   using your preferred method of rolling ability scores
@@ -63,7 +65,7 @@ devtools::install_github("njlyon0/dndR")
   when describing the patrons of a tavern or the travelers players
   glimpse on the edge of the flickering light cast by their campfire
 
-## Creatures & Monsters
+### Creatures
 
 - **`creature_list`** – Identify all creatures that fit certain criteria
   (e.g., experience point value, creature type, size, etc.)
@@ -82,7 +84,7 @@ devtools::install_github("njlyon0/dndR")
     *Witcher*-esque homebrew
     monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
 
-## Magic
+### Spells
 
 - **`spell_list`** – Identify all spells that fit certain criteria
   (e.g., spell level, school of magic, character class list, etc.)
@@ -90,7 +92,7 @@ devtools::install_github("njlyon0/dndR")
 - **`spell_text`** – Retrieve full information and description text for
   specified spell(s)
 
-## Encounter Balancing
+### Encounters
 
 - **`xp_pool`** – Identify XP total for desired encounter difficulty at
   a specified player level and party size
@@ -98,21 +100,19 @@ devtools::install_github("njlyon0/dndR")
 - **`xp_cost`** – Find “realized” XP amount by applying appropriate
   multiplier for “raw” XP based on number of creatures and party size
 
-## Visual Tools
-
-- **`probability_plot`** – Generate a `ggplot2` plot of the frequency of
-  roll outcomes for the specified type and number of dice. You can also
-  specify the number of times to roll those dice to inform the plot
+### Visual Tools
 
 - **`party_diagram`** – Create a `ggplot2` diagram of party ability
   scores separated either by player or by score. This plot can be useful
   in identifying the strengths and weaknesses of the party as a whole to
   help you (the DM) create encounters with that in mind
-
   - Thank you to [Tim Schatto-Eckrodt](https://kudusch.de/) for
     contributing this function!
+- **`probability_plot`** – Generate a `ggplot2` plot of the frequency of
+  roll outcomes for the specified type and number of dice. You can also
+  specify the number of times to roll those dice to inform the plot
 
-## Contributing Functions
+## Contributing to `dndR`
 
 If you’d like to contribute function scripts or ideas, that is more than
 welcome! For specific instructions check out `CONTRIBUTING.md` but at a
@@ -123,12 +123,5 @@ glance:
 
 - For function scripts, either [open a Github
   issue](https://github.com/njlyon0/dndR/issues) *or* fork the
-  repository and add your content to the `dev` folder
-
-## Looking Ahead
-
-I know that there are rumblings of a change to statistic modifiers
-becoming based on background rather than race so once those details are
-finalized I plan on creating a suite of functions that follow those
-guidelines. The extant functions follow “5e” rules as detailed in the
-Player’s Handbook (PHB) and Dungeon Master’s Guide (DMG).
+  repository and add your content to the `dev` folder and submit a pull
+  request
