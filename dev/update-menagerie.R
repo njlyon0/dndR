@@ -292,19 +292,21 @@ dplyr::glimpse(beasts_v4[,1:26])
 # Do final tidying
 menagerie <- beasts_v4 %>%
   # Remove all homebrewed entries
-  dplyr::filter(!source %in% c("Homebrew", "Out of The Box 5e")) %>%
+  dplyr::filter(!source %in% c("Homebrew", "Out Of The Box 5e",
+                               "Nerzugals Extended Bestiary",
+                               "Strongholds And Followers")) %>%
   # Rename columns to be more explicit that they are about monsters
   ## (Allows for simpler argument names in downstream functions)
-  dplyr::rename(monster_name = name,
-                monster_source = source,
-                monster_size = size,
-                monster_type = type,
-                monster_alignment = alignment,
-                monster_xp = xp,
-                monster_cr = cr) %>%
+  dplyr::rename(creature_name = name,
+                creature_source = source,
+                creature_size = size,
+                creature_type = type,
+                creature_alignment = alignment,
+                creature_xp = xp,
+                creature_cr = cr) %>%
   # Make XP and CR into numbers
-  dplyr::mutate(monster_xp = as.numeric(monster_xp),
-                monster_cr = as.numeric(monster_cr)) %>%
+  dplyr::mutate(creature_xp = as.numeric(creature_xp),
+                creature_cr = as.numeric(creature_cr)) %>%
   # Make skills in 'title case'
   dplyr::mutate(skills = stringr::str_to_title(string = skills)) %>%
   # Make saving throws uppercase

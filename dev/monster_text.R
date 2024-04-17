@@ -4,7 +4,7 @@
 # Script author(s): Nick J Lyon
 
 # PURPOSE
-# Create monster equivalent of existing spell function
+# Create creature equivalent of existing spell function
 ?dndR::spell_text
 
 ## ------------------------------ ##
@@ -16,35 +16,35 @@ librarian::shelf(tidyverse, supportR)
 # Clear environment
 rm(list = ls())
 
-# Load monster info
-monster_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
+# Load creature info
+creature_info <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
 
 ## ------------------------------ ##
 # Function Var.
 ## ------------------------------ ##
 
 # Define function
-monster_text <- function(name = NULL){
+creature_text <- function(name = NULL){
   # Silence visible bindings note
-  monster_name <- NULL
+  creature_name <- NULL
 
   # Read in spell dataframe
-  all_monsters <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
+  all_creatures <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
 
   # Perform the desired query
-  focal_monster <- all_monsters %>%
+  focal_creature <- all_creatures %>%
     # Subset to only creatures where the name is an exact match
-    dplyr::filter(tolower(monster_name) %in% tolower(name))
+    dplyr::filter(tolower(creature_name) %in% tolower(name))
 
-  # If there is not a monster of that name print a message
-  if(nrow(focal_monster) == 0){
-    message("No monster(s) found matching that name; consider checking spelling")
+  # If there is not a creature of that name print a message
+  if(nrow(focal_creature) == 0){
+    message("No creature(s) found matching that name; consider checking spelling")
 
     # Otherwise...
   } else {
 
     # Do some tidying to make the output neater
-    tidy_monster <- focal_monster %>%
+    tidy_creature <- focal_creature %>%
       # Make all columns characters
       dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
                                   .fns = as.character)) %>%
@@ -63,12 +63,12 @@ monster_text <- function(name = NULL){
         ) ~ paste0(stringr::str_to_title(string = category), ": ", info),
         category == "armor_class" ~ paste0("AC: ", info),
         category == "hit_points" ~ paste0("HP: ", info),
-        category == "monster_cr" ~ paste0("CR: ", info),
-        category == "monster_xp" ~ paste0("XP: ", info),
-        category == "monster_source" ~ paste0("Source: ", info),
-        category == "monster_size" ~ paste0("Size: ", info),
-        category == "monster_type" ~ paste0("Type: ", info),
-        category == "monster_alignment" ~ paste0("Alignment: ", info),
+        category == "creature_cr" ~ paste0("CR: ", info),
+        category == "creature_xp" ~ paste0("XP: ", info),
+        category == "creature_source" ~ paste0("Source: ", info),
+        category == "creature_size" ~ paste0("Size: ", info),
+        category == "creature_type" ~ paste0("Type: ", info),
+        category == "creature_alignment" ~ paste0("Alignment: ", info),
         category == "damage_immunities" ~ paste0("Damage Immunities:", info),
         category == "damage_resistances" ~ paste0("Damage Resistances:", info),
         category == "damage_vulnerabilities" ~ paste0("Damage Vulnerabilities:", info),
@@ -82,11 +82,11 @@ monster_text <- function(name = NULL){
       as.data.frame()
 
     # Return that information
-    return(tidy_monster) } }
+    return(tidy_creature) } }
 
 
 # Invoke function
-test <- monster_text(name = "hill giant")
+test <- creature_text(name = "hill giant")
 
 test$info
 
