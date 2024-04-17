@@ -17,12 +17,6 @@ librarian::shelf(tidyverse, supportR, dndR)
 # Clear environment
 rm(list = ls())
 
-## ------------------------------ ##
-# Function Var.
-## ------------------------------ ##
-# Clear environment
-rm(list = ls())
-
 # Define function
 creature_list <- function(name = NULL, size = NULL, type = NULL,
                          source = NULL, xp = NULL, cr = NULL){
@@ -122,7 +116,7 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
 creature_list(name = c("giant", "goblin")) %>% nrow()
 creature_list(size = c("tiny", "gargantuan")) %>% nrow()
 creature_list(type = c("elemental", "undead")) %>% nrow()
-unique(creature_list(source = c("creature manual", "v'o'l'o's guide", "strahd"))$creature_source)
+unique(creature_list(source = c("monster manual", "v'o'l'o's guide", "strahd"))$creature_source)
 creature_list(xp = c("100", "10000")) %>% nrow()
 creature_list(cr = c("0.125", "5")) %>% nrow()
 
