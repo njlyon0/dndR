@@ -85,12 +85,17 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"njlyon0/dndR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="for-players-and-dms">For Players and DMs<a class="anchor" aria-label="anchor" href="#for-players-and-dms"></a>
+<h2 id="dice-rolling">Dice Rolling<a class="anchor" aria-label="anchor" href="#dice-rolling"></a>
 </h2>
 <ul>
-<li><p><strong><code>roll</code></strong> – Roll specified number of dice and sums their outcomes. Supports returning the individual die results as a message and/or re-rolling 1s via optional arguments.</p></li>
-<li><p><strong><code>ability_scores</code></strong> – Roll for six ability scores using specified method (e.g., 4d6 drop lowest, 3d6, or 1d20)</p></li>
-<li><p><strong><code>mod_calc</code></strong> – Calculate roll modifier for given ability score(s)</p></li>
+<li>
+<strong><code>roll</code></strong> – Roll specified number of dice and sums their outcomes. Supports returning the individual die results as a message and/or re-rolling 1s via optional arguments.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="character-creation">Character Creation<a class="anchor" aria-label="anchor" href="#character-creation"></a>
+</h2>
+<ul>
 <li>
 <p><strong><code>pc_creator</code></strong> – Stat out a character of specified race and class using your preferred method of rolling ability scores</p>
 <ul>
@@ -98,26 +103,24 @@
 </li>
 </ul>
 </li>
-<li><p><strong><code>spell_list</code></strong> – Identify all spells that fit certain criteria (e.g., spell level, school of magic, character class list, etc.)</p></li>
-<li><p><strong><code>spell_text</code></strong> – Retrieve full information and description text for specified spell(s)</p></li>
-<li><p><strong><code>creature_list</code></strong> – Identify all creatures that fit certain criteria (e.g., experience point value, creature type, size, etc.)</p></li>
-<li><p><strong><code>creature_text</code></strong> – Retrieve full information and ability/action information text for specified creature(s)</p></li>
-<li><p><strong><code>probability_plot</code></strong> – Generate a <code>ggplot2</code> plot of the frequency of roll outcomes for the specified type and number of dice. You can also specify the number of times to roll those dice to inform the plot</p></li>
+<li><p><strong><code>ability_scores</code></strong> – Roll for six ability scores using specified method (e.g., 4d6 drop lowest, 3d6, or 1d20). Agnostic to character race and/or class</p></li>
+<li><p><strong><code>mod_calc</code></strong> – Calculate roll modifier for given ability score(s)</p></li>
 <li>
 <p><strong><code>pc_level_calc</code></strong> – Identify the current level of a player character based on earned experience points (XP). Also returns the proficiency modifier to be used at that level</p>
 <ul>
 <li>Thank you to Humberto Nappo for contributing this function!</li>
 </ul>
 </li>
+<li><p><strong><code>npc_creator</code></strong> – Pick a job and race for any number of non-player characters (NPCs). Hopefully this provides a useful starting point when describing the patrons of a tavern or the travelers players glimpse on the edge of the flickering light cast by their campfire</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="for-dms">For DMs<a class="anchor" aria-label="anchor" href="#for-dms"></a>
+<h2 id="creatures--monsters">Creatures &amp; Monsters<a class="anchor" aria-label="anchor" href="#creatures--monsters"></a>
 </h2>
 <ul>
-<li><p><strong><code>xp_pool</code></strong> – Identify XP total for desired encounter difficulty at a specified player level and party size</p></li>
-<li><p><strong><code>xp_cost</code></strong> – Find “realized” XP amount by applying appropriate multiplier for “raw” XP based on number of creatures and party size</p></li>
-<li><p><strong><code>monster_stats</code></strong> – Return monster stat block of specified XP value or challenge rating (CR)</p></li>
+<li><p><strong><code>creature_list</code></strong> – Identify all creatures that fit certain criteria (e.g., experience point value, creature type, size, etc.)</p></li>
+<li><p><strong><code>creature_text</code></strong> – Retrieve full information and ability/action information text for specified creature(s)</p></li>
+<li><p><strong><code>monster_stats</code></strong> – Return generic monster stat block of specified XP value or challenge rating (CR)</p></li>
 <li>
 <p><strong><code>monster_creator</code></strong> – Generate a homebrew monster with additional immunities and vulnerabilities of specified difficulty (adjustment for these is performed automatically)</p>
 <ul>
@@ -125,13 +128,35 @@
 </li>
 </ul>
 </li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="magic">Magic<a class="anchor" aria-label="anchor" href="#magic"></a>
+</h2>
+<ul>
+<li><p><strong><code>spell_list</code></strong> – Identify all spells that fit certain criteria (e.g., spell level, school of magic, character class list, etc.)</p></li>
+<li><p><strong><code>spell_text</code></strong> – Retrieve full information and description text for specified spell(s)</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="encounter-balancing">Encounter Balancing<a class="anchor" aria-label="anchor" href="#encounter-balancing"></a>
+</h2>
+<ul>
+<li><p><strong><code>xp_pool</code></strong> – Identify XP total for desired encounter difficulty at a specified player level and party size</p></li>
+<li><p><strong><code>xp_cost</code></strong> – Find “realized” XP amount by applying appropriate multiplier for “raw” XP based on number of creatures and party size</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="visual-tools">Visual Tools<a class="anchor" aria-label="anchor" href="#visual-tools"></a>
+</h2>
+<ul>
+<li><p><strong><code>probability_plot</code></strong> – Generate a <code>ggplot2</code> plot of the frequency of roll outcomes for the specified type and number of dice. You can also specify the number of times to roll those dice to inform the plot</p></li>
 <li>
 <p><strong><code>party_diagram</code></strong> – Create a <code>ggplot2</code> diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind</p>
 <ul>
 <li>Thank you to <a href="https://kudusch.de/" class="external-link">Tim Schatto-Eckrodt</a> for contributing this function!</li>
 </ul>
 </li>
-<li><p><strong><code>npc_creator</code></strong> – Pick a job and race for any number of non-player characters (NPCs). Hopefully this provides a useful starting point when describing the patrons of a tavern or the travelers players glimpse on the edge of the flickering light cast by their campfire</p></li>
 </ul>
 </div>
 <div class="section level2">
