@@ -1,34 +1,22 @@
-## ---------------------------------------------------------- ##
-      # Retrieve Full Creature Text by Creature Name
-## ---------------------------------------------------------- ##
-# Script author(s): Nick J Lyon
-
-# PURPOSE
-# Create creature equivalent of existing spell function
-?dndR::spell_text
-
-## ------------------------------ ##
-        # Housekeeping ----
-## ------------------------------ ##
-# Load libraries
-librarian::shelf(tidyverse, supportR)
-
-# Clear environment
-rm(list = ls())
-
-# Load creature info
-creature_info <- dndR::creatures
-
-## ------------------------------ ##
-# Function Var.
-## ------------------------------ ##
-
-# Define function
+#' @title Retrieve Full Creature Description Text by Creature Name
+#'
+#' @description Accepts user-provided Dungeons & Dragons creature name(s) and returns the full set of creature information and the complete description text. Unlike `dndR::creature_list`, this function requires an exact match between the user-provided creature name(s) and how they appear in the main creature data object. The argument in this function is not case-sensitive.
+#'
+#' @param name (character) exact creature name(s) for which to gather description information
+#'
+#' @return (dataframe) one column per creature specified by the user. Creature name is stored as the column name for that creature's information. Returns all fields for which there are data for at least one of the specified creatures so row number will vary with query (maximum 26 rows if all fields have information).
+#' @importFrom magrittr %>%
+#'
+#' @export
+#'
+#' @examples
+#' creature_text(name = c("hill giant", "goblin"))
+#'
 creature_text <- function(name = NULL){
   # Silence visible bindings note
-  creature_name <- NULL
+  creature_name <- info <- category <- NULL
 
-  # Read in spell dataframe
+  # Read in creature dataframe
   all_creatures <- dndR::creatures
 
   # Perform the desired query
@@ -49,7 +37,7 @@ creature_text <- function(name = NULL){
       dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
                                   .fns = as.character)) %>%
       # Flip it to long format
-      tidyr::pivot_longer(cols = dplyr::everything(.),
+      tidyr::pivot_longer(cols = -creature_name,
                           names_to = "category", values_to = "info") %>%
       # Remove all empty rows that creates
       dplyr::filter(!is.na(info) & nchar(info) > 0) %>%
@@ -76,6 +64,8 @@ creature_text <- function(name = NULL){
         category == "saving_throws" ~ paste0("Saving Throws: ", info),
         # Otherwise just information is fine
         T ~ info)) %>%
+      # Pivot to wide format to get creature name in column name
+      tidyr::pivot_wider(names_from = creature_name, values_from = info) %>%
       # Ditch category column altogether (now unneeded)
       dplyr::select(-category) %>%
       # Make it a dataframe
@@ -83,11 +73,3 @@ creature_text <- function(name = NULL){
 
     # Return that information
     return(tidy_creature) } }
-
-
-# Invoke function
-test <- creature_text(name = "hill giant")
-
-test$info
-
-# End ----
