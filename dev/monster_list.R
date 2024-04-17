@@ -12,7 +12,7 @@
 ## ------------------------------ ##
 
 # Load libraries
-librarian::shelf(tidyverse, supportR)
+librarian::shelf(tidyverse, supportR, dndR)
 
 # Clear environment
 rm(list = ls())
@@ -28,10 +28,25 @@ dplyr::glimpse(monster_info)
 ## ------------------------------ ##
 
 # Want to search by:
-## name
-## size
-## type
-## XP / CR
+name <- c("giant", "goblin")
+size <- c("tiny", "gargantuan")
+type <- c("elemental", "undead")
+source <- c("monster manual", "volos guide", "strahd")
+xp <- "10000"
+cr = c("0.125", "5")
+
+
+# Search for just one
+monster_test <- monster_info %>%
+  # More than one name given? Collapse into one string match pattern
+  dplyr::filter(grepl(pattern = ifelse(test = length(name) > 1,
+                                       yes = paste(name, collapse = "|"),
+                                       no = name),
+                      # Compare string(s) against monster names (case insensitive)
+                      x = monster_name, ignore.case = TRUE))
+
+
+monster_test$monster_name
 
 
 
@@ -42,127 +57,112 @@ dplyr::glimpse(monster_info)
 # Function Var.
 ## ------------------------------ ##
 
-
+# Define function
 monster_list <- function(name = NULL, size = NULL, type = NULL,
-                         xp = NULL, cr = NULL){
-
-
-  name <- c("giant", "goblin")
-  size <- c("tiny", "gargantuan")
-  type <- c("elemental", "undead")
-  xp <- "10000"
-  cr = c("0.125", "5")
-
+                         source = NULL, xp = NULL, cr = NULL){
   # Squelch visible bindings note
 
 
   # Read in monster data
-  monster_v0 <- read.csv(file.path("dev", "tidy_data", "menagerie.csv")) %>%
-    # Do some minor renaming to avoid overlap with arguments
-    dplyr::rename(monster_size = size,
-                  monster_type = type,
-                  monster_xp = xp,
-                  monster_cr = cr)
+  monster_v0 <- read.csv(file.path("dev", "tidy_data", "menagerie.csv"))
 
   # Filter by name if names are provided
   if(is.null(name) != TRUE){
-    monster_v1 <- dplyr::filter(.data = monster_v0,
-                                # More than one name given? Collapse into one string match pattern
-                                grepl(pattern = ifelse(test = length(name) > 1,
-                                                       yes = paste(name, collapse = "|"),
-                                                       no = name),
-                                      # Compare string(s) against monster names (case insensitive)
-                                      x = monster_name, ignore.case = TRUE))
+
+    # More than one name given? Collapse into one string match pattern
+    name_query <- ifelse(test = length(name) > 1,
+                         yes = paste(name, collapse = "|"),
+                         no = name)
+
+    # Filter to just those that match (case in-sensitive)
+    monster_v1 <- monster_v0 %>%
+      dplyr::filter(grepl(pattern = name_query, x = monster_name, ignore.case = TRUE))
+
+    # If not provided, just pass to next object name
   } else { monster_v1 <- monster_v0 }
 
   # Filter by size if sizes are provided
   if(is.null(size) != TRUE){
-    monster_v2 <- dplyr::filter(.data = monster_v1,
-                                grepl(pattern = ifelse(test = length(size) > 1,
-                                                       yes = paste(size, collapse = "|"),
-                                                       no = size),
-                                      x = size, ignore.case = TRUE))
+    size_query <- ifelse(test = length(size) > 1,
+                         yes = paste(size, collapse = "|"),
+                         no = size)
+    monster_v2 <- monster_v1 %>%
+      dplyr::filter(grepl(pattern = size_query, x = monster_size, ignore.case = TRUE))
   } else { monster_v2 <- monster_v1 }
 
-  # Filter by level if levels are provided
-  if(is.null(level) != TRUE){
-
-    # If level isn't a character, make it so
-    if(is.character(level) != TRUE) { level <- as.character(level) }
-
-    # Do actual subsetting
-    monster_v3 <- dplyr::filter(.data = monster_v2,
-                                grepl(pattern = ifelse(test = length(level) > 1,
-                                                       yes = paste(level, collapse = "|"),
-                                                       no = level),
-                                      x = monster_level, ignore.case = TRUE))
+  # Filter by type if types are provided
+  if(is.null(type) != TRUE){
+    type_query <- ifelse(test = length(type) > 1,
+                         yes = paste(type, collapse = "|"),
+                         no = type)
+    monster_v3 <- monster_v2 %>%
+      dplyr::filter(grepl(pattern = type_query, x = monster_type, ignore.case = TRUE))
   } else { monster_v3 <- monster_v2 }
 
-  # Filter by school if schools are provided
-  if(is.null(school) != TRUE){
-    monster_v4 <- dplyr::filter(.data = monster_v3,
-                                grepl(pattern = ifelse(test = length(school) > 1,
-                                                       yes = paste(school, collapse = "|"),
-                                                       no = school),
-                                      x = monster_school, ignore.case = TRUE))
+  # Filter by CR if CRs are provided
+  if(is.null(cr) != TRUE){
+    # Handle fraction CRs
+    cr <- gsub(pattern = "1/8", replacement = 1/8, x = cr)
+    cr <- gsub(pattern = "1/4", replacement = 1/4, x = cr)
+    cr <- gsub(pattern = "1/2", replacement = 1/2, x = cr)
+
+    # Query the monster table
+    monster_v4 <- dplyr::filter(.data = monster_v3, monster_cr %in% cr)
   } else { monster_v4 <- monster_v3 }
 
-  # Filter for/against ritual monsters if specified
-  if(is.null(ritual) != TRUE){
-
-    # Error out if ritual isn't logical
-    if(is.logical(ritual) != TRUE)
-      stop("`ritual` argument must be a `TRUE`, `FALSE`, or `NULL`")
-
-    # Otherwise, use it to filter by
-    monster_v5 <- dplyr::filter(.data = monster_v4, ritual_cast == ritual)
+  # Filter by XP if XPs are provided
+  if(is.null(xp) != TRUE){
+    # Query the monster table
+    monster_v5 <- dplyr::filter(.data = monster_v4, monster_xp %in% xp)
   } else { monster_v5 <- monster_v4 }
 
-  # Filter by casting time
-  if(is.null(cast_time) != TRUE){
+  # Filter by source if sources are provided
+  if(is.null(source) != TRUE){
+    # Remove apostrophes from source entry
+    source <- gsub(pattern = "'", replacement = "", x = source)
 
-    # Actually do initial filtering
-    monster_v6a <- dplyr::filter(.data = monster_v5,
-                                 grepl(pattern = ifelse(test = length(cast_time) > 1,
-                                                        yes = paste(cast_time, collapse = "|"),
-                                                        no = cast_time),
-                                       x = casting_time, ignore.case = TRUE))
+    # Collapse multiple entries
+    source_query <- ifelse(test = length(source) > 1,
+                           yes = paste(source, collapse = "|"),
+                           no = source)
 
-    # If reaction isn't specified by user, drop it
-    ## Necessary because of partial string match of "action" with "reaction"
-    if(!"reaction" %in% cast_time){
-      monster_v6b <- dplyr::filter(.data = monster_v6a, grepl(pattern = "reaction", x = casting_time,
-                                                              ignore.case = TRUE) == FALSE)
-    } else { monster_v6b <- monster_v6a }
+    # Query
+    monster_v6 <- monster_v5 %>%
+      dplyr::filter(grepl(pattern = source_query, x = monster_source, ignore.case = TRUE))
+  } else { monster_v6 <- monster_v5 }
 
-    # Ditto for bonus action
-    ## Necessary because of partial string match of "action" with "bonus action"
-    if(!"bonus action" %in% cast_time){
-      monster_v6c <- dplyr::filter(.data = monster_v6b, grepl(pattern = "bonus action", x = casting_time,
-                                                              ignore.case = TRUE) == FALSE)
-    } else { monster_v6c <- monster_v6b }
+  # If no monsters meet these criteria...
+  if(nrow(monster_v6) == 0){
 
-  } else { monster_v6c <- monster_v5 } # Skip this mess if the argument isn't specified to begin with
-
-  # If there are no monsters identified by those arguments...
-  if(nrow(monster_v6c) == 0){
     # Return a message
     message("No monsters match these criteria; consider revising search")
 
-    # Otherwise do some final wrangling
+    # Otherwise...
   } else {
 
-    # Wrangle that object as needed before returning
-    monster_actual <- monster_v6c %>%
-      # Drop the description and higher_levels columns
-      dplyr::select(-description, -higher_levels) %>%
-      # Drop empty columns (none should exist but better safe than sorry)
-      dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) ))
+    # Do some final processing
+    monster_actual <- monster_v6 %>%
+      # Drop all action/ability information
+      dplyr::select(-dplyr::starts_with("ability_"), -dplyr::starts_with("action_")) %>%
+      # Drop any empty columns in this query
+      dplyr::select(dplyr::where(fn = ~ !( base::all(is.na(.)) | base::all(. == "")) )) %>%
+      # Make it a dataframe
+      as.data.frame()
 
-    # Return that object
-    return(as.data.frame(monster_actual)) } }
+    # Return that
+    return(monster_actual) } }
 
 
+
+
+
+
+name <- c("giant", "goblin")
+size <- c("tiny", "gargantuan")
+type <- c("elemental", "undead")
+source <- c("monster manual", "volos guide", "strahd")
+xp <- "10000"
+cr = c("0.125", "5")
 
 
 # End ----
