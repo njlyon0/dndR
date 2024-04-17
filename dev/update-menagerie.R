@@ -315,7 +315,14 @@ menagerie <- beasts_v4 %>%
   dplyr::relocate(dplyr::starts_with("damage_"),
                   .after = saving_throws) %>%
   # Drop unwanted columns
-  dplyr::select(-page_number)
+  dplyr::select(-page_number) %>%
+  # Pivot (slightly) longer for ease of documentation
+  tidyr::pivot_longer(cols = c(dplyr::starts_with("ability_"),
+                               dplyr::starts_with("action_")),
+                      names_to = "description_type",
+                      values_to = "description_text") %>%
+  # Drop NAs that introduces
+  dplyr::filter(!is.na(description_text) & nchar(description_text) != 0)
 
 # Last structure check
 dplyr::glimpse(menagerie)
