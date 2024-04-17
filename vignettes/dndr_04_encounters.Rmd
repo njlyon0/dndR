@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ```{r libs, echo = F, message = F}
 # devtools::install_github("njlyon0/dndR", force = TRUE)
-library(dndR); library(ggplot2); library(magrittr); library(dplyr); library(tidyr)
+library(dndR)
 ```
 
 When I am the Dungeon/Game Master (DM / GM) I find encounter balancing to be really difficult, in part because of the nest of interrelated tables and experience point multipliers outlined in the Dungeon Master's Guide (DMG) that must be consulted for novice GMs such as myself. To help other newbies, `dndR` includes two core functions aimed at simplifying encounter balancing.
@@ -80,96 +80,3 @@ dndR::xp_cost(monster_xp = 600, monster_count = 3, party_size = 4)
 ```
 
 Basically right on target! I can now pick out my three monsters that total up to 600 XP raw and know that they will likely* make a hard encounter for my players! (* "Likely" because there is dice rolling involved and it is possible that the monsters roll well while my players roll badly or vice versa).
-
-## `dndR` versus DMG Comparisons
-
-See below for some comparisons between my functions and the Dungeon Master's Guide statistics they recapitulate.
-
-### `xp_pool` vs. DMG
-
-The DMG specifies the XP threshold *per player* for a given difficulty while my function asks for the *average* player level and the party size. This difference keeps the function streamlined and flexible for parties of any size. Rather than embedding the DMG's table for encounter XP, `xp_pool` actually uses the formula for the line defining the XP-party level curve implicit in the DMG. This has the added benefit of being able to handle non-integer values for average party_level. 
-
-Below is a comparison of the DMG's XP-to-party level curve versus the one obtained by `xp_pool`.
-
-```{r xp-pool-plot, echo = F, warning = F, error = F, fig.height = 4, fig.width = 4, fig.align = "center"}
-xp_df <- data.frame('pc_level' = 1:20,
-                    'easy_xp' = c(25, 50, 75, 125, 250, 300, 350, 450,
-                                  550, 600, 800, 1000, 1100, 1250, 1400, 
-                                  1600, 2000, 2100, 2400, 2800)) %>%
-  # For each row...
-  dplyr::rowwise() %>%
-  # Calculate the XP for that party level using my function
-  dplyr::mutate(calc_xp = dndR::xp_pool(party_level = pc_level,
-                                        party_size = 1,
-                                        difficulty = 'easy')) %>%
-  # Rename a column more intuitively
-  dplyr::rename(book_xp = easy_xp) %>%
-  # Pivot longer for ease of plotting
-  tidyr::pivot_longer(cols = -pc_level, 
-                      names_to = 'calc_method',
-                      values_to = 'xp') %>%
-  # Change the entries of the calc_method column
-  dplyr::mutate(authority = base::ifelse(test = (calc_method == "book_xp"),
-                             yes = "DMG", no = "dndR"))
-
-# Create the plot
-ggplot2::ggplot(xp_df, aes(x = pc_level, y = xp, shape = authority))  +
-  geom_point(aes(fill = authority), color = 'black', size = 3, alpha = 0.8,
-             pch = rep(x = c(21, 24), times = 20),
-             position = position_dodge(width = 0.5)) +
-  geom_smooth(aes(color = authority), method = 'loess',
-              formula = 'y ~ x', se = FALSE) +
-  labs(x = "Party Level", y = "Experience Points (XP)") +
-  scale_color_manual(values = c("#f46d43", "#74add1")) +
-  scale_fill_manual(values = c("#f46d43", "#74add1")) +
-  theme_classic() +
-  theme(legend.position = c(0.15, 0.9),
-        legend.title = element_blank(),
-        axis.text.y = element_text(angle = 90, hjust = 0.5),
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 16))
-```
-
-### `cr_convert` vs. DMG
-
-`cr_convert` is embedded in the `monster_stats` function and is what allows that function to handle both CR and XP inputs. The DMG specifies the XP value of a monster of any CR from 0 to 30 so `cr_convert` uses the formula of that line to avoid querying the table for this conversion.
-
-Below is the comparison of the DMG's XP-to-CR curve and the one produced by `cr_convert`.
-
-```{r cr-convert-plot, echo = F, warning = F, error = F, fig.height = 4, fig.width = 4, fig.align = "center"}
-cr_actual <- data.frame(
-  "cr" = c(0, 0.125, 0.25, 0.5, 1:30),
-  "dmg_xp" = c(0, 25, 50, 100, 200, 450, 700, 1100, 1800, 2300, 2900,
-               3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000,
-               18000, 20000, 22000, 25000, 33000, 41000, 50000, 62000,
-               75000, 90000, 105000, 120000, 135000, 155000) ) %>%
-  # For each row...
-  dplyr::rowwise() %>%
-  # Calculate XP for a given CR using `cr_convert`
-  dplyr::mutate("calc_xp" = dndR::cr_convert(cr = cr)) %>%
-  # Pivot to long format
-  tidyr::pivot_longer(cols = dplyr::contains('_xp'),
-                      names_to = "authority",
-                      values_to = "xp") %>%
-  # And clean up the entries of the source column
-  dplyr::mutate(source = base::ifelse(test = (authority == "calc_xp"),
-                                      yes = "dndR", no = "DMG"))
-
-# Creat the plot comparison
-ggplot(cr_actual, aes(x = cr, y = xp, shape = source)) +
-  geom_point(aes(fill = source), color = 'black', size = 3, alpha = 0.8,
-             pch = rep(x = c(21, 24), times = 34),
-             position = position_dodge(width = 0.5)) +
-  geom_smooth(aes(color = source), method = 'loess',
-              formula = 'y ~ x', se = FALSE) +
-  # geom_smooth(formula = 'y ~ x', method = 'loess', se = F) +
-  labs(x = "Challenge Rating (CR)", y = "Experience Points (XP)") +
-  scale_color_manual(values = c("#c51b7d", "#4d9221")) +
-  scale_fill_manual(values = c("#c51b7d", "#4d9221")) +
-  theme_classic() +
-  theme(legend.position = c(0.2, 0.9),
-        legend.title = element_blank(),
-        axis.text.y = element_text(size = 12),
-        axis.text.x = element_text(size = 14),
-        axis.title = element_text(size = 16))
-```
