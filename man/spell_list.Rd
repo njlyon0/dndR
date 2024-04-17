@@ -33,6 +33,7 @@ spell_list(
 Query list of all Dungeons & Dragons spells based on partial string matches between user inputs and the relevant column of the spell information data table. Currently supports users querying the spell list by spell name, which class lists allow the spell, spell's level, the school of magic the spell belongs in, whether or not the spell can be cast as a ritual, and the time it takes to cast the spell. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude spells from the returned set of spells
 }
 \examples{
+# Search for evocation spells with 'fire' in the name that a wizard can cast
 spell_list(name = "fire", class = "wizard", school = "evocation")
 
 }

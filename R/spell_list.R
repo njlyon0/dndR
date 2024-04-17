@@ -15,6 +15,7 @@
 #' @export
 #'
 #' @examples
+#' # Search for evocation spells with 'fire' in the name that a wizard can cast
 #' spell_list(name = "fire", class = "wizard", school = "evocation")
 #'
 spell_list <- function(name = NULL, class = NULL, level = NULL,
