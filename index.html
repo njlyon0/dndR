@@ -41,9 +41,13 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/dndr_00_general_vignette.html">General Vignette</a>
-    <a class="dropdown-item" href="articles/dndr_01_everyone_vignette.html">Functions For Everyone</a>
-    <a class="dropdown-item" href="articles/dndr_02_gm_vignette.html">Functions For GMs</a>
+    <a class="dropdown-item" href="articles/dndr_00_dice.html">Dice Rolling</a>
+    <a class="dropdown-item" href="articles/dndr_01_characters.html">Character Creation</a>
+    <a class="dropdown-item" href="articles/dndr_02_creatures.html">Finding &amp; Making Creatures</a>
+    <a class="dropdown-item" href="articles/dndr_03_spells.html">Spells</a>
+    <a class="dropdown-item" href="articles/dndr_04_encounters.html">Encounter Balancing</a>
+    <a class="dropdown-item" href="articles/dndr_05_visuals.html">Visual Tools</a>
+    <a class="dropdown-item" href="articles/dndr_99_dmg-vs-dndr.html">DMG versus dndR</a>
   </div>
 </li>
 <li class="nav-item">
@@ -75,26 +79,29 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of <code>dndR</code> is to provide a suite of Dungeons &amp; Dragons (Fifth Edition a.k.a. “5e”) related functions to help both players and Dungeon Masters (DMs). Below are short descriptions of the functions currently included in <code>dndR</code>. I am always willing to expand that list though so if you have a DnD-related task that could be cool as a function, please <a href="https://github.com/njlyon0/dndR/issues" class="external-link">post it as an Issue</a> on this package’s GitHub repository!</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+<p>The goal of <code>dndR</code> is to provide a suite of Dungeons &amp; Dragons (Fifth Edition a.k.a. “5e”) related functions to help both players and Dungeon Masters (DMs). Below are short descriptions of the functions currently included in <code>dndR</code>. I am always willing to expand that list though so if you have a D&amp;D-related task that could be cool as a function, please <a href="https://github.com/njlyon0/dndR/issues" class="external-link">post it as an Issue</a> on this package’s GitHub repository!</p>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>You can install the development version of <code>dndR</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"njlyon0/dndR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="dice-rolling">Dice Rolling<a class="anchor" aria-label="anchor" href="#dice-rolling"></a>
+<h2 id="function-descriptions">Function Descriptions<a class="anchor" aria-label="anchor" href="#function-descriptions"></a>
 </h2>
+<div class="section level3">
+<h3 id="dice-rolling">Dice Rolling<a class="anchor" aria-label="anchor" href="#dice-rolling"></a>
+</h3>
 <ul>
 <li>
 <strong><code>roll</code></strong> – Roll specified number of dice and sums their outcomes. Supports returning the individual die results as a message and/or re-rolling 1s via optional arguments.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="character-creation">Character Creation<a class="anchor" aria-label="anchor" href="#character-creation"></a>
-</h2>
+<div class="section level3">
+<h3 id="character-creation">Character Creation<a class="anchor" aria-label="anchor" href="#character-creation"></a>
+</h3>
 <ul>
 <li>
 <p><strong><code>pc_creator</code></strong> – Stat out a character of specified race and class using your preferred method of rolling ability scores</p>
@@ -114,9 +121,9 @@
 <li><p><strong><code>npc_creator</code></strong> – Pick a job and race for any number of non-player characters (NPCs). Hopefully this provides a useful starting point when describing the patrons of a tavern or the travelers players glimpse on the edge of the flickering light cast by their campfire</p></li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="creatures--monsters">Creatures &amp; Monsters<a class="anchor" aria-label="anchor" href="#creatures--monsters"></a>
-</h2>
+<div class="section level3">
+<h3 id="creatures">Creatures<a class="anchor" aria-label="anchor" href="#creatures"></a>
+</h3>
 <ul>
 <li><p><strong><code>creature_list</code></strong> – Identify all creatures that fit certain criteria (e.g., experience point value, creature type, size, etc.)</p></li>
 <li><p><strong><code>creature_text</code></strong> – Retrieve full information and ability/action information text for specified creature(s)</p></li>
@@ -130,48 +137,47 @@
 </li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="magic">Magic<a class="anchor" aria-label="anchor" href="#magic"></a>
-</h2>
+<div class="section level3">
+<h3 id="spells">Spells<a class="anchor" aria-label="anchor" href="#spells"></a>
+</h3>
 <ul>
 <li><p><strong><code>spell_list</code></strong> – Identify all spells that fit certain criteria (e.g., spell level, school of magic, character class list, etc.)</p></li>
 <li><p><strong><code>spell_text</code></strong> – Retrieve full information and description text for specified spell(s)</p></li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="encounter-balancing">Encounter Balancing<a class="anchor" aria-label="anchor" href="#encounter-balancing"></a>
-</h2>
+<div class="section level3">
+<h3 id="encounters">Encounters<a class="anchor" aria-label="anchor" href="#encounters"></a>
+</h3>
 <ul>
 <li><p><strong><code>xp_pool</code></strong> – Identify XP total for desired encounter difficulty at a specified player level and party size</p></li>
 <li><p><strong><code>xp_cost</code></strong> – Find “realized” XP amount by applying appropriate multiplier for “raw” XP based on number of creatures and party size</p></li>
+<li><p><strong><code>cr_convert</code></strong> – Converts XP into equivalent Challenge Rating (CR)</p></li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="visual-tools">Visual Tools<a class="anchor" aria-label="anchor" href="#visual-tools"></a>
-</h2>
+<div class="section level3">
+<h3 id="visual-tools">Visual Tools<a class="anchor" aria-label="anchor" href="#visual-tools"></a>
+</h3>
 <ul>
-<li><p><strong><code>probability_plot</code></strong> – Generate a <code>ggplot2</code> plot of the frequency of roll outcomes for the specified type and number of dice. You can also specify the number of times to roll those dice to inform the plot</p></li>
 <li>
-<p><strong><code>party_diagram</code></strong> – Create a <code>ggplot2</code> diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind</p>
+<strong><code>party_diagram</code></strong> – Create a <code>ggplot2</code> diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind
 <ul>
 <li>Thank you to <a href="https://kudusch.de/" class="external-link">Tim Schatto-Eckrodt</a> for contributing this function!</li>
 </ul>
 </li>
+<li>
+<strong><code>probability_plot</code></strong> – Generate a <code>ggplot2</code> plot of the frequency of roll outcomes for the specified type and number of dice. You can also specify the number of times to roll those dice to inform the plot</li>
 </ul>
 </div>
+</div>
 <div class="section level2">
-<h2 id="contributing-functions">Contributing Functions<a class="anchor" aria-label="anchor" href="#contributing-functions"></a>
+<h2 id="contributing-to-dndr">Contributing to <code>dndR</code>
+<a class="anchor" aria-label="anchor" href="#contributing-to-dndr"></a>
 </h2>
 <p>If you’d like to contribute function scripts or ideas, that is more than welcome! For specific instructions check out <code>CONTRIBUTING.md</code> but at a glance:</p>
 <ul>
 <li><p>For function ideas, <a href="https://github.com/njlyon0/dndR/issues" class="external-link">open a Github issue</a></p></li>
-<li><p>For function scripts, either <a href="https://github.com/njlyon0/dndR/issues" class="external-link">open a Github issue</a> <em>or</em> fork the repository and add your content to the <code>dev</code> folder</p></li>
+<li><p>For function scripts, either <a href="https://github.com/njlyon0/dndR/issues" class="external-link">open a Github issue</a> <em>or</em> fork the repository and add your content to the <code>dev</code> folder and submit a pull request</p></li>
 </ul>
-</div>
-<div class="section level2">
-<h2 id="looking-ahead">Looking Ahead<a class="anchor" aria-label="anchor" href="#looking-ahead"></a>
-</h2>
-<p>I know that there are rumblings of a change to statistic modifiers becoming based on background rather than race so once those details are finalized I plan on creating a suite of functions that follow those guidelines. The extant functions follow “5e” rules as detailed in the Player’s Handbook (PHB) and Dungeon Master’s Guide (DMG).</p>
 </div>
 </div>
 

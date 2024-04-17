@@ -2,10 +2,14 @@ pandoc: 3.1.11
 pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
-  dndr_00_general_vignette: dndr_00_general_vignette.html
-  dndr_01_everyone_vignette: dndr_01_everyone_vignette.html
-  dndr_02_gm_vignette: dndr_02_gm_vignette.html
-last_built: 2024-04-17T18:13Z
+  dndr_00_dice: dndr_00_dice.html
+  dndr_01_characters: dndr_01_characters.html
+  dndr_02_creatures: dndr_02_creatures.html
+  dndr_03_spells: dndr_03_spells.html
+  dndr_04_encounters: dndr_04_encounters.html
+  dndr_05_visuals: dndr_05_visuals.html
+  dndr_99_dmg-vs-dndr: dndr_99_dmg-vs-dndr.html
+last_built: 2024-04-17T20:15Z
 urls:
   reference: https://njlyon0.github.io/dndR/reference
   article: https://njlyon0.github.io/dndR/articles
