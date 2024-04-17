@@ -73,6 +73,8 @@ devtools::install_github("njlyon0/dndR")
 
 - **`xp_cost`** -- Find "realized" XP amount by applying appropriate multiplier for "raw" XP based on number of creatures and party size
 
+- **`cr_convert`** -- Converts XP into equivalent Challenge Rating (CR)
+
 ### Visual Tools
 
 - **`party_diagram`** -- Create a `ggplot2` diagram of party ability scores separated either by player or by score. This plot can be useful in identifying the strengths and weaknesses of the party as a whole to help you (the DM) create encounters with that in mind
