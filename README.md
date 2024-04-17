@@ -55,6 +55,12 @@ devtools::install_github("njlyon0/dndR")
 - **`spell_text`** – Retrieve full information and description text for
   specified spell(s)
 
+- **`creature_list`** – Identify all creatures that fit certain criteria
+  (e.g., experience point value, creature type, size, etc.)
+
+- **`creature_text`** – Retrieve full information and ability/action
+  information text for specified creature(s)
+
 - **`probability_plot`** – Generate a `ggplot2` plot of the frequency of
   roll outcomes for the specified type and number of dice. You can also
   specify the number of times to roll those dice to inform the plot
