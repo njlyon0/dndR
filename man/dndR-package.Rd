@@ -19,9 +19,13 @@ Useful links:
 \author{
 \strong{Maintainer}: Nicholas Lyon \email{njlyon@alumni.iastate.edu} (\href{https://orcid.org/0000-0003-3905-1078}{ORCID}) (https://njlyon0.github.io/) [copyright holder]
 
+Authors:
+\itemize{
+  \item Tim Schatto-Eckrodt (https://kudusch.de/)
+}
+
 Other contributors:
 \itemize{
-  \item Tim Schatto-Eckrodt (https://kudusch.de/) [contributor]
   \item Humberto Nappo (\href{https://orcid.org/0000-0001-7810-1635}{ORCID}) [contributor]
 }
 
