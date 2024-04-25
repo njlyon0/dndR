@@ -11,16 +11,10 @@
       # Housekeeping ----
 ## --------------------------- ##
 # Load libraries
-librarian::shelf(tidyverse, dndR)
+librarian::shelf(dndR, tidyverse, magrittr)
 
 # Clear environment
 rm(list = ls())
-
-# Likely needed helper functions
-# ?dndR::xp_pool
-# ?dndR::xp_cost
-# ?dndR::creature_list
-# ?dndR::creatures
 
 ## --------------------------- ##
 # Exploration ----
@@ -80,17 +74,47 @@ available_df <- encounter_creator(enemy_type = "construct")
 # Check that
 str(available_df)
 
-# Check available XP manually
-(max_xp <- xp_pool(party_level = pc_level, party_size = pc_size, difficulty = enc_diff) )
+# Define other needed objects (will be arguments eventually)
+party_level = 5
+party_size = 4
+difficulty = "deadly"
 
-# Identify creature of the highest possible value still less than the max
-creature_pick <- creatures_avail %>%
-  dplyr::filter(creature_xp == max(creature_xp[creature_xp < max_xp], na.rm = TRUE))
+# Calculate maximum allowed XP for this encounter
+(max_xp <- xp_pool(party_level = party_level, party_size = party_size,
+                   difficulty = difficulty))
 
-# If more than one, pick one at random
-if(nrow(creature_pick) > 1){
-  creature_pick <- creature_pick[sample(x = 1:nrow(creature_pick), size = 1), ]
-}
+# Put a ceiling on that to be able to include more creatures
+(capped_xp <- ceiling(x = max_xp - (0.4 * max_xp)))
+
+# Pick the first creature of the encounter
+picked <- available_df %>%
+  # Choose highest possible XP that is still less than the capped XP
+  dplyr::filter(creature_xp == max(creature_xp[creature_xp < capped_xp])) %>%
+  # Pick one row of the result (if more than one)
+  dplyr::slice_sample(.data = ., n = 1)
+
+# Look at chosen creature
+picked
+
+# Calculate spent XP for this creature
+(spent_xp <- xp_cost(monster_xp = sum(picked$creature_xp),
+                     monster_count = nrow(picked),
+                     party_size = party_size))
+
+# Calculate remaining xp
+(remaining_xp <- max_xp - spent_xp)
+
+# Update set of available creatures
+available_df %<>%
+  # XP value less than (or equal to) remaining XP
+  dplyr::filter(creature_xp <= remaining_xp)
+
+
+
+
+
+
+
 
 # Compare to XP cost
 current_cost <- xp_cost(monster_xp = sum(creature_pick$creature_xp),
