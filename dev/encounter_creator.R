@@ -98,8 +98,8 @@ if(current_cost < (max_xp - min(creatures_avail$creature_xp))){
 # Function Exploration ----
 ## --------------------------- ##
 
-encounter_creator <- function(enemy_type = "undead", difficulty = "deadly",
-                              party_level = 5, party_size = 4, balance = "tougher"){
+encounter_creator <- function(party_level = 5, party_size = 4,
+                              difficulty = "deadly", enemy_type = "undead"){
 
   # If enemy type is null
   if(is.null(enemy_type) == TRUE){
@@ -135,67 +135,10 @@ encounter_creator <- function(enemy_type = "undead", difficulty = "deadly",
 
   } # Close conditional
 
+  # REST OF FUNCTION WILL GO HERE ----
 
-
-  # HERE NOW ----
-
-
-
-
-  # Check available XP manually
-  (max_xp <- xp_pool(party_level = pc_level, party_size = pc_size, difficulty = enc_diff) )
-
-  # Identify creature of the highest possible value still less than the max
-  creature_pick <- creatures_avail %>%
-    dplyr::filter(creature_xp == max(creature_xp[creature_xp < max_xp], na.rm = TRUE))
-
-  # If more than one, pick one at random
-  if(nrow(creature_pick) > 1){
-    creature_pick <- creature_pick[sample(x = 1:nrow(creature_pick), size = 1), ]
-  }
-
-  # Compare to XP cost
-  current_cost <- xp_cost(monster_xp = sum(creature_pick$creature_xp),
-                          monster_count = nrow(creature_pick),
-                          party_size = pc_size)
-
-  # If that's less than the allowed, try to grab another
-  if(current_cost < (max_xp - min(creatures_avail$creature_xp))){
-
-    # Calculate difference in XP
-    remaining_xp <- max_xp - current_cost
-
-    # Filter again
-    creature_pick2 <- creatures_avail %>%
-      dplyr::filter(creature_xp == max(creature_xp[creature_xp < remaining_xp], na.rm = TRUE))
-
-    # If more than one, pick one at random
-    if(nrow(creature_pick2) > 1){
-      creature_pick2 <- creature_pick2[sample(x = 1:nrow(creature_pick2), size = 1), ]
-    }
-
-    # Check XP cost again
-    attempt_cost <- xp_cost(monster_xp = sum(creature_pick$creature_xp,
-                                             creature_pick2$creature_xp),
-                            monster_count = length(c(creature_pick$creature_name,
-                                                     creature_pick2$creature_name)),
-                            party_size = pc_size)
-
-    # If above allowed XP cost...
-    if(attempt_cost > max_xp){
-
-      # Information message
-      message("Exceeding allowable XP cost of encounter")
-
-      # # Drop creatures of this value of XP and try again with one tier lower
-      # creatures_avail <- creatures_avail %>%
-      #   dplyr::filter()
-    }
-
-
-  }
-
-
+  # Return available creatures
+  return(available)
 
 }
 
