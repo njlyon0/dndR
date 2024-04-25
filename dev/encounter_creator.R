@@ -23,22 +23,62 @@ rm(list = ls())
 # ?dndR::creatures
 
 ## --------------------------- ##
-# Scripted Exploration ----
+# Exploration ----
 ## --------------------------- ##
 
-# Define relevant objects
-enc_type <- "undead"
-pc_level <- 5
-pc_size <- 4
-enc_diff <- "deadly"
+# Define draft function
+encounter_creator <- function(party_level = 5, party_size = 4,
+                              difficulty = "deadly", enemy_type = "undead"){
 
-# Subset available creatures to only those of desired 'type'
-creatures_avail <- dndR::creatures %>%
-  # Drop any creatures worth 0 XP or NA XP (latter should be none but we'll see)
-  dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
-  # Drop all but needed columns
-  dplyr::select(creature_type, creature_name, creature_xp) %>%
-  dplyr::filter(stringr::str_detect(string = creature_type, pattern = enc_type))
+  # Load creature information
+  dndR::creatures
+
+  # If enemy type is null
+  if(is.null(enemy_type) == TRUE){
+
+    # Just simplify the creature data
+    available <- creatures %>%
+      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp)
+
+    # If enemy type is not null & is in the data
+  } else if(is.null(enemy_type) != TRUE &
+            any(stringr::str_detect(string = unique(creatures$creature_type),
+                                    pattern = enemy_type)) == TRUE){
+
+    # Simplify **and filter** the creature data
+    available <- creatures %>%
+      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp) %>%
+      dplyr::filter(stringr::str_detect(string = creature_type, pattern = enemy_type))
+
+    # If enemy type is not null but isn't in the data
+  } else if(is.null(enemy_type) != TRUE &
+            any(stringr::str_detect(string = unique(creatures$creature_type),
+                                    pattern = enemy_type)) == FALSE){
+
+    # Warning message
+    rlang::warn("Enemy type not found in data. Including all enemy types as possibilities")
+
+    # Do same processing as when it isn't supplied
+    available <- creatures %>%
+      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp)
+
+  } # Close conditional
+
+  # REST OF FUNCTION WILL GO HERE ----
+
+  # Return available creatures
+  return(available)
+
+}
+
+# Invoke it to get as far as it'll take us
+available_df <- encounter_creator(enemy_type = "construct")
+
+# Check that
+str(available_df)
 
 # Check available XP manually
 (max_xp <- xp_pool(party_level = pc_level, party_size = pc_size, difficulty = enc_diff) )
@@ -75,9 +115,9 @@ if(current_cost < (max_xp - min(creatures_avail$creature_xp))){
   # Check XP cost again
   attempt_cost <- xp_cost(monster_xp = sum(creature_pick$creature_xp,
                                            creature_pick2$creature_xp),
-          monster_count = length(c(creature_pick$creature_name,
-                                   creature_pick2$creature_name)),
-          party_size = pc_size)
+                          monster_count = length(c(creature_pick$creature_name,
+                                                   creature_pick2$creature_name)),
+                          party_size = pc_size)
 
   # If above allowed XP cost...
   if(attempt_cost > max_xp){
@@ -92,56 +132,6 @@ if(current_cost < (max_xp - min(creatures_avail$creature_xp))){
 
 
 }
-
-
-## --------------------------- ##
-# Function Exploration ----
-## --------------------------- ##
-
-encounter_creator <- function(party_level = 5, party_size = 4,
-                              difficulty = "deadly", enemy_type = "undead"){
-
-  # If enemy type is null
-  if(is.null(enemy_type) == TRUE){
-
-    # Just simplify the creature data
-    available <- dndR::creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp)
-
-    # If enemy type is not null & is in the data
-  } else if(is.null(enemy_type) != TRUE &
-            stringr::str_detect(string = creature$creature_type,
-                                pattern = enemy_type) == TRUE){
-
-    # Simplify **and filter** the creature data
-    available <- dndR::creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp) %>%
-      dplyr::filter(stringr::str_detect(string = creature_type, pattern = enemy_type))
-
-    # If enemy type is not null but isn't in the data
-  } else if(is.null(enemy_type) != TRUE &
-            stringr::str_detect(string = creature$creature_type,
-                                pattern = enemy_type) == FALSE){
-
-    # Warning message
-    rlang::warn("Enemy type not found in data. Including all enemy types as possibilities")
-
-    # Do same processing as when it isn't supplied
-    available <- dndR::creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp)
-
-  } # Close conditional
-
-  # REST OF FUNCTION WILL GO HERE ----
-
-  # Return available creatures
-  return(available)
-
-}
-
 
 
 # End ----
