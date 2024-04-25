@@ -84,7 +84,7 @@ difficulty = "deadly"
                    difficulty = difficulty))
 
 # Put a ceiling on that to be able to include more creatures
-(capped_xp <- ceiling(x = max_xp - (max_xp / 2)))
+(capped_xp <- ceiling(x = max_xp - (max_xp * 0.65)))
 
 # Pick the first creature of the encounter
 (picked <- available_df %>%
@@ -104,7 +104,8 @@ difficulty = "deadly"
 # Update set of available creatures
 available_df %<>%
   # XP value less than (or equal to) remaining XP
-  dplyr::filter(creature_xp <= remaining_xp)
+  dplyr::filter(creature_xp <= remaining_xp &
+                  creature_xp < max(picked$creature_xp))
 
 # Loop across available XPs
 for(xp_value in rev(sort(unique(available_df$creature_xp)))){
@@ -113,15 +114,12 @@ for(xp_value in rev(sort(unique(available_df$creature_xp)))){
   message("Evaluating creatures worth ", xp_value, " XP")
 
   # See if including a creature of that XP is still below the threshold
-  (possible_xp <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
-                                      monster_count = nrow(picked) + 1,
-                                      party_size = party_size))
+  (possible_cost <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
+                            monster_count = nrow(picked) + 1,
+                            party_size = party_size))
 
-  # Compare with remaining XP
-  possible_remaining_xp <- remaining_xp - possible_xp
-
-  # If it's less than or equal to 0, remove this tier from the available list
-  if(possible_remaining_xp <= 0){
+  # If a creature of this value exceeds our available XP, drop it!
+  if(possible_cost > max_xp){
 
     message("Too costly!")
 
