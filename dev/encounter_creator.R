@@ -416,16 +416,19 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
     } # Close `else`
   } # Close while loop
 
-  # Return picked creatures
-  return(picked) }
+  # Add some nice diagnostics to the picked dataframe
+  encounter_info <- picked %>%
+    dplyr::mutate(encounter_xp_pool = max_xp,
+                  encounter_xp_cost = spent_xp)
+
+  # Return encounter information
+  return(encounter_info) }
 
 # Invoke the function
 encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
 
 # Invoke again with different arguments
 encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
-
-
 
 
 # End ----
