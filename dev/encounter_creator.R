@@ -27,12 +27,15 @@ encounter_creator <- function(party_level = 5, party_size = 4,
   # Load creature information
   dndR::creatures
 
+  # Define the minimum allowed XP value of a creature
+  weakest_xp <- 10
+
   # If enemy type is null
   if(is.null(enemy_type) == TRUE){
 
     # Just simplify the creature data
     available <- creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
       dplyr::select(creature_type, creature_name, creature_xp)
 
     # If enemy type is not null & is in the data
@@ -42,7 +45,7 @@ encounter_creator <- function(party_level = 5, party_size = 4,
 
     # Simplify **and filter** the creature data
     available <- creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
       dplyr::select(creature_type, creature_name, creature_xp) %>%
       dplyr::filter(stringr::str_detect(string = creature_type, pattern = enemy_type))
 
@@ -56,7 +59,7 @@ encounter_creator <- function(party_level = 5, party_size = 4,
 
     # Do same processing as when it isn't supplied
     available <- creatures %>%
-      dplyr::filter(creature_xp > 0 & !is.na(creature_xp)) %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
       dplyr::select(creature_type, creature_name, creature_xp)
 
   } # Close conditional
@@ -107,8 +110,11 @@ available_df %<>%
   dplyr::filter(creature_xp <= remaining_xp &
                   creature_xp < max(picked$creature_xp))
 
+# Identify XP levels of available creatures
+xp_levels <- unique(available_df$creature_xp)
+
 # Loop across available XPs
-for(xp_value in rev(sort(unique(available_df$creature_xp)))){
+for(xp_value in sample(x = xp_levels, size = length(xp_levels))){
 
   # Progress message
   message("Evaluating creatures worth ", xp_value, " XP")
