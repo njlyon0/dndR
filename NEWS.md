@@ -1,6 +1,6 @@
-## dndR Version 1.3.1.900
+## dndR Version 2.0.0
 
-Development version of `dndR`. The following changes were made from the preceding version:
+The following changes were made from the preceding version:
 
 - New function: `encounter_creator` -- picks a set of creature experience point (XP) values that constitute a balanced encounter of specified difficulty and given party composition information
 - New function: `creature_list` -- identifies Dungeons & Dragons creatures based on user specifications of various criteria (e.g., creature type, experience point value, size, etc.)
