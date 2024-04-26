@@ -293,8 +293,132 @@ while(spent_xp < max_xp & nrow(available_df) >= 1){
 picked
 
 ## --------------------------- ##
-# Function Expansion
+# Function Dev ----
 ## --------------------------- ##
+
+# Clear environment
+rm(list = ls())
+
+# Define draft function
+encounter_creator <- function(party_level = NULL, party_size = NULL,
+                              difficulty = NULL, enemy_type = NULL){
+
+  # `xp_pool` function will handle argument errors (except 'enemy_type'; see below)
+
+  # Load creature information
+  creatures <- dndR::creatures
+
+  # Define the minimum allowed XP value of a creature
+  weakest_xp <- 10
+
+  # If enemy type is null
+  if(is.null(enemy_type) == TRUE){
+
+    # Just simplify the creature data
+    available <- creatures %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp)
+
+    # If enemy type is not null & is in the data
+  } else if(is.null(enemy_type) != TRUE &
+            any(stringr::str_detect(string = unique(creatures$creature_type),
+                                    pattern = enemy_type)) == TRUE){
+
+    # Simplify **and filter** the creature data
+    available <- creatures %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp) %>%
+      dplyr::filter(stringr::str_detect(string = creature_type, pattern = enemy_type))
+
+    # If enemy type is not null but isn't in the data
+  } else if(is.null(enemy_type) != TRUE &
+            any(stringr::str_detect(string = unique(creatures$creature_type),
+                                    pattern = enemy_type)) == FALSE){
+
+    # Warning message
+    rlang::warn("Enemy type not found in data. Including all enemy types as possibilities")
+
+    # Do same processing as when it isn't supplied
+    available <- creatures %>%
+      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
+      dplyr::select(creature_type, creature_name, creature_xp)
+
+  } # Close conditional
+
+  # Calculate maximum allowed XP for this encounter
+  max_xp <- dndR::xp_pool(party_level = party_level, party_size = party_size,
+                          difficulty = difficulty)
+
+  # Put a ceiling on that to be able to include more creatures
+  capped_xp <- ceiling(x = max_xp - (max_xp * 0.65))
+
+  # Pick the first creature of the encounter
+  picked <- available %>%
+    # Choose highest possible XP that is still less than the capped XP
+    dplyr::filter(creature_xp == max(creature_xp[creature_xp < capped_xp])) %>%
+    # Pick one row of the result (if more than one)
+    dplyr::slice_sample(.data = ., n = 1)
+
+  # Calculate spent XP for this creature
+  spent_xp <- xp_cost(monster_xp = sum(picked$creature_xp),
+                      monster_count = nrow(picked),
+                      party_size = party_size)
+
+  # Calculate remaining xp
+  remaining_xp <- max_xp - spent_xp
+
+  # Update set of available creatures
+  available %<>%
+    # XP value less than (or equal to) remaining XP
+    dplyr::filter(creature_xp <= remaining_xp &
+                    creature_xp < max(picked$creature_xp))
+
+  # While there is XP to spend and creatures to spend it on, do so
+  while(spent_xp < max_xp & nrow(available) >= 1){
+
+    # Identify XP levels of remaining available creatures
+    xp_levels <- unique(available$creature_xp)
+
+    # Pick a random XP value
+    xp_value <- sample(x = xp_levels, size = 1)
+
+    # Progress message
+    message("Evaluating creatures worth ", xp_value, " XP")
+
+    # See if including a creature of that XP is still below the threshold
+    (possible_cost <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
+                              monster_count = nrow(picked) + 1,
+                              party_size = party_size))
+
+    # If this would be below the maximum allowed XP...
+    if(possible_cost < max_xp){
+
+      # Choose one candidate creature
+      candidate <- available %>%
+        dplyr::filter(creature_xp == xp_value) %>%
+        dplyr::slice_sample(.data = ., n = 1)
+
+      # Add this to the picked set of creatures
+      picked <- picked %>%
+        dplyr::bind_rows(candidate)
+
+      # Update the 'spent XP' object
+      spent_xp <- possible_cost
+
+      # If this would be *over* the allowed XP...
+    } else {
+
+      # Remove all creatures of this value from the set of available creatures
+      available %<>%
+        dplyr::filter(creature_xp != xp_value)
+
+    } # Close `else`
+  } # Close while loop
+
+  # Return picked creatures
+  return(picked) }
+
+# Invoke it
 
 
 
