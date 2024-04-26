@@ -364,13 +364,11 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
                       monster_count = nrow(picked),
                       party_size = party_size)
 
-  # Calculate remaining xp
-  remaining_xp <- max_xp - spent_xp
-
   # Update set of available creatures
   available %<>%
     # XP value less than (or equal to) remaining XP
-    dplyr::filter(creature_xp <= remaining_xp &
+    dplyr::filter(creature_xp <= (max_xp - spent_xp) &
+                    # And not as tough as the first chosen creature
                     creature_xp < max(picked$creature_xp))
 
   # While there is XP to spend and creatures to spend it on, do so
