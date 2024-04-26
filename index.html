@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">dndR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1.900</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@
 <ul>
 <li><p><strong><code>creature_list</code></strong> – Identify all creatures that fit certain criteria (e.g., experience point value, creature type, size, etc.)</p></li>
 <li><p><strong><code>creature_text</code></strong> – Retrieve full information and ability/action information text for specified creature(s)</p></li>
-<li><p><strong><code>monster_stats</code></strong> – Return generic monster stat block of specified XP value or challenge rating (CR)</p></li>
+<li><p><strong><code>monster_stats</code></strong> – Return generic monster stat block of specified experience point (XP) value or challenge rating (CR)</p></li>
 <li>
 <p><strong><code>monster_creator</code></strong> – Generate a homebrew monster with additional immunities and vulnerabilities of specified difficulty (adjustment for these is performed automatically)</p>
 <ul>
@@ -135,6 +135,7 @@
 </li>
 </ul>
 </li>
+<li><p><strong><code>cr_convert</code></strong> – Converts challenge rating into equivalent experience point value</p></li>
 </ul>
 </div>
 <div class="section level3">
@@ -149,10 +150,9 @@
 <h3 id="encounters">Encounters<a class="anchor" aria-label="anchor" href="#encounters"></a>
 </h3>
 <ul>
-<li><p><strong><code>encounter_creator</code></strong> – Pick set of creature experience point (XP) values that constitute a balanced encounter of specified difficulty and given party composition information</p></li>
-<li><p><strong><code>xp_pool</code></strong> – Identify XP total for desired encounter difficulty at a specified player level and party size</p></li>
-<li><p><strong><code>xp_cost</code></strong> – Find “realized” XP amount by applying appropriate multiplier for “raw” XP based on number of creatures and party size</p></li>
-<li><p><strong><code>cr_convert</code></strong> – Converts XP into equivalent Challenge Rating (CR)</p></li>
+<li><p><strong><code>encounter_creator</code></strong> – Pick set of creature experience point values that constitute a balanced encounter of specified difficulty and given party composition information</p></li>
+<li><p><strong><code>xp_pool</code></strong> – Identify experience point total for desired encounter difficulty at a specified player level and party size</p></li>
+<li><p><strong><code>xp_cost</code></strong> – Find “realized” experience point amount by applying appropriate multiplier for “raw” XP based on number of enemy creatures and party size</p></li>
 </ul>
 </div>
 <div class="section level3">
