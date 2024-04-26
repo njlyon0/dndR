@@ -430,5 +430,9 @@ encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
 # Invoke again with different arguments
 encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
 
+# Check obvious errors
+encounter_creator()
+encounter_creator(party_level = 5, party_size = 3,
+                  difficulty = "easy", enemy_type = "random")
 
 # End ----
