@@ -1,22 +1,24 @@
-## ---------------------------------------------- ##
-          # Automated Encounter Creation
-## ---------------------------------------------- ##
-# Script author(s): Nick Lyon
-
-# PURPOSE
-## Randomly select creatures to design an encounter of desired difficulty
-## Lean on several related existing `dndR` functions under the hood
-
-## --------------------------- ##
-      # Housekeeping ----
-## --------------------------- ##
-# Load libraries
-librarian::shelf(dndR, tidyverse, magrittr)
-
-# Clear environment
-rm(list = ls())
-
-# Define draft function
+#' @title x
+#'
+#' @description x
+#'
+#' @param party_level (numeric) integer indicating the average party level. If all players are the same level, that level is the average party level
+#' @param party_size (numeric) integer indicating how many player characters (PCs) are in the party
+#' @param difficulty (character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter
+#' @param enemy_type (character)
+#'
+#' @return (dataframe) creature types, names, and experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the XP cost of the returned creatures
+#' @importFrom magrittr %>%
+#'
+#' @export
+#'
+#' @examples
+#' # Invoke the function
+#' encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
+#'
+#' # Invoke again with different arguments
+#' encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
+#'
 encounter_creator <- function(party_level = NULL, party_size = NULL,
                               difficulty = NULL, enemy_type = NULL){
 
@@ -137,16 +139,3 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
 
   # Return encounter information
   return(encounter_info) }
-
-# Invoke the function
-encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
-
-# Invoke again with different arguments
-encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
-
-# Check obvious errors
-encounter_creator()
-encounter_creator(party_level = 5, party_size = 3,
-                  difficulty = "easy", enemy_type = "random")
-
-# End ----
