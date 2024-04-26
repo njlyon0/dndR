@@ -74,7 +74,7 @@ devtools::install_github("njlyon0/dndR")
   information text for specified creature(s)
 
 - **`monster_stats`** – Return generic monster stat block of specified
-  XP value or challenge rating (CR)
+  experience point (XP) value or challenge rating (CR)
 
 - **`monster_creator`** – Generate a homebrew monster with additional
   immunities and vulnerabilities of specified difficulty (adjustment for
@@ -83,6 +83,9 @@ devtools::install_github("njlyon0/dndR")
   - This function is inspired by [Zee Bashew’s video on creating
     *Witcher*-esque homebrew
     monsters](https://www.youtube.com/watch?v=GhjkPv4qo5w)
+
+- **`cr_convert`** – Converts challenge rating into equivalent
+  experience point value
 
 ### Spells
 
@@ -94,17 +97,16 @@ devtools::install_github("njlyon0/dndR")
 
 ### Encounters
 
-- **`encounter_creator`** – Pick set of creature experience point (XP)
-  values that constitute a balanced encounter of specified difficulty
-  and given party composition information
+- **`encounter_creator`** – Pick set of creature experience point values
+  that constitute a balanced encounter of specified difficulty and given
+  party composition information
 
-- **`xp_pool`** – Identify XP total for desired encounter difficulty at
-  a specified player level and party size
+- **`xp_pool`** – Identify experience point total for desired encounter
+  difficulty at a specified player level and party size
 
-- **`xp_cost`** – Find “realized” XP amount by applying appropriate
-  multiplier for “raw” XP based on number of creatures and party size
-
-- **`cr_convert`** – Converts XP into equivalent Challenge Rating (CR)
+- **`xp_cost`** – Find “realized” experience point amount by applying
+  appropriate multiplier for “raw” XP based on number of enemy creatures
+  and party size
 
 ### Visual Tools
 
