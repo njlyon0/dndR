@@ -247,11 +247,11 @@ available_df %<>%
   dplyr::filter(creature_xp <= remaining_xp &
                   creature_xp < max(picked$creature_xp))
 
-# Identify XP levels of available creatures
-xp_levels <- unique(available_df$creature_xp)
-
 # While there is XP to spend and creatures to spend it on, do so
 while(spent_xp < max_xp & nrow(available_df) >= 1){
+
+  # Identify XP levels of remaining available creatures
+  xp_levels <- unique(available_df$creature_xp)
 
   # Pick a random XP value
   xp_value <- sample(x = xp_levels, size = 1)
@@ -273,7 +273,11 @@ while(spent_xp < max_xp & nrow(available_df) >= 1){
       dplyr::slice_sample(.data = ., n = 1)
 
     # Add this to the picked set of creatures
-    picked <- dplyr::bind_rows(candidate)
+    picked <- picked %>%
+      dplyr::bind_rows(candidate)
+
+    # Update the 'spent XP' object
+    spent_xp <- possible_cost
 
     # If this would be *over* the allowed XP...
   } else {
