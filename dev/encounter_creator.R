@@ -21,7 +21,7 @@ rm(list = ls())
 ## --------------------------- ##
 
 # Define draft function
-encounter_creator <- function(party_level = 5, party_size = 4,
+creature_subset <- function(party_level = 5, party_size = 4,
                               difficulty = "deadly", enemy_type = "undead"){
 
   # Load creature information
@@ -72,7 +72,7 @@ encounter_creator <- function(party_level = 5, party_size = 4,
 }
 
 # Invoke it to get as far as it'll take us
-available_df <- encounter_creator(enemy_type = "construct")
+available_df <- creature_subset(enemy_type = "construct")
 
 # Check that
 str(available_df)
@@ -158,7 +158,7 @@ picked
 rm(list = ls())
 
 # Define draft function
-encounter_creator <- function(party_level = 5, party_size = 4,
+creature_subset <- function(party_level = 5, party_size = 4,
                               difficulty = "deadly", enemy_type = "undead"){
 
   # Load creature information
@@ -209,7 +209,7 @@ encounter_creator <- function(party_level = 5, party_size = 4,
 }
 
 # Invoke it to get as far as it'll take us
-available_df <- encounter_creator(enemy_type = "construct")
+available_df <- creature_subset(enemy_type = "construct")
 
 # Check that
 str(available_df)
@@ -286,11 +286,18 @@ while(spent_xp < max_xp & nrow(available_df) >= 1){
     available_df %<>%
       dplyr::filter(creature_xp != xp_value)
 
-    }
+    } # Close `else`
 
 } # Close while loop
 
 picked
+
+## --------------------------- ##
+# Function Expansion
+## --------------------------- ##
+
+
+
 
 
 # End ----
