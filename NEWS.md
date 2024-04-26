@@ -2,6 +2,7 @@
 
 Development version of `dndR`. The following changes were made from the preceding version:
 
+- New function: `encounter_creator` -- picks a set of creature experience point (XP) values that constitute a balanced encounter of specified difficulty and given party composition information
 - New function: `creature_list` -- identifies Dungeons & Dragons creatures based on user specifications of various criteria (e.g., creature type, experience point value, size, etc.)
 - New function: `creature_text` -- retrieves full description text of creature(s) specified by user
 - Adding support for re-rolling of 1s in `roll` result

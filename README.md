@@ -94,6 +94,10 @@ devtools::install_github("njlyon0/dndR")
 
 ### Encounters
 
+- **`encounter_creator`** – Pick set of creature experience point (XP)
+  values that constitute a balanced encounter of specified difficulty
+  and given party composition information
+
 - **`xp_pool`** – Identify XP total for desired encounter difficulty at
   a specified player level and party size
 
