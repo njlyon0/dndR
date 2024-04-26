@@ -27,11 +27,11 @@ If you want to identify creatures defined by official D&D source books, the `cre
 See the help file for `monster_list` for the full list of supported query criteria.
 
 ```{r creature_list}
-# Find all tiny construct creatures
-robot_df <- dndR::creature_list(size = "tiny", type = "construct")
+# Find all small creatures with 'goblin' in their name
+gobbo_df <- dndR::creature_list(name = "goblin", size = "small")
 
 # Check the structure of that output
-str(robot_df)
+str(gobbo_df)
 ```
 
 ### Creature Descriptions
@@ -42,7 +42,7 @@ If you need to access the specific description of a particular creature (or crea
 # Get the information for a hunter shark
 shark_df <- dndR::creature_text(name = "hunter shark")
 
-# Check that our
+# Check that out
 head(shark_df, n = 7)
 ```
 
