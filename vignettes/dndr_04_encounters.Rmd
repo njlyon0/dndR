@@ -16,7 +16,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(dndR)
 ```
 
-Creating balanced combat encounters can be surprisingly difficult, especially for newer Dungeon/Game Masters (DMs / GMs). If you want to use the Dungeon Master's Guide (DMG) you need to consult several interrelated tables for each encounter. To help other newbies--like myself!--`dndR` includes a handful of funtions aimed at simplifying the encounter balancing process.
+Creating balanced combat encounters can be surprisingly difficult, especially for newer Dungeon/Game Masters (DMs / GMs). If you want to use the Dungeon Master's Guide (DMG) you need to consult several interrelated tables for each encounter. To help other newbies--like myself!--`dndR` includes a handful of functions aimed at simplifying the encounter balancing process.
 
 ## Encounter Creation
 
