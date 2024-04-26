@@ -9,6 +9,7 @@
 #'
 #' @return (dataframe) creature types, names, and experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the XP cost of the returned creatures
 #' @importFrom magrittr %>%
+#' @importFrom magrittr %<>%
 #'
 #' @export
 #'
@@ -18,6 +19,8 @@
 #'
 encounter_creator <- function(party_level = NULL, party_size = NULL,
                               difficulty = NULL, enemy_type = NULL){
+  # Silence visible bindings note
+  . <- creature_xp <- creature_type <- creature_name <- NULL
 
   # `xp_pool` function will handle argument errors (except 'enemy_type'; see below)
 
