@@ -111,35 +111,35 @@ matches.</p>
 <p>See the help file for <code>monster_list</code> for the full list of
 supported query criteria.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Find all tiny construct creatures</span></span>
-<span><span class="va">robot_df</span> <span class="op">&lt;-</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/creature_list.html">creature_list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="st">"tiny"</span>, type <span class="op">=</span> <span class="st">"construct"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Find all small creatures with 'goblin' in their name</span></span>
+<span><span class="va">gobbo_df</span> <span class="op">&lt;-</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/creature_list.html">creature_list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"goblin"</span>, size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Check the structure of that output</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">robot_df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    6 obs. of  23 variables:</span></span>
-<span><span class="co">#&gt;  $ creature_name       : chr  "Broodiken" "Clockwork Beetle" "Emerald Eye" "Homunculus" ...</span></span>
-<span><span class="co">#&gt;  $ creature_source     : chr  "Tome Of Beasts" "Tome Of Beasts" "Tome Of Beasts" "Monster Manual" ...</span></span>
-<span><span class="co">#&gt;  $ STR                 : chr  "8 (-1)" "8 (-1)" "3 (-4)" "4 (-3)" ...</span></span>
-<span><span class="co">#&gt;  $ DEX                 : chr  "14 (+2)" "16 (+3)" "15 (+2)" "15 (+2)" ...</span></span>
-<span><span class="co">#&gt;  $ CON                 : chr  "16 (+3)" "10 (+0)" "14 (+2)" "11 (0)" ...</span></span>
-<span><span class="co">#&gt;  $ INT                 : chr  "2 (-4)" "4 (-3)" "15 (+2)" "10 (0)" ...</span></span>
-<span><span class="co">#&gt;  $ WIS                 : chr  "10 (+0)" "12 (+1)" "12 (+1)" "10 (0)" ...</span></span>
-<span><span class="co">#&gt;  $ CHA                 : chr  "6 (-2)" "7 (-2)" "16 (+3)" "7 (-2)" ...</span></span>
-<span><span class="co">#&gt;  $ creature_size       : chr  "tiny" "tiny" "tiny" "tiny" ...</span></span>
-<span><span class="co">#&gt;  $ creature_type       : chr  "construct" "construct" "construct" "construct" ...</span></span>
-<span><span class="co">#&gt;  $ creature_alignment  : chr  "neutral" "unaligned" "chaotic evil" "neutral" ...</span></span>
-<span><span class="co">#&gt;  $ creature_xp         : int  200 100 200 10 200 50</span></span>
-<span><span class="co">#&gt;  $ creature_cr         : num  1 0.5 1 0 1 0.25</span></span>
-<span><span class="co">#&gt;  $ languages           : chr  "--" "understands common, telepathy 100 ft. (creator only)" "common, draconic, telepathy 250 ft." "understands the languages of its creator but can't speak" ...</span></span>
-<span><span class="co">#&gt;  $ skills              : chr  "Perception +4, Stealth +6" "Stealth +5" "Acrobatics +4, Arcana +4, Deception +5, History +4, Perception +3, Persuasion +5, Religion +4" "" ...</span></span>
-<span><span class="co">#&gt;  $ speed               : chr  "20 ft., climb 20 ft." "30 ft., fly 50 ft." "0 ft., fly 30 ft. (hover)" "20 ft., fly 40 ft." ...</span></span>
-<span><span class="co">#&gt;  $ hit_points          : chr  "55 (10d4 + 30)" "15 (6d4)" "54 (12d4 + 24)" "5 (2d4)" ...</span></span>
-<span><span class="co">#&gt;  $ armor_class         : chr  "13 (natural armor)" "14 (natural armor)" "14" "13 (natural armor)" ...</span></span>
-<span><span class="co">#&gt;  $ senses              : chr  "darkvision 60 ft., passive perception 14" "darkvision 60 ft., passive perception 11" ", passive perception 13" "darkvision 60 ft." ...</span></span>
-<span><span class="co">#&gt;  $ saving_throws       : chr  "" "DEX +5" "DEX +4, CON +4, INT +4" "" ...</span></span>
-<span><span class="co">#&gt;  $ damage_immunities   : chr  "poison" "poison, psychic" "poison" "poison" ...</span></span>
-<span><span class="co">#&gt;  $ damage_resistances  : chr  "bludgeoning, piercing, and slashing damage from nonmagical weapons" "" "cold, fire; piercing damage" "" ...</span></span>
-<span><span class="co">#&gt;  $ condition_immunities: chr  "charmed, exhaustion, frightened, paralyzed, petrified, poisoned" "charmed, exhaustion, frightened, paralyzed, petrified, poisoned" "blinded, deafened, exhausted, paralyzed, petrified, poisoned, prone, unconscious" "charmed, poisoned" ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">gobbo_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    7 obs. of  23 variables:</span></span>
+<span><span class="co">#&gt;  $ creature_name       : chr  "Dust Goblin" "Fire Goblin" "Goblin" "Goblin Boss" ...</span></span>
+<span><span class="co">#&gt;  $ creature_source     : chr  "Tome Of Beasts" "Tome Of Horrors" "Monster Manual" "Monster Manual" ...</span></span>
+<span><span class="co">#&gt;  $ STR                 : chr  "8 (-1)" "14 (+2)" "8 (-1)" "10 (0)" ...</span></span>
+<span><span class="co">#&gt;  $ DEX                 : chr  "16 (+3)" "18 (+4)" "14 (+2)" "14 (+2)" ...</span></span>
+<span><span class="co">#&gt;  $ CON                 : chr  "14 (+2)" "13 (+1)" "10 (0)" "10 (0)" ...</span></span>
+<span><span class="co">#&gt;  $ INT                 : chr  "10 (+0)" "16 (+3)" "10 (0)" "10 (0)" ...</span></span>
+<span><span class="co">#&gt;  $ WIS                 : chr  "8 (-1)" "10 (+0)" "8 (-1)" "8 (-1)" ...</span></span>
+<span><span class="co">#&gt;  $ CHA                 : chr  "8 (-1)" "12 (+1)" "8 (-1)" "10 (0)" ...</span></span>
+<span><span class="co">#&gt;  $ creature_size       : chr  "small" "small" "small" "small" ...</span></span>
+<span><span class="co">#&gt;  $ creature_type       : chr  "humanoid" "humanoid" "humanoid (goblinoid)" "humanoid (goblinoid)" ...</span></span>
+<span><span class="co">#&gt;  $ creature_alignment  : chr  "neutral evil" "neutral evil" "neutral evil" "neutral evil" ...</span></span>
+<span><span class="co">#&gt;  $ creature_xp         : int  50 2900 50 200 100 1100 200</span></span>
+<span><span class="co">#&gt;  $ creature_cr         : num  0.25 7 0.25 1 0.5 4 1</span></span>
+<span><span class="co">#&gt;  $ languages           : chr  "common, goblin" "common, goblin, sylvan" "common, goblin" "common, goblin" ...</span></span>
+<span><span class="co">#&gt;  $ skills              : chr  "Stealth +7" "Deception +4, Perception +3, Stealth +7" "Stealth +6" "Stealth +6" ...</span></span>
+<span><span class="co">#&gt;  $ speed               : chr  "40 ft." "20 ft." "30 ft." "30 ft." ...</span></span>
+<span><span class="co">#&gt;  $ hit_points          : chr  "5 (1d6 + 2)" "45 (10d6 + 10)" "7 (2d6)" "21 (6d6)" ...</span></span>
+<span><span class="co">#&gt;  $ armor_class         : chr  "14 (leather armor)" "15 (natural armor)" "15 (leather armor, shield)" "17 (chain shirt, shield)" ...</span></span>
+<span><span class="co">#&gt;  $ senses              : chr  "darkvision 60 ft., passive perception 9" "darkvision 120 ft., passive perception 13" "darkvision 60 ft." "darkvision 60 ft." ...</span></span>
+<span><span class="co">#&gt;  $ saving_throws       : chr  "" "DEX +7, CON +4" "" "" ...</span></span>
+<span><span class="co">#&gt;  $ damage_immunities   : chr  "" "fire" "" "" ...</span></span>
+<span><span class="co">#&gt;  $ damage_resistances  : chr  "" "lightning; bludgeoning, piercing, and slashing from nonmagical weapons" "" "" ...</span></span>
+<span><span class="co">#&gt;  $ condition_immunities: chr  "charmed, frightened" "" "" "" ...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="creature-descriptions">Creature Descriptions<a class="anchor" aria-label="anchor" href="#creature-descriptions"></a>
@@ -153,7 +153,7 @@ source book.</p>
 <code class="sourceCode R"><span><span class="co"># Get the information for a hunter shark</span></span>
 <span><span class="va">shark_df</span> <span class="op">&lt;-</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/creature_text.html">creature_text</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"hunter shark"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Check that our</span></span>
+<span><span class="co"># Check that out</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">shark_df</span>, n <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Hunter Shark</span></span>
 <span><span class="co">#&gt; 1 Source: Monster Manual</span></span>

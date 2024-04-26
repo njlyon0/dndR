@@ -86,106 +86,104 @@
 
     
     
-<p>When I am the Dungeon/Game Master (DM / GM) I find encounter
-balancing to be really difficult, in part because of the nest of
-interrelated tables and experience point multipliers outlined in the
-Dungeon Master’s Guide (DMG) that must be consulted for novice GMs such
-as myself. To help other newbies, <code>dndR</code> includes two core
-functions aimed at simplifying encounter balancing.</p>
-<div class="section level3">
-<h3 id="experience-point-xp-thresholds">Experience Point (XP) Thresholds<a class="anchor" aria-label="anchor" href="#experience-point-xp-thresholds"></a>
-</h3>
-<p>The difficulty of an encounter in D&amp;D is affected by three
-things:</p>
+<p>Creating balanced combat encounters can be surprisingly difficult,
+especially for newer Dungeon/Game Masters (DMs / GMs). If you want to
+use the Dungeon Master’s Guide (DMG) you need to consult several
+interrelated tables for each encounter. To help other newbies–like
+myself!–<code>dndR</code> includes a handful of funtions aimed at
+simplifying the encounter balancing process.</p>
+<div class="section level2">
+<h2 id="encounter-creation">Encounter Creation<a class="anchor" aria-label="anchor" href="#encounter-creation"></a>
+</h2>
+<p>If you’d rather avoid consulting the DMG at all, the
+<code>encounter_creator</code> function may be a valuable tool for you
+to consider. This function requires the average level of all player
+characters in the party, the number of players in the party, and how
+difficult you’d like to make the encounter (allowable answers are
+‘easy’, ‘medium’, ‘hard’, and ‘deadly’). Once you’ve provided this
+information, it will automatically select one tougher creature and as
+many other creatures as possible <em>without making the encounter more
+difficult than you specified</em>.</p>
+<p>The function returns a dataframe with one row for each unique
+experience point (XP) value of the selected creatures. A separate column
+indicates the number of creatures worth that amount of XP that should be
+selected in the encounter. The function also returns the “pool” of XP
+available for the encounter and the realized XP “cost” of the chosen
+creatures. More detail is provided on this later in this vignette but
+for now keep in mind that there is an optimization step being done under
+the hood so this function <u>will not always return identical
+results</u>. I suggest running the function more than once until you are
+satisfied with the results!</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pick a hard set of creatures for a four-person party of 3rd level characters</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/encounter_creator.html">encounter_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">"hard"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
+<span><span class="co">#&gt;   creature_xp creature_count encounter_xp_pool encounter_xp_cost</span></span>
+<span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>         200              1              <span style="text-decoration: underline;">1</span>112              <span style="text-decoration: underline;">1</span>100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>         100              1              <span style="text-decoration: underline;">1</span>112              <span style="text-decoration: underline;">1</span>100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>          50              2              <span style="text-decoration: underline;">1</span>112              <span style="text-decoration: underline;">1</span>100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>          10              4              <span style="text-decoration: underline;">1</span>112              <span style="text-decoration: underline;">1</span>100</span></span></code></pre></div>
+<p>After this function has identified the number and XP value of the
+creatures in this encounter, you may consider using other
+<code>dndR</code> functions to identify specific creatures (e.g.,
+<code>creature_list</code>, etc.) or use your favorite source book /
+homebrew to decide on particular creatures.</p>
+</div>
+<div class="section level2">
+<h2 id="xp-balancing">XP Balancing<a class="anchor" aria-label="anchor" href="#xp-balancing"></a>
+</h2>
+<p>This may be more detail than you require but a small description of
+how experience points are used to balance encounters (in and outside of
+this R package) will be useful context for some of the other encounter
+balancing tools described below. In essence, the difficulty of a combat
+encounter in Dungeons and Dragons is affected by four things:</p>
 <ol style="list-style-type: decimal">
 <li>Level of characters</li>
 <li>Number of characters in the party</li>
-<li>How difficult the GM wants to make things for their players</li>
+<li>How difficult the GM wants to make the encounter</li>
+<li>How many enemy creatures are included</li>
 </ol>
-<p>The DMG handles this by providing experience point (XP) thresholds
-based on these three factors. All enemies are worth a pre-determined
-amount of XP so encounters are balanced by the DMG listing the total XP
-of all monsters in a given fight for every level of players, party size,
-and difficulty. That table is useful but a little dense to work through
-as you’re prepping potentially multiple encounters per session, so this
-is where <code>xp_pool</code> becomes useful.</p>
+<p>The first three go into the “pool” of available experience points to
+spend on a given encounter. However, the number of creatures can
+dramatically influence how difficult an encounter is even if their total
+XP value is the same (e.g., a fight against one 1000 XP creature versus
+against four 250 XP creatures). This realized XP “cost” is calculated by
+applying a multiplier to the total rules-as-written XP value of all
+monsters in the encounter. This multiplier is affected by the number of
+enemy creatures as well as the number of player characters.</p>
+<p>The DMG handles the total XP pool and the XP cost in two separate
+tables. In order to balance an encounter you need to carefully consult
+both of them. Often this involves iterative testing of which number and
+combination of creatures is below the available pool after applying the
+relevant multiplier. <code>dndR</code> provides two functions to handle
+this instead: <code>xp_pool</code> and <code>xp_cost</code>.</p>
 <p><code>xp_pool</code> returns the amount of XP the GM can ‘spend’ on
 monsters in a given encounter to ensure the difficulty is as desired
-based on the three factors identified above.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">"medium"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 625</span></span></code></pre></div>
-<p>In the above case, the DM can have their four-person, level two party
-face creatures worth a total of 625 XP and be reasonably confident that
-the difficulty will be somewhere in the middle.</p>
-</div>
-<div class="section level3">
-<h3 id="xp-multipliers">XP Multipliers<a class="anchor" aria-label="anchor" href="#xp-multipliers"></a>
-</h3>
-<p>However, while knowing the amount of XP available to the DM per
-encounter is helpful, it fails to account for the effect of the
-<em>number</em> of enemies. A fight versus a single monster worth 1000
-XP is a very different proposition than a fight against four creatures
-each worth 250 XP even though the total XP is the same.</p>
-<p>The DMG accounts for this by providing XP multipliers based on the
-number of monsters and the number of players. The same total monster XP
-is multiplied by a larger value for more monsters facing a smaller party
-than it would be for fewer monsters facing a larger party.</p>
-<p>So, if you are using the DMG to balance an encounter you have to
-total up the XP of the monsters in an encounter and then go to a
-<em>different part of the DMG</em> where you can multiply that value by
-the multiplier in the relevant row of a second table which would then
-tell you the “actual” XP of the creatures you have selected. If you had
-too many or too few monsters you’d have to repeat this process
-iteratively until you identified the correct amount of “raw” XP to yield
-your desired “realized” XP in an encounter. Cumbersome, right?</p>
-<p>The <code>xp_cost</code> function provides an alternative to using
-the multiplier table. <code>xp_cost</code> requires the “raw” XP of the
-monsters you have selected, the number of monsters, and the number of
-player characters (PCs) and returns the “realized” XP. You can then
-quickly compare this with the value return by <code>xp_pool</code> to
-determine whether you need to add or remove creatures from your
-encounter.</p>
+based on the three factors identified above. You may note that it has
+identical arguments to <code>encounter_creator</code>–this is because
+that function relies on both of these functions ‘under the hood.’</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Identify 'realized' XP of two monsters worth a total of 1,000 XP versus a 3-player party</span></span>
-<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">1000</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="balancing-demonstration">Balancing Demonstration<a class="anchor" aria-label="anchor" href="#balancing-demonstration"></a>
-</h2>
-<p>That was a lot of content so let’s run through a quick example to see
-how <code>xp_pool</code> and <code>xp_cost</code> work together to make
-encounter balancing simpler. Let’s say I am running a game for four
-players, all level 3, and I want to design a hard encounter for
-them.</p>
-<p>To begin, I’d identify the total XP I can spend to make an encounter
-of this difficulty using <code>xp_pool</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">'hard'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># How much XP is available for a hard encounter for the four-person, 3rd level party?</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, difficulty <span class="op">=</span> <span class="st">"hard"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1112</span></span></code></pre></div>
-<p>Okay, so the pool of XP available for me to spend is 1,112. Keeping
-that threshold in mind, I can use <code>xp_cost</code> to check the
-value of two monsters worth (total) 500 XP against that threshold.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">500</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 750</span></span></code></pre></div>
-<p>I can see that I’m well under the XP threshold I have to play with so
-I can add a monster and see where that leaves me.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">750</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<p>Once you have that in mind, you can make a note of that number and
+then use <code>xp_cost</code> repeatedly until you find the highest
+realized XP cost that will still fall beneath that threshold.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Identify 'realized' XP of two monsters worth a total of 1,000 XP versus our party</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">1000</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1500</span></span></code></pre></div>
-<p>A little over because of the multiplier, so let’s say I change my
-mind and keep three monsters but change their identities to reduce their
-total XP cost.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">600</span>, monster_count <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1200</span></span></code></pre></div>
-<p>Basically right on target! I can now pick out my three monsters that
-total up to 600 XP raw and know that they will likely* make a hard
-encounter for my players! (* “Likely” because there is dice rolling
-involved and it is possible that the monsters roll well while my players
-roll badly or vice versa).</p>
+<p>Even though the total XP value of the creatures is beneath the
+threshold identified by <code>xp_pool</code> it is dramatically higher
+after the appropriate multipliers are applied. Using
+<code>xp_pool</code> alone would risk creating a much harder encounter
+than you intended. In fact, in this case, that realized XP value is
+actually appropriate for a “deadly” encounter!</p>
+<p>While <code>encounter_creator</code> is meant to avoid needing to use
+these helper functions, you can of course use these if you’d rather take
+a middle path between relying entirely on this package versus relying
+entirely on the DMG.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
