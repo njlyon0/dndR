@@ -93,8 +93,15 @@ encounter_creator <- function(party_level = NULL, party_size = NULL, difficulty 
     } # Close `else`
   } # Close while loop
 
-  # Add some nice diagnostics to the picked dataframe
+  # Final processing
   encounter_info <- picked %>%
+    # Count number of creatures per XP value
+    dplyr::group_by(creature_xp) %>%
+    dplyr::summarize(creature_count = dplyr::n()) %>%
+    dplyr::ungroup() %>%
+    # Arrange by XP
+    dplyr::arrange(dplyr::desc(creature_xp)) %>%
+    # Add some nice diagnostics to the picked dataframe
     dplyr::mutate(encounter_xp_pool = max_xp,
                   encounter_xp_cost = spent_xp)
 
