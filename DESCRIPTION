@@ -2,7 +2,7 @@ Package: dndR
 Type: Package
 Title: Dungeons & Dragons Functions for Players and Dungeon Masters
 Version: 2.0.0
-Date: `r Sys.Date()`
+Date: 2024-04-26
 Authors@R: c(
   person(given = "Nicholas", family = "Lyon",
          role = c("aut", "cre", "cph"),
