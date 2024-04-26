@@ -418,8 +418,11 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
   # Return picked creatures
   return(picked) }
 
-# Invoke it
+# Invoke the function
+encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
 
+# Invoke again with different arguments
+encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
 
 
 
