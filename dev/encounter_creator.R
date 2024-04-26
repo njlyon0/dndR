@@ -378,7 +378,10 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
     xp_levels <- unique(available$creature_xp)
 
     # Pick a random XP value
-    xp_value <- sample(x = xp_levels, size = 1)
+    ## Need to do this as a conditional because `sample` is unreliable when length is < 1
+    if(length(xp_levels) > 1){
+      xp_value <- sample(x = xp_levels, size = 1)
+    } else { xp_value <- xp_levels }
 
     # Progress message
     message("Evaluating creatures worth ", xp_value, " XP")
