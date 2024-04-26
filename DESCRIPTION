@@ -34,7 +34,6 @@ Imports:
     ggplot2,
     magrittr,
     purrr,
-    rlang,
     stringr,
     tidyr
 Suggests: 

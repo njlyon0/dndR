@@ -1,82 +1,44 @@
-#' @title Choose Creatures for a Combat Encounter of Given Party Composition and Difficulty
+#' @title Balance a Combat Encounter for Given Party Composition and Difficulty
 #'
-#' @description Creates a balanced encounter of specified difficulty and user-specified party composition information (i.e., average player character level and number of party members). Users may optionally specify a particular type of creature (e.g., humanoid, construct, etc.) and potential creatures will be narrowed to only those of that type. Creature selection is semi-random so re-running this function will return similar but non-exact results. It is not always possible to exactly spend all available XP so the true maximum XP and the realized XP (see `?dndR::xp_cost`) are both returned in the output for context. This function _will not_ exceed the allowed XP so you may need to alter the party information and/or difficulty arguments in order to return the desired set of antagonists.
+#' @description Identifies set of creature XP values that constitute a balanced encounter of specified difficulty for given party composition information (i.e., average player character level and number of party members). Creature selection is semi-random so re-running this function will return similar but not necessarily identical results. It is not always possible to exactly spend all available XP so the true maximum XP and the realized XP (see `?dndR::xp_pool` and `?dndR::xp_cost`) are both returned in the output for context. This function _will not_ exceed the allowed XP so you may need to alter the party information and/or difficulty arguments in order to return an encounter that meets your needs.
 #'
 #' @param party_level (numeric) integer indicating the average party level. If all players are the same level, that level is the average party level
 #' @param party_size (numeric) integer indicating how many player characters (PCs) are in the party
 #' @param difficulty (character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter
-#' @param enemy_type (character) optional argument to choose only creatures of a particular type (e.g., undead, elemental, etc.). If the provided type is not found in the available set of creatures (see `?dndR::creatures`) then the argument is disregarded with a warning
 #'
-#' @return (dataframe) creature types, names, and experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the XP cost of the returned creatures
+#' @return (dataframe) creature experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the realized XP cost of the returned creatures
 #' @importFrom magrittr %>%
 #' @importFrom magrittr %<>%
 #'
 #' @export
 #'
 #' @examples
-#' # Create a hard encounter against humanoids for a 2-person, 9th level party
-#' encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
+#' # Create a hard encounter for a 2-person, 9th level party
+#' encounter_creator(party_level = 9, party_size = 2, difficulty = "hard")
 #'
-encounter_creator <- function(party_level = NULL, party_size = NULL,
-                              difficulty = NULL, enemy_type = NULL){
+encounter_creator <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
   # Silence visible bindings note
-  . <- creature_xp <- creature_type <- creature_name <- NULL
+  creature_xp <- NULL
 
-  # `xp_pool` function will handle argument errors (except 'enemy_type'; see below)
-
-  # Load creature information
-  creatures <- dndR::creatures
-
-  # Define the minimum allowed XP value of a creature
-  weakest_xp <- 10
-
-  # If enemy type is null
-  if(is.null(enemy_type) == TRUE){
-
-    # Just simplify the creature data
-    available <- creatures %>%
-      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp)
-
-    # If enemy type is not null & is in the data
-  } else if(is.null(enemy_type) != TRUE &
-            any(stringr::str_detect(string = unique(creatures$creature_type),
-                                    pattern = enemy_type)) == TRUE){
-
-    # Simplify **and filter** the creature data
-    available <- creatures %>%
-      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp) %>%
-      dplyr::filter(stringr::str_detect(string = creature_type, pattern = enemy_type))
-
-    # If enemy type is not null but isn't in the data
-  } else if(is.null(enemy_type) != TRUE &
-            any(stringr::str_detect(string = unique(creatures$creature_type),
-                                    pattern = enemy_type)) == FALSE){
-
-    # Warning message
-    rlang::warn("Enemy type not found in data. Including all enemy types as possibilities")
-
-    # Do same processing as when it isn't supplied
-    available <- creatures %>%
-      dplyr::filter(creature_xp > weakest_xp & !is.na(creature_xp)) %>%
-      dplyr::select(creature_type, creature_name, creature_xp)
-
-  } # Close conditional
+  # Identify all possible XP values for creatures
+  available <- data.frame("creature_xp" = c(10, 25, 50, 100, 200, 450,
+                                            700, 1100, 1800, 2300, 2900,
+                                            3900, 5000, 5900, 7200, 8400,
+                                            8900, 10000, 11500, 13000,
+                                            15000, 18000, 20000, 22000, 25000,
+                                            33000, 41000, 50000, 62000, 62500,
+                                            75000, 90000, 105000, 155000, 330000))
 
   # Calculate maximum allowed XP for this encounter
-  max_xp <- dndR::xp_pool(party_level = party_level, party_size = party_size,
-                          difficulty = difficulty)
+  max_xp <- dndR::xp_pool(party_level = party_level, party_size = party_size, difficulty = difficulty)
 
   # Put a ceiling on that to be able to include more creatures
   capped_xp <- ceiling(x = max_xp - (max_xp * 0.65))
 
-  # Pick the first creature of the encounter
+  # Pick the difficulty of the first (hardest) creature in the encounter
   picked <- available %>%
     # Choose highest possible XP that is still less than the capped XP
-    dplyr::filter(creature_xp == max(creature_xp[creature_xp < capped_xp])) %>%
-    # Pick one row of the result (if more than one)
-    dplyr::slice_sample(.data = ., n = 1)
+    dplyr::filter(creature_xp == max(creature_xp[creature_xp < capped_xp]))
 
   # Calculate spent XP for this creature
   spent_xp <- xp_cost(monster_xp = sum(picked$creature_xp),
@@ -112,8 +74,7 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
 
       # Choose one candidate creature
       candidate <- available %>%
-        dplyr::filter(creature_xp == xp_value) %>%
-        dplyr::slice_sample(.data = ., n = 1)
+        dplyr::filter(creature_xp == xp_value)
 
       # Add this to the picked set of creatures
       picked <- picked %>%
