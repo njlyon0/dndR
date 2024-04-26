@@ -383,9 +383,6 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
       xp_value <- sample(x = xp_levels, size = 1)
     } else { xp_value <- xp_levels }
 
-    # Progress message
-    message("Evaluating creatures worth ", xp_value, " XP")
-
     # See if including a creature of that XP is still below the threshold
     (possible_cost <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
                               monster_count = nrow(picked) + 1,
