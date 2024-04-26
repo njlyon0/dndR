@@ -16,67 +16,48 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(dndR)
 ```
 
-When I am the Dungeon/Game Master (DM / GM) I find encounter balancing to be really difficult, in part because of the nest of interrelated tables and experience point multipliers outlined in the Dungeon Master's Guide (DMG) that must be consulted for novice GMs such as myself. To help other newbies, `dndR` includes two core functions aimed at simplifying encounter balancing.
+Creating balanced combat encounters can be surprisingly difficult, especially for newer Dungeon/Game Masters (DMs / GMs). If you want to use the Dungeon Master's Guide (DMG) you need to consult several interrelated tables for each encounter. To help other newbies--like myself!--`dndR` includes a handful of funtions aimed at simplifying the encounter balancing process.
 
-### Experience Point (XP) Thresholds
+## Encounter Creation
 
-The difficulty of an encounter in D&D is affected by three things:
+If you'd rather avoid consulting the DMG at all, the `encounter_creator` function may be a valuable tool for you to consider. This function requires the average level of all player characters in the party, the number of players in the party, and how difficult you'd like to make the encounter (allowable answers are 'easy', 'medium', 'hard', and 'deadly'). Once you've provided this information, it will automatically select one tougher creature and as many other creatures as possible _without making the encounter more difficult than you specified_.
+
+The function returns a dataframe with one row for each unique experience point (XP) value of the selected creatures. A separate column indicates the number of creatures worth that amount of XP that should be selected in the encounter. The function also returns the "pool" of XP available for the encounter and the realized XP "cost" of the chosen creatures. More detail is provided on this later in this vignette but for now keep in mind that there is an optimization step being done under the hood so this function <u>will not always return identical results</u>. I suggest running the function more than once until you are satisfied with the results!
+
+```{r encounter_creator}
+# Pick a hard set of creatures for a four-person party of 3rd level characters
+dndR::encounter_creator(party_level = 3, party_size = 4, difficulty = "hard")
+```
+
+After this function has identified the number and XP value of the creatures in this encounter, you may consider using other `dndR` functions to identify specific creatures (e.g., `creature_list`, etc.) or use your favorite source book / homebrew to decide on particular creatures.
+
+## XP Balancing 
+
+This may be more detail than you require but a small description of how experience points are used to balance encounters (in and outside of this R package) will be useful context for some of the other encounter balancing tools described below. In essence, the difficulty of a combat encounter in Dungeons and Dragons is affected by four things:
 
 1. Level of characters
 2. Number of characters in the party
-3. How difficult the GM wants to make things for their players
+3. How difficult the GM wants to make the encounter
+4. How many enemy creatures are included
 
-The DMG handles this by providing experience point (XP) thresholds based on these three factors. All enemies are worth a pre-determined amount of XP so encounters are balanced by the DMG listing the total XP of all monsters in a given fight for every level of players, party size, and difficulty. That table is useful but a little dense to work through as you're prepping potentially multiple encounters per session, so this is where `xp_pool` becomes useful.
+The first three go into the "pool" of available experience points to spend on a given encounter. However, the number of creatures can dramatically influence how difficult an encounter is even if their total XP value is the same (e.g., a fight against one 1000 XP creature versus against four 250 XP creatures). This realized XP "cost" is calculated by applying a multiplier to the total rules-as-written XP value of all monsters in the encounter. This multiplier is affected by the number of enemy creatures as well as the number of player characters.
 
-`xp_pool` returns the amount of XP the GM can 'spend' on monsters in a given encounter to ensure the difficulty is as desired based on the three factors identified above.
+The DMG handles the total XP pool and the XP cost in two separate tables. In order to balance an encounter you need to carefully consult both of them. Often this involves iterative testing of which number and combination of creatures is below the available pool after applying the relevant multiplier. `dndR` provides two functions to handle this instead: `xp_pool` and `xp_cost`.
+
+`xp_pool` returns the amount of XP the GM can 'spend' on monsters in a given encounter to ensure the difficulty is as desired based on the three factors identified above. You may note that it has identical arguments to `encounter_creator`--this is because that function relies on both of these functions 'under the hood.'
 
 ```{r xp_pool}
-dndR::xp_pool(party_level = 2, party_size = 4, difficulty = "medium")
+# How much XP is available for a hard encounter for the four-person, 3rd level party?
+dndR::xp_pool(party_level = 3, party_size = 4, difficulty = "hard")
 ```
 
-In the above case, the DM can have their four-person, level two party face creatures worth a total of 625 XP and be reasonably confident that the difficulty will be somewhere in the middle.
-
-### XP Multipliers
-
-However, while knowing the amount of XP available to the DM per encounter is helpful, it fails to account for the effect of the *number* of enemies. A fight versus a single monster worth 1000 XP is a very different proposition than a fight against four creatures each worth 250 XP even though the total XP is the same.
-
-The DMG accounts for this by providing XP multipliers based on the number of monsters and the number of players. The same total monster XP is multiplied by a larger value for more monsters facing a smaller party than it would be for fewer monsters facing a larger party.
-
-So, if you are using the DMG to balance an encounter you have to total up the XP of the monsters in an encounter and then go to a _different part of the DMG_ where you can multiply that value by the multiplier in the relevant row of a second table which would then tell you the "actual" XP of the creatures you have selected. If you had too many or too few monsters you'd have to repeat this process iteratively until you identified the correct amount of "raw" XP to yield your desired "realized" XP in an encounter. Cumbersome, right?
-
-The `xp_cost` function provides an alternative to using the multiplier table. `xp_cost` requires the "raw" XP of the monsters you have selected, the number of monsters, and the number of player characters (PCs) and returns the "realized" XP. You can then quickly compare this with the value return by `xp_pool` to determine whether you need to add or remove creatures from your encounter.
+Once you have that in mind, you can make a note of that number and then use `xp_cost` repeatedly until you find the highest realized XP cost that will still fall beneath that threshold.
 
 ```{r xp_cost}
-# Identify 'realized' XP of two monsters worth a total of 1,000 XP versus a 3-player party
-dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 3)
+# Identify 'realized' XP of two monsters worth a total of 1,000 XP versus our party
+dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 4)
 ```
 
-## Balancing Demonstration
+Even though the total XP value of the creatures is beneath the threshold identified by `xp_pool` it is dramatically higher after the appropriate multipliers are applied. Using `xp_pool` alone would risk creating a much harder encounter than you intended. In fact, in this case, that realized XP value is actually appropriate for a "deadly" encounter!
 
-That was a lot of content so let's run through a quick example to see how `xp_pool` and `xp_cost` work together to make encounter balancing simpler. Let's say I am running a game for four players, all level 3, and I want to design a hard encounter for them.
-
-To begin, I'd identify the total XP I can spend to make an encounter of this difficulty using `xp_pool`.
-
-```{r balance-demo-1}
-dndR::xp_pool(party_level = 3, party_size = 4, difficulty = 'hard')
-```
-
-Okay, so the pool of XP available for me to spend is 1,112. Keeping that threshold in mind, I can use `xp_cost` to check the value of two monsters worth (total) 500 XP against that threshold.
-
-```{r balance-demo-2}
-dndR::xp_cost(monster_xp = 500, monster_count = 2, party_size = 4)
-```
-
-I can see that I'm well under the XP threshold I have to play with so I can add a monster and see where that leaves me.
-
-```{r balance-demo-3}
-dndR::xp_cost(monster_xp = 750, monster_count = 3, party_size = 4)
-```
-
-A little over because of the multiplier, so let's say I change my mind and keep three monsters but change their identities to reduce their total XP cost.
-
-```{r balance-demo-4}
-dndR::xp_cost(monster_xp = 600, monster_count = 3, party_size = 4)
-```
-
-Basically right on target! I can now pick out my three monsters that total up to 600 XP raw and know that they will likely* make a hard encounter for my players! (* "Likely" because there is dice rolling involved and it is possible that the monsters roll well while my players roll badly or vice versa).
+While `encounter_creator` is meant to avoid needing to use these helper functions, you can of course use these if you'd rather take a middle path between relying entirely on this package versus relying entirely on the DMG.
