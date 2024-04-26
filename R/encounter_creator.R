@@ -1,11 +1,11 @@
-#' @title x
+#' @title Choose Creatures for a Combat Encounter of Given Party Composition and Difficulty
 #'
-#' @description x
+#' @description Creates a balanced encounter of specified difficulty and user-specified party composition information (i.e., average player character level and number of party members). Users may optionally specify a particular type of creature (e.g., humanoid, construct, etc.) and potential creatures will be narrowed to only those of that type. Creature selection is semi-random so re-running this function will return similar but non-exact results. It is not always possible to exactly spend all available XP so the true maximum XP and the realized XP (see `?dndR::xp_cost`) are both returned in the output for context. This function _will not_ exceed the allowed XP so you may need to alter the party information and/or difficulty arguments in order to return the desired set of antagonists.
 #'
 #' @param party_level (numeric) integer indicating the average party level. If all players are the same level, that level is the average party level
 #' @param party_size (numeric) integer indicating how many player characters (PCs) are in the party
 #' @param difficulty (character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter
-#' @param enemy_type (character)
+#' @param enemy_type (character) optional argument to choose only creatures of a particular type (e.g., undead, elemental, etc.). If the provided type is not found in the available set of creatures (see `?dndR::creatures`) then the argument is disregarded with a warning
 #'
 #' @return (dataframe) creature types, names, and experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the XP cost of the returned creatures
 #' @importFrom magrittr %>%
@@ -13,10 +13,7 @@
 #' @export
 #'
 #' @examples
-#' # Invoke the function
-#' encounter_creator(party_level = 3, party_size = 5, difficulty = "medium")
-#'
-#' # Invoke again with different arguments
+#' # Create a hard encounter against humanoids for a 2-person, 9th level party
 #' encounter_creator(party_level = 9, party_size = 2, difficulty = "hard", enemy_type = "humanoid")
 #'
 encounter_creator <- function(party_level = NULL, party_size = NULL,
