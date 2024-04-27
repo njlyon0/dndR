@@ -2,6 +2,8 @@
 
 This is the development version of the package. Changes will be listed below as they are made.
 
+- Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments
+
 ## dndR Version 2.0.0
 
 The following changes were made from the preceding version:
