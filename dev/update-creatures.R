@@ -389,6 +389,8 @@ beasts_v7 %>%
 
 # Do final tidying
 creatures <- beasts_v7 %>%
+  # Drop non-ASCII counting column
+  dplyr::select(-non_ascii_ct) %>%
   # Remove all homebrewed entries
   dplyr::filter(!source %in% c("Homebrew", "Out Of The Box 5e",
                                "Nerzugals Extended Bestiary",
