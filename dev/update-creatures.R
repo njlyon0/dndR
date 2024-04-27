@@ -391,21 +391,6 @@ beasts_v7 %>%
   dplyr::filter(non_ascii_ct != 0) %>%
   dplyr::pull(name)
 
-
-beasts_v7 %>%
-  select(-non_ascii_ct) %>%
-  filter(name == "Orchid Count") %>%
-  mutate(across(everything(), as.character)) %>%
-  pivot_longer(cols = everything()) %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(value,
-                                                       pattern = "[^[:ascii:]]"),
-                                   na.rm = T)) %>%
-  filter(non_ascii_ct != 0) %>%
-  pull(value)
-
-
-
 ## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
