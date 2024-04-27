@@ -415,6 +415,26 @@ spells_v5 <- spells_v4 %>%
   dplyr::mutate(dplyr::across(.cols = -ritual,
                               .fns = \(t){gsub(pattern = "’", replacement = "'",
                                                x = t)})) %>%
+  # Curly quotes are an issue too
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                              .fns = \(t){gsub(pattern = "“|”", replacement = '"',
+                                               x = t)})) %>%
+  # Also non-hyphen dashes
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                              .fns = \(t){gsub(pattern = "—|−|-", replacement = "-",
+                                               x = t)})) %>%
+  # Multiplication symbol
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                              .fns = \(t){gsub(pattern = "×", replacement = "*",
+                                               x = t)})) %>%
+  # Worst of all, weird spaces
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                            .fns = \(t){gsub(pattern = " |  |  |­", replacement = " ",
+                                               x = t)})) %>%
+  # Bizarre letter weirdness
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                              .fns = \(t){gsub(pattern = "ﬁ", replacement = "fi",
+                                               x = t)})) %>%
   # Re-count non-ASCII characters
   dplyr::rowwise() %>%
   dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(dplyr::c_across(-ritual),
@@ -431,7 +451,9 @@ spells_v5 %>%
 ## ---------------------------------------- ##
 
 # Do final tidying
-spells <- spells_v4 %>%
+spells <- spells_v5 %>%
+  # Drop non-ASCII quantification
+  dplyr::select(-non_ascii_ct) %>%
   # Rename some columns
   dplyr::rename(spell_name = name,
                 spell_source = sources,
