@@ -12,7 +12,7 @@
 ## ---------------------------------------- ##
 
 # Load libraries
-librarian::shelf(tidyverse, supportR)
+librarian::shelf(tidyverse, supportR, dndR)
 
 # Silence summarize
 options(dplyr.summarise.inform = F)
@@ -320,11 +320,91 @@ beasts_v5 <- beasts_v4 %>%
 dplyr::glimpse(beasts_v5)
 
 ## ---------------------------------------- ##
+# Non-ASCII Handling ----
+## ---------------------------------------- ##
+
+
+
+mutate(across(where(is.character),
+              .fns=\(x){if_else(condition = x == "n/a",
+                                true = NA_character_,
+                                false  = x)}))
+
+
+# Need to check for non-ASCII characters
+beasts_v6 <- beasts_v5 %>%
+  # Process each row separately
+  dplyr::rowwise() %>%
+  # Count non-ASCII characters
+  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(dplyr::c_across(dplyr::where(is.character)),
+                                                       pattern = "[^[:ascii:]]"),
+                                   na.rm = T))
+
+# Check how many rows this affects
+beasts_v6 %>%
+  dplyr::filter(non_ascii_ct != 0) %>%
+  dplyr::pull(name)
+
+# Attempt fixes
+beasts_v7 <- beasts_v6 %>%
+  # Drop old count (interferes with downstream stuff)
+  dplyr::select(-non_ascii_ct) %>%
+  # Pretty sure weird curly apostrophe is (part of) this problem
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "’", replacement = "'",
+                                               x = t)})) %>%
+  # Curly quotes are an issue too
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "“|”", replacement = '"',
+                                               x = t)})) %>%
+  # Also non-hyphen dashes
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "—|−|-", replacement = "-",
+                                               x = t)})) %>%
+  # Multiplication symbol
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "×", replacement = "*",
+                                               x = t)})) %>%
+  # Worst of all, weird spaces
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = " |  |  |­", replacement = " ",
+                                               x = t)})) %>%
+  # Bizarre letter weirdness
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "ﬁ", replacement = "fi",
+                                               x = t)})) %>%
+  # Re-count non-ASCII characters
+  dplyr::rowwise() %>%
+  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(dplyr::c_across(dplyr::where(is.character)),
+                                                       pattern = "[^[:ascii:]]"),
+                                   na.rm = T))
+
+# See how many are still problematic
+beasts_v7 %>%
+  dplyr::filter(non_ascii_ct != 0) %>%
+  dplyr::pull(name)
+
+
+beasts_v7 %>%
+  select(-non_ascii_ct) %>%
+  filter(name == "Runebound Dire Wolf") %>%
+  mutate(across(everything(), as.character)) %>%
+  pivot_longer(cols = everything()) %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(value,
+                                                       pattern = "[^[:ascii:]]"),
+                                   na.rm = T)) %>%
+  filter(non_ascii_ct != 0) %>%
+  pull(value)
+
+
+
+## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-creatures <- beasts_v5 %>%
+creatures <- beasts_v7 %>%
   # Remove all homebrewed entries
   dplyr::filter(!source %in% c("Homebrew", "Out Of The Box 5e",
                                "Nerzugals Extended Bestiary",
