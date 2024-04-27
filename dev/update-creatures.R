@@ -323,14 +323,6 @@ dplyr::glimpse(beasts_v5)
 # Non-ASCII Handling ----
 ## ---------------------------------------- ##
 
-
-
-mutate(across(where(is.character),
-              .fns=\(x){if_else(condition = x == "n/a",
-                                true = NA_character_,
-                                false  = x)}))
-
-
 # Need to check for non-ASCII characters
 beasts_v6 <- beasts_v5 %>%
   # Process each row separately
