@@ -359,19 +359,26 @@ beasts_v7 <- beasts_v6 %>%
                                                x = t)})) %>%
   # Also non-hyphen dashes
   dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
-                              .fns = \(t){gsub(pattern = "—|−|-", replacement = "-",
+                              .fns = \(t){gsub(pattern = "—|−|-|–", replacement = "-",
                                                x = t)})) %>%
   # Multiplication symbol
   dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
                               .fns = \(t){gsub(pattern = "×", replacement = "*",
                                                x = t)})) %>%
-  # Worst of all, weird spaces
-  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
-                              .fns = \(t){gsub(pattern = " |  |  |­", replacement = " ",
-                                               x = t)})) %>%
-  # Bizarre letter weirdness
+  # Non-ASCII letter fixes
   dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
                               .fns = \(t){gsub(pattern = "ﬁ", replacement = "fi",
+                                               x = t)})) %>%
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "ö", replacement = "o",
+                                               x = t)})) %>%
+  # Worst of all, weird spaces
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = " |  |  |­|·", replacement = " ",
+                                               x = t)})) %>%
+  # Ellipses
+  dplyr::mutate(dplyr::across(.cols = dplyr::where(is.character),
+                              .fns = \(t){gsub(pattern = "…", replacement = "...",
                                                x = t)})) %>%
   # Re-count non-ASCII characters
   dplyr::rowwise() %>%
@@ -387,7 +394,7 @@ beasts_v7 %>%
 
 beasts_v7 %>%
   select(-non_ascii_ct) %>%
-  filter(name == "Runebound Dire Wolf") %>%
+  filter(name == "Orchid Count") %>%
   mutate(across(everything(), as.character)) %>%
   pivot_longer(cols = everything()) %>%
   dplyr::rowwise() %>%
