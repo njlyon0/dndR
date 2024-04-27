@@ -12,7 +12,7 @@
 ## ---------------------------------------- ##
 
 # Load libraries
-librarian::shelf(tidyverse, supportR)
+librarian::shelf(tidyverse, supportR, dndR)
 
 # Clear environment
 rm(list = ls())
@@ -390,11 +390,48 @@ spells_v3 <- spells_v2 %>%
 dplyr::glimpse(spells_v3)
 
 ## ---------------------------------------- ##
+          # Non-ASCII Handling ----
+## ---------------------------------------- ##
+
+# Need to check for non-ASCII characters
+spells_v4 <- spells_v3 %>%
+  # Process each row separately
+  dplyr::rowwise() %>%
+  # Count non-ASCII characters
+  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(dplyr::c_across(-ritual),
+                                                       pattern = "[^[:ascii:]]"),
+                                   na.rm = T))
+
+# Check how many rows this affects
+spells_v4 %>%
+  dplyr::filter(non_ascii_ct != 0) %>%
+  dplyr::pull(name)
+
+# Attempt fixes
+spells_v5 <- spells_v4 %>%
+  # Drop old count (interferes with downstream stuff)
+  dplyr::select(-non_ascii_ct) %>%
+  # Pretty sure weird curly apostrophe is (part of) this problem
+  dplyr::mutate(dplyr::across(.cols = -ritual,
+                              .fns = \(t){gsub(pattern = "’", replacement = "'",
+                                               x = t)})) %>%
+  # Re-count non-ASCII characters
+  dplyr::rowwise() %>%
+  dplyr::mutate(non_ascii_ct = sum(stringr::str_detect(dplyr::c_across(-ritual),
+                                                       pattern = "[^[:ascii:]]"),
+                                   na.rm = T))
+
+# See how many are still problematic
+spells_v5 %>%
+  dplyr::filter(non_ascii_ct != 0) %>%
+  dplyr::pull(name)
+
+## ---------------------------------------- ##
             # Final Tidying ----
 ## ---------------------------------------- ##
 
 # Do final tidying
-spells <- spells_v3 %>%
+spells <- spells_v4 %>%
   # Rename some columns
   dplyr::rename(spell_name = name,
                 spell_source = sources,
@@ -402,8 +439,6 @@ spells <- spells_v3 %>%
                 spell_level = level,
                 spell_school = school,
                 ritual_cast = ritual) %>%
-  # Fix any lingering name issues
-  dplyr::mutate(spell_name = gsub(pattern = "’", replacement = "'", x = spell_name)) %>%
   # Move some columns to new places
   dplyr::relocate(ritual_cast, .before = casting_time) %>%
   dplyr::relocate(higher_levels, .after = description)
