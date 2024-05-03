@@ -15,7 +15,7 @@
 mod_calc <- function(score = 10){
 
   # Error out if score isn't numeric
-  if(!is.numeric(score))
+  if(is.numeric(score) != TRUE)
     stop("`score` must be numeric")
 
   # Calculate modifier from score
