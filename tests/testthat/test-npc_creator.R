@@ -20,4 +20,7 @@ test_that("Errors work as desired", {
 test_that("Outputs are as expected", {
   expect_equal(nrow(npc_creator(npc_count = 4)), 4)
   expect_equal(class(npc_creator(npc_count = 5)), "data.frame")
+  ## Make sure sampling is with replacement
+  race_num <- length(dnd_races())
+  expect_equal(nrow(npc_creator(npc_count = race_num + 10)), race_num + 10)
 })
