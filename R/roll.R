@@ -23,8 +23,18 @@
 roll <- function(dice = "d20", show_dice = FALSE, re_roll = FALSE){
 
   # Error out if not a character
-  if(!is.character(dice))
-    stop("`dice` must be specified as a character (e.g., '3d8')")
+  if(is.character(dice) != TRUE)
+    stop("'dice' must be specified as a character (e.g., '3d8')")
+
+  # Warn and coerce to default if logical arguments are not correct
+  ## 'show_dice'
+  if(is.logical(show_dice) != TRUE){
+    warning("'show_dice' must be a logical. Coercing to FALSE")
+    show_dice <- FALSE }
+  ## 'reroll'
+  if(is.logical(re_roll) != TRUE){
+    warning("'re_roll' must be a logical. Coercing to FALSE")
+    re_roll <- FALSE }
 
   # Identify number of dice to roll
   dice_count <- base::gsub(pattern = "d", replacement = "",
