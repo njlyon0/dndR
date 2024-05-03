@@ -20,8 +20,12 @@ probability_plot <- function(dice = "2d20", roll_num = 999){
   outcome <- outcome_fact <- ct <- NULL
 
   # Error out if roll number is not an integer
-  if(is.integer(x = roll_num) != TRUE)
+  if(is.numeric(roll_num) != TRUE)
     stop("'roll_num' must be an integer")
+
+  # If it is numeric but is not an integer, round it to the next highest integer
+  if(is.integer(roll_num) != TRUE){
+    roll_num <- ceiling(x = roll_num) }
 
   # Roll an initial set of the specified dice
   first_roll <- suppressMessages(dndR::roll(dice = dice, show_dice = FALSE))
