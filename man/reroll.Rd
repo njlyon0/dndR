@@ -7,7 +7,7 @@
 reroll(dice_faces, first_result = NULL)
 }
 \arguments{
-\item{dice_faces}{(numeric) number of faces on the die/dice to re-roll}
+\item{dice_faces}{(numeric) number of sides on the die to be rerolled (i.e., type of dice without the "d" found in the `roll` function)}
 
 \item{first_result}{(numeric) vector of original dice results (including 1s to reroll)}
 }

@@ -2,7 +2,7 @@
 #'
 #' @description Re-rolls only the dice that "landed on" 1 from a prior use of `roll`. Retains other dice results from the first roll but replaces the ones.
 #'
-#' @param dice_faces (numeric) number of faces on the die/dice to re-roll
+#' @param dice_faces (numeric) number of sides on the die to be rerolled (i.e., type of dice without the "d" found in the `roll` function)
 #' @param first_result (numeric) vector of original dice results (including 1s to reroll)
 #'
 #' @return (numeric) vector of non-1 original dice results with re-rolled dice results appended
