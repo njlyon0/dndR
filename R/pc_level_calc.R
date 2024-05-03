@@ -17,17 +17,17 @@ pc_level_calc <- function(player_xp = NULL){
   # Squelch visible bindings note
   xp_threshold <- NULL
 
-  # Error out if `player_xp` isn't provided
+  # Error out if 'player_xp' isn't provided
   if(is.null(player_xp))
-    stop("`player_xp` must be provided as a number")
+    stop("'player_xp' must be provided as a number")
 
   # Also error out if it's not numeric
   if(is.numeric(player_xp) != TRUE)
-    stop("`player_xp` must be numeric")
+    stop("'player_xp' must be numeric")
 
   # Error out if too many XP values are provided
   if(length(player_xp) != 1)
-    stop("`player_xp` must be only one number")
+    stop("'player_xp' must be only one number")
 
   # If no errors, build a quick reference table
   xp_reftable <- data.frame(player_level = seq(1:20),
