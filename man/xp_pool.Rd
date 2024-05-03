@@ -7,7 +7,7 @@
 xp_pool(party_level = NULL, party_size = NULL, difficulty = NULL)
 }
 \arguments{
-\item{party_level}{(numeric) integer indicating the average party level. If all players are the same level, that level is the average party level}
+\item{party_level}{(numeric) integer indicating the average party level. If all players are the same level, that level is the average party level. Non-integer values are supported but results will be slightly affected}
 
 \item{party_size}{(numeric) integer indicating how many player characters (PCs) are in the party}
 
