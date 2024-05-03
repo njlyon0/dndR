@@ -21,11 +21,11 @@ monster_creator <- function(party_level = NULL, party_size = NULL){
   score <- ability_actual <- modifier <- modifier_calc <- NULL
 
   # Error out if arguments aren't specified
-  if(base::is.null(party_level) | base::is.null(party_size))
+  if(is.null(party_level) | is.null(party_size))
     stop("Party level and party size must both be provided")
 
   # Error out for improper argument specifications
-  if(base::is.numeric(party_level) != TRUE | base::is.numeric(party_size) != TRUE)
+  if(is.numeric(party_level) != TRUE | is.numeric(party_size) != TRUE)
     stop("Party level and party size must be numeric")
 
   # Identify challenge rating based on party size / level
