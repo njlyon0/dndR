@@ -22,26 +22,46 @@
 #' class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
 #'
 class_block <- function(class = NULL, score_method = "4d6",
-                       scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
+                        scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
   # Squelch visible bindings note
   score <- ability <- NULL
 
-  # If scores have been rolled but dataframe hasn't been provided, error out
-  if(scores_rolled == TRUE & base::is.null(scores_df))
-    stop("No scores dataframe provided but 'scores_rolled' is set to TRUE. Please provide name of dataframe returned by `ability_scores()` to 'scores_df' argument.")
+  # Warn for malformed 'scores_rolled' parameter
+  if(is.logical(scores_rolled) != TRUE){
+    warning("'scores_rolled' must be a logical. Defaulting to FALSE")
+    scores_rolled <- FALSE }
 
-  # If scores have been rolled and a dataframe has been provided, change its name
-  if(scores_rolled == TRUE & !base::is.null(scores_df)){ scores <- scores_df }
+  # Error for saying scores have been rolled but not providing them
+  if(scores_rolled == TRUE & is.null(scores_df))
+    stop("No scores dataframe provided but 'scores_rolled' is set to TRUE. Please provide name of dataframe returned by 'ability_scores()' to 'scores_df' argument.")
+
+  # Error for providing scores as anything other than a dataframe
+  if(scores_rolled == TRUE & is.data.frame(scores_df) != TRUE)
+    stop("Pre-rolled scores must be provided as a dataframe")
+
+  # Error for too many/few scores
+  if(scores_rolled == TRUE & is.data.frame(scores_df) == TRUE){
+    if(nrow(scores_df) != 6)
+      stop("Too few or too many pre-rolled ability scores provided") }
+
+  # If scores have been rolled and a dataframe has been provided, change the object name
+  if(scores_rolled == TRUE & !base::is.null(scores_df)){
+    scores <- scores_df }
 
   # If scores haven't been rolled, roll them here
-  if(scores_rolled == FALSE){ scores <- ability_scores(method = score_method, quiet = quiet) }
+  if(scores_rolled == FALSE){
+    scores <- ability_scores(method = score_method, quiet = quiet) }
 
-  # Error out if class isn't one of supported vector
-  if(base::is.null(class) | !base::tolower(class) %in% c(dnd_classes(), "random"))
-    stop("Class either not provided or not one of accepted classes. Run `dnd_classes()` for the classes this function currently supports")
+  # Error out if class isn't supplied
+  if(is.null(class) == TRUE)
+    stop("Class must be specified")
+
+  # Error out if class is supplied but isn't in the set of allowed classes
+  if(!tolower(class) %in% c(dnd_classes(), "random"))
+    stop("Chosen class not currently supported by this function. Run 'dnd_classes()' for accepted classes")
 
   # If class is set to random, pick one
-  if(!is.null(class) & tolower(class) == "random"){
+  if(tolower(class) == "random"){
     class <- sample(x = dnd_classes(), size = 1)
     message("Random class selected: ", class) }
 
