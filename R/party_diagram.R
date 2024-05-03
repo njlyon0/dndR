@@ -33,9 +33,14 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
   # Squelch visible bindings note
   STR <- CHA <- player <- ability <- score <- NULL
 
-  # Error out if `by` is not valid
+  # Error out if 'by' is not valid
   if(!by %in% c("player", "ability"))
-    stop("`by` must be 'player' or 'ability'")
+    stop("'by' must be 'player' or 'ability'")
+
+  # If quiet is not a logical, warn the user and coerce to default
+  if(is.logical(quiet) != TRUE){
+    warning("'quiet' must be logical. Coercing to FALSE")
+    quiet <- FALSE }
 
   # Assemble ability scores ----
 
@@ -46,12 +51,12 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
     base::message("Creating diagram for a new party")
     base::message("Adding PC 1")
     i <- 1
-    while (TRUE) {
+    while(TRUE){
       # Request name from user
       pc_value <- list()
       name <-
         base::readline(prompt = sprintf("Name (leave empty for 'PC %s'): ", i))
-      if (name == "") { name <- sprintf("PC %s", i) }
+      if(name == ""){ name <- sprintf("PC %s", i) }
 
       # Request ability scores for this PC from user
       ## Strength
@@ -83,7 +88,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
       pc_stats[[name]] <- pc_value
       i <- i + 1
 
-      # Ask user if they want to add another PC and if they do, return to top  of `while` loop
+      # Ask user if they want to add another PC and if they do, return to top  of 'while' loop
       if (base::substr(x = base::readline(prompt = sprintf("Add PC %s? (yes/no): ", i)), start = 1, stop = 1) == "n") {
         break
       } else { next }
@@ -93,7 +98,7 @@ party_diagram <- function(by = "player", pc_stats = NULL, quiet = FALSE) {
   }
 
   # Wrangle ability scores ----
-  # Wrangle list to make it easier for `ggplot2`
+  # Wrangle list to make it easier for 'ggplot2'
   pc_df <- pc_stats %>%
     # Condense list into a dataframe
     purrr::map_df(.f = dplyr::bind_rows) %>%
