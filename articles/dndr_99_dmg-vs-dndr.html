@@ -112,11 +112,11 @@ produced by <code>cr_convert</code>.</p>
 <p>The DMG specifies the XP threshold <em>per player</em> for a given
 difficulty while my function asks for the <em>average</em> player level
 and the party size. This difference keeps the function streamlined and
-flexible for parties of any size. Rather than embedding the DMG’s table
-for encounter XP, <code>xp_pool</code> actually uses the formula for the
-line defining the XP-party level curve implicit in the DMG. This has the
-added benefit of being able to handle non-integer values for average
-party_level.</p>
+flexible for parties of any size. If average party level is an integer,
+the DMG’s table for the encounter XP to player level is used. Otherwise,
+<code>xp_pool</code> uses the formula for the line defining the XP-party
+level curve implicit in the DMG’s table. This has the benefit of being
+able to handle parties where not all players are the same level.</p>
 <p>Below is a comparison of the DMG’s XP-to-party level curve versus the
 one obtained by <code>xp_pool</code>.</p>
 <p><img src="dndr_99_dmg-vs-dndr_files/figure-html/xp-pool-plot-1.png" width="384" style="display: block; margin: auto;"></p>
