@@ -26,7 +26,7 @@ creature_text <- function(name = NULL){
 
   # If there is not a creature of that name print a message
   if(nrow(focal_creature) == 0){
-    message("No creature(s) found matching that name; consider checking spelling")
+    warning("No creature(s) found matching that name; consider checking spelling")
 
     # Otherwise...
   } else {

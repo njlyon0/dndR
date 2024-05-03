@@ -18,7 +18,7 @@
 #' # Identify medium undead creatures from the Monster Manual worth 450 XP
 #' creature_list(type = "undead", size = "medium", source = "monster manual", xp = 450)
 creature_list <- function(name = NULL, size = NULL, type = NULL,
-                         source = NULL, xp = NULL, cr = NULL){
+                          source = NULL, xp = NULL, cr = NULL){
   # Squelch visible bindings note
   creature_name <- creature_size <- creature_type <- NULL
   creature_source <- creature_xp <- creature_cr <- NULL
@@ -94,8 +94,8 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
   # If no creatures meet these criteria...
   if(nrow(creature_v6) == 0){
 
-    # Return a message
-    message("No creatures match these criteria; consider revising search")
+    # Return a warning
+    warning("No creatures match these criteria; consider revising search")
 
     # Otherwise...
   } else {

@@ -109,8 +109,8 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
 
   # If there are no spells identified by those arguments...
   if(nrow(spell_v6c) == 0){
-    # Return a message
-    message("No spells match these criteria; consider revising search")
+    # Return a warning
+    warning("No spells match these criteria; consider revising search")
 
     # Otherwise do some final wrangling
   } else {
