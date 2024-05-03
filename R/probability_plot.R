@@ -20,11 +20,11 @@ probability_plot <- function(dice = "2d20", roll_num = 999){
   outcome <- outcome_fact <- ct <- NULL
 
   # Error out if roll number is not an integer
-  if(!is.numeric(x = roll_num))
-    stop("`roll_num` must be an integer")
+  if(is.integer(x = roll_num) != TRUE)
+    stop("'roll_num' must be an integer")
 
   # Roll an initial set of the specified dice
-  first_roll <- suppressMessages(dndR::roll(dice = dice, show_dice = F))
+  first_roll <- suppressMessages(dndR::roll(dice = dice, show_dice = FALSE))
 
   # Handle case if someone is using 2d20
   ## `dndR::roll` returns a differently-formatted object in this case
@@ -49,8 +49,7 @@ probability_plot <- function(dice = "2d20", roll_num = 999){
     roll_results <- dplyr::bind_rows(x = roll_results, y = next_roll) }
 
   # Identify dice type
-  dice_type <- stringr::str_extract(string = dice,
-                                    pattern = "d[:digit:]{1,3}")
+  dice_type <- stringr::str_extract(string = dice, pattern = "d[:digit:]{1,3}")
 
   # Assemble color palette per dice type (colors roughly match `dndR` hex logo)
   dice_palette <- c("d2" = "#000000", "d3" = "#3c096c", "d4" = "#7209b7",
