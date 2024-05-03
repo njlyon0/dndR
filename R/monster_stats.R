@@ -15,20 +15,20 @@ monster_stats <- function(xp = NULL, cr = NULL){
   DMG_XP <- NULL
 
   # Error out if neither XP nor CR is specified
-  if(base::is.null(cr) & base::is.null(xp))
+  if(is.null(cr) & is.null(xp))
     stop("Either XP or CR must be provided")
 
   # Print warning if both are specified and they don't match
-  if(!base::is.null(cr) & !base::is.null(xp)){
-    message("CR and XP both specified, proceeding with CR")
+  if(is.null(cr) != TRUE & is.null(xp) != TRUE){
+    warning("CR and XP both specified. Ignoring provided XP")
     xp_actual <- dndR::cr_convert(cr = cr) }
 
   # If CR is provided and XP isn't, calculate XP
-  if(!base::is.null(cr) & base::is.null(xp)){
+  if(is.null(cr) != TRUE & is.null(xp) == TRUE){
     xp_actual <- dndR::cr_convert(cr = cr) }
 
   # If only XP is provided just rename the object
-  if(base::is.null(cr) & !base::is.null(xp)){
+  if(is.null(cr) == TRUE & is.null(xp) != TRUE){
     xp_actual <- xp }
 
   # Load in the DMG's monster table
