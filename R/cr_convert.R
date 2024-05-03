@@ -13,11 +13,15 @@ cr_convert <- function(cr = NULL){
 
   # Error out if its not filled
   if(base::is.null(cr))
-    stop("`cr` must be provided")
+    stop("'cr' must be provided")
+
+  # Error for too many (should only work on 1)
+  if(length(cr) != 1)
+    stop("Only conversion of a single CR is supported")
 
   # Error out for unrecognized challenge rating entries
   if(!cr %in% c(0, "1/8", "1/4", "1/2", 0.125, 0.25, 0.5, 1:30))
-    stop("Unrecognized `cr` entry. Must be one of '0', '1/8', '1/4', '1/2' or any number between 1 and 30")
+    stop("Unrecognized 'cr' entry. Must be one of '0', '1/8', '1/4', '1/2' or any number between 1 and 30")
 
   # Handle fraction CRs
   if(cr == "1/8"){cr <- 0.125}
