@@ -16,7 +16,8 @@ ability_singular <- function(method = "4d6"){
   if(method == "d20"){method <- "1d20"}
 
   # Error out if method isn't specified
-  if(!method %in% c("4d6", "3d6", "1d20")) stop("`method` not recognized. Select one of '4d6', '3d6', '1d20', or 'd20'")
+  if(!method %in% c("4d6", "3d6", "1d20"))
+    stop("'method' not recognized. Select one of '4d6', '3d6', '1d20', or 'd20'")
 
   # Roll appropriate number of dice
   if(method == "4d6"){ for(i in 1:4){ blank[i]<- d6() } }
@@ -57,13 +58,12 @@ ability_scores <- function(method = "4d6", quiet = FALSE){
 
   # Error out if method is not part of accepted list
   if(!method %in% c("4d6", "3d6", "1d20", "d20"))
-    stop("`method` not recognized, must be one of '4d6', '3d6', '1d20', or  'd20'")
+    stop("'method' not recognized, must be one of '4d6', '3d6', '1d20', or  'd20'")
 
   # Warn if quiet isn't logical
   if(is.logical(quiet) != TRUE){
-    message("`quiet` must be a logical. Defaulting to FALSE")
+    warning("'quiet' must be a logical. Defaulting to FALSE")
     quiet <- FALSE }
-
 
   # Increase specificity of "d20" if someone enters that
   if(method == "d20"){method <- "1d20"}
