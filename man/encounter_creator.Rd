@@ -4,7 +4,12 @@
 \alias{encounter_creator}
 \title{Balance a Combat Encounter for Given Party Composition and Difficulty}
 \usage{
-encounter_creator(party_level = NULL, party_size = NULL, difficulty = NULL)
+encounter_creator(
+  party_level = NULL,
+  party_size = NULL,
+  difficulty = NULL,
+  try = 5
+)
 }
 \arguments{
 \item{party_level}{(numeric) integer indicating the average party level. If all players are the same level, that level is the average party level}
@@ -12,6 +17,8 @@ encounter_creator(party_level = NULL, party_size = NULL, difficulty = NULL)
 \item{party_size}{(numeric) integer indicating how many player characters (PCs) are in the party}
 
 \item{difficulty}{(character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter}
+
+\item{try}{(numeric) integer indicating the number of attempts to make to maximize encounter XP while remaining beneath the threshold defined by the other parameters}
 }
 \value{
 (dataframe) creature experience point (XP) values as well as the maximum XP for an encounter of the specified difficulty and the realized XP cost of the returned creatures
