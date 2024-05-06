@@ -2,6 +2,7 @@
 
 This is the development version of the package. Changes will be listed below as they are made.
 
+- New function behavior: `encounter_creator` now supports a `try` argument that defines how many attempts are made to maximize encounter XP while remaining beneath the allowable threshold
 - Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments
 - Adding unit tests to most functions in the package. Some small changes have resulted (e.g., new warnings for edge cases, more informative messages, etc.) but this shouldn't change function behavior where they are currently in use. Hopefully future debugging will be made easier though!
 
