@@ -59,7 +59,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0.900" id="dndr-version-200900">dndR Version 2.0.0.900<a class="anchor" aria-label="anchor" href="#dndr-version-200900"></a></h2>
 <p>This is the development version of the package. Changes will be listed below as they are made.</p>
-<ul><li>Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments</li>
+<ul><li>New function behavior: <code>encounter_creator</code> now supports a <code>try</code> argument that defines how many attempts are made to maximize encounter XP while remaining beneath the allowable threshold</li>
+<li>Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments</li>
 <li>Adding unit tests to most functions in the package. Some small changes have resulted (e.g., new warnings for edge cases, more informative messages, etc.) but this shouldn’t change function behavior where they are currently in use. Hopefully future debugging will be made easier though!</li>
 </ul></div>
     <div class="section level2">
