@@ -31,7 +31,7 @@ xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
     stop("Unrecognized difficulty level. Please use only one of 'easy', 'medium', 'hard', or 'deadly'")
 
   # If party level is an integer, use the DMG's values
-  if(is.integer(party_level) == TRUE){
+  if(stringr::str_detect(string = party_level, pattern = "\\.") == TRUE){
 
     # Define XP / player values from DMG
     xp_df <- data.frame('pc_level' = 1:20,
