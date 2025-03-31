@@ -7,6 +7,7 @@ This is the development version of the package. Changes will be listed below as 
     - Functions relating to mechanics that were changed in the 2024 version (relative to the 2014 version) have a new `ver` argument for which version of fifth edition D&D is desired. 
     - Some functions that do not support 2024 information and will throw a warning if `ver` is not set to "2014". These include: `spell_text`, `spell_list`, `creature_text`, `creature_list`
 - New function behavior: `encounter_creator` now supports a `try` argument that defines how many attempts are made to maximize encounter XP while remaining beneath the allowable XP threshold
+- Namespaced all function examples--should allow users to run example code without loading `dndR` explicitly with `library` (though they will still need to have installed it at least once)
 - Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments
 - Adding unit tests to most functions in the package. Some small changes have resulted (e.g., new warnings for edge cases, more informative messages, etc.) but this shouldn't change function behavior where they are currently in use. Hopefully future debugging will be made easier though!
 
