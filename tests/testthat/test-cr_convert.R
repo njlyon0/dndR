@@ -3,9 +3,9 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(cr_convert(cr = NULL))
-  expect_error(cr_convert(cr = c(10, 15)))
-  expect_error(cr_convert(cr = 0.75))
+  expect_error(dndR::cr_convert(cr = NULL))
+  expect_error(dndR::cr_convert(cr = c(10, 15)))
+  expect_error(dndR::cr_convert(cr = 0.75))
 })
 
 # # Warning testing
@@ -20,5 +20,5 @@ test_that("Errors work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(cr_convert(cr = 12)), "numeric")
+  expect_equal(class(dndR::cr_convert(cr = 12)), "numeric")
 })

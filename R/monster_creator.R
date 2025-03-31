@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' # Creates a monster from the specified average party level
-#' monster_creator(party_level = 4, party_size = 3)
+#' dndR::monster_creator(party_level = 4, party_size = 3)
 #'
 monster_creator <- function(party_level = NULL, party_size = NULL){
   # Squelch 'visible bindings' note

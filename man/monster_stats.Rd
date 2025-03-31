@@ -17,3 +17,11 @@ monster_stats(xp = NULL, cr = NULL)
 \description{
 Quickly identify the vital statistics of a single creature worth the provided experience points (XP) or Challenge Rating (CR). Uses the table provided in p. 274-275 of the Dungeon Master's Guide. Accepts Challenge Ratings of 0, '1/8', '1/4, and '1/2' in addition to numbers between 1 and 30. CR is *not necessary* to provide **if** XP is provided.
 }
+\examples{
+# Identify monster statistics for a known challenge rating
+dndR::monster_stats(cr = 4)
+
+# Or XP value
+dndR::monster_stats(xp = 2800)
+
+}

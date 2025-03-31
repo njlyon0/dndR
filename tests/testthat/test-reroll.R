@@ -21,6 +21,6 @@
 
 # Output testing
 test_that("Outputs are as expected", {
-  new_values <- reroll(dice_faces = 1, first_result = c(1, 1, 5, 3, 6))
+  new_values <- dndR::reroll(dice_faces = 1, first_result = c(1, 1, 5, 3, 6))
   expect_equal(class(new_values), "numeric")
 })

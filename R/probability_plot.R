@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # Generate a probability plot of 3d8
-#' probability_plot(dice = "3d8", roll_num = 99)
+#' dndR::probability_plot(dice = "3d8", roll_num = 99)
 #'
 probability_plot <- function(dice = "2d20", roll_num = 999){
   # Squelch visible bindings note

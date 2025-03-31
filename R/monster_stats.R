@@ -10,6 +10,13 @@
 #'
 #' @export
 #'
+#' @examples
+#' # Identify monster statistics for a known challenge rating
+#' dndR::monster_stats(cr = 4)
+#' 
+#' # Or XP value
+#' dndR::monster_stats(xp = 2800)
+#'
 monster_stats <- function(xp = NULL, cr = NULL){
   # Squelch visible bindings note
   DMG_XP <- NULL

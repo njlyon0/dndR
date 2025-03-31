@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # Calculate the realized XP from the raw XP, number of monsters, and number of PCs
-#' xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
+#' dndR::xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
 #'
 xp_cost <- function(monster_xp = NULL, monster_count = NULL, party_size = NULL){
   # Squelch visible bindings note

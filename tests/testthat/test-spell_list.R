@@ -4,13 +4,13 @@
 # Error testing
 test_that("Errors work as desired", {
   ## ritual is neither NULL nor logical
-  expect_error(spell_list(ritual = "false"))
+  expect_error(dndR::spell_list(ritual = "false"))
 })
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(spell_list(name = "fake spell that doesn't exist"))
-  expect_warning(spell_list(name = "chill touch", ver = "2024"))
+  expect_warning(dndR::spell_list(name = "fake spell that doesn't exist"))
+  expect_warning(dndR::spell_list(name = "chill touch", ver = "2024"))
 })
 
 # # Message testing
@@ -20,6 +20,6 @@ test_that("Warnings work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  spell_set <- spell_list(name = "chill touch")
+  spell_set <- dndR::spell_list(name = "chill touch")
   expect_equal(class(spell_set), "data.frame")
 })

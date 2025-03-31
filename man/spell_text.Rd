@@ -18,6 +18,6 @@ spell_text(name = NULL, ver = "2014")
 Accepts user-provided fifth edition Dungeons & Dragons spell name(s) and returns the full set of spell information (for the 2014 version) and the complete description text. Unlike `dndR::spell_list`, this function requires an exact match between the user-provided spell name(s) and how they appear in the main spell data object. The argument in this function is not sensitive. This function's output differs from `dndR::spell_list` only in that it returns the additional spell description text.
 }
 \examples{
-spell_text(name = "chill touch")
+dndR::spell_text(name = "chill touch")
 
 }

@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' creature_text(name = c("hill giant", "goblin"))
+#' dndR::creature_text(name = c("hill giant", "goblin"))
 #'
 creature_text <- function(name = NULL, ver = "2014"){
   # Silence visible bindings note

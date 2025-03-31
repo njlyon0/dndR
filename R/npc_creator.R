@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' # Create some information for an NPC
-#' npc_creator(npc_count = 1)
+#' dndR::npc_creator(npc_count = 1)
 #'
 npc_creator <- function(npc_count = 1){
 

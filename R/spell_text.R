@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' spell_text(name = "chill touch")
+#' dndR::spell_text(name = "chill touch")
 #'
 spell_text <- function(name = NULL, ver = "2014"){
   # Silence visible bindings note

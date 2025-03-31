@@ -1,25 +1,26 @@
 #' @title Assign Ability Scores Based on Class
 #'
-#' @description Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB).
+#' @description Assign rolled ability scores based on the recommendations for quick class building given in the Player's Handbook (PHB) in the 2014 version of the rules.
 #'
-#' @param class (character) name of character class (supported classes returned by `dnd_classes()`). Also supports "random" and will randomly select a supported class
-#' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here
-#' @param scores_rolled (logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE
-#' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`
+#' @param class (character) name of character class (supported classes returned by `dndR::dnd_classes()`). Also supports "random" and will randomly select a supported class
+#' @param score_method (character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `dndR::ability_scores()` are accepted here
+#' @param scores_rolled (logical) whether ability scores have previously been rolled (via `dndR::ability_scores()`). Defaults to FALSE
+#' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `dndR::ability_scores()`
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
 #'
 #' @return (dataframe) two columns and six rows
+#' 
 #' @importFrom magrittr %>%
 #'
 #' @export
 #'
 #' @examples
 #' # Can roll up a new character of the desired class from scratch
-#' class_block(class = "wizard", score_method = "4d6")
+#' dndR::class_block(class = "wizard", score_method = "4d6")
 #'
 #' # Or you can roll separately and then create a character with that dataframe
 #' my_scores <- ability_scores(method = "4d6")
-#' class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
+#' dndR::class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
 #'
 class_block <- function(class = NULL, score_method = "4d6",
                         scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){

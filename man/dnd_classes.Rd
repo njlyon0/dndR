@@ -14,6 +14,6 @@ Simply returns a vector of classes that `class_block()` accepts currently. Submi
 }
 \examples{
 # Want to check which classes this package supports?
-dnd_classes()
+dndR::dnd_classes()
 
 }

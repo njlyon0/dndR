@@ -19,12 +19,12 @@ Rolls for six ability scores using the desired method of rolling (4d6 drop lowes
 }
 \examples{
 # Roll ability scores using four d6 and dropping the lowest
-ability_scores(method = "4d6")
+dndR::ability_scores(method = "4d6")
 
 # Roll using 3d6 and dropping nothing
-ability_scores("3d6")
+dndR::ability_scores("3d6")
 
 # Or if you're truly wild, just roll a d20 for each ability
-ability_scores('d20')
+dndR::ability_scores('d20')
 
 }

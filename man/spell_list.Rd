@@ -37,6 +37,6 @@ Query list of all fifth edition Dungeons & Dragons spells (2014 version) based o
 }
 \examples{
 # Search for evocation spells with 'fire' in the name that a wizard can cast
-spell_list(name = "fire", class = "wizard", school = "evocation")
+dndR::spell_list(name = "fire", class = "wizard", school = "evocation")
 
 }

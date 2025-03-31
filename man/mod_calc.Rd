@@ -17,6 +17,6 @@ Ability scores (typically 0-20 for most creatures) relate to roll modifiers. The
 }
 \examples{
 # Calculate roll modifier for an ability score of 17
-mod_calc(score = 17)
+dndR::mod_calc(score = 17)
 
 }

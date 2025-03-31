@@ -3,7 +3,7 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(party_diagram(by = "nothing"))
+  expect_error(dndR::party_diagram(by = "nothing"))
 })
 
 # Warning testing
@@ -15,7 +15,7 @@ test_that("Warnings work as desired", {
                                    INT = "10", WIS = "11", CHA = "12"),
                      Rook = list(STR = "10", DEX = "10", CON = "18",
                                  INT = "9", WIS = "11", CHA = "16"))
-  expect_warning(party_diagram(by = "player", pc_stats = party_list, quiet = "false"))
+  expect_warning(dndR::party_diagram(by = "player", pc_stats = party_list, quiet = "false"))
 })
 
 # # Message testing

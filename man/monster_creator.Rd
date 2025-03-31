@@ -19,6 +19,6 @@ Returns the vital statistics of a randomized monster based on a the average play
 }
 \examples{
 # Creates a monster from the specified average party level
-monster_creator(party_level = 4, party_size = 3)
+dndR::monster_creator(party_level = 4, party_size = 3)
 
 }

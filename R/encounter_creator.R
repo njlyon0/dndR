@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' # Create a hard encounter for a 2-person, 9th level party
-#' encounter_creator(party_level = 9, party_size = 2, difficulty = "hard")
+#' dndR::encounter_creator(party_level = 9, party_size = 2, difficulty = "hard")
 #'
 encounter_creator <- function(party_level = NULL, party_size = NULL,
                               difficulty = NULL, try = 5){
@@ -63,9 +63,9 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
       dplyr::filter(creature_xp == max(creature_xp[creature_xp < capped_xp]))
 
     # Calculate spent XP for this creature
-    spent_xp <- xp_cost(monster_xp = sum(picked$creature_xp),
-                        monster_count = nrow(picked),
-                        party_size = party_size)
+    spent_xp <- dndR::xp_cost(monster_xp = sum(picked$creature_xp),
+                              monster_count = nrow(picked),
+                              party_size = party_size)
 
     # Update set of available creatures
     available %<>%
@@ -87,10 +87,10 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
       } else { xp_value <- xp_levels }
 
       # See if including a creature of that XP is still below the threshold
-      (possible_cost <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
-                                monster_count = nrow(picked) + 1,
-                                party_size = party_size))
-
+      (possible_cost <- dndR::xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
+                                      monster_count = nrow(picked) + 1,
+                                      party_size = party_size))
+      
       # If this would be below the maximum allowed XP...
       if(possible_cost < max_xp){
 
@@ -99,7 +99,7 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
           dplyr::filter(creature_xp == xp_value)
 
         # Add this to the picked set of creatures
-        picked <- picked %>%
+        picked %<>%
           dplyr::bind_rows(candidate)
 
         # Update the 'spent XP' object

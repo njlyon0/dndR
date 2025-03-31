@@ -31,9 +31,9 @@ Rook = list(
 STR = "10", DEX = "10", CON = "18", INT = "9", WIS = "11", CHA = "16"))
 
 # Create a party diagram using that list (by player)
-party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
+dndR::party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
 
 # Can easily group by ability with the same list!
-party_diagram(by = "ability", pc_stats = party_list, quiet = FALSE)
+dndR::party_diagram(by = "ability", pc_stats = party_list, quiet = FALSE)
 }
 }

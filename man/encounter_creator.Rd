@@ -28,6 +28,6 @@ Identifies set of creature XP values that constitute a balanced encounter of spe
 }
 \examples{
 # Create a hard encounter for a 2-person, 9th level party
-encounter_creator(party_level = 9, party_size = 2, difficulty = "hard")
+dndR::encounter_creator(party_level = 9, party_size = 2, difficulty = "hard")
 
 }

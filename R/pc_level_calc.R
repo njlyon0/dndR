@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # Calculate player level from XP earned
-#' pc_level_calc(player_xp = 950)
+#' dndR::pc_level_calc(player_xp = 950)
 #'
 pc_level_calc <- function(player_xp = NULL){
   # Squelch visible bindings note

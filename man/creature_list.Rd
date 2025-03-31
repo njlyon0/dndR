@@ -37,5 +37,6 @@ Query list of fifth edition Dungeons & Dragons creatures (2014 version) based on
 }
 \examples{
 # Identify medium undead creatures from the Monster Manual worth 450 XP
-creature_list(type = "undead", size = "medium", source = "monster manual", xp = 450)
+dndR::creature_list(type = "undead", size = "medium", source = "monster manual", xp = 450)
+
 }

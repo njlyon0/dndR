@@ -4,26 +4,26 @@
 # Error testing
 test_that("Errors work as desired", {
   ## Specified that scores have been rolled but data not provided to function
-  expect_error(class_block(class = "cleric", scores_rolled = TRUE, scores_df = NULL))
+  expect_error(dndR::class_block(class = "cleric", scores_rolled = TRUE, scores_df = NULL))
   ## Pre-rolled scores not provided as a dataframe
-  expect_error(class_block(class = "fighter", scores_rolled = TRUE, scores_df = 10:15))
+  expect_error(dndR::class_block(class = "fighter", scores_rolled = TRUE, scores_df = 10:15))
   ## Pre-rolled scores provided but not enough of them
   my_stats <- ability_scores(method = "4d6", quiet = TRUE)[-1,]
-  expect_error(class_block(class = "warlock", scores_rolled = TRUE, scores_df = my_stats))
+  expect_error(dndR::class_block(class = "warlock", scores_rolled = TRUE, scores_df = my_stats))
   ## Class is null
-  expect_error(class_block(class = NULL, quiet = TRUE))
+  expect_error(dndR::class_block(class = NULL, quiet = TRUE))
   ## Class is unsupported
-  expect_error(class_block(class = "fake class", quiet = TRUE))
+  expect_error(dndR::class_block(class = "fake class", quiet = TRUE))
 })
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(class_block(class = "wizard", scores_rolled = "false"))
+  expect_warning(dndR::class_block(class = "wizard", scores_rolled = "false"))
 })
 
 # Message testing
 test_that("Messages work as desired", {
-  expect_message(class_block(class = "random", quiet = TRUE))
+  expect_message(dndR::class_block(class = "random", quiet = TRUE))
 })
 
 # Output testing

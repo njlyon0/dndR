@@ -18,6 +18,6 @@ creature_text(name = NULL, ver = "2014")
 Accepts user-provided Dungeons & Dragons creature name(s) and returns the full set of fifth edition creature information and the complete description text (for the 2014 version). Unlike `dndR::creature_list`, this function requires an exact match between the user-provided creature name(s) and how they appear in the main creature data object. The argument in this function is not case-sensitive.
 }
 \examples{
-creature_text(name = c("hill giant", "goblin"))
+dndR::creature_text(name = c("hill giant", "goblin"))
 
 }

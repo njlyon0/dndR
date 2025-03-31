@@ -8,14 +8,14 @@
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(encounter_creator(party_level = 10, party_size = 3,
-                                   difficulty = "deadly", try = "xxx"))
+  expect_warning(dndR::encounter_creator(party_level = 10, party_size = 3,
+                                         difficulty = "deadly", try = "xxx"))
 })
 
 # Message testing
 test_that("Messages work as desired", {
-  expect_message(encounter_creator(party_level = 5, party_size = 5,
-                                   difficulty = "deadly", try = NULL))
+  expect_message(dndR::encounter_creator(party_level = 5, party_size = 5,
+                                         difficulty = "deadly", try = NULL))
 })
 
 # Output testing

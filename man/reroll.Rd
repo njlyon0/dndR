@@ -19,6 +19,6 @@ Re-rolls only the dice that "landed on" 1 from a prior use of `roll`. Retains ot
 }
 \examples{
 # Re-roll ones from a prior result
-reroll(dice_faces = 8, first_result = c(1, 3, 1))
+dndR::reroll(dice_faces = 8, first_result = c(1, 3, 1))
 
 }

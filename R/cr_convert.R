@@ -24,9 +24,9 @@ cr_convert <- function(cr = NULL){
     stop("Unrecognized 'cr' entry. Must be one of '0', '1/8', '1/4', '1/2' or any number between 1 and 30")
 
   # Handle fraction CRs
-  if(cr == "1/8"){cr <- 0.125}
-  if(cr == "1/4"){cr <- 0.25}
-  if(cr == "1/2"){cr <- 0.5}
+  if(cr == "1/8"){ cr <- 1/8 }
+  if(cr == "1/4"){ cr <- 1/4 }
+  if(cr == "1/2"){ cr <- 1/2 }
 
   # Calculate XP depending on XP > / < than 20
   ## CR less than or equal to 20

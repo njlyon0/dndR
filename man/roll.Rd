@@ -21,12 +21,12 @@ Rolls the specified number and type of dice. Dice are specified in the shorthand
 }
 \examples{
 # Roll your desired dice
-roll(dice = "4d6", show_dice = TRUE)
+dndR::roll(dice = "4d6", show_dice = TRUE)
 
 # Returned as a number so you can add rolls together or integers
-roll(dice = '1d20') + 5
+dndR::roll(dice = '1d20') + 5
 
 # Can also re-roll ones if desired
-roll(dice = '4d4', re_roll = TRUE)
+dndR::roll(dice = '4d4', re_roll = TRUE)
 
 }

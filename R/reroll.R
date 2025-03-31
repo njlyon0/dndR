@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # Re-roll ones from a prior result
-#' reroll(dice_faces = 8, first_result = c(1, 3, 1))
+#' dndR::reroll(dice_faces = 8, first_result = c(1, 3, 1))
 #'
 reroll <- function(dice_faces, first_result = NULL){
 

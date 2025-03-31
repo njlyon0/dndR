@@ -21,6 +21,6 @@ Encounters are more difficult than the total of the monsters' experience points 
 }
 \examples{
 # Calculate the realized XP from the raw XP, number of monsters, and number of PCs
-xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
+dndR::xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
 
 }

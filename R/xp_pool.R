@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' # Supply a party level and difficulty and get the total XP of such an encounter
-#' xp_pool(party_level = 3, party_size = 2, difficulty = 'medium')
+#' dndR::xp_pool(party_level = 3, party_size = 2, difficulty = 'medium')
 #'
 xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
 

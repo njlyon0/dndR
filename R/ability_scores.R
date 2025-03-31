@@ -9,8 +9,6 @@
 #' @export
 #'
 ability_singular <- function(method = "4d6"){
-  # Create empty list
-  blank <- list()
 
   # Increase specificity of "d20" if someone enters that
   if(method == "d20"){method <- "1d20"}
@@ -19,6 +17,9 @@ ability_singular <- function(method = "4d6"){
   if(!method %in% c("4d6", "3d6", "1d20"))
     stop("'method' not recognized. Select one of '4d6', '3d6', '1d20', or 'd20'")
 
+  # Create empty list
+  blank <- list()
+  
   # Roll appropriate number of dice
   if(method == "4d6"){ for(i in 1:4){ blank[i]<- d6() } }
   if(method == "3d6"){ for(i in 1:3){ blank[i]<- d6() } }
@@ -44,13 +45,13 @@ ability_singular <- function(method = "4d6"){
 #'
 #' @examples
 #' # Roll ability scores using four d6 and dropping the lowest
-#' ability_scores(method = "4d6")
+#' dndR::ability_scores(method = "4d6")
 #'
 #' # Roll using 3d6 and dropping nothing
-#' ability_scores("3d6")
+#' dndR::ability_scores("3d6")
 #'
 #' # Or if you're truly wild, just roll a d20 for each ability
-#' ability_scores('d20')
+#' dndR::ability_scores('d20')
 #'
 ability_scores <- function(method = "4d6", quiet = FALSE){
   # Squelch 'no visible bindings' note
@@ -74,10 +75,10 @@ ability_scores <- function(method = "4d6", quiet = FALSE){
   if(method == "1d20"){ row_num <- 1 }
 
   # Make placeholder matrix
-  empty_block <- matrix(nrow = row_num, ncol = 6)
+  empty_block <- base::matrix(nrow = row_num, ncol = 6)
 
   # Fill it column by column
-  for(k in 1:6){ empty_block[,k] <- ability_singular(method = method) }
+  for(k in 1:6){ empty_block[,k] <- dndR::ability_singular(method = method) }
 
   # Method == "4d6" (and drop lowest) ----
   if(method == "4d6") {

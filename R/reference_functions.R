@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' # Want to check which classes this package supports?
-#' dnd_classes()
+#' dndR::dnd_classes()
 #'
 dnd_classes <- function(){
 
@@ -32,7 +32,7 @@ dnd_classes <- function(){
 #'
 #' @examples
 #' # Want to check which races this package supports?
-#' dnd_races()
+#' dndR::dnd_races()
 #'
 dnd_races <- function(){
 
@@ -60,7 +60,7 @@ dnd_races <- function(){
 #'
 #' @examples
 #' # Full set of damage types included in DnD Fifth Edition (5e)
-#' dnd_damage_types()
+#' dndR::dnd_damage_types()
 #'
 dnd_damage_types <- function(){
 

@@ -19,11 +19,11 @@
 #'
 #' @examples
 #' # Create a PC's base statistics from scratch
-#' pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6", quiet = TRUE)
+#' dndR::pc_creator(class = 'barbarian', race = 'warforged', score_method = "4d6", quiet = TRUE)
 #'
 #' # Or you can roll separately and then create a character with that dataframe
-#' my_scores <- ability_scores(method = "4d6", quiet = TRUE)
-#' pc_creator(class = 'sorcerer', race = 'dragonborn', scores_rolled = TRUE, scores_df = my_scores)
+#' my_scores <- dndR::ability_scores(method = "4d6", quiet = TRUE)
+#' dndR::pc_creator(class = 'sorcerer', race = 'orc', scores_rolled = TRUE, scores_df = my_scores)
 #'
 pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
                        scores_rolled = FALSE, scores_df = NULL, quiet = FALSE,

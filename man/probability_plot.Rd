@@ -19,6 +19,6 @@ Input the number and type of dice to roll and the number of times to roll the di
 }
 \examples{
 # Generate a probability plot of 3d8
-probability_plot(dice = "3d8", roll_num = 99)
+dndR::probability_plot(dice = "3d8", roll_num = 99)
 
 }

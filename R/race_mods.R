@@ -2,16 +2,17 @@
 #'
 #' @description Identify the race-based ability modifiers identified in the Player's Handbook (PHB).
 #'
-#' @param race (character) string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race
+#' @param race (character) string of race (supported classes returned by `dndR::dnd_races()`). Also supports "random" and will randomly select a supported race
 #'
 #' @return (dataframe) two columns and as many rows as there are abilities modified by the race
+#' 
 #' @importFrom magrittr %>%
 #'
 #' @export
 #'
 #' @examples
 #' # Identifies race modifiers of provided race
-#' race_mods(race = "mountain dwarf")
+#' dndR::race_mods(race = "mountain dwarf")
 #'
 race_mods <- function(race = NULL){
   # Error out if race is not specified
@@ -24,7 +25,7 @@ race_mods <- function(race = NULL){
 
   # Pick random race if that is specified
   if(tolower(race) == "random"){
-    race <- sample(x = dnd_races(), size = 1)
+    race <- sample(x = dndR::dnd_races(), size = 1)
     message("Random class selected: ", race) }
 
   # Create an empty dataframe to hold modifiers
