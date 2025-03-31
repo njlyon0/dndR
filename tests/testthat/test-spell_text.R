@@ -9,6 +9,7 @@
 # Warning testing
 test_that("Warnings work as desired", {
   expect_warning(spell_text(name = "fake spell that doesn't exist"))
+  expect_warning(spell_text(name = "chill touch", ver = "2024"))
 })
 
 # # Message testing

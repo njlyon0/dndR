@@ -10,6 +10,7 @@ test_that("Errors work as desired", {
 # Warning testing
 test_that("Warnings work as desired", {
   expect_warning(spell_list(name = "fake spell that doesn't exist"))
+  expect_warning(spell_list(name = "chill touch", ver = "2024"))
 })
 
 # # Message testing
