@@ -4,16 +4,18 @@
 \alias{creature_text}
 \title{Retrieve Full Creature Description Text by Creature Name}
 \usage{
-creature_text(name = NULL)
+creature_text(name = NULL, ver = "2014")
 }
 \arguments{
 \item{name}{(character) exact creature name(s) for which to gather description information}
+
+\item{ver}{(character) which version of fifth edition to use ("2014" or "2024"). Note that only 2014 is supported and entering "2024" will print a warning to that effect}
 }
 \value{
 (dataframe) one column per creature specified by the user. Creature name is stored as the column name for that creature's information. Returns all fields for which there are data for at least one of the specified creatures so row number will vary with query (maximum 26 rows if all fields have information).
 }
 \description{
-Accepts user-provided Dungeons & Dragons creature name(s) and returns the full set of creature information and the complete description text. Unlike `dndR::creature_list`, this function requires an exact match between the user-provided creature name(s) and how they appear in the main creature data object. The argument in this function is not case-sensitive.
+Accepts user-provided Dungeons & Dragons creature name(s) and returns the full set of fifth edition creature information and the complete description text (for the 2014 version). Unlike `dndR::creature_list`, this function requires an exact match between the user-provided creature name(s) and how they appear in the main creature data object. The argument in this function is not case-sensitive.
 }
 \examples{
 creature_text(name = c("hill giant", "goblin"))

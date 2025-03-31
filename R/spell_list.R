@@ -26,7 +26,7 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
   spell_name <- pc_class <- spell_level <- spell_school <- NULL
   ritual_cast <- casting_time <- description <- higher_levels <- NULL
 
-  # Return warning if edition is not 2014
+  # Return warning if version is not 2014
   if(as.character(ver) %in% c("2014", "14") != TRUE){
     warning("This function only supports content from the 2014 edition")
   }

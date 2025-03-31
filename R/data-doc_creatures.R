@@ -1,6 +1,6 @@
 #' @title Dungeons and Dragons Creature Information
 #'
-#' @description Creatures in Dungeons and Dragons all fall into certain, well-documented categories. This table summarizes all of that information into a long format dataframe for easy navigation. Unless otherwise noted, all creature querying functions in `dndR` use this table as their starting point.
+#' @description Creatures in fifth edition Dungeons and Dragons all fall into certain, well-documented categories. This table summarizes all of that information (for the 2014 version of the rules) into a long format dataframe for easy navigation. Unless otherwise noted, all creature querying functions in `dndR` use this table as their starting point.
 #'
 #' @format Dataframe with 26 columns and 1721 rows
 #' \describe{
