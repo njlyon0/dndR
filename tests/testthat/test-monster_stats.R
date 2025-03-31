@@ -3,12 +3,12 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(monster_stats(xp = NULL, cr = NULL))
+  expect_error(dndR::monster_stats(xp = NULL, cr = NULL))
 })
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(monster_stats(xp = 4000, cr = 6))
+  expect_warning(dndR::monster_stats(xp = 4000, cr = 6))
 })
 
 # # Message testing
@@ -18,6 +18,6 @@ test_that("Warnings work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(monster_stats(xp = 5300, cr = NULL)), c("tbl_df", "tbl", "data.frame"))
-  expect_equal(class(monster_stats(xp = NULL, cr = 12)), c("tbl_df", "tbl", "data.frame"))
+  expect_equal(class(dndR::monster_stats(xp = 5300, cr = NULL)), c("tbl_df", "tbl", "data.frame"))
+  expect_equal(class(dndR::monster_stats(xp = NULL, cr = 12)), c("tbl_df", "tbl", "data.frame"))
 })

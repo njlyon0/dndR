@@ -8,7 +8,8 @@
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(creature_text(name = "fake creature that doesn't exist"))
+  expect_warning(dndR::creature_text(name = "fake creature that doesn't exist"))
+  expect_warning(dndR::creature_text(name = "goblin", ver = "2024"))
 })
 
 # # Message testing
@@ -19,9 +20,9 @@ test_that("Warnings work as desired", {
 # Output testing
 test_that("Outputs are as expected", {
   ## Single creature
-  my_creature <- creature_text(name = "goblin")
+  my_creature <- dndR::creature_text(name = "goblin")
   expect_equal(class(my_creature), "data.frame")
   ## Multiple creatures
-  my_creature <- creature_text(name = c("hunter shark", "vampire spawn"))
+  my_creature <- dndR::creature_text(name = c("hunter shark", "vampire spawn"))
   expect_equal(class(my_creature), "data.frame")
 })

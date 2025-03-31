@@ -8,7 +8,8 @@
 
 # Warning testing
 test_that("Warnings work as desired", {
-  expect_warning(creature_list(name = "fake creature that doesn't exist"))
+  expect_warning(dndR::creature_list(name = "fake creature that doesn't exist"))
+  expect_warning(dndR::creature_list(name = "goblin", ver = "2024"))
 })
 
 # # Message testing
@@ -18,6 +19,6 @@ test_that("Warnings work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  creature_set <- creature_list(name = "shark")
+  creature_set <- dndR::creature_list(name = "shark")
   expect_equal(class(creature_set), "data.frame")
 })
