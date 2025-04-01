@@ -20,11 +20,11 @@
 monster_stats <- function(xp = NULL, cr = NULL){
   # Squelch visible bindings note
   DMG_XP <- NULL
-
+  
   # Error out if neither XP nor CR is specified
   if(is.null(cr) & is.null(xp))
     stop("Either XP or CR must be provided")
-
+  
   # Print warning if both are specified and they don't match
   if(is.null(cr) != TRUE & is.null(xp) != TRUE){
     warning("CR and XP both specified. Ignoring provided XP")

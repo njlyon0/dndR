@@ -18,14 +18,13 @@
 probability_plot <- function(dice = "2d20", roll_num = 999){
   # Squelch visible bindings note
   outcome <- outcome_fact <- ct <- NULL
+  
+  # Roll number must be provided as a number
+  if(is.null(roll_num) || is.numeric(roll_num) != TRUE || length(roll_num) != 1)
+    stop("'roll_num' must be provided as a single number")
 
-  # Error out if roll number is not an integer
-  if(is.numeric(roll_num) != TRUE)
-    stop("'roll_num' must be an integer")
-
-  # If it is numeric but is not an integer, round it to the next highest integer
-  if(is.integer(roll_num) != TRUE){
-    roll_num <- ceiling(x = roll_num) }
+  # Make sure number of rolls is an integer
+  roll_num <- round(x = roll_num, digits = 0)
 
   # Roll an initial set of the specified dice
   first_roll <- suppressMessages(dndR::roll(dice = dice, show_dice = FALSE))
@@ -41,7 +40,7 @@ probability_plot <- function(dice = "2d20", roll_num = 999){
   for(k in 1:roll_num){
 
     # Roll the next set of dice and store the result
-    next_roll_raw <- suppressMessages(dndR::roll(dice = dice, show_dice = F))
+    next_roll_raw <- suppressMessages(dndR::roll(dice = dice, show_dice = FALSE))
 
     # Remember 2d20 still need to be handled differently every time
     if(dice == "2d20"){

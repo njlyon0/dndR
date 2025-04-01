@@ -2,7 +2,7 @@
 #'
 #' @description Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. NOTE: this does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.
 #'
-#' @param party_level (numeric) integer indicating the average party level. If all players are the same level, that level is the average party level. Non-integer values are supported but results will be slightly affected
+#' @param party_level (numeric) integer indicating the _average_ party level. If all players are the same level, that level is the average party level. Non-integer values are supported but results will be slightly affected
 #' @param party_size (numeric) integer indicating how many player characters (PCs) are in the party
 #' @param difficulty (character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.
 #'
@@ -15,21 +15,21 @@
 #'
 xp_pool <- function(party_level = NULL, party_size = NULL, difficulty = NULL){
 
-  # Error out if party_level or difficulty is unspecified
-  if(base::is.null(party_level) | base::is.null(party_size) | base::is.null(difficulty))
-    stop("At least one parameter is unspecified. See `?dndR::xp_pool()` for details")
-
-  if(base::is.numeric(party_level) != TRUE | base::is.numeric(party_size) != TRUE)
-    stop("Party level and party size must be a number")
-
-  # Error out if too many party levels are provided
-  if(base::length(party_level) > 1)
-    stop("Too many values provided. What is the *average* level of PCs in the party?")
-
-  # Error out if difficulty is not supported
-  if(!base::tolower(difficulty) %in% c('easy', 'medium', 'hard', 'deadly'))
-    stop("Unrecognized difficulty level. Please use only one of 'easy', 'medium', 'hard', or 'deadly'")
-
+  # Party level must be specified as a single number
+  if(is.null(party_level) || is.numeric(party_level) != TRUE || length(party_level) != 1)
+    stop("'party_level' must be defined as a single number")
+  
+  # Same error check for party size
+  if(is.null(party_size) || is.numeric(party_size) != TRUE || length(party_size) != 1)
+    stop("'party_size' must be defined as a single number")
+  
+  # Make sure difficulty is lowercase
+  diff_lcase <- tolower(x = difficulty)
+  
+  # Difficulty must be provided as a single value and be a one of the specified levels
+  if(is.null(diff_lcase) || length(diff_lcase) != 1 || diff_lcase %in% c("easy", "medium", "hard", "deadly") != TRUE)
+    stop("'difficulty' must be provided as one of 'easy', 'medium', 'hard', or 'deadly'")
+  
   # If party level is an integer, use the DMG's values
   if(stringr::str_detect(string = party_level, pattern = "\\.") == TRUE){
 

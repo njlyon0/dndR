@@ -19,15 +19,19 @@ xp_cost <- function(monster_xp = NULL, monster_count = NULL, party_size = NULL){
   # Squelch visible bindings note
   monster_number <- party_category <- NULL
 
-  # Error out if any parameter is null
-  if(base::is.null(monster_xp) | base::is.null(monster_count) | base::is.null(party_size))
-    stop("At least one parameter is unspecified. See `?dndR::xp_cost()` for details")
+  # Monster XP has to be a single numeric value
+  if(is.null(monster_xp) || is.numeric(monster_xp) != TRUE || length(monster_xp) != 1)
+    stop("'monster_xp' must be specified as a single number")
 
-  # Error out if any parameter is not numeric
-  if(base::is.numeric(monster_xp) != TRUE | base::is.numeric(monster_count) != TRUE | base::is.numeric(party_size) != TRUE)
-    stop("All parameters must be numeric")
-
-  # Assemble multiplier table (see p. 82 in DMG)
+  # Same error for number of monsters
+  if(is.null(monster_count) || is.numeric(monster_count) != TRUE || length(monster_count) != 1)
+    stop("'monster_count' must be specified as a single number")
+  
+  # Same error check for party size
+  if(is.null(party_size) || is.numeric(party_size) != TRUE || length(party_size) != 1)
+    stop("'party_size' must be defined as a single number")
+  
+  # Assemble multiplier table (see p. 82 in 2014 DMG)
   multiplier_table_raw <- base::data.frame(
     'party_category' = c('small', 'typical', 'large'),
     'monster_1' = c(1.5, 1, 0.5), 'monster_2' = c(2, 1.5, 1),

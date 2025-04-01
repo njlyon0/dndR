@@ -13,10 +13,9 @@ test_that("Warnings work as desired", {
 })
 
 # Message testing
-test_that("Messages work as desired", {
-  expect_message(dndR::encounter_creator(party_level = 5, party_size = 5,
-                                         difficulty = "deadly", try = NULL))
-})
+# test_that("Messages work as desired", {
+#   # No messages in this function
+# })
 
 # Output testing
 test_that("Outputs are as expected", {

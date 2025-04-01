@@ -14,14 +14,13 @@
 #'
 npc_creator <- function(npc_count = 1){
 
-  # Error out if count isn't a number
-  if(is.numeric(npc_count) != TRUE)
-    stop("'npc_count' must be numeric")
-
-  # Handle non-integer values
-  if(is.integer(npc_count) != TRUE){
-    npc_count <- ceiling(x = npc_count) }
-
+  # NPC count must be a single number
+  if(is.null(npc_count) || is.numeric(npc_count) != TRUE || length(npc_count) != 1)
+    stop("'npc_count' must be specified as a single number")
+  
+  # Make sure count is an integer
+  npc_count <- round(x = npc_count, digits = 0)
+  
   # Pick a race
   npc_race <- sample(x = dndR::dnd_races(), size = npc_count, replace = TRUE)
 
@@ -30,7 +29,8 @@ npc_creator <- function(npc_count = 1){
                      size = npc_count, replace = TRUE)
 
   # Assemble into named vector
-  npc_info <- data.frame("Race" = npc_race, "Job" = npc_role)
+  npc_info <- data.frame("race" = npc_race, 
+                         "job" = npc_role)
 
   # Return the data.frame
   return(npc_info) }

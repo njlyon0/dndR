@@ -16,10 +16,12 @@ spell_text <- function(name = NULL, ver = "2014"){
   # Silence visible bindings note
   spell_name <- NULL
 
+  # Coerce version parameter to proper format
+  ver_char <- as.character(ver)
+  
   # Return warning if edition is not 2014
-  if(as.character(ver) %in% c("2014", "14") != TRUE){
+  if(ver_char != "2014")
     warning("This function only supports content from the 2014 edition")
-  }
   
   # Read in spell dataframe
   all_spells <- dndR::spells
@@ -30,6 +32,6 @@ spell_text <- function(name = NULL, ver = "2014"){
 
   # If there is not a spell of that name print a message
   if(nrow(focal_spell) == 0){
-    warning("No spell(s) found matching that name; consider checking spelling")
+    warning("No spells found matching that name; consider checking spelling")
     # Otherwise, return the spell's info
   } else { return(focal_spell) } }

@@ -26,10 +26,12 @@ spell_list <- function(name = NULL, class = NULL, level = NULL,
   spell_name <- pc_class <- spell_level <- spell_school <- NULL
   ritual_cast <- casting_time <- description <- higher_levels <- NULL
 
-  # Return warning if version is not 2014
-  if(as.character(ver) %in% c("2014", "14") != TRUE){
+  # Coerce version parameter to proper format
+  ver_char <- as.character(ver)
+  
+  # Return warning if edition is not 2014
+  if(ver_char != "2014")
     warning("This function only supports content from the 2014 edition")
-  }
   
   # Read in spell data
   spell_v0 <- dndR::spells

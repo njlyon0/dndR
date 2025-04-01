@@ -30,31 +30,28 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
                        ver = "2014"){
   # Squelch no visible bindings note
   score <- modifier <- raw_score <- race_modifier <- modifier_calc <- NULL
-
+  
+  # Coerce version to proper form
+  ver_char <- as.character(ver)
+  
   # Malformed 'ver' values
-  if(ver %in% c("2014", "2024", "14", "24") != TRUE)
-    stop("'ver' must be one of '2014', '2024', '14', or '24'")
+  if(is.null(ver_char) || length(ver_char) != 1 || ver_char %in% c("2014", "2024") != TRUE)
+    stop("'ver' must be one of '2014' or '2024'")
   
   # No other errors/warnings required because this is a wrapper for other custom functions that themselves have good error messages built in!
-
+  
   # Create class block
   class_df <- dndR::class_block(class = class, score_method = score_method,
                                 scores_rolled = scores_rolled, scores_df = scores_df, 
                                 quiet = quiet, ver = ver)
   
   # 2014 uses racial ability score modifiers but 2024 doesn't
-  if(as.character(ver) %in% c("2014", "14")){
-    
-    # Calculate racial modifiers
+  if(ver_char == "2014"){ 
     race_df <- dndR::race_mods(race = race)
-    
-    # If not 2014, make an empty dataframe
   } else { 
-    
     race_df <- data.frame("ability" = c("STR", "DEX", "CON",
                                         "INT", "WIS", "CHA"),
                           "modifier" = 0)
-    
   }
   
   # Combine both tables
@@ -62,25 +59,16 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
     dplyr::left_join(y = race_df, by = "ability") %>%
     # Rename the columns more descriptively
     dplyr::rename(raw_score = score, race_modifier = modifier) %>%
-    # Calculate the total scores
-    dplyr::mutate(score = (raw_score + race_modifier)) %>%
-    dplyr::mutate(modifier_calc = base::floor(x = ((score - 10) / 2))) %>%
-    # Paste a plus if its positive
-    dplyr::mutate(roll_modifier = ifelse(test = modifier_calc > 0,
-                                         yes = paste0("+", modifier_calc),
-                                         no = modifier_calc)) %>%
-    # Drop calculated modifier
-    dplyr::select(-modifier_calc) %>%
+    # Calculate the total scores & roll modifiers
+    dplyr::mutate(score = (raw_score + race_modifier),
+                  roll_modifier = dndR::mod_calc(score = score)) %>%
     # Return as a dataframe
     as.data.frame()
-
-  # If 2024 is the specified version...
-  if(as.character(ver) %in% c("2024", "24")){
-    
-    # Remove irrelevant racial columns
+  
+  # If 2024 is the specified version remove irrelevant racial columns
+  if(ver_char == "2024"){
     full_stats %<>%
       dplyr::select(-raw_score, -race_modifier)
-    
   }
   
   # Return that table

@@ -23,14 +23,9 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
   # Silence visible bindings note
   creature_xp <- attempt_num <- NULL
 
-  # If 'try' is null, re-set to default
-  if(is.null(try) == TRUE){
-    message("'try' set to 5")
-    try <- 5 }
-
-  # If try is not a number, warn and coerce to 5
-  if(is.numeric(try) != TRUE){
-    warning("'try' must be numeric. Setting to 5")
+  # Number of tries must be a single number
+  if(is.null(try)|| is.numeric(try) != TRUE || length(try) != 1) {
+    warning("'try' must be provided as a single number. Defaulting to 5")
     try <- 5 }
 
   # Calculate maximum allowed XP for this encounter

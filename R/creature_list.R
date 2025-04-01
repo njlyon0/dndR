@@ -27,10 +27,12 @@ creature_list <- function(name = NULL, size = NULL, type = NULL,
   creature_name <- creature_size <- creature_type <- NULL
   creature_source <- creature_xp <- creature_cr <- NULL
   
-  # Return warning if version is not 2014
-  if(as.character(ver) %in% c("2014", "14") != TRUE){
+  # Coerce version parameter to proper format
+  ver_char <- as.character(ver)
+  
+  # Return warning if edition is not 2014
+  if(ver_char != "2014")
     warning("This function only supports content from the 2014 edition")
-  }
   
   # Read in creature data
   creature_v0 <- dndR::creatures

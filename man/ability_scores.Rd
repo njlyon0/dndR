@@ -9,7 +9,7 @@ ability_scores(method = "4d6", quiet = FALSE)
 \arguments{
 \item{method}{(character) string of "4d6", "3d6", or "1d20" ("d20" also accepted). Enter your preferred method of rolling for each ability score ("4d6" drops lowest before summing)}
 
-\item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low}
+\item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low. Defaults to FALSE}
 }
 \value{
 (dataframe) two columns and six rows for ability score for each ability

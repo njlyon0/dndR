@@ -17,10 +17,12 @@ creature_text <- function(name = NULL, ver = "2014"){
   # Silence visible bindings note
   creature_name <- info <- category <- NULL
 
-  # Return warning if version is not 2014
-  if(as.character(ver) %in% c("2014", "14") != TRUE){
+  # Coerce version parameter to proper format
+  ver_char <- as.character(ver)
+  
+  # Return warning if edition is not 2014
+  if(ver_char != "2014")
     warning("This function only supports content from the 2014 edition")
-  }
   
   # Read in creature dataframe
   all_creatures <- dndR::creatures

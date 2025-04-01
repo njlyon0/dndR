@@ -22,5 +22,5 @@ test_that("Messages work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(dndR::race_mods(race = "goblin")), "data.frame")
+  expect_equal(class(dndR::race_mods(race = "stout halfling")), "data.frame")
 })
