@@ -9,7 +9,8 @@ class_block(
   score_method = "4d6",
   scores_rolled = FALSE,
   scores_df = NULL,
-  quiet = FALSE
+  quiet = FALSE,
+  ver = "2014"
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ class_block(
 \item{scores_df}{(dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `dndR::ability_scores()`}
 
 \item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low}
+
+\item{ver}{(character) which version of fifth edition to use ("2014" or "2024")}
 }
 \value{
 (dataframe) two columns and six rows

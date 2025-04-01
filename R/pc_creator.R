@@ -40,7 +40,7 @@ pc_creator <- function(class = NULL, race = NULL, score_method = "4d6",
   # Create class block
   class_df <- dndR::class_block(class = class, score_method = score_method,
                                 scores_rolled = scores_rolled, scores_df = scores_df, 
-                                quiet = quiet)
+                                quiet = quiet, ver = ver)
   
   # 2014 uses racial ability score modifiers but 2024 doesn't
   if(as.character(ver) %in% c("2014", "14")){

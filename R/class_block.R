@@ -7,6 +7,7 @@
 #' @param scores_rolled (logical) whether ability scores have previously been rolled (via `dndR::ability_scores()`). Defaults to FALSE
 #' @param scores_df (dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `dndR::ability_scores()`
 #' @param quiet (logical) whether to print warnings if the total score is very low or one ability score is very low
+#' @param ver (character) which version of fifth edition to use ("2014" or "2024")
 #'
 #' @return (dataframe) two columns and six rows
 #' 
@@ -23,7 +24,8 @@
 #' dndR::class_block(class = "fighter", scores_rolled = TRUE, scores_df = my_scores)
 #'
 class_block <- function(class = NULL, score_method = "4d6",
-                        scores_rolled = FALSE, scores_df = NULL, quiet = FALSE){
+                        scores_rolled = FALSE, scores_df = NULL, quiet = FALSE,
+                        ver = "2014"){
   # Squelch visible bindings note
   score <- ability <- NULL
 
@@ -58,12 +60,18 @@ class_block <- function(class = NULL, score_method = "4d6",
     stop("Class must be specified")
 
   # Error out if class is supplied but isn't in the set of allowed classes
-  if(!tolower(class) %in% c(dnd_classes(), "random"))
+  if(!tolower(class) %in% c(dndR::dnd_classes(), "random"))
     stop("Chosen class not currently supported by this function. Run 'dnd_classes()' for accepted classes")
 
+  # Error for malformed "ver" values
+  if(!tolower(ver) %in% c("2014", "14", "2024", "24")){
+    warning("'ver' must be either '2014' or '2014'. Defaulting to 2014")
+    ver <- "2014"
+  }
+  
   # If class is set to random, pick one
   if(tolower(class) == "random"){
-    class <- sample(x = dnd_classes(), size = 1)
+    class <- sample(x = dndR::dnd_classes(), size = 1)
     message("Random class selected: ", class) }
 
   # Determine top two abilities based on class
@@ -71,15 +79,20 @@ class_block <- function(class = NULL, score_method = "4d6",
   if(base::tolower(class) == "barbarian"){ top_two <- c("STR", "CON") }
   if(base::tolower(class) == "bard"){ top_two <- c("CHA", "DEX") }
   if(base::tolower(class) == "cleric"){ top_two <- c("WIS", "STR") }
-  if(base::tolower(class) == "druid"){ top_two <- c("WIS", "CON") }
+  if(base::tolower(class) == "cleric" & ver %in% c("2014", "14")){ top_two <- c("WIS", "STR") }
+  if(base::tolower(class) == "cleric" & ver %in% c("2024", "24")){ top_two <- c("WIS", "CHA") }
+  if(base::tolower(class) == "druid" & ver %in% c("2014", "14")){ top_two <- c("WIS", "CON") }
+  if(base::tolower(class) == "druid" & ver %in% c("2024", "24")){ top_two <- c("WIS", "INT") }
   if(base::tolower(class) == "fighter"){ top_two <- c("STR", "DEX") }
   if(base::tolower(class) == "monk"){ top_two <- c("DEX", "WIS") }
   if(base::tolower(class) == "paladin"){ top_two <- c("STR", "CHA") }
   if(base::tolower(class) == "ranger"){ top_two <- c("DEX", "WIS") }
   if(base::tolower(class) == "rogue"){ top_two <- c("DEX", "INT") }
   if(base::tolower(class) == "sorcerer"){ top_two <- c("CHA", "CON") }
-  if(base::tolower(class) == "warlock"){ top_two <- c("CHA", "CON") }
-  if(base::tolower(class) == "wizard"){ top_two <- c("INT", "CON") }
+  if(base::tolower(class) == "warlock" & ver %in% c("2014", "14")){ top_two <- c("CHA", "CON") }
+  if(base::tolower(class) == "warlock" & ver %in% c("2024", "24")){ top_two <- c("CHA", "WIS") }
+  if(base::tolower(class) == "wizard" & ver %in% c("2014", "14")){ top_two <- c("INT", "CON") }
+  if(base::tolower(class) == "wizard" & ver %in% c("2024", "24")){ top_two <- c("INT", "WIS") }
   # If we need to add classes we can use the next line
   # if(base::tolower(class) == ""){ top_two <- c("", "") }
 
