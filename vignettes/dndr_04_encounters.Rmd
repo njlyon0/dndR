@@ -16,17 +16,23 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(dndR)
 ```
 
-Creating balanced combat encounters can be surprisingly difficult, especially for newer Dungeon/Game Masters (DMs / GMs). If you want to use the Dungeon Master's Guide (DMG) you need to consult several interrelated tables for each encounter. To help other newbies--like myself!--`dndR` includes a handful of functions aimed at simplifying the encounter balancing process.
+Creating balanced combat encounters can be surprisingly difficult, especially for newer Dungeon/Game Masters (DMs / GMs). If using the 2014 version's Dungeon Master's Guide (DMG) you need to consult several interrelated tables for each encounter. Even though the 2024 version of fifth edition D&D streamlined this process slightly it can still be cumbersome to balance an encounter. To help other newbies, `dndR` includes a handful of functions aimed at simplifying the encounter balancing process.
 
 ## Encounter Creation
 
-If you'd rather avoid consulting the DMG at all, the `encounter_creator` function may be a valuable tool for you to consider. This function requires the average level of all player characters in the party, the number of players in the party, and how difficult you'd like to make the encounter (allowable answers are 'easy', 'medium', 'hard', and 'deadly'). Once you've provided this information, it will automatically select one tougher creature and as many other creatures as possible _without making the encounter more difficult than you specified_.
+If you'd rather avoid consulting the rulebooks at all, the `encounter_creator` function may be a valuable tool for you to consider. This function requires the average level of all player characters in the party (if all players are the same level this is just that level), the number of players in the party, which version of fifth edition D&D you're using, and how difficult you'd like to make the encounter (allowable answers differ between the 2014 and 2024 versions). Once you've provided this information, it will automatically select one tougher creature and as many other creatures as possible _without making the encounter more difficult than you specified_.
 
-The function returns a dataframe with one row for each unique experience point (XP) value of the selected creatures. A separate column indicates the number of creatures worth that amount of XP that should be selected in the encounter. The function also returns the "pool" of XP available for the encounter and the realized XP "cost" of the chosen creatures. More detail is provided on this later in this vignette but for now keep in mind that there is an optimization step being done under the hood so this function <u>will not always return identical results</u>. I suggest running the function more than once until you are satisfied with the results!
+There is also an optional argument to specify the maximum number of creatures if desired. The 2024 version is particularly susceptible to including a number of monsters that--while mathematically appropriate--can be logistically challening to actually keep track of during a session but this argument may also be helpful for those playing under the 2014 rules.
+
+The function returns a dataframe with one row for each unique experience point (XP) value of the selected creatures. A separate column indicates the number of creatures worth that amount of XP that should be selected in the encounter. The function also returns the "pool" of XP available for the encounter and the realized XP "cost" of the chosen creatures. More detail is provided on this later in this vignette but for now keep in mind that there is an optimization step being done under the hood so this function <u>may not always return identical results</u>. I suggest running the function more than once until you are satisfied with the results! Or increasing the "try" argument to give the function more chances to find the optimal encounter composition.
 
 ```{r encounter_creator}
 # Pick a hard set of creatures for a four-person party of 3rd level characters
-dndR::encounter_creator(party_level = 3, party_size = 4, difficulty = "hard")
+## Try 10 times to find the 'best' encounter
+encounter_creator(party_level = 3, party_size = 4, ver = "2014", difficulty = "hard", try = 10)
+
+# Design a moderately difficult encounter for a 3-person, 8th level party with no more than 6 creatures
+encounter_creator(party_level = 8, party_size = 4, ver = "2024", difficulty = "moderate", max_creatures = 6)
 ```
 
 After this function has identified the number and XP value of the creatures in this encounter, you may consider using other `dndR` functions to identify specific creatures (e.g., `creature_list`, etc.) or use your favorite source book / homebrew to decide on particular creatures.
@@ -38,24 +44,27 @@ This may be more detail than you require but a small description of how experien
 1. Level of characters
 2. Number of characters in the party
 3. How difficult the GM wants to make the encounter
-4. How many enemy creatures are included
+4. For the 2014 version _only_, how many enemy creatures are included
 
-The first three go into the "pool" of available experience points to spend on a given encounter. However, the number of creatures can dramatically influence how difficult an encounter is even if their total XP value is the same (e.g., a fight against one 1000 XP creature versus against four 250 XP creatures). This realized XP "cost" is calculated by applying a multiplier to the total rules-as-written XP value of all monsters in the encounter. This multiplier is affected by the number of enemy creatures as well as the number of player characters.
+The first three go into the "pool" of available experience points to spend on a given encounter. However, the number of creatures can dramatically influence how difficult an encounter is even if their total XP value is the same (e.g., a fight against one 1000 XP creature versus against four 250 XP creatures). This realized XP "cost" is calculated--for the 2014 version--by applying a multiplier to the total rules-as-written XP value of all monsters in the encounter. This multiplier is affected by the number of enemy creatures as well as the number of player characters. The 2024 rules have a qualitative note that GMs may want to tweak the number of creatures during the session until the desired difficulty is reached rather than explicitly doing math on the XP pool to get to a realized XP cost.
 
-The DMG handles the total XP pool and the XP cost in two separate tables. In order to balance an encounter you need to carefully consult both of them. Often this involves iterative testing of which number and combination of creatures is below the available pool after applying the relevant multiplier. `dndR` provides two functions to handle this instead: `xp_pool` and `xp_cost`.
+The 2014 DMG handles the total XP pool and the XP cost in two separate tables. In order to balance an encounter you need to carefully consult both of them. Often this involves iterative testing of which number and combination of creatures is below the available pool after applying the relevant multiplier. `dndR` provides two functions to handle this instead: `xp_pool` and `xp_cost`. As you can imagine, the change for the 2024 rules greatly streamlines this process!
 
 `xp_pool` returns the amount of XP the GM can 'spend' on monsters in a given encounter to ensure the difficulty is as desired based on the three factors identified above. You may note that it has identical arguments to `encounter_creator`--this is because that function relies on both of these functions 'under the hood.'
 
 ```{r xp_pool}
 # How much XP is available for a hard encounter for the four-person, 3rd level party?
-dndR::xp_pool(party_level = 3, party_size = 4, difficulty = "hard")
+xp_pool(party_level = 3, party_size = 4, ver = "2014", difficulty = "hard")
+
+# What about for the same party in the 2024 rules?
+xp_pool(party_level = 3, party_size = 4, ver = "2024", difficulty = "high")
 ```
 
-Once you have that in mind, you can make a note of that number and then use `xp_cost` repeatedly until you find the highest realized XP cost that will still fall beneath that threshold.
+Once you have that in mind, you can make a note of that number and then use `xp_cost` repeatedly until you find the highest realized XP cost that will still fall beneath that threshold. Note that using `xp_cost` while specifying the 2024 rules (i.e., `ver = "2024"`) will return a warning because the XP pool returned by `xp_pool` _is_ the XP cost in that version of fifth edition D&D.
 
 ```{r xp_cost}
-# Identify 'realized' XP of two monsters worth a total of 1,000 XP versus our party
-dndR::xp_cost(monster_xp = 1000, monster_count = 2, party_size = 4)
+# Identify 'realized' XP of two monsters worth a total of 800 XP versus our party
+xp_cost(monster_xp = 800, monster_count = 2, party_size = 4, ver = "2014")
 ```
 
 Even though the total XP value of the creatures is beneath the threshold identified by `xp_pool` it is dramatically higher after the appropriate multipliers are applied. Using `xp_pool` alone would risk creating a much harder encounter than you intended. In fact, in this case, that realized XP value is actually appropriate for a "deadly" encounter!
