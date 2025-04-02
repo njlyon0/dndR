@@ -1,3 +1,9 @@
+## dndR Version 3.0.0.900
+
+This is the development version. The following changes were made from the preceding version:
+
+- No changes (yet!)
+
 ## dndR Version 3.0.0
 
 The following changes were made from the preceding version:
