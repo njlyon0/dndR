@@ -1,6 +1,6 @@
-## dndR Version 2.0.0.900
+## dndR Version 3.0.0
 
-This is the development version of the package. Changes will be listed below as they are made.
+The following changes were made from the preceding version:
 
 - Updates for 2024 version of fifth edition Dungeons & Dragons:
     - With the 2024 release of an updated fifth edition, many functions needed to be updated so users could specify which version they were using. In all cases this was added as a `ver` argument
