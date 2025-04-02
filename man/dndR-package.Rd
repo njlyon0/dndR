@@ -21,7 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Tim Schatto-Eckrodt (https://kudusch.de/)
+  \item Tim Schatto-Eckrodt (https://kudusch.de)
 }
 
 Other contributors:

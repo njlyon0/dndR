@@ -7,13 +7,13 @@ Authors@R: c(
   person(given = "Nicholas", family = "Lyon",
          role = c("aut", "cre", "cph"),
          email = "njlyon@alumni.iastate.edu",
-         comment = c(ORCID = "0000-0003-3905-1078")),
+         comment = "https://orcid.org/0000-0003-3905-1078"),
   person(given = "Tim", family = "Schatto-Eckrodt",
          role = "aut",
-         comment = c(Website = "https://kudusch.de/")),
+         comment = "https://kudusch.de"),
   person(given = "Humberto", family = "Nappo",
          role = "ctb",
-         comment = c(ORCID = "0000-0001-7810-1635"))
+         comment = "https://orcid.org/0000-0001-7810-1635")
          )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions.
