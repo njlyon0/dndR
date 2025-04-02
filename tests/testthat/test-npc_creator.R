@@ -3,7 +3,7 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(npc_creator(npc_count = "bbb"))
+  expect_error(dndR::npc_creator(npc_count = "bbb"))
 })
 
 # # Warning testing

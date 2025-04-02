@@ -4,23 +4,28 @@
 \alias{xp_pool}
 \title{Calculate Total XP of Monsters for Given Party Level and Difficulty}
 \usage{
-xp_pool(party_level = NULL, party_size = NULL, difficulty = NULL)
+xp_pool(party_level = NULL, party_size = NULL, ver = NULL, difficulty = NULL)
 }
 \arguments{
-\item{party_level}{(numeric) integer indicating the average party level. If all players are the same level, that level is the average party level. Non-integer values are supported but results will be slightly affected}
+\item{party_level}{(numeric) integer indicating the _average_ party level. If all players are the same level, that level is the average party level. Non-integer values are supported but results will be slightly affected}
 
 \item{party_size}{(numeric) integer indicating how many player characters (PCs) are in the party}
 
-\item{difficulty}{(character) one of "easy", "medium", "hard", or "deadly" for the desired difficulty of the encounter.}
+\item{ver}{(character) which version of fifth edition to use ("2014" or "2024")}
+
+\item{difficulty}{(character) one of a specific set of encounter difficulty level names. If `ver = "2014"`, this must be one of "easy", "medium", "hard", or "deadly" while for `ver = "2024"` it must instead be one of "low", "moderate", or "high"}
 }
 \value{
 (numeric) total encounter XP as an integer
 }
 \description{
-Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. NOTE: this does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.
+Returns the total XP (experience points) of all creatures that would make an encounter the specified level of difficulty for a party of the supplied level. This 'pool' can be used by a GM (game master) to "purchase" monsters to identify how many a party is likely to be able to handle given their average level. This function supports both 2014 and 2024 versions of fifth edition D&D. Note that the returned pool does not take into account creature-specific abilities or traits so care should be taken if a monster has many such traits that modify its difficulty beyond its experience point value.
 }
 \examples{
 # Supply a party level and difficulty and get the total XP of such an encounter
-xp_pool(party_level = 3, party_size = 2, difficulty = 'medium')
+dndR::xp_pool(party_level = 3, party_size = 2, ver = "2014", difficulty = "medium")
+
+# Calculate the XP pool for the same party under the 2024 rules
+xp_pool(party_level = 3, party_size = 2, ver = "2024", difficulty = "moderate")
 
 }

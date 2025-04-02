@@ -3,7 +3,7 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(mod_calc(score = "aaa"))
+  expect_error(dndR::mod_calc(score = "aaa"))
 })
 
 # # Warning testing
@@ -18,5 +18,5 @@ test_that("Errors work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(mod_calc(score = 10)), "character")
+  expect_equal(class(dndR::mod_calc(score = 10)), "character")
 })

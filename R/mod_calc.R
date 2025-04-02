@@ -10,14 +10,14 @@
 #'
 #' @examples
 #' # Calculate roll modifier for an ability score of 17
-#' mod_calc(score = 17)
+#' dndR::mod_calc(score = 17)
 #'
 mod_calc <- function(score = 10){
 
-  # Error out if score isn't numeric
-  if(is.numeric(score) != TRUE)
-    stop("`score` must be numeric")
-
+  # Score must be specified as a single number
+  if(is.null(score) || is.numeric(score) != TRUE)
+    stop("'score' must be defined as a numeric vector")
+  
   # Calculate modifier from score
   mod_num <- base::floor(x = ((score - 10) / 2))
 

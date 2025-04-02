@@ -4,9 +4,9 @@
 # Error testing
 test_that("Errors work as desired", {
   ## Unspecified PC race
-  expect_error(race_mods(race = NULL))
+  expect_error(dndR::race_mods(race = NULL))
   ## Unsupported PC race
-  expect_error(race_mods(race = "fake pc race"))
+  expect_error(dndR::race_mods(race = "fake pc race"))
 })
 
 # # Warning testing
@@ -16,11 +16,11 @@ test_that("Errors work as desired", {
 
 # Message testing
 test_that("Messages work as desired", {
-  expect_message(race_mods(race = "random"))
-  expect_message(race_mods(race = "plasmoid"))
+  expect_message(dndR::race_mods(race = "random"))
+  expect_message(dndR::race_mods(race = "plasmoid"))
 })
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(race_mods(race = "goblin")), "data.frame")
+  expect_equal(class(dndR::race_mods(race = "stout halfling")), "data.frame")
 })

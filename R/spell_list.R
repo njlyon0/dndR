@@ -1,6 +1,6 @@
 #' @title List Spells Based on Criteria
 #'
-#' @description Query list of all Dungeons & Dragons spells based on partial string matches between user inputs and the relevant column of the spell information data table. Currently supports users querying the spell list by spell name, which class lists allow the spell, spell's level, the school of magic the spell belongs in, whether or not the spell can be cast as a ritual, and the time it takes to cast the spell. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude spells from the returned set of spells
+#' @description Query list of all fifth edition Dungeons & Dragons spells (2014 version) based on partial string matches between user inputs and the relevant column of the spell information data table. Currently supports users querying the spell list by spell name, which class lists allow the spell, spell's level, the school of magic the spell belongs in, whether or not the spell can be cast as a ritual, and the time it takes to cast the spell. All character arguments are case-insensitive (note that the ritual argument expects a logical). Any argument set to `NULL` (the default) will not be used to include/exclude spells from the returned set of spells
 #'
 #' @param name (character) text to look for in spell names
 #' @param class (character) character class(es) with the spell(s) on their list
@@ -8,6 +8,7 @@
 #' @param school (character) school(s) of magic within which the spell belongs (e.g., 'evocation', 'necromancy', etc.)
 #' @param ritual (logical) whether the spell can be cast as a ritual
 #' @param cast_time (character) either the phase of a turn needed to cast the spell or the in-game time required (e.g., "reaction", "1 minute", etc.)
+#' @param ver (character) which version of fifth edition to use ("2014" or "2024"). Note that only 2014 is supported and entering "2024" will print a warning to that effect
 #'
 #' @return (dataframe) 10 columns of information with one row per spell(s) that fit(s) the user-specified criteria. If no spells fit the criteria, returns a message to that effect instead of a data object
 #' @importFrom magrittr %>%
@@ -16,14 +17,22 @@
 #'
 #' @examples
 #' # Search for evocation spells with 'fire' in the name that a wizard can cast
-#' spell_list(name = "fire", class = "wizard", school = "evocation")
+#' dndR::spell_list(name = "fire", class = "wizard", school = "evocation")
 #'
 spell_list <- function(name = NULL, class = NULL, level = NULL,
-                       school = NULL, ritual = NULL, cast_time = NULL){
+                       school = NULL, ritual = NULL, cast_time = NULL,
+                       ver = "2014"){
   # Squelch visible bindings note
   spell_name <- pc_class <- spell_level <- spell_school <- NULL
   ritual_cast <- casting_time <- description <- higher_levels <- NULL
 
+  # Coerce version parameter to proper format
+  ver_char <- as.character(ver)
+  
+  # Return warning if edition is not 2014
+  if(ver_char != "2014")
+    warning("This function only supports content from the 2014 edition")
+  
   # Read in spell data
   spell_v0 <- dndR::spells
 

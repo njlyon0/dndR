@@ -3,7 +3,7 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(probability_plot(dice = "2d20", roll_num = "yyy"))
+  expect_error(dndR::probability_plot(dice = "2d20", roll_num = "yyy"))
 })
 
 # # Warning testing
@@ -18,6 +18,6 @@ test_that("Errors work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  my_plot <- probability_plot(dice = "2d8", roll_num = 10)
+  my_plot <- dndR::probability_plot(dice = "2d8", roll_num = 10)
   expect_equal(class(my_plot), c("gg", "ggplot"))
 })

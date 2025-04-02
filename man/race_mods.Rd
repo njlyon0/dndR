@@ -7,7 +7,7 @@
 race_mods(race = NULL)
 }
 \arguments{
-\item{race}{(character) string of race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race}
+\item{race}{(character) string of race (supported classes returned by `dndR::dnd_races()`). Also supports "random" and will randomly select a supported race}
 }
 \value{
 (dataframe) two columns and as many rows as there are abilities modified by the race
@@ -17,6 +17,6 @@ Identify the race-based ability modifiers identified in the Player's Handbook (P
 }
 \examples{
 # Identifies race modifiers of provided race
-race_mods(race = "mountain dwarf")
+dndR::race_mods(race = "mountain dwarf")
 
 }

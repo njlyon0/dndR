@@ -10,34 +10,37 @@ pc_creator(
   score_method = "4d6",
   scores_rolled = FALSE,
   scores_df = NULL,
-  quiet = FALSE
+  quiet = FALSE,
+  ver = "2014"
 )
 }
 \arguments{
-\item{class}{(character) name of character class (supported classes returned by `dnd_classes()`). Also supports "random" and will randomly select a supported class. Random class returned as message}
+\item{class}{(character) name of character class (supported classes returned by `dndR::dnd_classes()`). Also supports "random" and will randomly select a supported class. Random class returned as message}
 
-\item{race}{(character) name of character race (supported classes returned by `dnd_races()`). Also supports "random" and will randomly select a supported race. Random race returned as message}
+\item{race}{(character) name of character race (supported classes returned by `dndR::dnd_races()`). Also supports "random" and will randomly select a supported race. Random race returned as message. Note that if `ver` is set to "2024", this argument is ignored}
 
-\item{score_method}{(character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `ability_scores()` are accepted here}
+\item{score_method}{(character) preferred method of rolling for ability scores "4d6", "3d6", or "1d20" ("d20" also accepted synonym of "1d20"). Only values accepted by `dndR::ability_scores()` are accepted here}
 
-\item{scores_rolled}{(logical) whether ability scores have previously been rolled (via `ability_scores()`). Defaults to FALSE}
+\item{scores_rolled}{(logical) whether ability scores have previously been rolled (via `dndR::ability_scores()`). Defaults to FALSE}
 
-\item{scores_df}{(dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `ability_scores()`}
+\item{scores_df}{(dataframe) if 'scores_rolled' is TRUE, the name of the dataframe object returned by `dndR::ability_scores()`}
 
 \item{quiet}{(logical) whether to print warnings if the total score is very low or one ability score is very low}
+
+\item{ver}{(character) which version of fifth edition to use ("2014" or "2024")}
 }
 \value{
 (dataframe) raw ability score, race modifier, total ability score, and the roll modifier for each of the six abilities
 }
 \description{
-Stat out a player character (PC) of specified race and class using your preferred method for rolling ability scores.
+Assign ability scores for a fifth edition Dungeons and Dragons player character (PC) of specified race and class using your preferred method for rolling ability scores. Note that in the 2024 version of fifth edition, race has no effect on ability scores so that part of this function is ignored if the 2024 rules are indicated.
 }
 \examples{
 # Create a PC's base statistics from scratch
-pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6", quiet = TRUE)
+dndR::pc_creator(class = 'barbarian', race = 'warforged', score_method = "4d6", quiet = TRUE)
 
 # Or you can roll separately and then create a character with that dataframe
-my_scores <- ability_scores(method = "4d6", quiet = TRUE)
-pc_creator(class = 'sorcerer', race = 'dragonborn', scores_rolled = TRUE, scores_df = my_scores)
+my_scores <- dndR::ability_scores(method = "4d6", quiet = TRUE)
+dndR::pc_creator(class = 'sorcerer', race = 'orc', scores_rolled = TRUE, scores_df = my_scores)
 
 }

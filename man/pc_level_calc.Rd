@@ -17,6 +17,6 @@ Uses total player experience points (XP) to identify player character (PC) level
 }
 \examples{
 # Calculate player level from XP earned
-pc_level_calc(player_xp = 950)
+dndR::pc_level_calc(player_xp = 950)
 
 }

@@ -3,9 +3,9 @@
 
 # Error testing
 test_that("Errors work as desired", {
-  expect_error(pc_level_calc(player_xp = NULL))
-  expect_error(pc_level_calc(player_xp = "xxx"))
-  expect_error(pc_level_calc(player_xp = c(4000, 250)))
+  expect_error(dndR::pc_level_calc(player_xp = NULL))
+  expect_error(dndR::pc_level_calc(player_xp = "xxx"))
+  expect_error(dndR::pc_level_calc(player_xp = c(4000, 250)))
 })
 
 # # Warning testing
@@ -20,5 +20,5 @@ test_that("Errors work as desired", {
 
 # Output testing
 test_that("Outputs are as expected", {
-  expect_equal(class(pc_level_calc(player_xp = 3600)), "data.frame")
+  expect_equal(class(dndR::pc_level_calc(player_xp = 3600)), "data.frame")
 })

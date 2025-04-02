@@ -1,6 +1,6 @@
 #' @title Dungeons and Dragons Quick Table for Creature Statistics
 #'
-#' @description On pages 274 and 275 in the Dungeon Master's Guide (Fifth Edition) there are two tables that relate creature Challenge Rating (CR) to various vital statistics (armor, hit points, etc.) and to Experience Points (XP). These tables have been transcribed into this data object for ease of reference.
+#' @description On pages 274 and 275 in the Dungeon Master's Guide (Fifth Edition; 2014 version) there are two tables that relate creature Challenge Rating (CR) to various vital statistics (armor, hit points, etc.) and to Experience Points (XP). These tables have been transcribed into this data object for ease of reference.
 #'
 #' @format Dataframe with 8 columns and 34 rows
 #' \describe{

@@ -11,24 +11,16 @@
 #'
 #' @examples
 #' # Calculate player level from XP earned
-#' pc_level_calc(player_xp = 950)
+#' dndR::pc_level_calc(player_xp = 950)
 #'
 pc_level_calc <- function(player_xp = NULL){
   # Squelch visible bindings note
   xp_threshold <- NULL
 
-  # Error out if 'player_xp' isn't provided
-  if(is.null(player_xp))
-    stop("'player_xp' must be provided as a number")
-
-  # Also error out if it's not numeric
-  if(is.numeric(player_xp) != TRUE)
-    stop("'player_xp' must be numeric")
-
-  # Error out if too many XP values are provided
-  if(length(player_xp) != 1)
-    stop("'player_xp' must be only one number")
-
+  # Player XP must be provided as a single numeric value
+  if(is.null(player_xp) || is.numeric(player_xp) != TRUE || length(player_xp) != 1)
+    stop("'player_xp' must be specified as a single number")
+  
   # If no errors, build a quick reference table
   xp_reftable <- data.frame(player_level = seq(1:20),
                             xp_threshold = c(0, 300, 900, 2700, 6500,

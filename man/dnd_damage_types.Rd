@@ -14,6 +14,6 @@ Simply returns a vector of damage types in DnD
 }
 \examples{
 # Full set of damage types included in DnD Fifth Edition (5e)
-dnd_damage_types()
+dndR::dnd_damage_types()
 
 }

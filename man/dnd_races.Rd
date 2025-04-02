@@ -14,6 +14,6 @@ Simply returns a vector of races that `race_mods()` accepts currently. Submit an
 }
 \examples{
 # Want to check which races this package supports?
-dnd_races()
+dndR::dnd_races()
 
 }

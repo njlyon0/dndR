@@ -18,8 +18,8 @@
 
 # Output testing
 test_that("Outputs are as expected", {
-  my_pc <- pc_creator(class = "wizard", race = "kalashtar",
-                      score_method = "4d6", scores_rolled = FALSE,
-                      quiet = TRUE)
+  my_pc <- dndR::pc_creator(class = "wizard", race = "kalashtar",
+                            score_method = "4d6", scores_rolled = FALSE,
+                            quiet = TRUE)
   expect_equal(class(my_pc), "data.frame")
 })
