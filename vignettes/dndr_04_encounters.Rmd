@@ -39,34 +39,44 @@ After this function has identified the number and XP value of the creatures in t
 
 ## XP Balancing 
 
-This may be more detail than you require but a small description of how experience points are used to balance encounters (in and outside of this R package) will be useful context for some of the other encounter balancing tools described below. In essence, the difficulty of a combat encounter in Dungeons and Dragons is affected by four things:
+This may be more detail than you require but a small description of how experience points are used to balance encounters (in and outside of this R package) will be useful context for some of the other encounter balancing tools described below. In the In essence, the difficulty of a combat encounter in Dungeons and Dragons is affected by four things:
 
-1. Level of characters
-2. Number of characters in the party
+1. Player character level
+2. Number of party members
 3. How difficult the GM wants to make the encounter
 4. For the 2014 version _only_, how many enemy creatures are included
 
-The first three go into the "pool" of available experience points to spend on a given encounter. However, the number of creatures can dramatically influence how difficult an encounter is even if their total XP value is the same (e.g., a fight against one 1000 XP creature versus against four 250 XP creatures). This realized XP "cost" is calculated--for the 2014 version--by applying a multiplier to the total rules-as-written XP value of all monsters in the encounter. This multiplier is affected by the number of enemy creatures as well as the number of player characters. The 2024 rules have a qualitative note that GMs may want to tweak the number of creatures during the session until the desired difficulty is reached rather than explicitly doing math on the XP pool to get to a realized XP cost.
+The first three go into the "pool" of available experience points to spend on a given encounter regardless of whether you're using the 2014 or 2024 version of fifth edition Dungeons & Dragons. If you're using the 2014 version, the number of enemies is used to calculate a realized XP cost by applying a multiplier to the XP pool. In the 2024 version, the XP pool is the XP cost but there is a qualitative note in the Player's Handbook that GMs will want to be careful about the number of enemies.
 
-The 2014 DMG handles the total XP pool and the XP cost in two separate tables. In order to balance an encounter you need to carefully consult both of them. Often this involves iterative testing of which number and combination of creatures is below the available pool after applying the relevant multiplier. `dndR` provides two functions to handle this instead: `xp_pool` and `xp_cost`. As you can imagine, the change for the 2024 rules greatly streamlines this process!
+### XP Balancing -- 2024 5e
 
-`xp_pool` returns the amount of XP the GM can 'spend' on monsters in a given encounter to ensure the difficulty is as desired based on the three factors identified above. You may note that it has identical arguments to `encounter_creator`--this is because that function relies on both of these functions 'under the hood.'
+Because it's simpler, let's start by identifying the XP pool for a given party under the 2024 rules. Let's imagine that we have a 3rd level party composed of four players and we want to know how much XP is needed to make a moderately difficult encounter. We can use the `xp_pool` function to do this! Note that the names of the difficulty levels also differ between the 5e D&D versions.
 
-```{r xp_pool}
-# How much XP is available for a hard encounter for the four-person, 3rd level party?
-xp_pool(party_level = 3, party_size = 4, ver = "2014", difficulty = "hard")
-
-# What about for the same party in the 2024 rules?
-xp_pool(party_level = 3, party_size = 4, ver = "2024", difficulty = "high")
+```{r xp_pool-24}
+# Calculate pool of available XP
+xp_pool(party_level = 3, party_size = 4, ver = "2024", difficulty = "moderate")
 ```
 
-Once you have that in mind, you can make a note of that number and then use `xp_cost` repeatedly until you find the highest realized XP cost that will still fall beneath that threshold. Note that using `xp_cost` while specifying the 2024 rules (i.e., `ver = "2024"`) will return a warning because the XP pool returned by `xp_pool` _is_ the XP cost in that version of fifth edition D&D.
+If you're playing under the 2024 version, simply take this number, open up your favorite website or source book and identify creatures whose XP can be added up to be equal to or beneath that value!
+
+### XP Balancing -- 2014 5e
+
+The 2014 DMG handles the total XP pool and the XP cost in two separate tables. In order to balance an encounter you need to carefully consult both of them. Often this involves iterative testing of which number and combination of creatures is below the available pool after applying the relevant multiplier. `dndR` provides two functions to handle this instead: `xp_pool` and `xp_cost`. 
+
+Let's begin by calculating the XP pool from the same party as above but under the 2014 rules version.
+
+```{r xp_pool-14}
+# Calculate pool of available XP
+xp_pool(party_level = 3, party_size = 4, ver = "2014", difficulty = "medium")
+```
+
+Once you have that in mind, you can make a note of that number and then use `xp_cost` repeatedly until you find the highest realized XP cost that will still fall beneath that threshold. Note that using `xp_cost` while specifying the 2024 rules (i.e., `ver = "2024"`) will return a warning because the XP pool returned by `xp_pool` _is_ the XP cost in that version of fifth edition D&D. Interestingly, the level of the party has no effect on the realized XP cost; only the number of players and number of enemies matters!
 
 ```{r xp_cost}
 # Identify 'realized' XP of two monsters worth a total of 800 XP versus our party
-xp_cost(monster_xp = 800, monster_count = 2, party_size = 4, ver = "2014")
+xp_cost(monster_xp = 500, monster_count = 2, party_size = 4, ver = "2014")
 ```
 
-Even though the total XP value of the creatures is beneath the threshold identified by `xp_pool` it is dramatically higher after the appropriate multipliers are applied. Using `xp_pool` alone would risk creating a much harder encounter than you intended. In fact, in this case, that realized XP value is actually appropriate for a "deadly" encounter!
+Even though the total XP value of the creatures is beneath the threshold identified by `xp_pool`, the realized XP cost is higher after the appropriate multipliers are applied. Using `xp_pool` alone would risk creating a much harder encounter than you intended. In fact, in this case, that realized XP value is actually appropriate for a "deadly" encounter! Because player characters tend to be stronger under the 2024 rules (all else being equal) this XP cost versus pool comparison is no longer necessary.
 
-While `encounter_creator` is meant to avoid needing to use these helper functions, you can of course use these if you'd rather take a middle path between relying entirely on this package versus relying entirely on the DMG.
+While `encounter_creator` is meant to avoid needing to use these helper functions, you can of course use these if you'd rather take a middle path between relying entirely on this package versus relying entirely on the core rulebooks.
