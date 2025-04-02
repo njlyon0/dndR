@@ -24,7 +24,7 @@ task that could be cool as a function, please [post it as an
 Issue](https://github.com/njlyon0/dndR/issues) on this package’s GitHub
 repository!
 
-### Installation
+## Installation
 
 You can install the development version of `dndR` from
 [GitHub](https://github.com/) with:
