@@ -8,7 +8,7 @@ The following changes were made from the preceding version:
     - Similarly, encounter balancing rules have changed so `xp_cost` will likewise return a warning if the `ver = "2024"`
     - All other functions with a `ver` argument will behave as appropriate for the specified version
 - New function behavior: `encounter_creator` now supports a `try` argument that defines how many attempts are made to maximize encounter XP while remaining beneath the allowable XP threshold
-- New function hebvaior: `encounter_creator` now supports a `max_creatures` argument that allows users to specify the maximum number of creatures they want to include in a given encounter (regardless of available XP)
+- New function behavior: `encounter_creator` now supports a `max_creatures` argument that allows users to specify the maximum number of creatures they want to include in a given encounter (regardless of available XP)
 - Namespaced all function examples--should allow users to run example code without loading `dndR` explicitly with `library` (though they will still need to have installed it at least once)
 - Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments
 - Adding unit tests to most functions in the package. Some small changes have resulted (e.g., new warnings for edge cases, more informative messages, etc.) but this shouldn't change function behavior where they are currently in use. Hopefully future debugging will be made easier though!
