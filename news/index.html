@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">dndR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.900</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,8 +43,8 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0.900" id="dndr-version-200900">dndR Version 2.0.0.900<a class="anchor" aria-label="anchor" href="#dndr-version-200900"></a></h2>
-<p>This is the development version of the package. Changes will be listed below as they are made.</p>
+<h2 class="pkg-version" data-toc-text="3.0.0" id="dndr-version-300">dndR Version 3.0.0<a class="anchor" aria-label="anchor" href="#dndr-version-300"></a></h2>
+<p>The following changes were made from the preceding version:</p>
 <ul><li>Updates for 2024 version of fifth edition Dungeons &amp; Dragons:
 <ul><li>With the 2024 release of an updated fifth edition, many functions needed to be updated so users could specify which version they were using. In all cases this was added as a <code>ver</code> argument</li>
 <li>Note that the creature and spell query functions (<code>spell_text</code>, <code>spell_list</code>, <code>creature_text</code>, and <code>creature_list</code>) use 2014 information and will return a warning if 2024 is specified as the desired version</li>
@@ -53,7 +53,7 @@
 <li>All other functions with a <code>ver</code> argument will behave as appropriate for the specified version</li>
 </ul></li>
 <li>New function behavior: <code>encounter_creator</code> now supports a <code>try</code> argument that defines how many attempts are made to maximize encounter XP while remaining beneath the allowable XP threshold</li>
-<li>New function hebvaior: <code>encounter_creator</code> now supports a <code>max_creatures</code> argument that allows users to specify the maximum number of creatures they want to include in a given encounter (regardless of available XP)</li>
+<li>New function behavior: <code>encounter_creator</code> now supports a <code>max_creatures</code> argument that allows users to specify the maximum number of creatures they want to include in a given encounter (regardless of available XP)</li>
 <li>Namespaced all function examples–should allow users to run example code without loading <code>dndR</code> explicitly with <code>library</code> (though they will still need to have installed it at least once)</li>
 <li>Removed all non-ASCII characters from spell and creature information data tables. Should not affect user experience but silences a CRAN check note in Linux environments</li>
 <li>Adding unit tests to most functions in the package. Some small changes have resulted (e.g., new warnings for edge cases, more informative messages, etc.) but this shouldn’t change function behavior where they are currently in use. Hopefully future debugging will be made easier though!</li>
