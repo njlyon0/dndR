@@ -1,168 +1,58 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://njlyon0.github.io/dndR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_00_dice.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_01_characters.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_02_creatures.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_03_spells.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_04_encounters.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_05_visuals.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/dndr_99_dmg-vs-dndr.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/ability_scores.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/ability_singular.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/class_block.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/coin.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/cr_convert.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/creature_list.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/creature_text.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/creatures.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d10.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d100.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d12.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d2.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d20.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d3.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d4.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d6.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/d8.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/dndR-package.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/dnd_classes.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/dnd_damage_types.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/dnd_races.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/encounter_creator.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/mod_calc.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/monster_creator.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/monster_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/monster_table.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/npc_creator.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/party_diagram.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/pc_creator.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/pc_level_calc.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/probability_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/race_mods.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/reroll.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/roll.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/spell_list.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/spell_text.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/spells.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/xp_cost.html</loc>
-  </url>
-  <url>
-    <loc>https://njlyon0.github.io/dndR/reference/xp_pool.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://njlyon0.github.io/dndR/404.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/CONTRIBUTING.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/LICENSE-text.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/LICENSE.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_00_dice.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_01_characters.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_02_creatures.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_03_spells.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_04_encounters.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_05_visuals.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/dndr_99_dmg-vs-dndr.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/articles/index.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/authors.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/index.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/news/index.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/ability_scores.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/ability_singular.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/class_block.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/coin.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/cr_convert.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/creature_list.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/creature_text.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/creatures.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d10.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d100.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d12.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d2.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d20.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d3.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d4.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d6.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/d8.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/dndR-package.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/dnd_classes.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/dnd_damage_types.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/dnd_races.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/encounter_creator.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/index.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/mod_calc.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/monster_creator.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/monster_stats.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/monster_table.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/npc_creator.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/party_diagram.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/pc_creator.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/pc_level_calc.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/probability_plot.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/race_mods.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/reroll.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/roll.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/spell_list.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/spell_text.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/spells.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/xp_cost.html</loc></url>
+<url><loc>https://njlyon0.github.io/dndR/reference/xp_pool.html</loc></url>
 </urlset>
+
