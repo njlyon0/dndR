@@ -4,7 +4,12 @@
 \alias{xp_cost}
 \title{Adjust the XP Total by Number of Monsters and Party Size}
 \usage{
-xp_cost(monster_xp = NULL, monster_count = NULL, party_size = NULL)
+xp_cost(
+  monster_xp = NULL,
+  monster_count = NULL,
+  party_size = NULL,
+  ver = "2014"
+)
 }
 \arguments{
 \item{monster_xp}{(numeric) XP total across all monsters}
@@ -12,15 +17,17 @@ xp_cost(monster_xp = NULL, monster_count = NULL, party_size = NULL)
 \item{monster_count}{(numeric) count for the number of monsters in the encounter}
 
 \item{party_size}{(numeric) value for the number of PCs in the party}
+
+\item{ver}{(character) which version of fifth edition to use ("2014" or "2024")}
 }
 \value{
 (numeric) value for "realized" XP
 }
 \description{
-Encounters are more difficult than the total of the monsters' experience points (XP). Both the number of monsters making attacks and the number of players attacking those creatures can affect the difficulty of an encounter. The Dungeon Master's Guide (DMG) accounts for this by providing an XP multiplier for given party sizes and numbers of monsters. This function accepts the unmodified total of the monsters' XP and adjusts this as specified in the DMG without the pain of the tables in that book.
+In the 2014 version of fifth edition Dungeons and Dragons, encounters are more difficult than the total of the monsters' experience points (XP). Both the number of monsters making attacks and the number of players attacking those creatures can affect the difficulty of an encounter. The 2014 Dungeon Master's Guide (DMG) accounts for this by providing an XP multiplier for given party sizes and numbers of monsters. This function accepts the unmodified total of the monsters' XP and adjusts this as specified in the DMG without the pain of the tables in that book. For the 2024 version, the XP cost is exactly equal to the total monster XP so this function will return a warning and whatever value is passed to the `monster_xp` argument if the 2024 version is specified.
 }
 \examples{
 # Calculate the realized XP from the raw XP, number of monsters, and number of PCs
-dndR::xp_cost(monster_xp = 100, monster_count = 3, party_size = 2)
+dndR::xp_cost(monster_xp = 100, monster_count = 3, party_size = 2, ver = "2014")
 
 }
