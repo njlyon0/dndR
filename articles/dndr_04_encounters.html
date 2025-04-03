@@ -112,7 +112,7 @@ function more chances to find the optimal encounter composition.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pick a hard set of creatures for a four-person party of 3rd level characters</span></span>
 <span><span class="co">## Try 10 times to find the 'best' encounter</span></span>
-<span><span class="fu"><a href="../reference/encounter_creator.html">encounter_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span>, difficulty <span class="op">=</span> <span class="st">"hard"</span>, try <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/encounter_creator.html">encounter_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span>, difficulty <span class="op">=</span> <span class="st">"hard"</span>, try <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
 <span><span class="co">#&gt;   creature_xp creature_count encounter_xp_pool encounter_xp_cost</span></span>
 <span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -122,7 +122,8 @@ function more chances to find the optimal encounter composition.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>          10              2               900               890</span></span>
 <span></span>
 <span><span class="co"># Design a moderately difficult encounter for a 3-person, 8th level party with no more than 6 creatures</span></span>
-<span><span class="fu"><a href="../reference/encounter_creator.html">encounter_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">8</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2024"</span>, difficulty <span class="op">=</span> <span class="st">"moderate"</span>, max_creatures <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/encounter_creator.html">encounter_creator</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">8</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2024"</span>, </span>
+<span>                        difficulty <span class="op">=</span> <span class="st">"moderate"</span>, max_creatures <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
 <span><span class="co">#&gt;   creature_xp creature_count encounter_xp_pool encounter_xp_cost</span></span>
 <span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -171,7 +172,7 @@ to make a moderately difficult encounter. We can use the
 difficulty levels also differ between the 5e D&amp;D versions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Calculate pool of available XP</span></span>
-<span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2024"</span>, difficulty <span class="op">=</span> <span class="st">"moderate"</span><span class="op">)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2024"</span>, difficulty <span class="op">=</span> <span class="st">"moderate"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 900</span></span></code></pre></div>
 <p>If you’re playing under the 2024 version, simply take this number,
 open up your favorite website or source book and identify creatures
@@ -191,7 +192,7 @@ functions to handle this instead: <code>xp_pool</code> and
 but under the 2014 rules version.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Calculate pool of available XP</span></span>
-<span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span>, difficulty <span class="op">=</span> <span class="st">"medium"</span><span class="op">)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_pool.html">xp_pool</a></span><span class="op">(</span>party_level <span class="op">=</span> <span class="fl">3</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span>, difficulty <span class="op">=</span> <span class="st">"medium"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 600</span></span></code></pre></div>
 <p>Once you have that in mind, you can make a note of that number and
 then use <code>xp_cost</code> repeatedly until you find the highest
@@ -204,7 +205,7 @@ effect on the realized XP cost; only the number of players and number of
 enemies matters!</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Identify 'realized' XP of two monsters worth a total of 800 XP versus our party</span></span>
-<span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">500</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span><span class="op">)</span></span>
+<span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/xp_cost.html">xp_cost</a></span><span class="op">(</span>monster_xp <span class="op">=</span> <span class="fl">500</span>, monster_count <span class="op">=</span> <span class="fl">2</span>, party_size <span class="op">=</span> <span class="fl">4</span>, ver <span class="op">=</span> <span class="st">"2014"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 750</span></span></code></pre></div>
 <p>Even though the total XP value of the creatures is beneath the
 threshold identified by <code>xp_pool</code>, the realized XP cost is
