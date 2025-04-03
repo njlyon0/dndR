@@ -78,13 +78,13 @@ dndR::pc_level_calc(player_xp = 8250)
 
 > **DM:** ...
 
-When I'm DMing, I sometimes struggle with improvising background non-player characters (NPCs) that aren't relevant to the current questlines when my player ask about them. To hopefully help fellow DMs, `dndR` includes a function to let you quickly respond in situations like the one I've described above. The `npc_creator` function quickly selects a random race and job for however many NPCs you need.
+When I'm DMing, I sometimes struggle with improvising background non-player characters (NPCs) that aren't relevant to the current questlines when my player ask about them. To hopefully help fellow DMs, `dndR` includes a function to let you quickly respond in situations like the one I've described above. The `npc_creator` function quickly generates a full name (first and last) and selects a random race and job for however many NPCs you need.
 
 ```{r npc_creator}
 # Make three NPCs
 dndR::npc_creator(npc_count = 3)
 ```
 
-If your players decide to go chat with the goblin carpenter passing them on the street (or whoever else they cross paths with) you can then improv more details about that particular NPC as needed. Hopefully this function helps you skip the "uh..." step of trying to on-the-fly come up with some brief NPC descriptions that give depth to your world.
+If your players decide to go chat with the goblin carpenter passing them on the street (or whoever else they cross paths with) you can then improvise more details about that particular NPC as needed. Hopefully this function helps you skip the "uh..." step of trying to on-the-fly come up with some brief NPC descriptions that give depth to your world.
 
 Note that because both NPC race and job are selected randomly you may wind up with some unusual combinations. I hope that adds to the fun but feel free to re-run the function until you get NPCs that fit your world and intended tone.
