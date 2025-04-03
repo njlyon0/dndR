@@ -76,7 +76,7 @@ dnd_damage_types <- function(){
 
 #' @title Return Vector of Feminine First Names
 #'
-#' @description Simply returns a vector of feminine first names (in alphabetical order)
+#' @description Simply returns a vector of feminine first names (in alphabetical order). Names contributed by William Mitchell.
 #'
 #' @return (character) vector of first names
 #'
@@ -169,7 +169,7 @@ first_names_fem <- function(){
 
 #' @title Return Vector of Masculine First Names
 #'
-#' @description Simply returns a vector of masculine first names (in alphabetical order)
+#' @description Simply returns a vector of masculine first names (in alphabetical order). Names contributed by William Mitchell.
 #'
 #' @return (character) vector of first names
 #'
@@ -316,7 +316,7 @@ first_names_masc <- function(){
 
 #' @title Return Vector of Surnames
 #'
-#' @description Simply returns a vector of surnames (a.k.a. last names) in alphabetical order 
+#' @description Simply returns a vector of surnames (a.k.a. last names) in alphabetical order. Names contributed by William Mitchell.
 #'
 #' @return (character) vector of last names
 #'

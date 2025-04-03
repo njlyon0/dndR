@@ -10,7 +10,7 @@ surnames()
 (character) vector of last names
 }
 \description{
-Simply returns a vector of surnames (a.k.a. last names) in alphabetical order
+Simply returns a vector of surnames (a.k.a. last names) in alphabetical order. Names contributed by William Mitchell.
 }
 \examples{
 # Full set of feminine first names

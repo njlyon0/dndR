@@ -10,7 +10,7 @@ first_names_masc()
 (character) vector of first names
 }
 \description{
-Simply returns a vector of masculine first names (in alphabetical order)
+Simply returns a vector of masculine first names (in alphabetical order). Names contributed by William Mitchell.
 }
 \examples{
 # Full set of masculine first names

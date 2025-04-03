@@ -4,16 +4,16 @@ Title: Dungeons & Dragons Functions for Players and Dungeon Masters
 Version: 3.0.0.900
 Date: 2025-04-02
 Authors@R: c(
-  person(given = "Nicholas", family = "Lyon",
+  person(given = "Nicholas", family = "Lyon", 
          role = c("aut", "cre", "cph"),
          email = "njlyon@alumni.iastate.edu",
          comment = "https://orcid.org/0000-0003-3905-1078"),
   person(given = "Tim", family = "Schatto-Eckrodt",
-         role = "aut",
-         comment = "https://kudusch.de"),
+         role = "aut", comment = "https://kudusch.de"),
   person(given = "Humberto", family = "Nappo",
-         role = "ctb",
-         comment = "https://orcid.org/0000-0001-7810-1635")
+         role = "aut", comment = "https://orcid.org/0000-0001-7810-1635"),
+  person(given = "William", family = "Mitchell",
+         role = "aut", comment = "https://github.com/wj-mitchell")
          )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions.

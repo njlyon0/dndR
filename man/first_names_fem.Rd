@@ -10,7 +10,7 @@ first_names_fem()
 (character) vector of first names
 }
 \description{
-Simply returns a vector of feminine first names (in alphabetical order)
+Simply returns a vector of feminine first names (in alphabetical order). Names contributed by William Mitchell.
 }
 \examples{
 # Full set of feminine first names

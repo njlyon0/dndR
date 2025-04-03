@@ -13,7 +13,7 @@ npc_creator(npc_count = 1)
 (dataframe) dataframe with three columns (one each for name, race, and job) and a number of rows equal to `npc_count`
 }
 \description{
-Randomly generates a name for a user-specified number of Non-Player Characters (NPCs) as well as a species (a.k.a. "race" in 2014 rules) and a job
+Randomly generates a name for a user-specified number of Non-Player Characters (NPCs) as well as a species (a.k.a. "race" in 2014 rules) and a job. Shout out to William Mitchell for providing the work to include names for NPCs.
 }
 \examples{
 # Create some information for an NPC

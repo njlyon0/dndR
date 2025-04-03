@@ -1,6 +1,6 @@
 #' @title Create a Non-Player Character (NPC)
 #'
-#' @description Randomly generates a name for a user-specified number of Non-Player Characters (NPCs) as well as a species (a.k.a. "race" in 2014 rules) and a job
+#' @description Randomly generates a name for a user-specified number of Non-Player Characters (NPCs) as well as a species (a.k.a. "race" in 2014 rules) and a job. Shout out to William Mitchell for providing the work to include names for NPCs.
 #' 
 #' @param npc_count (numeric) number of NPCs for which to return names, species, and positions
 #'
