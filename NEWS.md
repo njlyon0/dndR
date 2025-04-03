@@ -2,7 +2,7 @@
 
 This is the development version. The following changes were made from the preceding version:
 
-- No changes (yet!)
+- New function behavior: `npc_creator` now also returns first and last names for NPCs (in addition to race/species and a job)
 
 ## dndR Version 3.0.0
 
