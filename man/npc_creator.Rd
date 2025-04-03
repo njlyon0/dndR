@@ -7,13 +7,13 @@
 npc_creator(npc_count = 1)
 }
 \arguments{
-\item{npc_count}{(numeric) number of NPCs for which to choose race/positions}
+\item{npc_count}{(numeric) number of NPCs for which to return names, species, and positions}
 }
 \value{
-(dataframe) dataframe with two columns (one for race and one for job) and a number of rows equal to `npc_count`
+(dataframe) dataframe with three columns (one each for name, race, and job) and a number of rows equal to `npc_count`
 }
 \description{
-Randomly selects a race and job for a user-specified number of NPCs
+Randomly generates a name for a user-specified number of Non-Player Characters (NPCs) as well as a species (a.k.a. "race" in 2014 rules) and a job
 }
 \examples{
 # Create some information for an NPC
