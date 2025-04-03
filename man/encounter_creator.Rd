@@ -38,7 +38,7 @@ dndR::encounter_creator(party_level = 9, party_size = 2, ver = "2014", difficult
 
 # Create a moderate encounter for a 4-person, 5th level party in the 2024 version
 ## And allow no more than 6 creatures
-encounter_creator(party_level = 5, party_size = 4, ver = "2024", 
-                  difficulty = "moderate", max_creatures = 6)
+dndR::encounter_creator(party_level = 5, party_size = 4, ver = "2024", 
+                        difficulty = "moderate", max_creatures = 6)
 
 }

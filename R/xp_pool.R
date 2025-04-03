@@ -15,7 +15,7 @@
 #' dndR::xp_pool(party_level = 3, party_size = 2, ver = "2014", difficulty = "medium")
 #' 
 #' # Calculate the XP pool for the same party under the 2024 rules
-#' xp_pool(party_level = 3, party_size = 2, ver = "2024", difficulty = "moderate")
+#' dndR::xp_pool(party_level = 3, party_size = 2, ver = "2024", difficulty = "moderate")
 #'
 xp_pool <- function(party_level = NULL, party_size = NULL, ver = NULL, difficulty = NULL){
   # Squelch 'visible bindings' note

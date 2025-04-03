@@ -78,7 +78,7 @@ xp_df <- data.frame('pc_level' = 1:20,
   # For each row...
   dplyr::rowwise() %>%
   # Calculate the XP for that party level using my function
-  dplyr::mutate(calc_xp = xp_pool(party_level = pc_level, party_size = 1,
+  dplyr::mutate(calc_xp = dndR::xp_pool(party_level = pc_level, party_size = 1,
                                         ver = "2014", difficulty = 'easy')) %>%
   # Rename a column more intuitively
   dplyr::rename(book_xp = easy_xp) %>%

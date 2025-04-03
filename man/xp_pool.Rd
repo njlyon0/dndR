@@ -26,6 +26,6 @@ Returns the total XP (experience points) of all creatures that would make an enc
 dndR::xp_pool(party_level = 3, party_size = 2, ver = "2014", difficulty = "medium")
 
 # Calculate the XP pool for the same party under the 2024 rules
-xp_pool(party_level = 3, party_size = 2, ver = "2024", difficulty = "moderate")
+dndR::xp_pool(party_level = 3, party_size = 2, ver = "2024", difficulty = "moderate")
 
 }

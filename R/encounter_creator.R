@@ -22,8 +22,8 @@
 #'
 #' # Create a moderate encounter for a 4-person, 5th level party in the 2024 version
 #' ## And allow no more than 6 creatures
-#' encounter_creator(party_level = 5, party_size = 4, ver = "2024", 
-#'                   difficulty = "moderate", max_creatures = 6)
+#' dndR::encounter_creator(party_level = 5, party_size = 4, ver = "2024", 
+#'                         difficulty = "moderate", max_creatures = 6)
 #'
 encounter_creator <- function(party_level = NULL, party_size = NULL,
                               ver = NULL, difficulty = NULL,
@@ -39,13 +39,13 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
   } else { max_creatures <- Inf }
   
   # Number of tries must be a single number
-  if(is.null(try)|| is.numeric(try) != TRUE || length(try) != 1) {
+  if(is.null(try) || is.numeric(try) != TRUE || length(try) != 1) {
     warning("'try' must be provided as a single number. Defaulting to 5")
     try <- 5 }
   
   # Calculate maximum allowed XP for this encounter
-  max_xp <- xp_pool(party_level = party_level, party_size = party_size, 
-                    difficulty = difficulty, ver = ver)
+  max_xp <- dndR::xp_pool(party_level = party_level, party_size = party_size, 
+                          difficulty = difficulty, ver = ver)
   
   # Put a version-dependent ceiling on that to be able to include more creatures
   if(ver == "2014"){
@@ -78,10 +78,10 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
     
     # Calculate spent XP for this creature
     if(ver == "2014"){
-      spent_xp <- xp_cost(monster_xp = sum(picked$creature_xp),
-                          monster_count = nrow(picked),
-                          party_size = party_size,
-                          ver = "2014")
+      spent_xp <- dndR::xp_cost(monster_xp = sum(picked$creature_xp),
+                                monster_count = nrow(picked),
+                                party_size = party_size,
+                                ver = "2014")
     } else { spent_xp <- sum(picked$creature_xp) }
     
     # Update set of available creatures
@@ -110,10 +110,10 @@ encounter_creator <- function(party_level = NULL, party_size = NULL,
       
       # See if including a creature of that XP is still below the threshold
       if(ver == "2014"){
-        possible_cost <- xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
-                                 monster_count = nrow(picked) + 1,
-                                 party_size = party_size,
-                                 ver = "2014")
+        possible_cost <- dndR::xp_cost(monster_xp = sum(c(picked$creature_xp, xp_value)),
+                                       monster_count = nrow(picked) + 1,
+                                       party_size = party_size,
+                                       ver = "2014")
       } else { possible_cost <- sum(c(picked$creature_xp, xp_value)) }
       
       # If this would be below the maximum allowed XP...
