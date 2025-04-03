@@ -196,20 +196,21 @@ non-player characters (NPCs) that aren’t relevant to the current
 questlines when my player ask about them. To hopefully help fellow DMs,
 <code>dndR</code> includes a function to let you quickly respond in
 situations like the one I’ve described above. The
-<code>npc_creator</code> function quickly selects a random race and job
-for however many NPCs you need.</p>
+<code>npc_creator</code> function quickly generates a full name (first
+and last) and selects a random race and job for however many NPCs you
+need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make three NPCs</span></span>
 <span><span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="../reference/npc_creator.html">npc_creator</a></span><span class="op">(</span>npc_count <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         race            job</span></span>
-<span><span class="co">#&gt; 1    bugbear     ambassador</span></span>
-<span><span class="co">#&gt; 2 rock gnome         urchin</span></span>
-<span><span class="co">#&gt; 3   half-elf anthropologist</span></span></code></pre></div>
+<span><span class="co">#&gt;            name   species        job</span></span>
+<span><span class="co">#&gt; 1   Natyan Sage   bugbear inquisitor</span></span>
+<span><span class="co">#&gt; 2  Rjila Tanner  half-elf    acolyte</span></span>
+<span><span class="co">#&gt; 3 Viktorja Arch aarakocra  navigator</span></span></code></pre></div>
 <p>If your players decide to go chat with the goblin carpenter passing
 them on the street (or whoever else they cross paths with) you can then
-improv more details about that particular NPC as needed. Hopefully this
-function helps you skip the “uh…” step of trying to on-the-fly come up
-with some brief NPC descriptions that give depth to your world.</p>
+improvise more details about that particular NPC as needed. Hopefully
+this function helps you skip the “uh…” step of trying to on-the-fly come
+up with some brief NPC descriptions that give depth to your world.</p>
 <p>Note that because both NPC race and job are selected randomly you may
 wind up with some unusual combinations. I hope that adds to the fun but
 feel free to re-run the function until you get NPCs that fit your world

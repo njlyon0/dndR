@@ -103,23 +103,23 @@
 <span class="r-in"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu">pc_creator</span><span class="op">(</span>class <span class="op">=</span> <span class="st">'barbarian'</span>, race <span class="op">=</span> <span class="st">'warforged'</span>, score_method <span class="op">=</span> <span class="st">"4d6"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Warforged get +1 to one (non-CON) ability. You'll need to do that manually.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability raw_score race_modifier score roll_modifier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        15             0    15            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        14             0    14            +2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        10             0    10            +0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        11             2    13            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT         9             0     9            -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS         9             0     9            -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA         7             0     7            -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        13             2    15            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT        10             0    10            +0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS         7             0     7            -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA        12             0    12            +1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Or you can roll separately and then create a character with that dataframe</span></span></span>
 <span class="r-in"><span><span class="va">my_scores</span> <span class="op">&lt;-</span> <span class="fu">dndR</span><span class="fu">::</span><span class="fu"><a href="ability_scores.html">ability_scores</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"4d6"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">dndR</span><span class="fu">::</span><span class="fu">pc_creator</span><span class="op">(</span>class <span class="op">=</span> <span class="st">'sorcerer'</span>, race <span class="op">=</span> <span class="st">'orc'</span>, scores_rolled <span class="op">=</span> <span class="cn">TRUE</span>, scores_df <span class="op">=</span> <span class="va">my_scores</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ability raw_score race_modifier score roll_modifier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        11             2    13            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        11             0    11            +0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        13             1    14            +2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT        13             0    13            +1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS         7             0     7            -2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA        13             0    13            +1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     STR        12             2    14            +2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     DEX        10             0    10            +0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CON        15             1    16            +3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     INT         7             0     7            -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     WIS         8             0     8            -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     CHA        16             0    16            +3</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
