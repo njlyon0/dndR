@@ -37,6 +37,16 @@ npc_creator <- function(npc_count = 1){
   if(is.null(npc_count) || is.numeric(npc_count) != TRUE || length(npc_count) != 1)
     stop("'npc_count' must be specified as a single number")
   
+  # Make sure count is an integer
+  npc_count <- round(x = npc_count, digits = 0)
+  
+  # Pick a race
+  npc_race <- sample(x = dndR::dnd_races(), size = npc_count, replace = TRUE)
+  
+  # Pick a career
+  npc_role <- sample(x = c("acolyte", "adventurer", "ambassador", "anthropologist", "archaeologist", "artisan", "barber", "bounty hunter", "caravan driver", "caravan guard", "carpenter", "charlatan", "city watch", "criminal", "diplomat", "doctor", "farmer", "farrier", "entertainer", "gladiator", "hermit", "initiate", "inquisitor", "investigator", "knight", "mercenary", "merchant", "navigator", "noble", "outlander", "sage", "scholar", "smith", "soldier", "spy", "student of magic", "smuggler", "urchin", "veteran"),
+                     size = npc_count, replace = TRUE)
+  
   # Define some vectors of names
   ## Feminine first names ----
   fem_names <- c("Abia", "Abigail", "Abigala", "Abigayl", "Abjiga", "Abressa", 
@@ -243,34 +253,140 @@ npc_creator <- function(npc_count = 1){
                   "Zeke")
   
             # Surnames -----
-            sur1 <- c("Bright", "Brown", "Browne", "Brushfire", "Camp", "Campman", "Canyon", "Cricketts", "Crickets", "Dunes", "Doons", "Doones", "Dunne", "Dunneman", "Flats", "Fox", "Foxx", "Gold", "Golden", "Grey", "Gray", "Gulch", "Gully", "Hardy", "Hills", "Hill", "Hopper", "Hunter", "Huntsman", "March", "Marcher", "Moon", "Redmoon", "Palmer", "Palms", "Peartree", "Pearman", "Redd", "Red", "Rider", "Ryder", "Rock", "Rockman", "Rock", "Rockman", "Rocker", "Sands", "Scales", "Redscale", "Greyscale", "Singer", "Small", "Smalls", "Star", "Starr", "Stone", "Stoneman", "Storm", "Storms", "Strider", "Stryder", "Sunn", "Sunner", "Tumbleweed", "Walker", "Water", "Watters")
-            sur2 <- c("Appletree", "Appler", "Applin", "Barley", "Barleycorn", "Barleywine", "Barns", "Barnes", "Barnard", "Beans", "Beanman", "Beanstalk", "Berry", "Berryland", "Bloom", "Bloomland", "Brown", "Brownland", "Brownard", "Bull", "Bullyard", "Cabbage", "Kabbage", "Cotton", "Cottonseed", "Croppe", "Cropman", "Dairyman", "Darryman", "Darry", "Derry", "Farmer", "Farmor", "Fields", "Fielder", "Fieldman", "Flats", "Redflats", "Sandflats", "Stoneflats", "Flowers", "Gardner", "Gardener", "Gardiner", "Green", "Greene", "Greenland", "Greenyard", "Grove", "Groveland", "Hays", "Hayes", "Hayward", "Henkeeper", "Hennerman", "Herd", "Hurd", "Herdland", "Land", "Lander", "Mares", "Mayr", "Mair", "Meadows", "Milk", "Millet", "Millett", "Mills", "Miller", "Millard", "Neeps", "Neepland", "Nutt", "Nutman", "Oates", "Oats", "Overland", "Overfield", "Peartree", "Pearman", "Pease", "Peapod", "Peabody", "Picket", "Picketts", "Pickens", "Pickman", "Plant", "Planter", "Ploughman", "Plowman", "Plougherman", "Pollen", "Pollin", "Polly", "Pollard", "Rains", "Raines", "Rayns", "Raynes", "Rainard", "Root", "Roote", "Rutland", "Shepherd", "Shepard", "Shepyrd", "Shearer", "Sheerer", "Shears", "Sheers", "Sower", "Soward", "Tate", "Tater", "Thresh", "Threshett", "Tiller", "Tillman", "Vines", "Vineland", "Wheatley", "Wheatly", "Wheat", "Whittaker", "Whitard", "Winnows", "Winnower", "Wool", "Woolard", "Yardly", "Yardley", "Yards")  
-            sur3 <- c("Ales", "Aleman", "Aler", "Baker", "Bake", "Bakeler", "Barr", "Barre", "Barman", "Berry", "Berryman", "Berriman", "Boyle", "Boiles", "Boyles", "Brewer", "Brewster", "Broyles", "Broiles", "Broyler", "Butcher", "Butchett", "Cook", "Dice", "Dougherman", "Dougher", "Fry", "Frey", "Fryman", "Gardner", "Gardener", "Gardiner", "Grills", "Grillett", "Innes", "Innman", "Inman", "Kettle", "Kettleblack", "Kettleman", "Kneadler", "Kneadman", "Milk", "Miller", "Mills", "Miller", "Palewine", "Pan", "Pannerman", "Panning", "Peppers", "Pepper", "Pickler", "Pickleman", "Pickles", "Pieman", "Piemaker", "Potts", "Pott", "Potter", "Redwine", "Roasterman", "Salt", "Salter", "Simms", "Simmerman", "Slaughter", "Smoke", "Smoker", "Vines", "Vintner", "Vinaker Winaker", "Wineman")  
-            sur4 <- c("Biggs", "Bigg", "Byggs", "Camp", "Campman", "Coates", "Frost", "Furrs", "Furrman", "Graysky", "Whitesky", "Blacksky", "Grey", "Gray", "Hardy", "Hardison", "Hardland", "Harland", "Hills", "Hill", "Hylls", "Hunter", "Huntsman", "Ice", "Iceland", "Icewind", "Icecutter", "Yceland", "Ycewind", "Ycecutter", "Longnight", "Longdark", "Moon", "Wintermoon", "North", "Northman", "Norman", "Northland", "Norland", "Pix", "Pickman", "Pickes", "Pyckes", "Seales", "Seals", "Silver", "Silvermoon", "Sylver", "Snow", "Snowes", "Star", "Starr", "Northstar", "Stone", "Stoneman", "Strider", "Stryder", "Walker", "White", "Whyte", "Winter", "Winters", "Wynters")  
-            sur5 <- c("Bobbin", "Bolt", "Bolte", "Bolter", "Button", "Buttonworth", "Capers", "Coates", "Cotton", "Dyer", "Dye", "Dyeworth", "Dyerson", "Dyson", "Felter", "Felterman", "Glover", "Hatter", "Hatty", "Hattiman", "Hatson", "Hemmings", "Hemings", "Hemson", "Hyde", "Hides", "Hydes", "Leathers", "Lethers", "Mercer", "Needleman", "Needler", "Needleworth", "Seams", "Seems", "Seemworth", "Shearer", "Sheerer", "Shears", "Sheers", "Shoemaker", "Stitches", "Stitchworth", "Tailor", "Taylor", "Tanner", "Tannerman", "Thredd", "Threddler", "Threddman", "Threddaker", "Weaver", "Weever", "Wool", "Woolworth", "Yardly", "Yardley", "Yards")  
-            sur6 <- c("Bay", "Bayes", "Bayer", "Bayers", "Beacher", "Beach", "Blue", "Bowman", "Castaway", "Crabb", "Crab", "Crest", "Days", "Dayes", "Dunes", "Doons", "Doones", "Dunne", "Dunneman", "Eddy", "Fisher", "Fishman", "Flowers", "Harper", "Hook", "Hooke", "Iles", "Isles", "Ailes", "Mast", "Palmer", "Palms", "Rafman", "Raftman", "Reel", "Reelings", "Salt", "Seasalt", "Sands", "Sandman", "Seabreeze", "Shell", "Shellman", "Shellmound", "Sheller", "Shelley", "Shoals", "Singer", "Star", "Starr", "Stern", "Sterne", "Stillwater", "Storm", "Storms", "Summers", "Sunn", "Sunner", "Swimmer", "Shwimmer", "Swymmer", "Tidewater", "Waters", "Watters", "Waterman")  
-            sur7 <- c("Arch", "Archmaker", "Baskett", "Basket", "Bilder", "Builder", "Bulder", "Bilds", "Blow", "Brickman", "Bricker", "Brycks", "Bricks", "Burgh", "Berg", "Burg", "Burgher", "Berger", "Burger", "Carpenter", "Chandler", "Candler", "Clay", "Cooper", "Crafter", "Glass", "Glazier", "Glasier", "Hammer", "Maker", "Mason", "Masen", "Masyn", "Potts", "Pott", "Potter", "Quarrier", "Quarryman", "Rock", "Rockman", "Rocker", "Roof", "Roofe", "Sawyer", "Stone", "Stoneman", "Townes", "Towns", "Towny", "Wahl", "Wall", "Wahls", "Walls", "Waller", "Waxman", "Wax", "Wackes", "Wood", "Woods")
-            sur8 <- c("Billy", "Billie", "Bluffe", "Bluffclimber", "Boulder", "Bulder", "Camp", "Campman", "Claymer", "Clayms", "Claimer", "Cole", "Coler", "Coleman", "Coalman", "Coaler", "Coaldigger", "Coledegger", "Condor", "Condorman", "Cragg", "Cragman", "Diggs", "Digger", "Diggman", "Digger", "Diggett", "Dragonhoard", "Dragonhord", "Dragon", "Drake", "Dredge", "Dredger", "Hall", "Haul", "Heights", "Hights", "Hytes", "Hites", "Highland", "Hills", "Hill", "Hillclimber", "Hylltopper", "Hoard", "Hord", "Hoar", "Hoardigger", "Hordegger", "Kidd", "Kipman", "Kipper", "Kipson", "Kopperfield", "Miner", "Myner", "Mynor", "Minor", "Mole", "Moler", "Moller", "Molson", "Molsen", "Ores", "Orr", "Orrs", "Oredigger", "Orrdegger", "Orson", "Orrsen", "Pan", "Pans", "Pannerman", "Panning", "Peaks", "Peeks", "Pike", "Pyke", "Pikeclimber", "Pyketopper", "Pix", "Pickman", "Pickes", "Pyckes", "Pickens", "Quarrier", "Quarryman", "Ridge", "Ridgeclimber", "Ridgetopper", "Rock", "Rockman", "Rocker", "Rockridge", "Snow", "Snowes", "Spade", "Spader Springs", "Springer", "Stone", "Stoneman", "Underhill", "Underwood", "Underman", "Walker")  
-            sur9 <- c("Barr", "Barre", "Cash", "Copper", "Coppers", "Curry", "Deals", "Deels", "Deel", "Deelaker", "Deelman. Diamond", "Glass", "Glazier", "Glasier", "Gold", "Golden", "Goldsmith", "Goldman", "Jewels", "Jules", "Jewls", "Lender", "Lenderman", "Lynder", "Mercer", "Money", "Munny", "Monny", "Munnee", "Monnee", "Peppers", "Pepper", "Rich", "Richman", "Richett", "Riches", "Saffron", "Sage", "Salt", "Scales", "Shine", "Ships", "Schipps", "Shipps", "Shipman", "Schippman", "Silver", "Sylver", "Silverman", "Small", "Smalls", "Spicer", "Spiceman", "Star", "Starr", "Thyme", "Ware", "Wool")
-            sur10 <- c("Altarside", "Altarworthy", "Beacon", "Beecon", "Beeken", "Bell", "Bolt", "Bolte", "Bolter", "Bones", "Bright", "Burns", "Cast", "Caster", "Kast", "Chaplain", "Chaplin", "Church", "Churchside", "Darko", "Darkstar", "Darker", "Darkbrother", "Deacon", "Deecon", "Deeken", "Drake", "Draco", "Dragon", "Dreamer", "Dreemer", "Dreems", "Goodbrother", "Goodman", "Hecks", "Heckes", "Hex", "Holiday", "Holliday", "Holyday", "Hollier", "Holly", "Holier", "Hollison", "Hood", "Kearse", "Kerse", "Kerser", "Curser", "Monk", "Munk", "Nunn", "Nun", "Powers", "Preacher", "Preecher", "Priest", "Preest", "Sage", "Sageworthy", "Saint", "School", "Skool", "Skolar", "Scholyr", "Shock", "Shocker", "Shaka", "Skelton", "Skeltyn", "Smart", "Spelling", "Speller", "Star", "Starr", "Brightstar", "Teech", "Teeches", "Theery", "Tinker", "Tutor", "Tudor", "Vickers", "Vykar", "Vicker", "Vikars", "Wise", "Overwise", "Worthy", "Zapp", "Zappa")   
-            sur11 <- c("Banks", "Bankes", "Bend", "Benderman", "Blue", "Bridges", "Cray", "Craw", "Eddy", "Ferryman", "Ferrimen", "Ferry", "Fisher", "Fishman", "Flowers", "Garr", "Hook", "Hooke", "Hopper", "Iles", "Isles", "Ailes", "Mills", "Miller", "Oars", "Orrs", "Orr", "Oxbow", "Piers", "Peers", "Poleman", "Polman", "Porter", "Rafman", "Raftman", "Reed", "Reede", "Reedy", "Reel", "Reelings", "River", "Rivers", "Salmon", "Shell", "Shellman", "Sheller", "Shelley", "Silver", "Silvermoon", "Small", "Smalls", "Snails", "Snailman", "Spanner", "Stillwater", "Streams", "Streems", "Swimmer", "Shwimmer", "Swymmer", "Trout", "Waters", "Watters", "Waterman", "Whitewater", "Wurms", "Worms")
-            sur12 <- c("Anchor", "Ankor", "Anker", "Ballast", "Bay", "Bayes", "Bayer", "Bayers", "Beacon", "Biggs", "Bigg", "Brigg", "Briggs", "Bowman", "Capp", "Capman", "Castaway", "Crabb", "Crab", "Crabber", "Crabman", "Crest", "Darkwater", "Decks", "Decker", "Eddy", "Ferryman", "Ferrimen", "Ferry", "Fisher", "Fishman", "Hardy", "Hardison", "Harper", "Helms", "Helmsman", "Hook", "Hooke", "Iles", "Isles", "Ailes", "Mast", "Oars", "Orrs", "Orr", "Piers", "Peers", "Pitch", "Pytch", "Porter Redtide", "Blacktide", "Riggs", "Riggett", "Sailor", "Saylor", "Sailer", "Sayler", "Salt", "Seasalt", "Saltman", "Seabreeze", "Seaman", "Season", "Seeman", "Ships", "Schipps", "Shipps", "Shipman", "Schippman", "Shore", "Shoreman", "Singer", "Star", "Starr", "Stern", "Sterne", "Storm", "Storms", "Swimmer", "Shwimmer", "Swymmer", "Tar", "Tarr", "Tidewater", "Tuggs", "Tugman", "Waters", "Watters", "Waterman", "Whitewater")
-            sur13 <- c("Anvill", "Anvilson", "Bellows", "Black", "Blackiron", "Copper", "Coppers", "Farrier", "Fletcher", "Fletchett", "Forger", "Forgeman", "Goldsmith", "Grey", "Greysteel", "Hammer", "Hammett", "Irons", "Yrons", "Ironsmith", "Ironshoe", "Ironhoof", "Kettle", "Kettleblack", "Kettleman", "Potts", "Pott", "Pottaker", "Pound", "Poundstone", "Shields", "Shieldson", "Slagg", "Slagman", "Smith", "Smyth", "Smitts", "Smittens", "Smitty", "Smythett", "Smoke", "Smoker", "Steel", "Steele", "Steelman", "Swords", "Swordson", "Tinn", "Tinman", "Tynn", "Tyne", "Tine")
-            sur14 <- c("Ackes", "Ax", "Archer", "Bailey", "Banner", "Bannerman", "Bay", "Bayes", "Bones", "Boots", "Bootes", "Bowman", "Chestnut", "Colt", "Colter", "Dice", "Dyce", "Dycen", "Dyson", "Flagg", "Flag", "Helms", "Hightower", "Knight", "Leathers", "Lethers", "March", "Marcher", "Mares", "Mayr", "Mair", "Marks", "Mercer", "Pike", "Pikes", "Pyke", "Pykes", "Pikeman", "Pykeman", "Poleman", "Polman", "Rider", "Ryder", "Shields", "Shieldson", "Slaughter", "Spears", "Speers", "Swords", "Swordson", "Towers", "Wahl", "Wall", "Wahls", "Walls", "Waller")
-            sur15 <- c("Bay", "Bayes", "Brand", "Carrier", "Carryer", "Carter", "Carton", "Cartwright", "Chestnut", "Colt", "Colter", "Driver", "Dryver", "Foote", "Handler", "Mares", "Mayr", "Mair", "Porter", "Quicke", "Quick", "Reines", "Reynes", "Reins", "Reyns", "Rider", "Ryder", "Ryde", "Saddler", "Stall", "Stalls", "Staller", "Stallworth", "Stallman", "Swift", "Swyft", "Trainor", "Trainer", "Wain", "Wayne", "Wayn", "Wainwright", "Waynwright")
-            sur16 <- c("Banks", "Bankes", "Black", "Blacktide", "Greentide", "Boggs", "Bogg", "Bogs", "Bull", "Buzzfly", "Blackfly", "Shoefly", "Cray", "Craw", "Cricketts", "Crickets", "Darkwater", "Dragonfly", "Dragon", "Eeler", "Ealer", "Eeles", "Eales", "Fisher", "Fishman", "Frogg", "Frogman", "Green", "Greene", "Greenwater", "Blackwater", "Grey", "Gray", "Grove", "Groves", "Hook", "Hooke", "Hopper", "Marsh", "Mayfly", "May", "Moss", "Mosstree", "Greentree", "Poisonweed", "Poisonwood", "Polly", "Pollywog", "Polliwog", "Rafman", "Raftman", "Ratt", "Ratman", "Reed", "Reede", "Reedy", "River", "Rivers", "Rotten", "Rotman", "Scales", "Greenscale", "Blackscale", "Shell", "Shellman", "Sheller", "Shelley", "Skeeter", "Skito", "Small", "Smalls", "Snails", "Snailman", "Stillwater", "Swimmer", "Shwimmer", "Swymmer", "Thick", "Thicke", "Tidewater", "Vines", "Waters", "Watters", "Wurms", "Worms")
-            sur17 <- c("Alley", "Allie", "Bailey", "Bell", "Berg", "Berger", "Burg", "Burger", "Brickman", "Brickhouse", "Bridges", "Court", "Gardner", "Gardiner", "Hall", "Heap", "Hightower", "Hood", "House", "Lane", "Lain", "Laine", "Lodge", "Lodges", "Park", "Parks", "Plaza", "Rhoads", "Rhodes", "Roades", "Roof", "Spanner", "Stairs", "Street", "Streets", "Towers", "Towns", "Townsend", "Townes", "Towny", "Towney", "Vista", "Wall", "Wahl", "Woodhouse")
-            sur18 <- c("Ackes", "Ax", "Archer", "Berry", "Biggs", "Bigg", "Birch", "Byrch", "Bird", "Byrd", "Birdett", "Byrdman", "Bloom", "Bowman", "Branch", "Brush", "Buck", "Deere", "Deerman", "Doe", "Feller", "Fletcher", "Flowers", "Forester", "Forrester", "Forrest", "Fox", "Foxx", "Gardner", "Gardener", "Gardiner", "Green", "Greene", "Grove", "Groves", "Harper", "Hatchet", "Hunter", "Huntsman", "Hyde", "Hides", "Hydes", "Jack", "Lodge", "Lodges", "Meadows", "Mole", "Moler", "Moller", "Moss", "Mosstree", "Greentree", "Oaks", "Oakes", "Pine", "Pines", "Pyne", "Pynes", "Sawyer", "Silver", "Silvermoon", "Singer", "Springs", "Springer", "Strider", "Stryder", "Tanner", "Tannerman", "Thick", "Thicke", "Walker", "Woods", "Wood", "Woode", "Wooden", "Woodyn")
-  
-  # Make sure count is an integer
-  npc_count <- round(x = npc_count, digits = 0)
-  
-  # Pick a race
-  npc_race <- sample(x = dndR::dnd_races(), size = npc_count, replace = TRUE)
-  
-  # Pick a career
-  npc_role <- sample(x = c("acolyte", "adventurer", "ambassador", "anthropologist", "archaeologist", "artisan", "barber", "bounty hunter", "caravan driver", "caravan guard", "carpenter", "charlatan", "city watch", "criminal", "diplomat", "doctor", "farmer", "farrier", "entertainer", "gladiator", "hermit", "initiate", "inquisitor", "investigator", "knight", "mercenary", "merchant", "navigator", "noble", "outlander", "sage", "scholar", "smith", "soldier", "spy", "student of magic", "smuggler", "urchin", "veteran"),
-                     size = npc_count, replace = TRUE)
+  sur_names <- c(c("Ackes", "Ailes", "Aler", "Alley", "Allie", "Altarside", "Altarworthy", 
+                   "Anchor", "Anker", "Ankor", "Anvill", "Anvilson", "Appler", "Appleyard", 
+                   "Applin", "Arch", "Archer", "Archmaker", "Ax", "Bailey", "Bakeler", 
+                   "Baker", "Ballast", "Bankes", "Banks", "Banner", "Bannerman", 
+                   "Barnard", "Barnes", "Barr", "Barre", "Basket", "Baskett", "Bay", 
+                   "Bayer", "Bayers", "Bayes", "Beach", "Beacher", "Beacon", "Beecon", 
+                   "Beeken", "Bell", "Bellows", "Bend", "Benderman", "Berg", "Berger", 
+                   "Berriman", "Berry", "Berryland", "Bigg", "Biggs", "Bilder", 
+                   "Bilds", "Billie", "Billy", "Birch", "Bird", "Birdett", "Black", 
+                   "Blackfly", "Blackiron", "Blackscale", "Blacksky", "Blacktide", 
+                   "Blackwater", "Bloom", "Bloomland", "Blow", "Blue", "Bluffclimber", 
+                   "Bluffe", "Bobbin", "Bogg", "Boggs", "Bogs", "Boiles", "Bolt", 
+                   "Bolte", "Bolter", "Bones", "Bootes", "Boots", "Boulder", "Bowman", 
+                   "Boyle", "Boyles", "Branch", "Brand", "Brewer", "Brewster", "Bricker", 
+                   "Brickhouse", "Brickman", "Bricks", "Bridges", "Brigg", "Briggs", 
+                   "Bright", "Brightstar", "Broiles", "Brownard", "Browne", "Broyler", 
+                   "Broyles", "Brush", "Brushfire", "Brycks", "Buck", "Builder", 
+                   "Bulder", "Bull", "Bullyard", "Burg", "Burger", "Burgh", "Burgher", 
+                   "Burns", "Butcher", "Butchett", "Button", "Buttonworth", "Buzzfly", 
+                   "Byggs", "Byrch", "Byrd", "Byrdman", "Camp", "Campman", "Candler", 
+                   "Capers", "Capman", "Capp", "Carpenter", "Carrier", "Carryer", 
+                   "Carter", "Carton", "Cartwright", "Cash", "Cast", "Castaway", 
+                   "Caster", "Chandler", "Chaplain", "Chaplin", "Chestnut", "Church", 
+                   "Churchside", "Claimer", "Clay", "Claymer", "Clayms", "Coaldigger", 
+                   "Coaler", "Coalman", "Coates", "Cole", "Coledegger", "Coleman", 
+                   "Coler", "Colt", "Colter", "Condor", "Condorman", "Cook", "Cooper", 
+                   "Copper", "Coppers", "Cotton", "Cottonseed", "Court", "Crab", 
+                   "Crabb", "Crabber", "Crabman", "Crafter", "Cragg", "Cragman", 
+                   "Craw", "Cray", "Crest", "Crickets", "Cricketts", "Croppe", "Curry", 
+                   "Curser", "Darkbrother", "Darker", "Darko", "Darkstar", "Darkwater", 
+                   "Darryman", "Dayes", "Days", "Deacon", "Deals", "Decker", "Decks", 
+                   "Deecon", "Deeken", "Deel", "Deelaker", "Deelman. Diamond", "Deels", 
+                   "Deere", "Deerman", "Derry", "Dice", "Digger", "Diggett", "Diggman", 
+                   "Diggs", "Doe", "Doones", "Doons", "Dougher", "Dougherman", "Draco", 
+                   "Dragon", "Dragonfly", "Dragonhoard", "Dragonhord", "Drake", 
+                   "Dreamer", "Dredge", "Dredger", "Dreemer", "Dreems", "Driver", 
+                   "Dryver", "Dunes", "Dunne", "Dunneman", "Dyce", "Dycen", "Dye", 
+                   "Dyer", "Dyerson", "Dyeworth", "Dyson", "Ealer", "Eales", "Eddy", 
+                   "Eeler", "Eeles", "Farmor", "Farrier", "Feller", "Felter", "Felterman", 
+                   "Ferrimen", "Ferry", "Ferryman", "Fielder", "Fieldman", "Fields", 
+                   "Fisher", "Fishman", "Flag", "Flagg", "Flats", "Fletcher", "Fletchett", 
+                   "Flowers", "Foote", "Forester", "Forgeman", "Forger", "Forrest", 
+                   "Forrester", "Fox", "Foxx", "Frey", "Frogg", "Frogman", "Frost", 
+                   "Fry", "Fryman", "Furrman", "Furrs", "Gardener", "Gardiner", 
+                   "Gardner", "Garr", "Glasier", "Glass", "Glazier", "Glover", "Gold", 
+                   "Golden", "Goldman", "Goldsmith", "Goodbrother", "Goodman", "Gray", 
+                   "Graysky", "Green", "Greene", "Greenscale", "Greentide", "Greentree", 
+                   "Greenwater", "Greenyard", "Grey", "Greyscale", "Greysteel", 
+                   "Grillett", "Grills", "Grove", "Groveland", "Groves", "Hall", 
+                   "Hammer", "Hammett", "Handler", "Hardison", "Hardland", "Hardy", 
+                   "Harland", "Harper", "Hatchet", "Hatson", "Hatter", "Hattiman", 
+                   "Hatty", "Haul", "Hayes", "Hayward", "Heap", "Heckes", "Hecks", 
+                   "Heights", "Helms", "Helmsman", "Hemings", "Hemmings", "Hemson", 
+                   "Henkeeper", "Hennerman", "Hex", "Hides", "Highland", "Hightower", 
+                   "Hights", "Hill", "Hillclimber", "Hills", "Hites", "Hoar", "Hoard", 
+                   "Hoardigger", "Holiday", "Holier", "Holliday", "Hollier", "Hollison", 
+                   "Holly", "Holyday", "Hood", "Hook", "Hooke", "Hopper", "Hord", 
+                   "Hordegger", "House", "Hunter", "Huntsman", "Hurd", "Hyde", "Hydes", 
+                   "Hylls", "Hylltopper", "Hytes", "Ice", "Icecutter", "Iceland", 
+                   "Icewind", "Iles", "Inman", "Innes", "Innman", "Ironhoof", "Irons", 
+                   "Ironshoe", "Ironsmith", "Isles", "Jack", "Jewels", "Jewls", 
+                   "Jules", "Kabbage", "Kast", "Kearse", "Kerse", "Kerser", "Kettle", 
+                   "Kettleblack", "Kettleman", "Kidd", "Kipman", "Kipper", "Kipson", 
+                   "Kneadler", "Kneadman", "Knight", "Kopperfield", "Lain", "Laine", 
+                   "Lander", "Lane", "Leathers", "Lender", "Lenderman", "Lethers", 
+                   "Lodge", "Lodges", "Longdark", "Longnight", "Lynder", "Mair", 
+                   "Maker", "March", "Marcher", "Mares", "Marks", "Marsh", "Masen", 
+                   "Mason", "Mast", "Masyn", "May", "Mayfly", "Mayr", "Meadows", 
+                   "Mercer", "Milk", "Millard", "Miller", "Mills", "Miner", "Minor", 
+                   "Mole", "Moler", "Moller", "Molsen", "Molson", "Money", "Monk", 
+                   "Monnee", "Monny", "Moon", "Moss", "Mosstree", "Munk", "Munnee", 
+                   "Munny", "Myner", "Mynor", "Needleman", "Needler", "Needleworth", 
+                   "Neeps", "Norland", "Norman", "North", "Northland", "Northman", 
+                   "Northstar", "Nun", "Nunn", "Nutt", "Oakes", "Oaks", "Oars", 
+                   "Oates", "Oredigger", "Ores", "Orr", "Orrdegger", "Orrs", "Orrsen", 
+                   "Orson", "Overfield", "Overwise", "Oxbow", "Palewine", "Palmer", 
+                   "Palms", "Pan", "Pannerman", "Panning", "Pans", "Park", "Parks", 
+                   "Peabody", "Peaks", "Pearman", "Peartree", "Pease", "Peeks", 
+                   "Peers", "Pepper", "Peppers", "Pickens", "Pickes", "Picketts", 
+                   "Pickleman", "Pickler", "Pickles", "Pickman", "Piemaker", "Pieman", 
+                   "Piers", "Pike", "Pikeclimber", "Pikeman", "Pikes", "Pine", "Pines", 
+                   "Pitch", "Pix", "Plaza", "Ploughman", "Plowman", "Poisonweed", 
+                   "Poisonwood", "Poleman", "Pollard", "Pollin", "Polliwog", "Polly", 
+                   "Pollywog", "Polman", "Porter", "Porter Redtide", "Pott", "Pottaker", 
+                   "Potter", "Potts", "Pound", "Poundstone", "Powers", "Preacher", 
+                   "Preecher", "Preest", "Priest", "Pyckes", "Pyke", "Pykeman", 
+                   "Pykes", "Pyketopper", "Pyne", "Pynes", "Pytch", "Quarrier", 
+                   "Quarryman", "Quick", "Quicke", "Rafman", "Raftman", "Rainard", 
+                   "Raines", "Rains", "Ratman", "Ratt", "Raynes", "Redd", "Redflats", 
+                   "Redmoon", "Redscale", "Redwine", "Reed", "Reede", "Reedy", "Reel", 
+                   "Reelings", "Reines", "Reins", "Reynes", "Reyns", "Rhoads", "Rhodes", 
+                   "Rich", "Riches", "Richett", "Richman", "Rider", "Ridge", "Ridgeclimber", 
+                   "Ridgetopper", "Riggett", "Riggs", "River", "Rivers", "Roades", 
+                   "Roasterman", "Rock", "Rocker", "Rockman", "Rockridge", "Roof", 
+                   "Roofe", "Root", "Roote", "Rotman", "Rotten", "Rutland", "Ryde", 
+                   "Ryder", "Saddler", "Saffron", "Sage", "Sageworthy", "Sailer", 
+                   "Sailor", "Saint", "Salmon", "Salt", "Salter", "Saltman", "Sandflats", 
+                   "Sandman", "Sands", "Sawyer", "Sayler", "Saylor", "Scales", "Schippman", 
+                   "Schipps", "Scholyr", "School", "Seabreeze", "Seales", "Seals", 
+                   "Seaman", "Seams", "Seasalt", "Season", "Seeman", "Seems", "Seemworth", 
+                   "Shaka", "Shearer", "Shears", "Sheerer", "Sheers", "Shell", "Sheller", 
+                   "Shelley", "Shellman", "Shellmound", "Shepard", "Shepyrd", "Shields", 
+                   "Shieldson", "Shine", "Shipman", "Shipps", "Ships", "Shoals", 
+                   "Shock", "Shocker", "Shoefly", "Shoemaker", "Shore", "Shoreman", 
+                   "Shwimmer", "Silver", "Silverman", "Silvermoon", "Simmerman", 
+                   "Simms", "Singer", "Skeeter", "Skelton", "Skeltyn", "Skito", 
+                   "Skolar", "Skool", "Slagg", "Slagman", "Slaughter", "Small", 
+                   "Smalls", "Smart", "Smith", "Smittens", "Smitts", "Smitty", "Smoke", 
+                   "Smoker", "Smyth", "Smythett", "Snailman", "Snails", "Snow", 
+                   "Snowes", "Soward", "Sower", "Spade", "Spader Springs", "Spanner", 
+                   "Spears", "Speers", "Speller", "Spelling", "Spiceman", "Spicer", 
+                   "Springer", "Springs", "Stairs", "Stall", "Staller", "Stallman", 
+                   "Stalls", "Stallworth", "Star", "Starr", "Steel", "Steele", "Steelman", 
+                   "Stern", "Sterne", "Stillwater", "Stitches", "Stitchworth", "Stone", 
+                   "Stoneflats", "Stoneman", "Storm", "Storms", "Streams", "Streems", 
+                   "Street", "Streets", "Strider", "Stryder", "Summers", "Sunn", 
+                   "Sunner", "Swift", "Swimmer", "Swords", "Swordson", "Swyft", 
+                   "Swymmer", "Sylver", "Tailor", "Tanner", "Tannerman", "Tar", 
+                   "Tarr", "Tate", "Taylor", "Teech", "Teeches", "Theery", "Thick", 
+                   "Thicke", "Thredd", "Threddaker", "Threddler", "Threddman", "Thresh", 
+                   "Threshett", "Thyme", "Tidewater", "Tillman", "Tine", "Tinker", 
+                   "Tinman", "Tinn", "Towers", "Townes", "Towney", "Towns", "Townsend", 
+                   "Towny", "Trainer", "Trainor", "Trout", "Tudor", "Tuggs", "Tugman", 
+                   "Tutor", "Tyne", "Tynn", "Underhill", "Underman", "Underwood", 
+                   "Vicker", "Vickers", "Vikars", "Vinaker Winaker", "Vines", "Vinter", 
+                   "Vintner", "Vista", "Vykar", "Wackes", "Wahl", "Wahls", "Wain", 
+                   "Wainwright", "Walker", "Wall", "Waller", "Walls", "Ware", "Waterman", 
+                   "Waters", "Watters", "Wax", "Waxman", "Wayn", "Wayne", "Waynwright", 
+                   "Weaver", "Weever", "Whitard", "White", "Whitesky", "Whitewater", 
+                   "Whitley", "Whittaker", "Whyte", "Wineman", "Winnows", "Winter", 
+                   "Wintermoon", "Winters", "Wise", "Wood", "Woode", "Wooden", "Woodhouse", 
+                   "Woods", "Woodyn", "Wool", "Woolard", "Woolworth", "Worms", "Worthy", 
+                   "Wurms", "Wynters", "Yardley", "Yardly", "Yards", "Ycecutter", 
+                   "Yceland", "Ycewind", "Yrons", "Zapp"))
   
   # Assemble into named vector
   npc_info <- data.frame("race" = npc_race, 
