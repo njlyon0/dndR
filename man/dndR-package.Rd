@@ -23,7 +23,7 @@ Authors:
 \itemize{
   \item Tim Schatto-Eckrodt (https://kudusch.de)
   \item Humberto Nappo (\href{https://orcid.org/0000-0001-7810-1635}{ORCID})
-  \item William Mitchell (https://github.com/wj-mitchell)
+  \item Billy Mitchell (https://wj-mitchell.github.io/)
 }
 
 }

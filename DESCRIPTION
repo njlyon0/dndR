@@ -12,8 +12,8 @@ Authors@R: c(
          role = "aut", comment = "https://kudusch.de"),
   person(given = "Humberto", family = "Nappo",
          role = "aut", comment = "https://orcid.org/0000-0001-7810-1635"),
-  person(given = "William", family = "Mitchell",
-         role = "aut", comment = "https://github.com/wj-mitchell")
+  person(given = "Billy", family = "Mitchell",
+         role = "aut", comment = "https://wj-mitchell.github.io/")
          )
 Maintainer: Nicholas Lyon <njlyon@alumni.iastate.edu>
 Description: The goal of 'dndR' is to provide a suite of Dungeons & Dragons related functions.

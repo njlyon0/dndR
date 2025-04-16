@@ -53,5 +53,5 @@ glance:
   `party_diagram` function
 - [Humberto Nappo](https://orcid.org/0000-0001-7810-1635) contributed
   the idea for the `pc_level_calc` function
-- [William Mitchell](https://github.com/wj-mitchell) contributed the
+- [Billy Mitchell](https://wj-mitchell.github.io/) contributed the
   vectors of names used to expand the `npc_creator` function
