@@ -37,15 +37,9 @@ devtools::install_github("njlyon0/dndR")
 ## Contributing to `dndR`
 
 If you’d like to contribute function scripts or ideas, that is more than
-welcome! For specific instructions check out `CONTRIBUTING.md` but at a
-glance:
-
-- For function ideas, [open a Github
-  issue](https://github.com/njlyon0/dndR/issues)
-- For function scripts, either [open a Github
-  issue](https://github.com/njlyon0/dndR/issues) *or* fork the
-  repository and add your content to the `dev` folder and submit a pull
-  request
+welcome! Please check out the [contributing
+guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) and follow
+the instructions described there.
 
 ### Package Contributors
 
