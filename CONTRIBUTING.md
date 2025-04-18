@@ -2,6 +2,10 @@
 
 I would love to have you contribute to `dndR` if that is of interest! I would divide contributions into two categories: (1) function ideas that aren't coded and (2) functions that are written in scripts. Once you've decided which of these categories you fall into, follow the instructions under the relevant subheading.
 
+## Note on "Artificial Intelligence"
+
+Please **_do not_** use generative AI for _any_ facet of your contribution to this work. AI is a random number generator built on plagiarism with an absurd error rate so from ethical and practical perspectives I'm not interested in including content produced in that way in this effort. I am absolutely interested in the ways in which your curiosity and insight can benefit this product though, so please do contribute if you have an idea for a new feature. Remember that function _ideas_ are still totally welcome so even if you don't feel up to coding your idea yourself, send the idea to me and I can happily try to develop code that fits that purpose.
+
 ## Function Ideas
 
 If you have an idea for a function [open a GitHub issue](https://github.com/njlyon0/dndR/issues) and tell me about it! Be sure to include as much detail about what the function does (and the limits of its power) as possible. I'll read through your issue and comment on it with any follow-up questions/comments I have.
