@@ -44,7 +44,7 @@ Dataframe with 26 columns and 1721 rows
 
 {Explorer's Guide to Wildemount. Wizards of the Coast 2020.}
 
-{Guildmasters’ Guide to Ravnica. Wizards of the Coast 2018.}
+{Guildmasters' Guide to Ravnica. Wizards of the Coast 2018.}
 
 {Lost Mine of Phandelver. Wizards of the Coast 2014.}
 

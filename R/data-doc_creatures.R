@@ -36,7 +36,7 @@
 #' @source {Waterdeep: Dungeon of the Mad Mage. Wizards of the Coast 2018.}
 #' @source {Elemental Evil. Wizards of the Coast 2015.}
 #' @source {Explorer's Guide to Wildemount. Wizards of the Coast 2020.}
-#' @source {Guildmasters’ Guide to Ravnica. Wizards of the Coast 2018.}
+#' @source {Guildmasters' Guide to Ravnica. Wizards of the Coast 2018.}
 #' @source {Lost Mine of Phandelver. Wizards of the Coast 2014.}
 #' @source {Mearls, M. and Crawford, J. Dungeons & Dragons Monster Manual (Fifth Edition). Wizards of the Coast 2014}
 #' @source {Morenkainen's Tome of Foes. Wizards of the Coast 2018.}
