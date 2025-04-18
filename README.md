@@ -20,9 +20,9 @@ Masters (DMs). Check out the package website
 ([njlyon0.github.io/dndR](https://njlyon0.github.io/dndR/)) for
 documentation of the functions currently included in the package. I am
 always willing to expand that list though so if you have a D&D-related
-task that could be cool as a function, please [post it as an
-Issue](https://github.com/njlyon0/dndR/issues) on this package’s GitHub
-repository!
+task that could be cool as a function, please [review the contributing
+guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) on how to
+share your idea!
 
 ## Installation
 
