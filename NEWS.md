@@ -3,6 +3,7 @@
 This is the development version. The following changes were made from the preceding version:
 
 - New function behavior: `npc_creator` now also returns first and last names for NPCs (in addition to race/species and a job)
+- Unit test update for `ggplot2` version `4.0.0`
 
 ## dndR Version 3.0.0
 
