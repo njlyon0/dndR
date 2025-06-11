@@ -32,5 +32,5 @@ test_that("Outputs are as expected", {
                      Rook = list(STR = "10", DEX = "10", CON = "18",
                                  INT = "9", WIS = "11", CHA = "16"))
   party_plot <- party_diagram(by = "player", pc_stats = party_list, quiet = TRUE)
-  expect_equal(class(party_plot), c("gg", "ggplot"))
+  expect_true(ggplot2::is_ggplot(party_plot))
 })

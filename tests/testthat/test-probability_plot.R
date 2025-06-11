@@ -19,5 +19,5 @@ test_that("Errors work as desired", {
 # Output testing
 test_that("Outputs are as expected", {
   my_plot <- dndR::probability_plot(dice = "2d8", roll_num = 10)
-  expect_equal(class(my_plot), c("gg", "ggplot"))
+  expect_true(ggplot2::is_ggplot(my_plot))
 })
