@@ -2,7 +2,7 @@
 
 This is the development version of dndR. The following changes were made from the preceding version:
 
-- No changes (yet)
+- Update maintainer email
 
 ## dndR Version 3.1.0
 
