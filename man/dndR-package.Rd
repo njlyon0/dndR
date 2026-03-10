@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Nicholas Lyon \email{njlyon@alumni.iastate.edu} (\href{https://orcid.org/0000-0003-3905-1078}{ORCID}) [copyright holder]
+\strong{Maintainer}: Nicholas Lyon \email{nickjlyon@gmail.com} (\href{https://orcid.org/0000-0003-3905-1078}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
