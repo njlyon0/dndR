@@ -1,51 +1,32 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <img src="man/figures/dndR_hex.png" align = "right" width = "15%" />
 
 # `dndR`: Dungeons & Dragons Functions for Players and Dungeon Masters
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/njlyon0/dndR/workflows/R-CMD-check/badge.svg)](https://github.com/njlyon0/dndR/actions)
 [![](https://cranlogs.r-pkg.org/badges/dndR)](https://cran.r-project.org/package=dndR)
 ![GitHub issues](https://img.shields.io/github/issues-raw/njlyon0/dndR)
-![GitHub pull
-requests](https://img.shields.io/github/issues-pr/njlyon0/dndR)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/njlyon0/dndR)
 <!-- badges: end -->
 
-The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth
-Edition a.k.a. “5e”) related functions to help both players and Dungeon
-Masters (DMs). Check out the package website
-([njlyon0.github.io/dndR](https://njlyon0.github.io/dndR/)) for
-documentation of the functions currently included in the package. I am
-always willing to expand that list though so if you have a D&D-related
-task that could be cool as a function, please [review the contributing
-guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) on how to
-share your idea!
+The goal of `dndR` is to provide a suite of Dungeons & Dragons (Fifth Edition a.k.a. "5e") related functions to help both players and Dungeon Masters (DMs). Check out the package website ([njlyon0.github.io/dndR](https://njlyon0.github.io/dndR/)) for documentation of the functions currently included in the package. I am always willing to expand that list though so if you have a D&D-related task that could be cool as a function, please [review the contributing guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) on how to share your idea!
 
 ## Installation
 
-You can install the development version of `dndR` from
-[GitHub](https://github.com/) with:
+You can install the development version of `dndR` from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("njlyon0/dndR")
+# install.packages("pak")
+pak::pak("njlyon0/dndR")
 ```
 
 ## Contributing to `dndR`
 
-If you’d like to contribute function scripts or ideas, that is more than
-welcome! Please check out the [contributing
-guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) and follow
-the instructions described there.
+If you'd like to contribute function scripts or ideas, that is more than welcome! Please check out the [contributing guidelines](https://njlyon0.github.io/dndR/CONTRIBUTING.html) and follow the instructions described there.
 
 ### Package Contributors
 
-- [Tim Schatto-Eckrodt](https://kudusch.de/) contributed the
-  `party_diagram` function
-- [Humberto Nappo](https://orcid.org/0000-0001-7810-1635) contributed
-  the idea for the `pc_level_calc` function
-- [Billy Mitchell](https://wj-mitchell.github.io/) contributed the
-  vectors of names used to expand the `npc_creator` function
+- [Tim Schatto-Eckrodt](https://kudusch.de/) contributed the `party_diagram` function
+- [Humberto Nappo](https://orcid.org/0000-0001-7810-1635) contributed the idea for the `pc_level_calc` function
+- [Billy Mitchell](https://wj-mitchell.github.io/) contributed the vectors of names used to expand the `npc_creator` function
