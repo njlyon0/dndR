@@ -18,8 +18,8 @@ You can install the development version of `dndR` from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("njlyon0/dndR")
+# install.packages("pak")
+pak::pak("njlyon0/dndR")
 ```
 
 ## Contributing to `dndR`
