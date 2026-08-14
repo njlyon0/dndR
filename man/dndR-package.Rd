@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Nicholas Lyon \email{nickjlyon@gmail.com} (\href{https://orcid.org/0000-0003-3905-1078}{ORCID}) [copyright holder]
   \item Tim Schatto-Eckrodt (https://kudusch.de)
   \item Humberto Nappo (\href{https://orcid.org/0000-0001-7810-1635}{ORCID})
   \item Billy Mitchell (https://wj-mitchell.github.io/)

@@ -39,5 +39,7 @@ export(surnames)
 export(xp_cost)
 export(xp_pool)
 import(ggplot2)
-importFrom(magrittr,"%<>%")
-importFrom(magrittr,"%>%")
+importFrom(magrittr,
+  "%<>%",
+  "%>%"
+)
