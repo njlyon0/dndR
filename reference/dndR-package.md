@@ -22,6 +22,9 @@ Useful links:
 
 Authors:
 
+- Nicholas Lyon <nickjlyon@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-3905-1078)) \[copyright holder\]
+
 - Tim Schatto-Eckrodt (https://kudusch.de)
 
 - Humberto Nappo ([ORCID](https://orcid.org/0000-0001-7810-1635))

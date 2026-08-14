@@ -25,6 +25,7 @@ See the help file for `monster_list` for the full list of supported
 query criteria.
 
 ``` r
+
 # Find all small creatures with 'goblin' in their name
 gobbo_df <- dndR::creature_list(name = "goblin", size = "small")
 
@@ -74,6 +75,7 @@ an R-style dataframe equivalent of the sort of creature card information
 you’d find in the back of a typical D&D source book.
 
 ``` r
+
 # Get the information for a hunter shark
 shark_df <- dndR::creature_text(name = "hunter shark")
 
@@ -102,6 +104,7 @@ To that end, the `cr_convert` function can perform this conversion
 without too much stress.
 
 ``` r
+
 # Convert a CR of 5 into equivalent XP
 dndR::cr_convert(cr = 5)
 #> [1] 1690
@@ -124,6 +127,7 @@ statistics as they appear in the DMG for a *single* creature of that
 difficulty.
 
 ``` r
+
 # Find the statistics of a single creature worth 8,000 XP
 dndR::monster_stats(xp = 8000)
 #> # A tibble: 8 × 2
@@ -164,6 +168,7 @@ opportunities to reward player investigation and insight in discovering
 the monster’s strengths and weaknesses before the final showdown.
 
 ``` r
+
 # Make a monster for a 4-person party of level 5
 dndR::monster_creator(party_level = 5, party_size = 4)
 #>             statistic                                                  value

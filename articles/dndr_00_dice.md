@@ -21,6 +21,7 @@ function supports ‘rolling’ up to 10 million of any dice type and
 returns the sum of their outcomes.
 
 ``` r
+
 # Roll three six-sided dice
 dndR::roll(dice = "3d6")
 #> [1] 14
@@ -30,6 +31,7 @@ If desired, you can set the `show_dice` argument to message the
 individual dice outcomes that make up that total.
 
 ``` r
+
 # Roll four four-sided dice and show the per-dice results
 dndR::roll(dice = "4d4", show_dice = TRUE)
 #> Individual rolls: 2, 3, 3, 3
@@ -42,6 +44,7 @@ the re-rolled value. If a one is detected, a message will be printed
 indicating that it has been re-rolled.
 
 ``` r
+
 # Re-roll low values (if any)
 dndR::roll(dice = "10d10", re_roll = TRUE)
 #> [1] 56
@@ -52,6 +55,7 @@ use it multiple times if you want to roll multiple types of dice and sum
 them together.
 
 ``` r
+
 # Roll 1d10 and 2d8
 dndR::roll(dice = "1d10") + dndR::roll(dice = "2d8")
 #> [1] 15
@@ -66,6 +70,7 @@ These functions do not accept any arguments and simply “roll” one of the
 respective die.
 
 ``` r
+
 # Roll one twenty-sided die
 dndR::d20()
 #> [1] 4
@@ -75,6 +80,7 @@ Just for fun, there is also a `coin` helper function that is analogous
 to a two-sided dice (i.e., “d2”)
 
 ``` r
+
 # Flip a coin
 dndR::coin()
 #> [1] 2

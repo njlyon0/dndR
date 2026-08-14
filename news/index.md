@@ -1,9 +1,8 @@
 # Changelog
 
-## dndR Version 3.1.0.900
+## dndR Version 3.1.1
 
-This is the development version of dndR. The following changes were made
-from the preceding version:
+The following changes were made from the preceding version:
 
 - Update maintainer email
 

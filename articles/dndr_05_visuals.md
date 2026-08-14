@@ -8,6 +8,7 @@ specify the number and type of dice and the number of times to roll that
 group. The median outcome is indicated by a dashed vertical line.
 
 ``` r
+
 # Make a probability plot for two, six-sided dice
 dndR::probability_plot(dice = "2d6", roll_num = 499)
 ```
@@ -33,6 +34,7 @@ Due to the static nature of a vignette, we’ll use the non-interactive
 path by assembling the party score list and then invoking this function.
 
 ``` r
+
 # Create named list of PCs and their scores
 party_list <- list(Vax = list(STR = "10", DEX = "13", CON = "14", 
                               INT = "15", WIS = "16", CHA = "12"),
@@ -51,6 +53,7 @@ You can also group the diagram by ability score if that is of interest
 instead.
 
 ``` r
+
 # Party diagram grouped by ability score
 dndR::party_diagram(by = "ability", pc_stats = party_list, quiet = TRUE)
 ```

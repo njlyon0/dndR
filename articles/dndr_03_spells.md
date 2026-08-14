@@ -29,6 +29,7 @@ following criteria:
   in-game time for spells that take more than one turn to cast)
 
 ``` r
+
 # Find all sorcerer spells that have the word 'bolt' in the name
 bolt_df <- dndR::spell_list(name = "bolt", class = "sorcerer")
 
@@ -55,6 +56,7 @@ str(bolt_df)
 ```
 
 ``` r
+
 # Find all seventh-level necromancy spells in the wizard spell list
 necro_df <- dndR::spell_list(school = "necromancy", class = "wizard", level = 7)
 
@@ -86,6 +88,7 @@ dataframe equivalent of the sort of spell card information you’d find in
 the back of a typical D&D source book.
 
 ``` r
+
 # Get the Chill Touch spell description
 dndR::spell_text(name = "chill touch")
 #>    spell_name                                         spell_source

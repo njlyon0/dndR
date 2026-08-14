@@ -21,6 +21,7 @@ to `TRUE` if you don’t want that message to print regardless of the roll
 outcomes.
 
 ``` r
+
 # Roll for ability scores using the '4d6 drop lowest' method
 dndR::ability_scores(method = "4d6")
 #>   ability score
@@ -42,6 +43,7 @@ that class, and return final ability scores and modifiers as a
 dataframe.
 
 ``` r
+
 # Create a half orc barbarian
 dndR::pc_creator(class = 'barbarian', race = 'half orc', score_method = "4d6")
 #>   ability raw_score race_modifier score roll_modifier
@@ -64,6 +66,7 @@ You can check currently supported character races and classes with the
 `dnd_races` and `dnd_classes` functions respectively.
 
 ``` r
+
 # Identify supported character races
 dndR::dnd_races()
 #>  [1] "aarakocra"          "bugbear"            "changeling"        
@@ -89,6 +92,7 @@ If you have a single ability score and want to remind yourself what roll
 modifier that translates to, you can use the `mod_calc` function.
 
 ``` r
+
 # What is the roll modifier for an ability score of 15?
 dndR::mod_calc(score = 15)
 #> [1] "+2"
@@ -104,6 +108,7 @@ be and the minimum XP threshold for your current level.
 Big thanks to Humberto Nappo for contributing this function!
 
 ``` r
+
 # What level is a player character that earned 8,250 XP?
 dndR::pc_level_calc(player_xp = 8250)
 #>   player_level xp_threshold proficiency
@@ -131,6 +136,7 @@ generates a full name (first and last) and selects a random race and job
 for however many NPCs you need.
 
 ``` r
+
 # Make three NPCs
 dndR::npc_creator(npc_count = 3)
 #>            name   species        job

@@ -21,12 +21,12 @@ Source:
 
 Lyon N, Schatto-Eckrodt T, Nappo H, Mitchell B (2026). *dndR: Dungeons &
 Dragons Functions for Players and Dungeon Masters*. R package version
-3.1.0.900, <https://njlyon0.github.io/dndR/>.
+3.1.1, <https://njlyon0.github.io/dndR/>.
 
     @Manual{,
       title = {dndR: Dungeons & Dragons Functions for Players and Dungeon Masters},
       author = {Nicholas Lyon and Tim Schatto-Eckrodt and Humberto Nappo and Billy Mitchell},
       year = {2026},
-      note = {R package version 3.1.0.900},
+      note = {R package version 3.1.1},
       url = {https://njlyon0.github.io/dndR/},
     }

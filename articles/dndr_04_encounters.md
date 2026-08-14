@@ -42,6 +42,7 @@ results! Or increasing the “try” argument to give the function more
 chances to find the optimal encounter composition.
 
 ``` r
+
 # Pick a hard set of creatures for a four-person party of 3rd level characters
 ## Try 10 times to find the 'best' encounter
 dndR::encounter_creator(party_level = 3, party_size = 4, ver = "2014", difficulty = "hard", try = 10)
@@ -103,6 +104,7 @@ to do this! Note that the names of the difficulty levels also differ
 between the 5e D&D versions.
 
 ``` r
+
 # Calculate pool of available XP
 dndR::xp_pool(party_level = 3, party_size = 4, ver = "2024", difficulty = "moderate")
 #> [1] 900
@@ -125,6 +127,7 @@ Let’s begin by calculating the XP pool from the same party as above but
 under the 2014 rules version.
 
 ``` r
+
 # Calculate pool of available XP
 dndR::xp_pool(party_level = 3, party_size = 4, ver = "2014", difficulty = "medium")
 #> [1] 600
@@ -140,6 +143,7 @@ has no effect on the realized XP cost; only the number of players and
 number of enemies matters!
 
 ``` r
+
 # Identify 'realized' XP of two monsters worth a total of 800 XP versus our party
 dndR::xp_cost(monster_xp = 500, monster_count = 2, party_size = 4, ver = "2014")
 #> [1] 750
