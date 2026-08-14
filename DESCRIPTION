@@ -1,8 +1,8 @@
 Package: dndR
 Type: Package
 Title: Dungeons & Dragons Functions for Players and Dungeon Masters
-Version: 3.1.0.900
-Date: 2026-03-10
+Version: 3.1.1
+Date: 2026-08-14
 Authors@R: c(
   person(given = "Nicholas", family = "Lyon", 
          role = c("aut", "cre", "cph"),
