@@ -13,6 +13,8 @@ Useful links:
 
 - <https://njlyon0.github.io/dndR/>
 
+- <https://github.com/njlyon0/dndR>
+
 - Report bugs at <https://github.com/njlyon0/dndR/issues>
 
 ## Author
