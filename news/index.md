@@ -2,6 +2,8 @@
 
 ## dndR Version 3.1.1
 
+CRAN release: 2026-09-18
+
 - Update maintainer email.
 
 ## dndR Version 3.1.0

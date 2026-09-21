@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/njlyon0/dndR/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/njlyon0/dndR/blob/v3.1.1/DESCRIPTION)
 
 Lyon N, Schatto-Eckrodt T, Nappo H, Mitchell B (2026). *dndR: Dungeons &
 Dragons Functions for Players and Dungeon Masters*. R package version
